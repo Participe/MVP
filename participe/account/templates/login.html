@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Log in - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="" style="width:100%; min-height: 200px; border: 1px solid navy;">
+    {% if form.errors %}
+    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
+    {% endif %}
+
+    <form action='.' method='post'>{% csrf_token %}
+        <label for="username">Login:</label><input type="text" name="username" value="" id="username">
+        <label for="password">Password:</label><input type="password" name="password" value="" id="password">
+
+        <input type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next|escape }}" />
+    </form>
+</div>
+{% endblock %}

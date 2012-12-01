@@ -26,6 +26,16 @@
             <img src="{{ MEDIA_URL }}img/logo_285x93.jpg"/>
             {% endblock %}
 
+            {% block links %}
+                {% if user.is_authenticated %}
+                    {{ user }}
+                    <a href='/accounts/logout/'>Log out</a>
+                {% else %}
+                    <a href='/accounts/login/'>Log in</a>
+                    <a href='/accounts/signup/'>Sign up</a>
+                {% endif %}
+            {% endblock %}
+            
             {% block content %}
             {% endblock %}
 

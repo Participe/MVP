@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
@@ -17,8 +18,9 @@ def signup(request):
                     first_name = uform.cleaned_data["first_name"],
                     last_name = uform.cleaned_data["last_name"],
                     email = uform.cleaned_data["email"],
-                    password = uform.cleaned_data["password"],
                     )
+            user.set_password(uform.cleaned_data["password"])
+            user.save()
             
             # Create User Profile
             profile = UserProfile.objects.create(
@@ -40,3 +42,7 @@ def signup(request):
         pform = UserProfileForm()
     
     return render_to_response('signup.html', RequestContext(request, {'uform': uform, 'pform': pform}))
+
+@login_required
+def profile(request):
+    return render_to_response('profile.html', RequestContext(request))

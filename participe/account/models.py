@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     address_1 = models.CharField(max_length=80, null=True, blank=True)
     address_2 = models.CharField(max_length=80, null=True, blank=True)
     postal_code = models.PositiveIntegerField()
-    city = models.CharField(max_length=80, null=True, blank=True)
+    city = models.CharField(max_length=80)
     country = CountryField()
 
     gender = models.CharField(max_length=2, choices=gender_choices, default="M")

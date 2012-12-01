@@ -14,17 +14,17 @@
                     <tr><td>Avatar</td></tr>
                 </table></td>
                 <td style="width: 30%;"><table>
-                    <tr><th></th><td>{{ uform.username }}</td></tr>
-                    <tr><th></th><td>{{ uform.first_name }}</td></tr>
-                    <tr><th></th><td>{{ uform.last_name }}</td></tr>
-                    <tr><th></th><td>{{ uform.email }}</td></tr>
-                    <tr><th></th><td>{{ uform.password }}</td></tr>
-                    
-                    <tr><th></th><td>{{ pform.address_1 }}</td></tr>
-                    <tr><th></th><td>{{ pform.address_2 }}</td></tr>
-                    <tr><th></th><td>{{ pform.postal_code }}</td></tr>
-                    <tr><th></th><td>{{ pform.city }}</td></tr>
-                    <tr><th></th><td>{{ pform.country}}</td></tr>
+                    <tr><th></th><td>{{ uform.username }}{{ uform.username.errors }}</td></tr>
+                    <tr><th></th><td>{{ uform.first_name }}{{ uform.first_name.errors }}</td></tr>
+                    <tr><th></th><td>{{ uform.last_name }}{{ uform.last_name.errors }}</td></tr>
+                    <tr><th></th><td>{{ uform.email }}{{ uform.email.errors }}</td></tr>
+                    <tr><th></th><td>{{ uform.password }}{{ uform.password.errors }}</td></tr>
+                    <tr><th></th><td>{{ uform.retry }}{{ uform.retry.errors }}</td></tr>
+                    <tr><th></th><td>{{ pform.address_1 }}{{ pform.address_1.errors }}</td></tr>
+                    <tr><th></th><td>{{ pform.address_2 }}{{ pform.address_2.errors }}</td></tr>
+                    <tr><th></th><td>{{ pform.postal_code }}{{ pform.postal_code.errors }}</td></tr>
+                    <tr><th></th><td>{{ pform.city }}{{ pform.city.errors }}</td></tr>
+                    <tr><th></th><td>{{ pform.country }}{{ pform.country.errors }}</td></tr>
                 </table></td>
             </tr>
             <tr>
