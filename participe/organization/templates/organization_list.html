@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Organizations list - {{ block.super }}{% endblock %}
+
+{% block content %}
+<a href='#'>Log in</a>
+<a href='/signup/'>Sign up</a>
+
+<ul class="">
+    <li class=""><a href="/home/">Home</a></li>
+    <li class=""><a href="/challenges/">Challenges</a></li>
+    <li class=""><a id="current" href="/organizations/">Organizations</a></li>
+</ul>
+
+<div class="main_container">
+    <table>
+        <form action="create/" method="post">{% csrf_token %}
+            <input type="submit" value="Create new organization" />
+        </form>
+        
+    {% for organization in organizations %}
+        <tr>
+            <td><a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a></td>
+        <tr>
+    {% empty %}
+        <p>There are no organizations</p>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

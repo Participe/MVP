@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Challenges list - {{ block.super }}{% endblock %}
+
+{% block content %}
+<a href='#'>Log in</a>
+<a href='/signup/'>Sign up</a>
+
+<ul class="">
+    <li class=""><a href="/home/">Home</a></li>
+    <li class=""><a id="current" href="/challenges/">Challenges</a></li>
+    <li class=""><a href="/organizations/">Organizations</a></li>
+</ul>
+
+<div class="main_container">
+    <table>
+        <form action="create/" method="post">{% csrf_token %}
+            <input type="submit" value="Create new challenge" />
+        </form>
+        
+    {% for challenge in challenges %}
+        <tr>
+            <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+        <tr>
+    {% empty %}
+        <p>There are no active challenges</p>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Create challenge - {{ block.super }}{% endblock %}
+
+{% block content %}
+<a href='#'>Log in</a>
+<a href='/signup/'>Sign up</a>
+
+<ul class="">
+    <li class=""><a href="/home/">Home</a></li>
+    <li class=""><a id="current" href="/challenges/">Challenges</a></li>
+    <li class=""><a href="/organizations/">Organizations</a></li>
+</ul>
+<div class="main_container">
+    <form action="" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+        <table>
+            <tr>
+                <td><table>
+                    <tr><td>{{ form.name }}{{ form.name.errors }}</td></tr>
+                    <tr><td>{{ form.description }}{{ form.description.errors }}</td></tr>
+                    <tr><td>{{ form.location }}{{ form.location.errors }}</td></tr>
+                    
+                </table></td>
+                <td><table>
+                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ form.contact_person }}</td></tr>
+                    <tr><th><span></span></th><td>{{ form.is_alt_person }}</td><td>Affiliate different person</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_fullname }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_email }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_phone }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><td><p>Goodies/Give-aways</p></td></tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                    <tr><td>Duration {{ form.duration }} hours</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><th><span>Start date </span></th><td>{{ form.start_date }}</td><th><span>Time </span></th><td>{{ form.start_time }}</td></tr>
+                    <tr><th><span>Alternative date </span></th><td>{{ form.alt_date }}</td><th><span>Time </span></th><td>{{ form.alt_time }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                    <tr><th>Affiliate with organization</th><td>{{ form.organization }}</td></tr>
+                    <tr><th>or</th><td><input type="button" value="Create new Organization" /></td></tr>
+                </table></td>
+                <td><table>
+                    <tr><th>Application</th><td>{{ form.application }}{{ form.application.errors }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                    <tr><td>Number of participants:</td></tr>
+                    <tr><td>Minimum {{ form.min_participants }} Maximum {{ form.max_participants }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><th>Latest sign-up</th><td>{{ form.latest_signup }}{{ form.latest_signup.errors }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <input type="submit" value="Create this challenge" />
+                </table></td>
+            </tr>
+        </table>
+        </div>     
+    </form>
+</div>
+{% endblock %}

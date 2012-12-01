@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Create organization - {{ block.super }}{% endblock %}
+
+{% block content %}
+<a href='#'>Log in</a>
+<a href='/signup/'>Sign up</a>
+
+<ul class="">
+    <li class=""><a href="/home/">Home</a></li>
+    <li class=""><a href="/challenges/">Challenges</a></li>
+    <li class=""><a id="current" href="/organizations/">Organizations</a></li>
+</ul>
+<div class="main_container">
+    <form action="" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+        <p>Ready to participe?</p>
+        <table>
+            <tr>
+                <td><table>
+                    <tr><td>{{ form.name }}</td></tr>
+                    <tr><td>{{ form.address_1 }}</td></tr>
+                    <tr><td>{{ form.address_2 }}</td></tr>
+                    <tr><td>{{ form.postal_code }}</td></tr>
+                    <tr><td>{{ form.city }}</td></tr>
+                    <tr><td>{{ form.country }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><td>{{ form.description }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><td>{{ form.website }}</td></tr>
+                    <tr><td>{{ form.video }}</td></tr>
+                    <tr><td>{{ form.email }}</td></tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ form.contact_person }}</td></tr>
+                    <tr><th><span></span></th><td>{{ form.is_alt_person }}</td><td>Affiliate different person</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_fullname }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_email }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_phone }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <input type="submit" value="Create this organization" />
+                </table></td>
+            </tr>
+        </table>        
+        </div>
+    </form>
+</div>
+{% endblock %}

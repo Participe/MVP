@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Sign up - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="" style="width:100%; min-height: 200px; border: 1px solid navy;">
+    <form action="/signup/" method="post">{% csrf_token %}
+        <div class="fieldWrapper">
+        <table>
+            <tr>
+                <td style="width: 60%;"><table>
+                    <tr><td>To participate in a challenge, you first need to sign-up for participe:</td></tr>
+                </table></td>
+                <td style="width: 10%;"><table>
+                    <tr><td>Avatar</td></tr>
+                </table></td>
+                <td style="width: 30%;"><table>
+                    <tr><th></th><td>{{ uform.username }}</td></tr>
+                    <tr><th></th><td>{{ uform.first_name }}</td></tr>
+                    <tr><th></th><td>{{ uform.last_name }}</td></tr>
+                    <tr><th></th><td>{{ uform.email }}</td></tr>
+                    <tr><th></th><td>{{ uform.password }}</td></tr>
+                    
+                    <tr><th></th><td>{{ pform.address_1 }}</td></tr>
+                    <tr><th></th><td>{{ pform.address_2 }}</td></tr>
+                    <tr><th></th><td>{{ pform.postal_code }}</td></tr>
+                    <tr><th></th><td>{{ pform.city }}</td></tr>
+                    <tr><th></th><td>{{ pform.country}}</td></tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <tr><th>Gender</th><td>{{ pform.gender }}</td></tr>
+                    <tr><th>Date of birth</th><td>{{ pform.birth_day }}</td></tr>
+                    <tr><th></th><td>{{ pform.phone_number }}</td></tr>
+                    <tr><th>Receive newsletters</th><td>{{ pform.receive_newsletter }}</td></tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <input type="submit" value="Sign-up for Participe" />
+                </table></td>
+            </tr>
+        </table>
+        </div>
+    </form>
+</div>
+{% endblock %}
