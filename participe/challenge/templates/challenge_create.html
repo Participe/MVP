@@ -13,7 +13,7 @@
                     
                 </table></td>
                 <td><table>
-                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ form.contact_person }}</td></tr>
+                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ user.get_full_name }} ({{ user.username }})</td></tr>
                     <tr><th><span></span></th><td>{{ form.is_alt_person }}</td><td>Affiliate different person</td></tr>
                     <tr><th><span></span></th><td></td><td>{{ form.alt_person_fullname }}</td></tr>
                     <tr><th><span></span></th><td></td><td>{{ form.alt_person_email }}</td></tr>

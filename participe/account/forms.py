@@ -6,7 +6,7 @@ import participe.core.html5_widgets as widgets
 
 
 class UserForm(forms.ModelForm):
-    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "class": "mandatory_field"}))
+    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": "", "class": "mandatory_field"}))
     
     class Meta:
         model = User
@@ -29,7 +29,6 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ["address_1", "address_2", "postal_code", "city", "country",
             "gender", "birth_day", "phone_number", "receive_newsletter",]
-
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),

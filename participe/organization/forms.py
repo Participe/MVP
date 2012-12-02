@@ -7,14 +7,12 @@ import participe.core.html5_widgets as widgets
 class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
-
         fields = ["name", "description", 
             "address_1", "address_2", "postal_code", "city", "country",
             "website", "video", "email",
-            "is_contact_person", "contact_person",
+            "is_contact_person",
             "is_alt_person", "alt_person_fullname", "alt_person_email", "alt_person_phone",
             ]
-
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Organization name"}),
             "description": forms.Textarea(attrs={"cols": 25, "rows": 5, "placeholder": "Organization description"}),

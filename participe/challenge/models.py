@@ -23,6 +23,8 @@ class Challenge(models.Model):
     location = models.CharField(max_length=80, null=True, blank=True)
     duration = models.PositiveIntegerField(default=1, null=True, blank=True)
 
+    # Even if primary contact person isn't set, despite everything,
+    # value 'contact_person' can be used to identify who has created challenge
     is_contact_person = models.BooleanField(default=True)
     contact_person = models.ForeignKey(User)
     
@@ -37,16 +39,12 @@ class Challenge(models.Model):
     alt_time = models.TimeField(blank=True)
     
     organization = models.ForeignKey(Organization, null=True)
-    
     application = models.CharField(max_length=2, choices=application_choices, default="0")
-    
     min_participants = models.PositiveIntegerField(default=1, null=True, blank=True)
     max_participants = models.PositiveIntegerField(default=1, null=True, blank=True)
-    
     latest_signup = models.CharField(max_length=2, choices=latest_signup_choices, default="0")
     
-    #created_by = models.ForeignKey(User)
-    #created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'challenge'

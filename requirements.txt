@@ -5,3 +5,4 @@ Fabric=1.5.1
 psycopg2=2.4.5
 boto=2.6.0
 django-countries=1.5
+django-social-auth

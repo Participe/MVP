@@ -18,8 +18,8 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('participe.account.views',
     # Account
-    url(r'^accounts/login/$', login, {"template_name": "login.html",}),
-    url(r'^accounts/logout/$', logout),
+    url(r'^accounts/login/$', login, {"template_name": "account_login.html",}),
+    url(r'^accounts/logout/$', logout, {"next_page": "/home/"}),
     url(r'^accounts/signup/$', 'signup', name='signup'),
     url(r'^accounts/profile/$', 'profile', name='profile'),
     )

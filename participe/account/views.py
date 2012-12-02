@@ -41,8 +41,8 @@ def signup(request):
         uform = UserForm()
         pform = UserProfileForm()
     
-    return render_to_response('signup.html', RequestContext(request, {'uform': uform, 'pform': pform}))
+    return render_to_response('account_signup.html', RequestContext(request, {'uform': uform, 'pform': pform}))
 
 @login_required
 def profile(request):
-    return render_to_response('profile.html', RequestContext(request))
+    return render_to_response('account_profile.html', RequestContext(request))

@@ -7,16 +7,14 @@ import participe.core.html5_widgets as widgets
 class ChallengeForm(forms.ModelForm):
     class Meta:
         model = Challenge
-
         fields = ["name", "description", "location", "duration",
-            "is_contact_person", "contact_person",
+            "is_contact_person",
             "is_alt_person", "alt_person_fullname", "alt_person_email", "alt_person_phone",
             "start_date", "start_time", "alt_date", "alt_time",
             "organization", "application",
             "min_participants", "max_participants",
             "latest_signup",
             ]
-
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Challenge name"}),
             "description": forms.Textarea(attrs={"cols": 25, "rows": 5, "placeholder": "Challenge description"}),
@@ -39,4 +37,3 @@ class ChallengeForm(forms.ModelForm):
             
             "latest_signup": forms.RadioSelect(),
             }
-
