@@ -1,3 +1,7 @@
 # Repository
 https://github.com/Participe/MVP.git
 https://github.com/Participe/MVP
+
+# E-mail (don't forget to change it in 'local_settings.py')
+address:  participe.mvp@gmail.com
+password: PaRtIcIpE123

@@ -10,7 +10,7 @@ TEMPLATE_DIRS = (
     )
     
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('OVERRIDE ME IN LOCAL_SETTINGS', 'OVERRIDE ME IN LOCAL_SETTINGS'),
 )
 
 MANAGERS = ADMINS
@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'participe.account',
     
     'south',
+    'social_auth',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -125,6 +126,41 @@ LOGGING = {
         },
     }
 }
+
+"""
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.disqus.DisqusBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    'social_auth.backends.contrib.orkut.OrkutBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.vkontakte.VKontakteBackend',
+    'social_auth.backends.contrib.live.LiveBackend',
+    'social_auth.backends.contrib.skyrock.SkyrockBackend',
+    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+"""
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'OVERRIDE ME IN LOCAL_SETTINGS'
+EMAIL_HOST_PASSWORD= 'OVERRIDE ME IN LOCAL_SETTINGS'
+EMAIL_HOST = 'OVERRIDE ME IN LOCAL_SETTINGS'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+TEMPLATED_EMAIL_TEMPLATE_DIR = 'emails/'
+TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
 
 # Override some settings
 #from local_settings import *

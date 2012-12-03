@@ -1,62 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'organization_base.html' %}
 {% block title %}Create organization - {{ block.super }}{% endblock %}
 
-{% block content %}
-<a href='#'>Log in</a>
-<a href='/signup/'>Sign up</a>
-
-<ul class="">
-    <li class=""><a href="/home/">Home</a></li>
-    <li class=""><a href="/challenges/">Challenges</a></li>
-    <li class=""><a id="current" href="/organizations/">Organizations</a></li>
-</ul>
-<div class="main_container">
-    <form action="" method="post">{% csrf_token %}
-        <div class="fieldWrapper">
-        <p>Ready to participe?</p>
-        <table>
-            <tr>
-                <td><table>
-                    <tr><td>{{ form.name }}</td></tr>
-                    <tr><td>{{ form.address_1 }}</td></tr>
-                    <tr><td>{{ form.address_2 }}</td></tr>
-                    <tr><td>{{ form.postal_code }}</td></tr>
-                    <tr><td>{{ form.city }}</td></tr>
-                    <tr><td>{{ form.country }}</td></tr>
-                </table></td>
-                <td><table>
-                    <tr><td>{{ form.description }}</td></tr>
-                </table></td>
-                <td><table>
-                    <tr><td>{{ form.website }}</td></tr>
-                    <tr><td>{{ form.video }}</td></tr>
-                    <tr><td>{{ form.email }}</td></tr>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                </table></td>
-                <td><table>
-                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ form.contact_person }}</td></tr>
-                    <tr><th><span></span></th><td>{{ form.is_alt_person }}</td><td>Affiliate different person</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_fullname }}</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_email }}</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ form.alt_person_phone }}</td></tr>
-                </table></td>
-                <td><table>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                </table></td>
-                <td><table>
-                </table></td>
-                <td><table>
-                    <input type="submit" value="Create this organization" />
-                </table></td>
-            </tr>
-        </table>        
-        </div>
+{% block extra_content %}
+    <form action="." class="well" method="post">{% csrf_token %}
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span4">
+                        <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}</div>
+                        <div {% if form.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_1 }}</div>
+                        <div {% if form.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_2 }}</div>
+                        <div {% if form.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.postal_code }}</div>
+                        <div {% if form.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.city }}</div>
+                        <div {% if form.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.country }}</div>
+                    </div>                    
+                    <div class="span4">
+                        <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div>
+                        <div class="input">Contact person: </div>
+                        <div class="input">{{ form.is_contact_person }} {{ user.get_full_name }} ({{ user.username }})</div>
+                        <div class="input">{{ form.is_alt_person }} Affiliate different person</div>
+                        <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}</div>
+                        <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}</div>
+                        <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}</div>
+                    </div>                    
+                    <div class="span4">
+                        <div {% if form.website.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.website }}</div>
+                        <div {% if form.video.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.video }}</div>
+                        <div {% if form.email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.email }}</div>
+                    </div>
+                </div>   
+                <input type="submit" class="btn-primary" value="Create this organization" />
+            </div>        
+        </div>     
     </form>
-</div>
 {% endblock %}

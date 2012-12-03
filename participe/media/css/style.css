@@ -71,6 +71,9 @@ table tr td ul li {
 .fieldWrapper {
     margin: 5px;
 }
+.mandatory_field {
+    border: 1px solid red;
+}
 input {
     border: 1px dotted navy;
 }

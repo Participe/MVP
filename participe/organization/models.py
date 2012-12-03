@@ -27,8 +27,7 @@ class Organization(models.Model):
     alt_person_email = models.EmailField(max_length=80, null=True, blank=True)
     alt_person_phone = models.CharField(max_length=15, blank=True, default='')
 
-    #created_by = models.ForeignKey(User)
-    #created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'organization'
