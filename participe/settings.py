@@ -10,7 +10,7 @@ TEMPLATE_DIRS = (
     )
     
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('OVERRIDE ME IN LOCAL_SETTINGS', 'OVERRIDE ME IN LOCAL_SETTINGS'),
 )
 
 MANAGERS = ADMINS
@@ -150,6 +150,17 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 """
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'OVERRIDE ME IN LOCAL_SETTINGS'
+EMAIL_HOST_PASSWORD= 'OVERRIDE ME IN LOCAL_SETTINGS'
+EMAIL_HOST = 'OVERRIDE ME IN LOCAL_SETTINGS'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+TEMPLATED_EMAIL_TEMPLATE_DIR = 'emails/'
+TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
 
 # Override some settings
 from local_settings import *

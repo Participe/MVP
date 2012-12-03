@@ -20,7 +20,7 @@ class UserForm(forms.ModelForm):
             }
     
     def clean_retry( self ):
-       if ( self.cleaned_data["retry"] != self.cleaned_data.get( "password", "") ):
+       if ( self.cleaned_data["retry"] != self.cleaned_data.get("password", "") ):
            raise forms.ValidationError("Passwords don't match")
        return self.cleaned_data["retry"]
 
@@ -36,8 +36,17 @@ class UserProfileForm(forms.ModelForm):
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
 
-            "gender": forms.RadioSelect(),
+            "gender": forms.Select(attrs={"class": "input-small"}),
             
             "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(attrs={"placeholder": "Phone number"}),
             }
+
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Password", "value": ""}))
+    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": ""}))
+
+    def clean_retry( self ):
+       if ( self.cleaned_data["retry"] != self.cleaned_data.get("password", "") ):
+           raise forms.ValidationError("Passwords don't match")
+       return self.cleaned_data["retry"]

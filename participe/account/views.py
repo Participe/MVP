@@ -1,11 +1,15 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 
-from forms import UserForm, UserProfileForm
+from templated_email import send_templated_mail
+
+from forms import UserForm, UserProfileForm, ResetPasswordForm
 from models import UserProfile
+
 
 def signup(request):
     if request.method == "POST":
@@ -35,9 +39,23 @@ def signup(request):
                     phone_number = pform.cleaned_data["phone_number"],
                     receive_newsletter = pform.cleaned_data["receive_newsletter"],
                     )
-            
-            # TODO Change redirect in future
-            return HttpResponseRedirect('/home/')
+
+            # Let it be here. Instant log-in after sign-up
+            user = authenticate(username=uform.cleaned_data["username"], password=uform.cleaned_data["password"])
+            login(request, user)
+         
+            # Here and further, if "send_templated_email" will raise exception
+            # (in general, if <user.email> not set), user will be redirected
+            # to the "/home/" or other appropriate page. 
+            try:
+                send_templated_mail(
+                        template_name="account_successful_signup",
+                        from_email="from@example.com", 
+                        recipient_list=[user.email,], 
+                        context={"user": user},)
+                return render_to_response('account_confirmation_email.html', RequestContext(request, {"address": user.email}))
+            except:
+                return HttpResponseRedirect('/home/')
     else:
         uform = UserForm()
         pform = UserProfileForm()
@@ -47,3 +65,27 @@ def signup(request):
 @login_required
 def profile(request):
     return render_to_response('account_profile.html', RequestContext(request))
+    
+@login_required
+def reset_password(request):
+    if request.method == "POST":
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            user.set_password(form.cleaned_data["password"])
+            user.save()
+    
+            try:
+                send_templated_mail(
+                        template_name="account_successful_reset_password",
+                        from_email="from@example.com", 
+                        recipient_list=[user.email,], 
+                        context={"user": user},)
+                return render_to_response('account_confirmation_email.html', RequestContext(request, {"address": user.email}))
+            except:
+                return HttpResponseRedirect('/accounts/profile/')
+    else:
+        form = ResetPasswordForm()
+    
+    return render_to_response('account_reset_password.html', RequestContext(request, {'form': form}))
+    

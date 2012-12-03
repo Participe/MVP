@@ -24,10 +24,10 @@
                         <div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>
                         <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}</div>
                         <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
-                        <div {% if pform.receive_newsletter.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.receive_newsletter }} Receive newsletters</div>
+                        <div class="input">{{ pform.receive_newsletter }} Receive newsletters</div>
+                        <div class="input"><input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" /></div>
                     </div>
                 </div>
-                <input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" />
             </div>        
         </div>     
     </form>

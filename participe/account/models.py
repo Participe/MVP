@@ -32,3 +32,6 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user
+
+    #def get_absolute_url(self):
+    #    return reverse('participe.account.views.profile', args=[str(self.id)])
