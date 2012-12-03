@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     
     'south',
     'social_auth',
+    'avatar',
 )
 
 # A sample logging configuration. The only tangible logging

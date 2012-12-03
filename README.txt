@@ -14,7 +14,17 @@
     sudo make prefix=/usr all
     sudo make prefix=/usr install
     
-1. Installing Virtual Environment and project dependencies:
+2. Installing dependencies for PIL (Python image libraries)
+2.1 Mandatory:
+
+    sudo apt-get install libjpeg libjpeg-dev
+
+2.2 Optional (if PIL were install before libjpeg):
+
+    pip uninstall pil
+    pip install pil --upgrade
+
+3. Installing Virtual Environment and project dependencies:
 
     cd <PROJECT_PATH>
     virtualenv ve --no-site-packages
