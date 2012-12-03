@@ -127,4 +127,4 @@ LOGGING = {
 }
 
 # Override some settings
-from local_settings import *
+#from local_settings import *
