@@ -30,9 +30,10 @@ def signup(request):
                     postal_code = pform.cleaned_data["postal_code"],
                     city = pform.cleaned_data["city"],
                     country = pform.cleaned_data["country"],
-                    phone_number = pform.cleaned_data["phone_number"],
-                    #receive_newsletter = pform.cleaned_data["receive_newsletter"],
+                    gender = pform.cleaned_data["gender"],
                     birth_day = pform.cleaned_data["birth_day"],
+                    phone_number = pform.cleaned_data["phone_number"],
+                    receive_newsletter = pform.cleaned_data["receive_newsletter"],
                     )
             
             # TODO Change redirect in future

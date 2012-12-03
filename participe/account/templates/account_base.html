@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="" style="width:100%; min-height: 200px; border: 1px solid navy;">
+<ul class="nav nav-tabs">  
+    <li class=""><a href="/home/"><< Back</a></li>
+    <li class="active"><a href="#">Accounts</a></li>
+</ul>
+
+<div class="main_container">
     {% block extra_content %}
     {% endblock %}
 </div>

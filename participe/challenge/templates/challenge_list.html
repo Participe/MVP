@@ -2,11 +2,8 @@
 {% block title %}Challenges list - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
+    <a class="btn" href="/challenges/create/">Create new challenge</a>
     <table>
-        <form action="create/" method="post">{% csrf_token %}
-            <input type="submit" value="Create new challenge" />
-        </form>
-        
     {% for challenge in challenges %}
         <tr>
             <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>

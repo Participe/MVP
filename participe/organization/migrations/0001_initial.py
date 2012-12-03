@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('address_1', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('address_2', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
-            ('postal_code', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('postal_code', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
             ('city', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
             ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
@@ -27,6 +27,7 @@ class Migration(SchemaMigration):
             ('alt_person_fullname', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('alt_person_email', self.gf('django.db.models.fields.EmailField')(max_length=80, null=True, blank=True)),
             ('alt_person_phone', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('organization', ['Organization'])
 
@@ -74,7 +75,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'organization.organization': {
-            'Meta': {'object_name': 'Organization'},
+            'Meta': {'ordering': "['name']", 'object_name': 'Organization'},
             'address_1': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'address_2': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'alt_person_email': ('django.db.models.fields.EmailField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
@@ -83,13 +84,14 @@ class Migration(SchemaMigration):
             'city': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'contact_person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
             'country': ('django_countries.fields.CountryField', [], {'max_length': '2'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_alt_person': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_contact_person': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'postal_code': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'postal_code': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'video': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         }

@@ -15,10 +15,12 @@ class Migration(SchemaMigration):
             ('address_1', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('address_2', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('postal_code', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
+            ('city', self.gf('django.db.models.fields.CharField')(max_length=80)),
             ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
-            ('phone_number', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
+            ('gender', self.gf('django.db.models.fields.CharField')(default='M', max_length=2)),
             ('birth_day', self.gf('django.db.models.fields.DateField')()),
+            ('phone_number', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
+            ('receive_newsletter', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('account', ['UserProfile'])
 
@@ -30,15 +32,17 @@ class Migration(SchemaMigration):
 
     models = {
         'account.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
+            'Meta': {'ordering': "['user__first_name', 'user__last_name']", 'object_name': 'UserProfile'},
             'address_1': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'address_2': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'birth_day': ('django.db.models.fields.DateField', [], {}),
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
             'country': ('django_countries.fields.CountryField', [], {'max_length': '2'}),
+            'gender': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '2'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'phone_number': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
             'postal_code': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            'receive_newsletter': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
         'auth.group': {

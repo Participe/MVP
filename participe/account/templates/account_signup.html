@@ -2,52 +2,33 @@
 {% block title %}Sign up - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
-    <form id="signup" action="." method="post">{% csrf_token %}
-        <div class="fieldWrapper">
-        <table>
-            <tr>
-                <td style="width: 60%;"><table>
-                    <tr><td>To participate in a challenge, you first need to sign-up for participe:</td></tr>
-                </table></td>
-                <td style="width: 10%;"><table>
-                    <tr><td>Avatar</td></tr>
-                </table></td>
-                <td style="width: 30%;"><table>
-                    <tr><th></th><td>{{ uform.username }}{{ uform.username.errors }}</td></tr>
-                    <tr><th></th><td>{{ uform.first_name }}{{ uform.first_name.errors }}</td></tr>
-                    <tr><th></th><td>{{ uform.last_name }}{{ uform.last_name.errors }}</td></tr>
-                    <tr><th></th><td>{{ uform.email }}{{ uform.email.errors }}</td></tr>
-                    <tr><th></th><td>{{ uform.password }}{{ uform.password.errors }}</td></tr>
-                    <tr><th></th><td>{{ uform.retry }}{{ uform.retry.errors }}</td></tr>
-                    <tr><th></th><td>{{ pform.address_1 }}{{ pform.address_1.errors }}</td></tr>
-                    <tr><th></th><td>{{ pform.address_2 }}{{ pform.address_2.errors }}</td></tr>
-                    <tr><th></th><td>{{ pform.postal_code }}{{ pform.postal_code.errors }}</td></tr>
-                    <tr><th></th><td>{{ pform.city }}{{ pform.city.errors }}</td></tr>
-                    <tr><th></th><td>{{ pform.country }}{{ pform.country.errors }}</td></tr>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                </table></td>
-                <td><table>
-                </table></td>
-                <td><table>
-                    <tr><th>Gender</th><td>{{ pform.gender }}</td></tr>
-                    <tr><th>Date of birth</th><td>{{ pform.birth_day }}</td></tr>
-                    <tr><th></th><td>{{ pform.phone_number }}</td></tr>
-                    <tr><th>Receive newsletters</th><td>{{ pform.receive_newsletter }}</td></tr>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                </table></td>
-                <td><table>
-                </table></td>
-                <td><table>
-                    <input type="submit" form="signup" value="Sign-up for Participe" />
-                </table></td>
-            </tr>
-        </table>
-        </div>
+    <form id="signup" class="well" action="." method="post">{% csrf_token %}
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span8">
+                        <p>To participate in a challenge, you first need to sign-up for participe:</p>
+                    </div>
+                    <div class="span4">
+                        <div {% if uform.username.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.username }}</div>
+                        <div {% if uform.first_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.first_name }}</div>
+                        <div {% if uform.last_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.last_name }}</div>
+                        <div {% if uform.email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.email }}</div>
+                        <div {% if uform.password.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.password }}</div>
+                        <div {% if uform.retry.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.retry }}</div>
+                        <div {% if pform.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_1 }}</div>
+                        <div {% if pform.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_2 }}</div>
+                        <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}</div>
+                        <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}</div>
+                        <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}</div>
+                        <div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>
+                        <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}</div>
+                        <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
+                        <div {% if pform.receive_newsletter.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.receive_newsletter }} Receive newsletters</div>
+                    </div>
+                </div>
+                <input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" />
+            </div>        
+        </div>     
     </form>
 {% endblock %}

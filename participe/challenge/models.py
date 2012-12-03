@@ -35,8 +35,8 @@ class Challenge(models.Model):
     
     start_date = models.DateField()
     start_time = models.TimeField()
-    alt_date = models.DateField(blank=True)
-    alt_time = models.TimeField(blank=True)
+    alt_date = models.DateField(null=True, blank=True)
+    alt_time = models.TimeField(null=True, blank=True)
     
     organization = models.ForeignKey(Organization, null=True)
     application = models.CharField(max_length=2, choices=application_choices, default="0")

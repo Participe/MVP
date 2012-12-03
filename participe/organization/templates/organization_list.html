@@ -2,11 +2,8 @@
 {% block title %}Organizations list - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
+    <a class="btn" href="/organizations/create/">Create new organization</a>
     <table>
-        <form action="create/" method="post">{% csrf_token %}
-            <input type="submit" value="Create new organization" />
-        </form>
-        
     {% for organization in organizations %}
         <tr>
             <td><a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a></td>

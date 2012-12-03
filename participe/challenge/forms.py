@@ -19,21 +19,21 @@ class ChallengeForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"placeholder": "Challenge name"}),
             "description": forms.Textarea(attrs={"cols": 25, "rows": 5, "placeholder": "Challenge description"}),
             "location": forms.TextInput(attrs={"placeholder": "Location"}),
-            "duration": widgets.NumberInput(attrs={'min': '0', 'max': '10', 'step': '1'}),
+            "duration": widgets.NumberInput(attrs={'min': '1', 'max': '10', 'step': '1', "class": "input-mini"}),
             
             "alt_person_fullname": forms.TextInput(attrs={"placeholder": "Full name"}),
             "alt_person_email": forms.TextInput(attrs={"placeholder": "E-mail"}),
             "alt_person_phone": forms.TextInput(attrs={"placeholder": "Phone number"}),
 
-            "start_date": widgets.DateInput(),
-            "start_time": widgets.TimeInput(),
-            "alt_date": widgets.DateInput(),
-            "alt_time": widgets.TimeInput(),
+            "start_date": widgets.DateInput(attrs={"class": "input-small"}),
+            "start_time": widgets.TimeInput(attrs={"class": "input-mini"}),
+            "alt_date": widgets.DateInput(attrs={"class": "input-small"}),
+            "alt_time": widgets.TimeInput(attrs={"class": "input-mini"}),
             
             "application": forms.RadioSelect(),
 
-            "min_participants": widgets.NumberInput(attrs={'min': '0', 'max': '10', 'step': '1'}),
-            "max_participants": widgets.NumberInput(attrs={'min': '0', 'max': '10', 'step': '1'}),
+            "min_participants": widgets.NumberInput(attrs={'min': '1', 'max': '10', 'step': '1', "class": "input-mini"}),
+            "max_participants": widgets.NumberInput(attrs={'min': '1', 'max': '10', 'step': '1', "class": "input-mini"}),
             
             "latest_signup": forms.RadioSelect(),
             }

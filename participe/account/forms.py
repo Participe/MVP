@@ -6,17 +6,17 @@ import participe.core.html5_widgets as widgets
 
 
 class UserForm(forms.ModelForm):
-    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": "", "class": "mandatory_field"}))
+    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": ""}))
     
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "password",]
         widgets = {
-            "username": forms.TextInput(attrs={"placeholder": "User name", "class": "mandatory_field"}),
+            "username": forms.TextInput(attrs={"placeholder": "User name"}),
             "first_name": forms.TextInput(attrs={"placeholder": "First name"}),
             "last_name": forms.TextInput(attrs={"placeholder": "Last name"}),
             "email": widgets.EmailInput(attrs={"placeholder": "E-mail"}),
-            "password": forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Password", "class": "mandatory_field"}),
+            "password": forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Password"}),
             }
     
     def clean_retry( self ):
@@ -32,12 +32,12 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
-            "postal_code": forms.TextInput(attrs={"placeholder": "Postal code", "class": "mandatory_field"}),
-            "city": forms.TextInput(attrs={"placeholder": "City", "class": "mandatory_field"}),
-            "country": forms.Select(attrs={"class": "mandatory_field"}),
+            "postal_code": forms.TextInput(attrs={"placeholder": "Postal code"}),
+            "city": forms.TextInput(attrs={"placeholder": "City"}),
+            "country": forms.Select(),
 
             "gender": forms.RadioSelect(),
             
-            "birth_day": widgets.DateInput(attrs={"class": "mandatory_field"}),
+            "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(attrs={"placeholder": "Phone number"}),
             }
