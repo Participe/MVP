@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     
     # Admin
     url(r'^admin/', include(admin.site.urls)),
+
+    # Take into account, that Avatar templates are overridden here
+    (r'^avatar/', include('avatar.urls'))
     )
 
 urlpatterns += patterns('participe.account.views',
