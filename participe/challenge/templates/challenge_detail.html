@@ -1,0 +1,55 @@
+{% extends 'challenge_base.html' %}
+{% block title %}Challenge details - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+        <table>
+            <tr>
+                <td><table>
+                    <tr><td><b>{{ challenge.name }}</b></td></tr>
+                    <tr><td>{{ challenge.description }}</td></tr>
+                    <tr><td>{{ challenge.location }}</td></tr>
+                    
+                </table></td>
+                <td><table>
+                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ challenge.contact_person }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_fullname }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_email }}</td></tr>
+                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_phone }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><td><p>Goodies/Give-aways</p></td></tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                    <tr><td>Duration {{ challenge.duration }} hours</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><th><span>Start date </span></th><td>{{ challenge.start_date }}</td><th><span>Time </span></th><td>{{ challenge.start_time }}</td></tr>
+                    <tr><th><span>Alternative date </span></th><td>{{ challenge.alt_date }}</td><th><span>Time </span></th><td>{{ challenge.alt_time }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                </table></td>
+                <td><table>
+                    <tr><th>Application</th><td>{{ challenge.application }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table>
+                    <tr><td>Number of participants:</td></tr>
+                    <tr><td>Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</td></tr>
+                </table></td>
+                <td><table>
+                    <tr><th>Latest sign-up</th><td>{{ challenge.latest_signup }}</td></tr>
+                </table></td>
+                <td><table>
+                </table></td>
+            </tr>
+        </table>        
+{% endblock %}

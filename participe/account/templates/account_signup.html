@@ -1,0 +1,70 @@
+{% extends 'account_base.html' %}
+{% block title %}Sign up - {{ block.super }}{% endblock %}
+    
+{% block extra_script %}
+    <script type="text/javascript">
+    function startConnect(){
+        FB.login(function(response) {
+            if (response.authResponse) {
+                window.location = window.location +
+                        '?access_token=' + response.authResponse.accessToken +
+                        '&expires=' + response.authResponse.expiresIn +
+                        '&signed_request=' + response.authResponse.signedRequest;
+            }
+
+        }, {scope: "{{ app_scope }}" })
+    }
+    </script>
+{% endblock %}
+
+{% block extra_content %}
+    <form id="signup" class="well" action="." method="post">{% csrf_token %}
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span8">
+                        <p>To participate in a challenge, you first need to sign-up for participe:</p>
+                        <a href="#" onclick="startConnect(); return false;">Click to connect and authenticate with Facebook</a>
+                        <p>{{ fb_profile }}</p>
+                    </div>
+                    <div class="span4">
+                        <div {% if uform.username.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.username }}</div>
+                        <div {% if uform.first_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.first_name }}</div>
+                        <div {% if uform.last_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.last_name }}</div>
+                        <div {% if uform.email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.email }}</div>
+                        <div {% if uform.password.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.password }}</div>
+                        <div {% if uform.retry.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.retry }}</div>
+                        <div {% if pform.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_1 }}</div>
+                        <div {% if pform.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_2 }}</div>
+                        <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}</div>
+                        <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}</div>
+                        <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}</div>
+                        <div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>
+                        <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}</div>
+                        <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
+                        <div class="input">{{ pform.receive_newsletter }} Receive newsletters</div>
+                        <div class="input"><input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" /></div>
+                    </div>
+                </div>
+            </div>        
+        </div>     
+    </form>
+
+    <div id="fb-root"></div>
+    <script type="text/javascript">
+        window.fbAsyncInit = function() {
+            FB.init({appId: {{ fb_app_id }}, status: true, cookie: true, xfbml: true, oauth: true});
+
+            window.setTimeout(function() {
+                FB.Canvas.setAutoResize();
+            }, 250);
+        };
+
+        (function() {
+            var e = document.createElement('script'); e.async = true;
+            e.src = document.location.protocol +
+                '//connect.facebook.net/ru_RU/all.js';
+            document.getElementById('fb-root').appendChild(e);
+        }());
+    </script>
+{% endblock %}

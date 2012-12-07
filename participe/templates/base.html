@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8;" />
+        <title>{% block title %}Participe{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.css" type="text/css" />
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1-1.4.3.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.min.js"></script>
+        <script src="http://connect.facebook.net/en_US/all.js"></script>
+            
+        <script type="text/javascript">
+        </script>
+
+        {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+        {% block extra_style %}{% endblock %}
+        {% block extra_script %}{% endblock %}
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        {% block container %}
+        <div class="container">
+            <div id="" class="">
+                <noscript style="font-family:Verdana;font-size:10px;font-weight:bold;color:red;width:100%;">
+                    Javascript must be enabled to properly navigate this site.
+                </noscript>
+            </div>
+
+            {% block header %}
+            <img src="{{ MEDIA_URL }}img/logo_285x93.jpg"/>
+            {% endblock %}
+
+            {% block links %}
+                {% if user.is_authenticated %}
+                    <a href='/accounts/profile/'>{{ user }}</a>
+                    <a href='/accounts/logout/'>(Log out)</a>
+                {% else %}
+                    <a href='/accounts/login/'>Log in</a>
+                    <a href='/accounts/signup/'>Sign up</a>
+                {% endif %}
+            {% endblock %}
+            
+            {% block content %}
+            {% endblock %}
+
+            {% block footer %}
+            {% endblock %}
+        </div>
+        {% endblock %}
+
+        <script src="{{ MEDIA_URL }}js/bootstrap-transition.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-alert.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-modal.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-dropdown.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-scrollspy.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-tab.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-tooltip.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-popover.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-button.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-collapse.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-carousel.js"></script>
+        <script src="{{ MEDIA_URL }}js/bootstrap-typeahead.js"></script>
+    </body>
+</html>
+
