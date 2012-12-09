@@ -29,7 +29,8 @@ class Challenge(models.Model):
     contact_person = models.ForeignKey(User)
     
     is_alt_person = models.BooleanField(default=False)
-    alt_person_fullname = models.CharField(max_length=80, null=True, blank=True)
+    alt_person_fullname = models.CharField(
+            max_length=80, null=True, blank=True)
     alt_person_email = models.EmailField(max_length=80, null=True, blank=True)
     alt_person_phone = models.CharField(max_length=15, blank=True, default='')
     
@@ -39,10 +40,14 @@ class Challenge(models.Model):
     alt_time = models.TimeField(null=True, blank=True)
     
     organization = models.ForeignKey(Organization, null=True)
-    application = models.CharField(max_length=2, choices=application_choices, default="0")
-    min_participants = models.PositiveIntegerField(default=1, null=True, blank=True)
-    max_participants = models.PositiveIntegerField(default=1, null=True, blank=True)
-    latest_signup = models.CharField(max_length=2, choices=latest_signup_choices, default="0")
+    application = models.CharField(
+            max_length=2, choices=application_choices, default="0")
+    min_participants = models.PositiveIntegerField(
+            default=1, null=True, blank=True)
+    max_participants = models.PositiveIntegerField(
+            default=1, null=True, blank=True)
+    latest_signup = models.CharField(
+            max_length=2, choices=latest_signup_choices, default="0")
     
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -55,4 +60,6 @@ class Challenge(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('participe.challenge.views.challenge_detail', args=[str(self.id)])
+        return reverse(
+                'participe.challenge.views.challenge_detail',
+                args=[str(self.id)])

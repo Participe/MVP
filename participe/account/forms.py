@@ -11,7 +11,9 @@ class UserForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
-    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": ""}))
+    retry = forms.CharField(widget=forms.PasswordInput(attrs={
+            "min_length": 6, "max_length": 30, "placeholder": "Retry",
+            "value": ""}))
     
     class Meta:
         model = User
@@ -21,11 +23,13 @@ class UserForm(forms.ModelForm):
             "first_name": forms.TextInput(attrs={"placeholder": "First name"}),
             "last_name": forms.TextInput(attrs={"placeholder": "Last name"}),
             "email": widgets.EmailInput(attrs={"placeholder": "E-mail"}),
-            "password": forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Password"}),
+            "password": forms.PasswordInput(attrs={
+                    "min_length": 6, "max_length": 30,
+                    "placeholder": "Password"}),
             }
     
     def clean_retry(self):
-       if ( self.cleaned_data["retry"] != self.cleaned_data.get("password", "") ):
+       if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError("Passwords don't match")
        return self.cleaned_data["retry"]
 
@@ -42,17 +46,21 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
-            "postal_code": forms.TextInput(attrs={"placeholder": "Postal code"}),
+            "postal_code": forms.TextInput(attrs={
+                    "placeholder": "Postal code"}),
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
             "gender": forms.Select(attrs={"class": "input-small"}),
             "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
-            "phone_number": forms.TextInput(attrs={"placeholder": "Phone number"}),
+            "phone_number": forms.TextInput(attrs={
+                    "placeholder": "Phone number"}),
             }
             
 class UserEditForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
+        self.user = user
+        
         self.fields['username'].initial = user.username
         self.fields['username'].widget.attrs['class'] = 'disabled'
         self.fields['username'].widget.attrs['readonly'] = True
@@ -61,10 +69,14 @@ class UserEditForm(forms.ModelForm):
         self.fields['email'].initial = user.email
         self.fields['email'].required = False
         
-    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "User name", "value": ""}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "First name", "value": ""}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Last name", "value": ""}))
-    email = forms.EmailField(widget=widgets.EmailInput(attrs={"placeholder": "E-mail", "value": ""}))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+            "placeholder": "User name", "value": ""}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+            "placeholder": "First name", "value": ""}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+            "placeholder": "Last name", "value": ""}))
+    email = forms.EmailField(widget=widgets.EmailInput(attrs={
+            "placeholder": "E-mail", "value": ""}))
 
     class Meta:
         model = UserProfile
@@ -74,19 +86,32 @@ class UserEditForm(forms.ModelForm):
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
-            "postal_code": forms.TextInput(attrs={"placeholder": "Postal code"}),
+            "postal_code": forms.TextInput(attrs={
+                    "placeholder": "Postal code"}),
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
             "gender": forms.Select(attrs={"class": "input-small"}),
             "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
-            "phone_number": forms.TextInput(attrs={"placeholder": "Phone number"}),
+            "phone_number": forms.TextInput(attrs={
+                    "placeholder": "Phone number"}),
             }
+        
+    def save(self, commit=True):
+        instance = super(UserEditForm, self).save(commit=False)
+        instance.user = self.user
+        
+        if commit:
+            instance.save()
             
 class ResetPasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Password", "value": ""}))
-    retry = forms.CharField(widget=forms.PasswordInput(attrs={"min_length": 6, "max_length": 30, "placeholder": "Retry", "value": ""}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+            "min_length": 6, "max_length": 30, "placeholder": "Password",
+            "value": ""}))
+    retry = forms.CharField(widget=forms.PasswordInput(attrs={
+            "min_length": 6, "max_length": 30, "placeholder": "Retry",
+            "value": ""}))
 
     def clean_retry( self ):
-       if ( self.cleaned_data["retry"] != self.cleaned_data.get("password", "") ):
+       if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError("Passwords don't match")
        return self.cleaned_data["retry"]

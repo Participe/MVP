@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect, Http404)
+from django.http import (HttpResponse, HttpResponseBadRequest,
+        HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 
@@ -21,7 +22,8 @@ def challenge_create(request):
                     is_contact_person = form.cleaned_data["is_contact_person"],
                     contact_person = request.user,
                     is_alt_person = form.cleaned_data["is_alt_person"],
-                    alt_person_fullname = form.cleaned_data["alt_person_fullname"],
+                    alt_person_fullname = form.cleaned_data[
+                            "alt_person_fullname"],
                     alt_person_email = form.cleaned_data["alt_person_email"],
                     alt_person_phone = form.cleaned_data["alt_person_phone"],
                     start_date = form.cleaned_data["start_date"],
@@ -39,12 +41,15 @@ def challenge_create(request):
     else:
         form = ChallengeForm()
     
-    return render_to_response('challenge_create.html', RequestContext(request, {'form': form}))
+    return render_to_response('challenge_create.html', 
+            RequestContext(request, {'form': form}))
     
 def challenge_list(request):
     challenges = Challenge.objects.all()
-    return render_to_response('challenge_list.html', RequestContext(request, {'challenges': challenges}))
+    return render_to_response('challenge_list.html',
+            RequestContext(request, {'challenges': challenges}))
 
 def challenge_detail(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    return render_to_response('challenge_detail.html', RequestContext(request, {'challenge': challenge}))
+    return render_to_response('challenge_detail.html',
+            RequestContext(request, {'challenge': challenge}))

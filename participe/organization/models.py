@@ -23,7 +23,8 @@ class Organization(models.Model):
     contact_person = models.ForeignKey(User)
     
     is_alt_person = models.BooleanField(default=False)
-    alt_person_fullname = models.CharField(max_length=80, null=True, blank=True)
+    alt_person_fullname = models.CharField(
+            max_length=80, null=True, blank=True)
     alt_person_email = models.EmailField(max_length=80, null=True, blank=True)
     alt_person_phone = models.CharField(max_length=15, blank=True, default='')
 
@@ -38,4 +39,5 @@ class Organization(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('participe.organization.views.organization_detail', args=[str(self.id)])
+        return reverse('participe.organization.views.organization_detail',
+                args=[str(self.id)])

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect, Http404)
+from django.http import (HttpResponse, HttpResponseBadRequest,
+        HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 
@@ -27,7 +28,8 @@ def organization_create(request):
                     is_contact_person = form.cleaned_data["is_contact_person"],
                     contact_person = request.user,
                     is_alt_person = form.cleaned_data["is_alt_person"],
-                    alt_person_fullname = form.cleaned_data["alt_person_fullname"],
+                    alt_person_fullname = form.cleaned_data[
+                            "alt_person_fullname"],
                     alt_person_email = form.cleaned_data["alt_person_email"],
                     alt_person_phone = form.cleaned_data["alt_person_phone"],
                     )
@@ -36,12 +38,15 @@ def organization_create(request):
     else:
         form = OrganizationForm()
     
-    return render_to_response('organization_create.html', RequestContext(request, {'form': form}))
+    return render_to_response('organization_create.html',
+            RequestContext(request, {'form': form}))
     
 def organization_list(request):
     organizations = Organization.objects.all()
-    return render_to_response('organization_list.html', RequestContext(request, {'organizations': organizations}))
+    return render_to_response('organization_list.html',
+            RequestContext(request, {'organizations': organizations}))
 
 def organization_detail(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
-    return render_to_response('organization_detail.html', RequestContext(request, {'organization': organization}))
+    return render_to_response('organization_detail.html',
+            RequestContext(request, {'organization': organization}))
