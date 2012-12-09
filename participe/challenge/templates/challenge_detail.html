@@ -2,54 +2,36 @@
 {% block title %}Challenge details - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
-        <table>
-            <tr>
-                <td><table>
-                    <tr><td><b>{{ challenge.name }}</b></td></tr>
-                    <tr><td>{{ challenge.description }}</td></tr>
-                    <tr><td>{{ challenge.location }}</td></tr>
-                    
-                </table></td>
-                <td><table>
-                    <tr><th><span>Contact person: </span></th><td>{{ form.is_contact_person }}</td><td>{{ challenge.contact_person }}</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_fullname }}</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_email }}</td></tr>
-                    <tr><th><span></span></th><td></td><td>{{ challenge.alt_person_phone }}</td></tr>
-                </table></td>
-                <td><table>
-                    <tr><td><p>Goodies/Give-aways</p></td></tr>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                    <tr><td>Duration {{ challenge.duration }} hours</td></tr>
-                </table></td>
-                <td><table>
-                    <tr><th><span>Start date </span></th><td>{{ challenge.start_date }}</td><th><span>Time </span></th><td>{{ challenge.start_time }}</td></tr>
-                    <tr><th><span>Alternative date </span></th><td>{{ challenge.alt_date }}</td><th><span>Time </span></th><td>{{ challenge.alt_time }}</td></tr>
-                </table></td>
-                <td><table>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                </table></td>
-                <td><table>
-                    <tr><th>Application</th><td>{{ challenge.application }}</td></tr>
-                </table></td>
-                <td><table>
-                </table></td>
-            </tr>
-            <tr>
-                <td><table>
-                    <tr><td>Number of participants:</td></tr>
-                    <tr><td>Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</td></tr>
-                </table></td>
-                <td><table>
-                    <tr><th>Latest sign-up</th><td>{{ challenge.latest_signup }}</td></tr>
-                </table></td>
-                <td><table>
-                </table></td>
-            </tr>
-        </table>        
+    <p>Challenge details</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span3">
+                        <div class=""><b>Name: </b>{{ challenge.name }}</div>
+                        <div class=""><b>Description: </b>{{ challenge.description }}</div>
+                        <div class=""><b>Location: </b>{{ challenge.location }}</div>
+                        <div class=""><b>Duration: </b>{{ challenge.duration }} hours</div>
+                        <div class=""><b>Number of participants: </b></div>
+                        <div class="">Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Contact person: </b>{{ challenge.contact_person }}</div>
+                        <div class="">{{ challenge.alt_person_fullname }}</div>
+                        <div class="">{{ challenge.alt_person_email }}</div>
+                        <div class="">{{ challenge.alt_person_phone }}</div>
+                        <div class=""><b>Start date: </b>{{ challenge.start_date }} <b>Time: </b>{{ challenge.start_time }}</div>
+                        <div class=""><b>Alternative date: </b>{{ challenge.alt_date }} <b>Time: </b>{{ challenge.alt_time }}</div>
+                        <div class=""><b>Application: </b>{{ challenge.application }}</div>
+                        <div class=""><b>Latest sign-up: </b>{{ challenge.latest_signup }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Goodies/Give-aways</b></div>
+                    </div>
+                    <div class="span3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

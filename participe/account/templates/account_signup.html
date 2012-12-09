@@ -2,6 +2,7 @@
 {% block title %}Sign up - {{ block.super }}{% endblock %}
     
 {% block extra_script %}
+    {% comment %}
     <script type="text/javascript">
     function startConnect(){
         FB.login(function(response) {
@@ -11,10 +12,10 @@
                         '&expires=' + response.authResponse.expiresIn +
                         '&signed_request=' + response.authResponse.signedRequest;
             }
-
         }, {scope: "{{ app_scope }}" })
     }
     </script>
+    {% endcomment %}
 {% endblock %}
 
 {% block extra_content %}
@@ -24,8 +25,15 @@
                 <div class="row">
                     <div class="span8">
                         <p>To participate in a challenge, you first need to sign-up for participe:</p>
+                        
+                        {% comment %}
                         <a href="#" onclick="startConnect(); return false;">Click to connect and authenticate with Facebook</a>
                         <p>{{ fb_profile }}</p>
+                        {% endcomment %}
+                        
+                        <a href={% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
+                            <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
+                        </a>
                     </div>
                     <div class="span4">
                         <div {% if uform.username.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.username }}</div>
@@ -50,6 +58,7 @@
         </div>     
     </form>
 
+    {% comment %}
     <div id="fb-root"></div>
     <script type="text/javascript">
         window.fbAsyncInit = function() {
@@ -67,4 +76,5 @@
             document.getElementById('fb-root').appendChild(e);
         }());
     </script>
+    {% endcomment %}
 {% endblock %}

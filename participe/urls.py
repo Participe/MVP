@@ -25,7 +25,8 @@ urlpatterns += patterns('participe.account.views',
     url(r'^accounts/login/$', login, {"template_name": "account_login.html",}),
     url(r'^accounts/logout/$', logout, {"next_page": "/home/"}),
     url(r'^accounts/signup/$', 'signup', name='signup'),
-    url(r'^accounts/profile/$', 'profile', name='profile'),
+    url(r'^accounts/profile/$', 'view_profile', name='view_profile'),
+    url(r'^accounts/edit/$', 'edit_profile', name='edit_profile'),
     url(r'^accounts/password/reset/$', 'reset_password', name='reset_password'),
     )
 

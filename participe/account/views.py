@@ -13,7 +13,7 @@ from templated_email import send_templated_mail
 
 from social_auth.utils import setting
 
-from forms import UserForm, UserProfileForm, ResetPasswordForm
+from forms import UserForm, UserProfileForm, ResetPasswordForm, UserEditForm
 from models import UserProfile
 
 
@@ -66,6 +66,8 @@ def signup(request):
         uform = UserForm()
         pform = UserProfileForm()
 
+    #XXX Point-blank auth. Uncomment for testing
+    """
     fb_profile = None
     if request.method == "GET":
         access_token = request.GET.get('access_token')
@@ -77,19 +79,56 @@ def signup(request):
             uform.fields['first_name'].initial = fb_profile['first_name']
             uform.fields['last_name'].initial = fb_profile['last_name']
             uform.fields['email'].initial = fb_profile['email']
-                
+    """
+             
     return render_to_response('account_signup.html',
             RequestContext(request, {
                     'uform': uform,
                     'pform': pform,
-                    'fb_app_id': setting('FACEBOOK_APP_ID'),
-                    'app_scope': ",".join(setting('FACEBOOK_EXTENDED_PERMISSIONS')),
-                    'fb_profile': fb_profile,
+                    #XXX Point-blank auth. Uncomment for testing
+                    #'fb_app_id': setting('FACEBOOK_APP_ID'),
+                    #'app_scope': ",".join(setting('FACEBOOK_EXTENDED_PERMISSIONS')),
+                    #'fb_profile': fb_profile,
                     }))
 
 @login_required
-def profile(request):
-    return render_to_response('account_profile.html', RequestContext(request))
+def view_profile(request):
+    user = request.user
+    
+    #TODO Enhance this behaviour
+    try:
+        profile = get_object_or_404(UserProfile, user=user)
+    except:
+        profile = None
+    
+    return render_to_response('account_profile.html',
+            RequestContext(request, {
+                    "user": user,
+                    "profile": profile,
+                    }))
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    profile, created = UserProfile.objects.get_or_create(user=user)
+    pform = UserEditForm(request.user, request.POST or None, instance=profile or created)
+
+    if request.method == "POST":
+        if pform.is_valid():
+            # Update User
+            user.first_name = pform.cleaned_data["first_name"]
+            user.last_name = pform.cleaned_data["last_name"]
+            user.email = pform.cleaned_data["email"]
+            user.save()
+                                
+            pform.save()
+            
+            return HttpResponseRedirect('/accounts/profile/')
+    
+    return render_to_response('account_edit.html',
+            RequestContext(request, {
+                    "pform": pform,
+                    }))
     
 @login_required
 def reset_password(request):
