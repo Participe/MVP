@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     #avatar =
     #description =
             
-    address_1 = models.CharField(max_length=80, null=True, blank=True)
+    address_1 = models.CharField(max_length=80)
     address_2 = models.CharField(max_length=80, null=True, blank=True)
     postal_code = models.PositiveIntegerField()
     city = models.CharField(max_length=80)
