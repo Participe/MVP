@@ -36,6 +36,7 @@
                     <a href='/accounts/profile/'>{{ user.get_full_name }}</a>
                     <a href='/accounts/logout/'>(Log out)</a>
                 {% else %}
+                    <a href={% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><img src="{{ MEDIA_URL }}img/footer-link-fb.png"></a>
                     <a href='/accounts/login/'>Log in</a>
                     <a href='/accounts/signup/'>Sign up</a>
                 {% endif %}
