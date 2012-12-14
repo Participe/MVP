@@ -42,7 +42,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ["address_1", "address_2", "postal_code", "city", "country",
-            "gender", "birth_day", "phone_number", "receive_newsletter",]
+            #"gender",
+            "birth_day", "phone_number", "receive_newsletter",]
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
@@ -50,7 +51,7 @@ class UserProfileForm(forms.ModelForm):
                     "placeholder": "Postal code"}),
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
-            "gender": forms.Select(attrs={"class": "input-small"}),
+            #"gender": forms.Select(attrs={"class": "input-small"}),
             "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(attrs={
                     "placeholder": "Phone number"}),
@@ -82,7 +83,8 @@ class UserEditForm(forms.ModelForm):
         model = UserProfile
         fields = ["username", "first_name", "last_name", "email",
             "address_1", "address_2", "postal_code", "city", "country",
-            "gender", "birth_day", "phone_number", "receive_newsletter",]
+            #"gender",
+            "birth_day", "phone_number", "receive_newsletter",]
         widgets = {
             "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
             "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
@@ -90,7 +92,7 @@ class UserEditForm(forms.ModelForm):
                     "placeholder": "Postal code"}),
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
-            "gender": forms.Select(attrs={"class": "input-small"}),
+            #"gender": forms.Select(attrs={"class": "input-small"}),
             "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(attrs={
                     "placeholder": "Phone number"}),

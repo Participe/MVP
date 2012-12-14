@@ -47,7 +47,7 @@
                         <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}</div>
                         <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}</div>
                         <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}</div>
-                        <div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>
+                        {% comment %}<div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>{% endcomment %}
                         <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}</div>
                         <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
                         <div class="input">{{ pform.receive_newsletter }} Receive newsletters</div>

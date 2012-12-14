@@ -21,9 +21,7 @@ class UserProfile(models.Model):
     country = CountryField()
 
     gender = models.CharField(
-            max_length=2, 
-            choices=gender_choices,
-            default="M")
+            max_length=2, choices=gender_choices, default="M")
     
     birth_day = models.DateField()
     phone_number = models.CharField(max_length=15, blank=True, default='')
