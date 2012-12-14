@@ -7,12 +7,12 @@
             <div class="span12">
                 <div class="row">
                     <div class="span4">
-                        <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}</div>
+                        <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div>
                         <div {% if form.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_1 }}</div>
                         <div {% if form.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_2 }}</div>
                         <div {% if form.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.postal_code }}</div>
                         <div {% if form.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.city }}</div>
-                        <div {% if form.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.country }}</div>
+                        <div {% if form.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.country }}{{ form.country.errors }}</div>
                     </div>                    
                     <div class="span4">
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div>

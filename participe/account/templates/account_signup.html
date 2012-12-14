@@ -36,19 +36,19 @@
                         </a>
                     </div>
                     <div class="span4">
-                        <div {% if uform.username.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.username }}</div>
+                        <div {% if uform.username.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.username }}{{ uform.username.errors }}</div>
                         <div {% if uform.first_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.first_name }}</div>
                         <div {% if uform.last_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.last_name }}</div>
                         <div {% if uform.email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.email }}</div>
-                        <div {% if uform.password.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.password }}</div>
-                        <div {% if uform.retry.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.retry }}</div>
-                        <div {% if pform.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_1 }}</div>
+                        <div {% if uform.password.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.password }}{{ uform.password.errors }}</div>
+                        <div {% if uform.retry.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ uform.retry }}{{ uform.retry.errors }}</div>
+                        <div {% if pform.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_1 }}{{ pform.address_1.errors }}</div>
                         <div {% if pform.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_2 }}</div>
-                        <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}</div>
-                        <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}</div>
-                        <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}</div>
+                        <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}{{ pform.postal_code.errors }}</div>
+                        <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}{{ pform.city.errors }}</div>
+                        <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}{{ pform.country.errors }}</div>
                         {% comment %}<div {% if pform.gender.errors %}class="control-group error"{% else %}class="input"{% endif %}>Gender {{ pform.gender }}</div>{% endcomment %}
-                        <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}</div>
+                        <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}{{ pform.birth_day.errors }}</div>
                         <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
                         <div class="input">{{ pform.receive_newsletter }} Receive newsletters</div>
                         <div class="input"><input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" /></div>

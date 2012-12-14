@@ -6,13 +6,24 @@
         <div class="row">
             <div class="span12">
                 <div class="row">
-                    <div class="span6">
+                    <div class="span8">
                         <p>Edit your profile</p>
                     </div>
-                    <div class="span6">
-                        <table>
-                        {{ pform.as_table }}
-                        </table>
+                    <div class="span4">
+                        <div class="input">{{ pform.username }}</div>
+                        <div {% if pform.first_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.first_name }}</div>
+                        <div {% if pform.last_name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.last_name }}</div>
+                        <div {% if pform.email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.email }}</div>
+                        
+                        <div {% if pform.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_1 }}{{ pform.address_1.errors }}</div>
+                        <div {% if pform.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.address_2 }}</div>
+                        <div {% if pform.postal_code.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.postal_code }}{{ pform.postal_code.errors }}</div>
+                        <div {% if pform.city.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.city }}{{ pform.city.errors }}</div>
+                        <div {% if pform.country.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.country }}{{ pform.country.errors }}</div>
+                        <div {% if pform.birth_day.errors %}class="control-group error"{% else %}class="input"{% endif %}>Date of birth {{ pform.birth_day }}{{ pform.birth_day.errors }}</div>
+                        <div {% if pform.phone_number.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ pform.phone_number }}</div>
+                        <div class="input">{{ pform.receive_newsletter }} Receive newsletters</div>
+
                         <div class="input"><input type="submit" form="edit" class="btn-primary" value="Save changes" /></div>
                     </div>
                 </div>
