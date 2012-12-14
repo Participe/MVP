@@ -1,0 +1,15 @@
+{% extends 'organization_base.html' %}
+{% block title %}Organizations list - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <a class="btn" href="/organizations/create/">Create new organization</a>
+    <table>
+    {% for organization in organizations %}
+        <tr>
+            <td><a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a></td>
+        <tr>
+    {% empty %}
+        <p>There are no organizations</p>
+    {% endfor %}
+    </table>
+{% endblock %}

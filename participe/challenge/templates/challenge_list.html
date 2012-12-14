@@ -1,0 +1,15 @@
+{% extends 'challenge_base.html' %}
+{% block title %}Challenges list - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <a class="btn" href="/challenges/create/">Create new challenge</a>
+    <table>
+    {% for challenge in challenges %}
+        <tr>
+            <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+        <tr>
+    {% empty %}
+        <p>There are no active challenges</p>
+    {% endfor %}
+    </table>
+{% endblock %}

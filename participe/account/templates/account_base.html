@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block extra_script %}
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs">  
+    <li class=""><a href="/home/"><< Back</a></li>
+    <li class="active"><a href="#">Accounts</a></li>
+</ul>
+
+<div class="main_container">
+    {% block extra_content %}
+    {% endblock %}
+</div>
+{% endblock %}

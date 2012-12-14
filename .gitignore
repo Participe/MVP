@@ -1,0 +1,13 @@
+participe/media/avatars/
+ve
+django_wsgi.py
+sqlite.db
+*.*~
+*.bak
+*.log
+*.orig
+*.pyc
+*.swo
+*.swp
+*.vim
+*.xls

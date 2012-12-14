@@ -1,0 +1,40 @@
+{% extends 'account_base.html' %}
+{% block title %}Profile - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <p>Your profile</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span3">
+                        <a href="{% url avatar_change %}">Change </a>/
+                        <a href="{% url avatar_delete %}">Delete </a>your avatar
+                        {% load avatar_tags %}
+                        {% avatar user 100 %}
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>User name:</b> {{ user.username }}</div>
+                        <div class=""><b>Full name:</b> {{ user.first_name }} {{ user.last_name }}</div>
+                        <div class=""><b>Email:</b> {{ user.email }}</div>
+
+                        <div class=""><b>Address:</b> {{ profile.address_1 }} {{ profile.address_2 }}</div>
+                        <div class=""><b>Postal code:</b> {{ profile.postal_code }}</div>
+                        <div class=""><b>City:</b> {{ profile.city }}</div>
+                        <div class=""><b>Country:</b> {{ profile.country }}</div>
+                        <div class=""><b>Gender:</b> {{ profile.gender }}</div>
+                        <div class=""><b>Date of birth:</b> {{ profile.birth_day }}</div>
+                        <div class=""><b>Phone number:</b> {{ profile.phone_number }}</div>
+                    </div>
+                    <div class="span3">
+                    </div>
+                    <div class="span3">
+                        <div class="input"><a class="btn" href="/accounts/edit/">Edit profile</a></div>
+                        <div class="input"><a class="btn" href="#">Delete profile</a></div>
+                        <div class="input"><a class="btn" href="/accounts/password/reset/">Reset password</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

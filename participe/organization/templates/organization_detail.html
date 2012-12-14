@@ -1,0 +1,35 @@
+{% extends 'organization_base.html' %}
+{% block title %}Organization details - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <p>Organization details</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span3">
+                        <div class=""><b>Name: </b>{{ organization.name }}</div>
+                        <div class=""><b>Address: </b>{{ organization.address_1 }} {{ organization.address_2 }}</div>
+                        <div class=""><b>Postal code: </b>{{ organization.postal_code }} hours</div>
+                        <div class=""><b>City: </b>{{ organization.city }}</div>
+                        <div class=""><b>Country: </b>{{ organization.country }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Description: </b>{{ organization.description }}</div>
+                        <div class=""><b>Contact person: </b>{{ organization.contact_person }}</div>
+                        <div class="">{{ organization.alt_person_fullname }}</div>
+                        <div class="">{{ organization.alt_person_email }}</div>
+                        <div class="">{{ organization.alt_person_phone }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Web site: </b>{{ organization.website }}</div>
+                        <div class=""><b>Video: </b>{{ organization.video }}</div>
+                        <div class=""><b>E-mail: </b>{{ organization.email }}</div>
+                    </div>
+                    <div class="span3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

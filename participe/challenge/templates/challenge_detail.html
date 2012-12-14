@@ -1,0 +1,37 @@
+{% extends 'challenge_base.html' %}
+{% block title %}Challenge details - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <p>Challenge details</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span3">
+                        <div class=""><b>Name: </b>{{ challenge.name }}</div>
+                        <div class=""><b>Description: </b>{{ challenge.description }}</div>
+                        <div class=""><b>Location: </b>{{ challenge.location }}</div>
+                        <div class=""><b>Duration: </b>{{ challenge.duration }} hours</div>
+                        <div class=""><b>Number of participants: </b></div>
+                        <div class="">Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Contact person: </b>{{ challenge.contact_person }}</div>
+                        <div class="">{{ challenge.alt_person_fullname }}</div>
+                        <div class="">{{ challenge.alt_person_email }}</div>
+                        <div class="">{{ challenge.alt_person_phone }}</div>
+                        <div class=""><b>Start date: </b>{{ challenge.start_date }} <b>Time: </b>{{ challenge.start_time }}</div>
+                        <div class=""><b>Alternative date: </b>{{ challenge.alt_date }} <b>Time: </b>{{ challenge.alt_time }}</div>
+                        <div class=""><b>Application: </b>{{ challenge.application }}</div>
+                        <div class=""><b>Latest sign-up: </b>{{ challenge.latest_signup }}</div>
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Goodies/Give-aways</b></div>
+                    </div>
+                    <div class="span3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

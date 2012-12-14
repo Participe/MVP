@@ -1,0 +1,43 @@
+{% extends 'challenge_base.html' %}
+{% block title %}Create challenge - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <style type="text/css">
+        ul li {list-style: none;}
+    </style>
+    
+    <form action="" class="well" method="post">{% csrf_token %}
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span4">
+                        <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}</div> 
+                        <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
+                        <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
+                        <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>Duration {{ form.duration }} hours</div> 
+                        <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>Affiliate with organization {{ form.organization }}</div> 
+                        <div class="input">or <a class="btn" href="/organizations/create/">Create new organization</a></div> 
+                        <div class="input">Number of participants:</div> 
+                        <div class="input">Minimum {{ form.min_participants }} Maximum {{ form.max_participants }}</div> 
+                    </div>                    
+                    <div class="span4">
+                        <div class="input">Contact person:</div>
+                        <div class="input">{{ form.is_contact_person }} {{ user.get_full_name }} ({{ user.username }})</div> 
+                        <div class="input">{{ form.is_alt_person }} Affiliate different person</div> 
+                        <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}</div> 
+                        <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}</div> 
+                        <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}</div> 
+                        <div {% if form.start_date.errors or form.start_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>Start date {{ form.start_date }} Time {{ form.start_time }}</div>
+                        <div {% if form.alt_date.errors or form.alt_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>Alternative date {{ form.alt_date }} Time {{ form.alt_time }}</div> 
+                        <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>Application {{ form.application }}</div> 
+                        <div {% if form.latest_signup.errors %}class="text-error"{% else %}class="input"{% endif %}>Latest sign-up {{ form.latest_signup }}</div> 
+                    </div>                    
+                    <div class="span4">
+                        <p>Goodies/Give-aways</p>
+                    </div>         
+                </div>   
+                <input type="submit" class="btn-primary" value="Create this challenge" />
+            </div>        
+        </div>     
+    </form>
+{% endblock %}
