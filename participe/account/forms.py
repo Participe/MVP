@@ -11,6 +11,13 @@ class UserForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
+        self.fields["username"].label = "username"
+        self.fields["first_name"].label = "first_name"
+        self.fields["last_name"].label = "last_name"
+        self.fields["email"].label = "email"
+        self.fields["password"].label = "password"
+        self.fields["retry"].label = "retry"
+        
     retry = forms.CharField(widget=forms.PasswordInput(attrs={
             "min_length": 6, "max_length": 30, "placeholder": "Retry",
             "value": ""}))
@@ -38,6 +45,15 @@ class UserProfileForm(forms.ModelForm):
         super(UserProfileForm, self).__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             pass
+
+        self.fields["address_1"].label = "address_1"
+        self.fields["address_2"].label = "address_2"
+        self.fields["postal_code"].label = "postal_code"
+        self.fields["city"].label = "city"
+        self.fields["country"].label = "country"
+        self.fields["birth_day"].label = "Birth day"
+        self.fields["phone_number"].label = "phone_number"
+        self.fields["receive_newsletter"].label = "Receive newsletters"
                 
     class Meta:
         model = UserProfile
@@ -70,6 +86,19 @@ class UserEditForm(forms.ModelForm):
         self.fields['email'].initial = user.email
         self.fields['email'].required = False
         
+        self.fields["username"].label = "username"
+        self.fields["first_name"].label = "first_name"
+        self.fields["last_name"].label = "last_name"
+        self.fields["email"].label = "email"
+        self.fields["address_1"].label = "address_1"
+        self.fields["address_2"].label = "address_2"
+        self.fields["postal_code"].label = "postal_code"
+        self.fields["city"].label = "city"
+        self.fields["country"].label = "country"
+        self.fields["birth_day"].label = "Birth day"
+        self.fields["phone_number"].label = "phone_number"
+        self.fields["receive_newsletter"].label = "Receive newsletters"
+
     username = forms.CharField(widget=forms.TextInput(attrs={
             "placeholder": "User name", "value": ""}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={
