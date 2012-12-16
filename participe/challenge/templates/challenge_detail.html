@@ -14,6 +14,7 @@
                         <div class=""><b>Duration: </b>{{ challenge.duration }} hours</div>
                         <div class=""><b>Number of participants: </b></div>
                         <div class="">Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</div>
+                        <div class=""><b>Affiliated with </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
                     </div>
                     <div class="span3">
                         <div class=""><b>Contact person: </b>{{ challenge.contact_person }}</div>

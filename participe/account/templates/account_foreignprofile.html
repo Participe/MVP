@@ -14,7 +14,7 @@
                     <div class="span3">
                         <div class=""><b>Full name:</b> {{ account.get_full_name }}</div>
                         <div class=""><b>City:</b> {{ profile.city }}</div>
-                        <div class=""><b>Country:</b> {{ profile.country }}</div>
+                        <div class=""><b>Country:</b> {{ profile.country.name }}</div>
                         {% if account.contact_chl_set.all or account.contact_org_set.all %}
                             <div class=""><b>Email:</b> {{ account.email }}</div>
                             <div class=""><b>Phone number:</b> {{ profile.phone_number }}</div>
