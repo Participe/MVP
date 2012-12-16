@@ -40,7 +40,7 @@ def signup(request):
                     postal_code = pform.cleaned_data["postal_code"],
                     city = pform.cleaned_data["city"],
                     country = pform.cleaned_data["country"],
-                    gender = pform.cleaned_data["gender"],
+                    #gender = pform.cleaned_data["gender"],
                     birth_day = pform.cleaned_data["birth_day"],
                     phone_number = pform.cleaned_data["phone_number"],
                     receive_newsletter = pform.cleaned_data[
@@ -69,7 +69,7 @@ def signup(request):
                                 "address": user.email,
                                 }))
             except:
-                return HttpResponseRedirect('/home/')
+                return HttpResponseRedirect('/')
     else:
         uform = UserForm()
         pform = UserProfileForm()
@@ -99,8 +99,29 @@ def signup(request):
                     #'fb_profile': fb_profile,
                     }))
 
+def account_list(request):
+    accounts = User.objects.all()
+
+    return render_to_response('account_list.html',
+            RequestContext(request, {'accounts': accounts}))
+
+def view_profile(request, user_id):
+    account = get_object_or_404(User, pk=user_id)
+    
+    #TODO Enhance this behaviour
+    try:
+        profile = get_object_or_404(UserProfile, user=account)
+    except:
+        profile = None
+    
+    return render_to_response('account_foreignprofile.html',
+            RequestContext(request, {
+                    "account": account,
+                    "profile": profile,
+                    }))    
+
 @login_required
-def view_profile(request):
+def view_myprofile(request):
     user = request.user
     
     #TODO Enhance this behaviour
@@ -109,7 +130,7 @@ def view_profile(request):
     except:
         profile = None
     
-    return render_to_response('account_profile.html',
+    return render_to_response('account_myprofile.html',
             RequestContext(request, {
                     "user": user,
                     "profile": profile,
@@ -172,4 +193,3 @@ def reset_password(request):
             RequestContext(request, {
                     'form': form,
                     }))
-    

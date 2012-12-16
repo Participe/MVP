@@ -20,7 +20,7 @@ class Organization(models.Model):
     email = models.EmailField(null=True, blank=True)
     
     is_contact_person = models.BooleanField(default=True)
-    contact_person = models.ForeignKey(User)
+    contact_person = models.ForeignKey(User, related_name="contact_org_set")
     
     is_alt_person = models.BooleanField(default=False)
     alt_person_fullname = models.CharField(

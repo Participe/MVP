@@ -1,0 +1,45 @@
+{% extends 'account_base.html' %}
+{% block title %}Profile - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <p>User profile</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span3">
+                        {% load avatar_tags %}
+                        {% avatar account 100 %}
+                    </div>
+                    <div class="span3">
+                        <div class=""><b>Full name:</b> {{ account.get_full_name }}</div>
+                        <div class=""><b>City:</b> {{ profile.city }}</div>
+                        <div class=""><b>Country:</b> {{ profile.country }}</div>
+                        {% if account.contact_chl_set.all or account.contact_org_set.all %}
+                            <div class=""><b>Email:</b> {{ account.email }}</div>
+                            <div class=""><b>Phone number:</b> {{ profile.phone_number }}</div>
+                        {%endif%}
+                    </div>
+                    <div class="span3">
+                        <b>Participated challenges: </b>
+                        {% for challenge in account.contact_chl_set.all %}
+                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>
+                            {% if not forloop.last %}<p>, </p>{% endif %}
+                        {% empty %}
+                            <p>Nope</p>
+                        {% endfor %}
+                    </div>
+                    <div class="span3">
+                        <b>Participated organizations: </b>
+                        {% for organization in account.contact_org_set.all %}
+                            <a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a>
+                            {% if not forloop.last %}<p>, </p>{% endif %}
+                        {% empty %}
+                            <p>Nope</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

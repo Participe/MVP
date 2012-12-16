@@ -26,7 +26,7 @@ class Challenge(models.Model):
     # Even if primary contact person isn't set, despite everything,
     # value 'contact_person' can be used to identify who has created challenge
     is_contact_person = models.BooleanField(default=True)
-    contact_person = models.ForeignKey(User)
+    contact_person = models.ForeignKey(User, related_name="contact_chl_set")
     
     is_alt_person = models.BooleanField(default=False)
     alt_person_fullname = models.CharField(
