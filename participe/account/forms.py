@@ -11,6 +11,10 @@ class UserForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
+        self.fields["first_name"].required = True
+        self.fields["last_name"].required = True
+        self.fields["email"].required = True
+
         self.fields["username"].label = "username"
         self.fields["first_name"].label = "first_name"
         self.fields["last_name"].label = "last_name"
