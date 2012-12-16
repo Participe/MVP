@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from models import UserProfile
+from participe.core.countries import COUNTRIES
 import participe.core.html5_widgets as widgets
 
 
@@ -59,6 +60,10 @@ class UserProfileForm(forms.ModelForm):
         self.fields["phone_number"].label = "phone_number"
         self.fields["receive_newsletter"].label = "Receive newsletters"
                 
+        # Override countries order in choice-list
+        self.fields["country"].choices = COUNTRIES
+        self.fields["country"].initial = "CH"
+        
     class Meta:
         model = UserProfile
         fields = ["address_1", "address_2", "postal_code", "city", "country",

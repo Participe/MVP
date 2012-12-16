@@ -63,3 +63,18 @@ class Challenge(models.Model):
         return reverse(
                 'participe.challenge.views.challenge_detail',
                 args=[str(self.id)])
+                
+    @property
+    def stat_application_name(self):
+        for code, name in application_choices:
+            if self.application == code:
+                return name
+        return ''
+
+    @property
+    def stat_latest_signup_name(self):
+        for code, name in latest_signup_choices:
+            if self.latest_signup == code:
+                return name
+        return ''
+
