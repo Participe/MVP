@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.models import Session
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -162,7 +163,26 @@ def edit_profile(request):
             RequestContext(request, {
                     "pform": pform,
                     }))
-    
+
+@login_required
+def delete_profile(request):
+    if request.method == "POST":
+        user = request.user
+        [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id]
+
+        try:
+            profile = UserProfile.objects.get(user=user)
+            profile.delete()
+        except:
+            pass
+
+        user.delete()
+
+        return HttpResponseRedirect('/')
+
+    return render_to_response('account_delete.html',
+            RequestContext(request, {}))
+
 @login_required
 def reset_password(request):
     if request.method == "POST":

@@ -1,0 +1,22 @@
+{% extends 'account_base.html' %}
+{% block title %}Delete account - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <form id="delete_account" class="well" action="." method="post">{% csrf_token %}
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span4">
+                    </div>
+                    <div class="span4" style="text-align:center;">
+                        <p>Do you really want to delete account?</p>
+                        <div class="input"><input type="submit" class="btn-primary" value="Delete" /></div>
+                        <div class="input"><a class="btn" href="/accounts/profile/">Cancel</a></div>
+                    </div>
+                    <div class="span4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
