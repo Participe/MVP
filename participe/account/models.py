@@ -33,7 +33,7 @@ class UserProfile(models.Model):
         ordering = ['user__first_name', 'user__last_name',]
 
     def __unicode__(self):
-        return self.user
+        return unicode(self.user)
 
     #def get_absolute_url(self):
     #    return reverse('participe.account.views.profile', args=[str(self.id)])
