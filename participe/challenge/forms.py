@@ -11,6 +11,8 @@ class ChallengeForm(forms.ModelForm):
             pass
 
         self.fields["organization"].empty_label = None
+        
+    contact = forms.CharField(max_length=2)
 
     class Meta:
         model = Challenge
@@ -53,3 +55,34 @@ class ChallengeForm(forms.ModelForm):
             
             "latest_signup": forms.RadioSelect(),
             }
+
+    def clean_contact(self):
+        if self.cleaned_data["contact"] == 'me':
+            self.cleaned_data["is_contact_person"] = True
+            self.cleaned_data["is_alt_person"] = False
+        elif self.cleaned_data["contact"] == 'he':
+            self.cleaned_data["is_contact_person"] = False
+            self.cleaned_data["is_alt_person"] = True
+        else:
+            self._errors["contact"] = self.error_class(
+                    ["This field is required.",])
+            del self.cleaned_data["contact"]
+
+        return self.cleaned_data["contact"]
+    
+    def clean(self):
+        if self.cleaned_data["is_alt_person"] == True:
+            if not self.cleaned_data["alt_person_fullname"]:
+                self._errors["alt_person_fullname"] = self.error_class(
+                        ["This field is required.",])
+                del self.cleaned_data["alt_person_fullname"]
+            if not self.cleaned_data["alt_person_email"]:
+                self._errors["alt_person_email"] = self.error_class(
+                        ["This field is required.",])
+                del self.cleaned_data["alt_person_email"]
+            if not self.cleaned_data["alt_person_phone"]:
+                self._errors["alt_person_phone"] = self.error_class(
+                        ["This field is required.",])
+                del self.cleaned_data["alt_person_phone"]
+
+        return self.cleaned_data
