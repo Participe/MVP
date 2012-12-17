@@ -5,6 +5,13 @@ import participe.core.html5_widgets as widgets
 
 
 class ChallengeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ChallengeForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            pass
+
+        self.fields["organization"].empty_label = None
+
     class Meta:
         model = Challenge
         fields = ["name", "description", "location", "duration",
