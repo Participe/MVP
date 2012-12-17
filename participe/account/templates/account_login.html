@@ -20,6 +20,10 @@
                         <div class="input"><label for="password">Password:</label><input type="password" name="password" value="" id="password"></div>
                         <div class="input"><input type="submit" class="btn-primary" value="login" /></div>
                         <div class="input"><input type="hidden" name="next" value="{{ next|escape }}" /></div>
+
+                        <a href={% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
+                            <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
+                        </a>
                     </div>
                 </div>
             </div>
