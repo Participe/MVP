@@ -1,0 +1,13 @@
+{% extends 'account_base.html' %}
+{% block title %}Alert - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <p>{{ information }}</p>
+                <a href="/accounts/profile/">Go back to your profile</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

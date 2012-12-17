@@ -191,21 +191,14 @@ def reset_password(request):
             user = request.user
             user.set_password(form.cleaned_data["password"])
             user.save()
-    
-            try:
-                send_templated_mail(
-                        template_name="account_successful_reset_password",
-                        from_email="from@example.com", 
-                        recipient_list=[user.email,], 
-                        context={"user": user},)
 
-                return render_to_response(
-                        'account_confirmation_email.html', 
-                        RequestContext(request, {
-                                "address": user.email,
-                                }))
-            except:
-                return HttpResponseRedirect('/accounts/profile/')
+            info = "You have successfuly changed your password"
+    
+            return render_to_response(
+                    'account_information.html', 
+                    RequestContext(request, {
+                            "information": info,
+                            }))
     else:
         form = ResetPasswordForm()
     
