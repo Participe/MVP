@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from captcha.fields import CaptchaField
+
 from models import UserProfile
 from participe.core.countries import COUNTRIES
 import participe.core.html5_widgets as widgets
@@ -63,7 +65,9 @@ class UserProfileForm(forms.ModelForm):
         # Override countries order in choice-list
         self.fields["country"].choices = COUNTRIES
         self.fields["country"].initial = "CH"
-        
+
+    captcha = CaptchaField()
+    
     class Meta:
         model = UserProfile
         fields = ["address_1", "address_2", "postal_code", "city", "country",
@@ -151,7 +155,7 @@ class ResetPasswordForm(forms.Form):
             "min_length": 6, "max_length": 30, "placeholder": "Retry",
             "value": ""}))
 
-    def clean_retry( self ):
+    def clean_retry(self):
        if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError("Passwords don't match")
        return self.cleaned_data["retry"]

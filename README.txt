@@ -92,7 +92,7 @@ package managers are provided. Otherwise, follow the installation instructions.
     or  sudo apt-get install libjpeg-dev
 
         sudo yum install freetype-devel  
-    or  ...  
+    or  sudo apt-get install libfreetype6-dev
     
 3.2 Optional (if PIL were installed before libjpeg*):
 

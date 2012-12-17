@@ -10,3 +10,4 @@ django-templated-email==0.4.7
 pil==1.1.7
 #django-avatar==1.0.5
 -e git+git://github.com/eldarion/django-avatar.git#egg=avatar
+django-simple-captcha=0.3.4

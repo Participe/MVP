@@ -20,7 +20,8 @@ urlpatterns = patterns('',
     # Take into account, that Avatar templates are overridden here
     url(r'^avatar/', include('avatar.urls')),
     url(r'', include('social_auth.urls')),
-
+    url(r'^captcha/', include('captcha.urls')),
+    
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     )
