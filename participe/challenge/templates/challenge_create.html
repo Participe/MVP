@@ -6,11 +6,12 @@
         ul li {list-style: none;}
     </style>
     
-    <form action="" class="well" method="post">{% csrf_token %}
+    <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">
                 <div class="row">
                     <div class="span4">
+                        <div class="input">Avatar: {{ form.avatar }}</div>
                         <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
                         <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
@@ -19,7 +20,7 @@
                         <div class="input">or <a class="btn" href="/organizations/create/">Create new organization</a></div> 
                         <div class="input">Number of participants:</div> 
                         <div class="input">Minimum {{ form.min_participants }} Maximum {{ form.max_participants }}</div> 
-                    </div>                    
+                    </div>
                     <div class="span4">
                         {{ form.contact.errors }}
                         <div class="input">Contact person:</div>

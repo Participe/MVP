@@ -16,7 +16,7 @@ class ChallengeForm(forms.ModelForm):
 
     class Meta:
         model = Challenge
-        fields = ["name", "description", "location", "duration",
+        fields = ["avatar", "name", "description", "location", "duration",
             "is_contact_person", "is_alt_person", "alt_person_fullname",
             "alt_person_email", "alt_person_phone", "start_date", "start_time",
             "alt_date", "alt_time", "organization", "application",
@@ -55,6 +55,21 @@ class ChallengeForm(forms.ModelForm):
             
             "latest_signup": forms.RadioSelect(),
             }
+
+    def clean_duration(self):
+        if self.cleaned_data["duration"] <= 1:
+            raise forms.ValidationError("Value should be greater or equal 1")
+        return self.cleaned_data["duration"]
+
+    def clean_min_participants(self):
+        if self.cleaned_data["min_participants"] <= 1:
+            raise forms.ValidationError("Value should be greater or equal 1")
+        return self.cleaned_data["min_participants"]
+
+    def clean_max_participants(self):
+        if self.cleaned_data["max_participants"] <= 1:
+            raise forms.ValidationError("Value should be greater or equal 1")
+        return self.cleaned_data["max_participants"]
 
     def clean_contact(self):
         if self.cleaned_data["contact"] == 'me':

@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from easy_thumbnails.fields import ThumbnailerImageField
+
 from participe.organization.models import Organization
 
 
@@ -17,7 +19,7 @@ latest_signup_choices = [
     ]
     
 class Challenge(models.Model):
-    #avatar =
+    avatar = ThumbnailerImageField(upload_to='img/challenges', blank=True)
     name = models.CharField(max_length=80)
     description = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=80, null=True, blank=True)
@@ -57,7 +59,7 @@ class Challenge(models.Model):
         ordering = ['name',]
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     def get_absolute_url(self):
         return reverse(

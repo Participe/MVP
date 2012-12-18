@@ -14,7 +14,13 @@ def challenge_create(request):
     if request.method == "POST":
         form = ChallengeForm(request.POST)
         if form.is_valid():
+            #from django.core.files.base import ContentFile
+            #file_content = ContentFile(request.FILES['avatar'].read())
+
             challenge = Challenge.objects.create(
+                    #avatar.save(request.FILES['avatar'].name, file_content),
+                    
+                    avatar = form.cleaned_data['avatar'],
                     name = form.cleaned_data["name"],
                     description = form.cleaned_data["description"],
                     location = form.cleaned_data["location"],
@@ -36,7 +42,6 @@ def challenge_create(request):
                     max_participants = form.cleaned_data["max_participants"],
                     latest_signup = form.cleaned_data["latest_signup"],
                     )
-
             return redirect("challenge_list")
     else:
         form = ChallengeForm()

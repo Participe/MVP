@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'social_auth',
     'avatar',
     'captcha',
+    'easy_thumbnails',
 )
 
 # A sample logging configuration. The only tangible logging
