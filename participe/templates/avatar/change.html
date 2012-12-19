@@ -6,13 +6,13 @@
     <div class="well">
         <div class="row">
             <div class="span12">
-            {% avatar user %}
+            {% avatar user 100 %}
             {% if not avatars %}
                 <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
             {% else %}
                 <form method="POST" action="{% url avatar_change %}">{% csrf_token %}
                     <ul>{{ primary_avatar_form.as_ul }}</ul>
-                    <input type="submit" value="{% trans "Choose new Default" %}" />
+                    <input type="submit" value="{% trans "Change avatar" %}" />
                 </form>
             {% endif %}
                 <form enctype="multipart/form-data" method="POST" action="{% url avatar_add %}">{% csrf_token %}
