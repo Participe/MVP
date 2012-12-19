@@ -12,9 +12,10 @@ from models import Organization
 @login_required
 def organization_create(request):
     if request.method == "POST":
-        form = OrganizationForm(request.POST)
+        form = OrganizationForm(request.POST, request.FILES)
         if form.is_valid():
             Organization.objects.create(
+                    avatar = form.cleaned_data['avatar'],
                     name = form.cleaned_data["name"],
                     description = form.cleaned_data["description"],
                     address_1 = form.cleaned_data["address_1"],

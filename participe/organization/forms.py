@@ -1,4 +1,7 @@
+import os
+
 from django import forms
+from django.conf import settings
 
 from models import Organization
 import participe.core.html5_widgets as widgets
@@ -7,7 +10,7 @@ import participe.core.html5_widgets as widgets
 class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
-        fields = ["name", "description", 
+        fields = ["avatar", "name", "description", 
             "address_1", "address_2", "postal_code", "city", "country",
             "website", "video", "email", "is_contact_person", "is_alt_person",
             "alt_person_fullname", "alt_person_email", "alt_person_phone",
@@ -38,3 +41,18 @@ class OrganizationForm(forms.ModelForm):
             "alt_person_phone": forms.TextInput(attrs={
                     "placeholder": "Phone number"}),
             }
+
+    def clean_avatar(self):
+        data = self.cleaned_data['avatar']
+        if settings.AVATAR_ALLOWED_FILE_EXTS:
+            (root, ext) = os.path.splitext(data.name.lower())
+            if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
+                raise forms.ValidationError(
+                        u"%(ext)s is an invalid file extension. Authorized extensions are : %(valid_exts_list)s" % 
+                        {'ext': ext, 'valid_exts_list': ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
+        if data.size > settings.AVATAR_MAX_SIZE:
+            raise forms.ValidationError(
+                    u"Your file is too big (%(size)s), the maximum allowed size is %(max_valid_size)s" %
+                    {'size': filesizeformat(data.size), 'max_valid_size': filesizeformat(settings.AVATAR_MAX_SIZE)})
+        return self.cleaned_data['avatar']      
+

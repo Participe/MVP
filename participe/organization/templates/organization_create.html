@@ -2,11 +2,12 @@
 {% block title %}Create organization - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
-    <form action="." class="well" method="post">{% csrf_token %}
+    <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">
                 <div class="row">
                     <div class="span4">
+                        <div class="input">Avatar: {{ form.avatar }}</div>
                         <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div>
                         <div {% if form.address_1.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_1 }}</div>
                         <div {% if form.address_2.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.address_2 }}</div>

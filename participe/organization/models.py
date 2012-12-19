@@ -3,9 +3,11 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from django_countries import CountryField
+from easy_thumbnails.fields import ThumbnailerImageField
 
 
 class Organization(models.Model):
+    avatar = ThumbnailerImageField(upload_to='img/organizations', blank=True)
     name = models.CharField(max_length=80)
     description = models.TextField(null=True, blank=True)
 
@@ -36,7 +38,7 @@ class Organization(models.Model):
         ordering = ['name',]
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     def get_absolute_url(self):
         return reverse('participe.organization.views.organization_detail',
