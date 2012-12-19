@@ -12,14 +12,9 @@ from models import Challenge
 @login_required
 def challenge_create(request):
     if request.method == "POST":
-        form = ChallengeForm(request.POST)
+        form = ChallengeForm(request.POST, request.FILES)
         if form.is_valid():
-            #from django.core.files.base import ContentFile
-            #file_content = ContentFile(request.FILES['avatar'].read())
-
             challenge = Challenge.objects.create(
-                    #avatar.save(request.FILES['avatar'].name, file_content),
-                    
                     avatar = form.cleaned_data['avatar'],
                     name = form.cleaned_data["name"],
                     description = form.cleaned_data["description"],

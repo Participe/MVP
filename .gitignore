@@ -1,4 +1,6 @@
 participe/media/avatars/
+participe/media/img/challenges/
+participe/media/img/organizations/
 ve
 django_wsgi.py
 sqlite.db

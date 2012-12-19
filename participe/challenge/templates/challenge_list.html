@@ -1,15 +1,18 @@
 {% extends 'challenge_base.html' %}
 {% block title %}Challenges list - {{ block.super }}{% endblock %}
+{% load thumbnail %}
 
 {% block extra_content %}
     <a class="btn" href="/challenges/create/">Create new challenge</a>
-    <table>
+    <ul>
     {% for challenge in challenges %}
-        <tr>
-            <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
-        <tr>
+        <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
+            <div><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 %}" alt=""></a></div>
+            <div><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></div>
+            <div><a href="{{ challenge.get_absolute_url }}">({{ challenge.organization }})</a></div>
+        </li>
     {% empty %}
         <p>There are no active challenges</p>
     {% endfor %}
-    </table>
+    </ul>
 {% endblock %}

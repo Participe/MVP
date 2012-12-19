@@ -57,17 +57,17 @@ class ChallengeForm(forms.ModelForm):
             }
 
     def clean_duration(self):
-        if self.cleaned_data["duration"] <= 1:
+        if self.cleaned_data["duration"] < 1:
             raise forms.ValidationError("Value should be greater or equal 1")
         return self.cleaned_data["duration"]
 
     def clean_min_participants(self):
-        if self.cleaned_data["min_participants"] <= 1:
+        if self.cleaned_data["min_participants"] < 1:
             raise forms.ValidationError("Value should be greater or equal 1")
         return self.cleaned_data["min_participants"]
 
     def clean_max_participants(self):
-        if self.cleaned_data["max_participants"] <= 1:
+        if self.cleaned_data["max_participants"] < 1:
             raise forms.ValidationError("Value should be greater or equal 1")
         return self.cleaned_data["max_participants"]
 
