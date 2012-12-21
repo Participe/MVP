@@ -1,0 +1,107 @@
+{% extends "avatar/avatar_base.html" %}
+{% load avatar_crop_tags %}
+{% load i18n %}
+
+{% block extra_content %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/imgareaselect-animated.css" type="text/css" media="screen" charset="utf-8">
+<style type="text/css">
+    .img_preview {
+        position:relative;
+        overflow:hidden;
+        border: 1px solid #000;
+    }
+    .img_preview img {
+        position:relative;
+        margin:0;
+    }
+    #img_small_preview {
+        width:49px;
+        height:49px;
+        margin: 0 auto;
+    }
+    #img_small_preview img {
+        {{ dim }}:49px;
+    }
+    #img_big_preview {
+        width:200px;
+        height:200px;
+        margin: 0 auto;
+    }
+    #img_big_preview img {
+        {{ dim }}:200px;
+    }
+    #avatar {
+        {% ifequal dim "width" %}
+            height:{{ AVATAR_CROP_MAX_SIZE }}px;
+        {% else %}
+            width:{{ AVATAR_CROP_MAX_SIZE }}px;
+        {% endifequal %}
+    }
+    .panel {
+        text-align:center;
+    }
+</style>
+
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.imgareaselect-0.9.2.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function (){
+        function adjust(el, selection) {
+            var scaleX = $(el).width() / (selection.width || 1);
+            var scaleY = $(el).height() / (selection.width || 1);
+            $(el+' img').css({
+                width: Math.round(scaleX*$('#avatar').width() ) + 'px',
+                height: Math.round(scaleY*$('#avatar').height() ) + 'px',
+                marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+                marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+            });
+        }
+        function preview(img, selection) {
+            adjust('#img_small_preview', selection);
+            adjust('#img_big_preview', selection);
+        }
+        $('img#avatar').imgAreaSelect({
+            aspectRatio: "4:4",
+            onSelectEnd:function(img, selection) {
+                $('#id_top').val(selection.y1);
+                $('#id_left').val(selection.x1);
+                $('#id_right').val(selection.x2);
+                $('#id_bottom').val(selection.y2);
+            },
+            onSelectChange: preview
+        });
+   });
+</script>
+
+    <p>{% trans "Crop." %}</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span6">
+                        <div id="picture">
+                            <img id="avatar" src="{{ avatar.avatar.url }}" alt="Avatar"/>
+                        </div>
+                        <form id="crop_form" action="." method="post">{% csrf_token %}
+                            {{ form }}
+                            <input type="submit" value="Crop" />
+                        </form>
+                    </div>
+                    <div class="span6">
+                        <div class="panel">
+                            <h2>Small preview</h2>
+                            <div class="img_preview" id="img_small_preview">
+                                <img src="{{ avatar.avatar.url }}" alt="Small preview" />
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <h2>Large preview</h2>
+                            <div class="img_preview" id="img_big_preview">
+                                <img src="{{ avatar.avatar.url }}" alt="Large preview" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

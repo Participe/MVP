@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     
     'south',
     'social_auth',
+    'avatar_crop',
     'avatar',
     'captcha',
     'easy_thumbnails',
@@ -142,12 +143,14 @@ LOGGING = {
 }
 
 ###############################################################################
-### DJANGO AVATAR SECTION                                                   ###
+### DJANGO AVATAR (CROP) SECTION                                            ###
 ###############################################################################
 AVATAR_DEFAULT_SIZE = 80
 AVATAR_ALLOWED_FILE_EXTS = [".jpg", ".jpeg", ".png",]
 AVATAR_MAX_SIZE = 5*1024*1024
 AVATAR_MAX_AVATARS_PER_USER = 1
+
+AVATAR_CROP_MIN_SIZE = 8
 
 ###############################################################################
 ### DJANGO SOCIAL AUTH SECTION                                              ###

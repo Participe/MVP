@@ -1,10 +1,10 @@
-from django.forms.widgets import TextInput
+from django.forms.widgets import TextInput, DateInput
 
 
 class NumberInput(TextInput):
     input_type = 'number'
 
-class DateInput(TextInput):
+class DateInput(DateInput):
     input_type = 'date'
 
 class TimeInput(TextInput):

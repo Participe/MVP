@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     
     # Take into account, that Avatar templates are overridden here
     url(r'^avatar/', include('avatar.urls')),
+    url(r'^avatar_crop/', include('avatar_crop.urls')),
     url(r'', include('social_auth.urls')),
     url(r'^captcha/', include('captcha.urls')),
     

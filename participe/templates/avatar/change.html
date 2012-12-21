@@ -7,6 +7,7 @@
         <div class="row">
             <div class="span12">
             {% avatar user 100 %}
+            <a href="{% url avatar_crop_default %}">Crop</a>
             {% if not avatars %}
                 <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
             {% else %}
