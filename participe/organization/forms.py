@@ -50,11 +50,17 @@ class OrganizationForm(forms.ModelForm):
                 (root, ext) = os.path.splitext(data.name.lower())
                 if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
                     raise forms.ValidationError(
-                            u"%(ext)s is an invalid file extension. Authorized extensions are : %(valid_exts_list)s" % 
-                            {'ext': ext, 'valid_exts_list': ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
+                            u"%(ext)s is an invalid file extension. "
+                            "Authorized extensions are : %(valid_exts_list)s" % 
+                            {'ext': ext, 
+                            'valid_exts_list':
+                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
             if data.size > settings.AVATAR_MAX_SIZE:
                 raise forms.ValidationError(
-                        u"Your file is too big (%(size)s), the maximum allowed size is %(max_valid_size)s" %
-                        {'size': filesizeformat(data.size), 'max_valid_size': filesizeformat(settings.AVATAR_MAX_SIZE)})
+                        u"Your file is too big (%(size)s), the maximum "
+                        "allowed size is %(max_valid_size)s" %
+                        {'size': filesizeformat(data.size),
+                        'max_valid_size':
+                            filesizeformat(settings.AVATAR_MAX_SIZE)})
         return self.cleaned_data['avatar']      
 

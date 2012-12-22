@@ -19,7 +19,7 @@ latest_signup_choices = [
     ]
     
 class Challenge(models.Model):
-    avatar = ThumbnailerImageField(upload_to='img/challenges', blank=True)
+    avatar = ThumbnailerImageField(upload_to='img/challenges')
     name = models.CharField(max_length=80)
     description = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=80, null=True, blank=True)
