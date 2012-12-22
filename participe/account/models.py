@@ -24,7 +24,7 @@ class UserProfile(models.Model):
             max_length=2, choices=gender_choices, default="M")
     
     birth_day = models.DateField()
-    phone_number = models.CharField(max_length=15, blank=True, default='')
+    phone_number = models.CharField(max_length=15, blank=False, null=False, default='')
     receive_newsletter = models.BooleanField(default=False)
     
     class Meta:
