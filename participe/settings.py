@@ -12,7 +12,6 @@ TEMPLATE_DIRS = (
 ADMINS = (
     ('OVERRIDE ME IN LOCAL_SETTINGS', 'OVERRIDE ME IN LOCAL_SETTINGS'),
 )
-
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -142,6 +141,8 @@ LOGGING = {
     }
 }
 
+DOMAIN_NAME = "www.ddaemon.info"
+
 ###############################################################################
 ### DJANGO AVATAR (CROP) SECTION                                            ###
 ###############################################################################
@@ -209,10 +210,10 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['user_about_me', 'user_activities',
 #YAHOO_CONSUMER_SECRET        = ''
 
 LOGIN_URL          = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = '/accounts/profile/view/'
 LOGIN_ERROR_URL    = '/login-error/'
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/view/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/signup/'
 #SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = ''
 #SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = ''

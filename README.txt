@@ -175,6 +175,34 @@ package managers are provided. Otherwise, follow the installation instructions.
                    --module wsgi 
                    --pythonpath /home/ec2-user/www/mvp/partice
                    -H /home/ec2-user/www/mvp/ve
+                   --logto /var/log/uwsgi.log
+                   
+5.5.6 To run daemonized uWSGI, create configuration file, e.g.:
+
+        sudo nano /etc/init/uwsgi.conf
+
+    In my case it looks like ("exec ..." all in one line):
+    
+        description "uWSGI server"
+
+        start on runlevel [2345]
+        stop on runlevel [!2345]
+
+        respawn
+        exec /usr/bin/uwsgi \
+            --home /home/ec2-user/www/mvp/participe/ \
+            --socket /tmp/uwsgi_mvp.sock \
+            --chmod-socket \
+            --module wsgi \
+            --pythonpath /home/ec2-user/www/mvp/participe \
+            -H /home/ec2-user/www/mvp/ve/ \
+            --logto /var/log/uwsgi.log \
+            --chdir /home/ec2-user/www/mvp/
+
+    Run/terminate daemonized uWSGI:
+
+        sudo start uwsgi
+        sudo stop uwsgi
 
 6. Django Social Auth (follow 
     https://django-social-auth.readthedocs.org/en/latest/index.html)

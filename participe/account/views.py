@@ -1,18 +1,23 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.views import auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
+from django.utils import timezone
 
+import datetime
 import json
+import random
+import string
 import urllib
 
-from templated_email import send_templated_mail
 from social_auth.utils import setting
+from templated_email import send_templated_mail
 
 from forms import UserForm, UserProfileForm, ResetPasswordForm, UserEditForm
 from models import UserProfile
@@ -29,9 +34,16 @@ def signup(request):
                     first_name = uform.cleaned_data["first_name"],
                     last_name = uform.cleaned_data["last_name"],
                     email = uform.cleaned_data["email"],
+                    is_active=False,
                     )
             user.set_password(uform.cleaned_data["password"])
             user.save()
+            
+            confirmation_code = ''.join(random.choice(
+                    string.ascii_uppercase + 
+                    string.digits +
+                    string.ascii_lowercase
+                ) for x in range(33))
             
             # Create User Profile
             profile = UserProfile.objects.create(
@@ -46,26 +58,33 @@ def signup(request):
                     phone_number = pform.cleaned_data["phone_number"],
                     receive_newsletter = pform.cleaned_data[
                             "receive_newsletter"],
+                    confirmation_code=confirmation_code,
                     )
 
-            # Let it be here. Instant log-in after sign-up
+            """
             user = authenticate(
                     username=uform.cleaned_data["username"],
                     password=uform.cleaned_data["password"])
             login(request, user)
-         
+            """
+
             # Here and further, if "send_templated_email" will raise exception
             # (in general, if <user.email> not set), user will be redirected
             # to the "/home/" or other appropriate page. 
+            confirmation_link = (
+                    "http://%s/account/confirmation/%s/" %
+                    (settings.DOMAIN_NAME, confirmation_code))
             try:
                 send_templated_mail(
-                        template_name="account_successful_signup",
+                        template_name="account_confirmation",
                         from_email="from@example.com", 
                         recipient_list=[user.email,], 
-                        context={"user": user},)
+                        context={
+                                "user": user,
+                                "confirmation_link": confirmation_link,
+                                },)
 
-                return render_to_response(
-                        'account_confirmation_email.html', 
+                return render_to_response('account_confirmation_email.html', 
                         RequestContext(request, {
                                 "address": user.email,
                                 }))
@@ -100,11 +119,42 @@ def signup(request):
                     #'fb_profile': fb_profile,
                     }))
 
+def email_confirmation(request, confirmation_code):
+    try:
+        profile = UserProfile.objects.get(confirmation_code=confirmation_code)
+        user = User.objects.get(pk=profile.user.pk)
+
+        if user.date_joined > (timezone.now() - datetime.timedelta(days=7)):
+            # Instant log-in after confirmation
+			user.is_active = True
+			user.save()
+			user.backend = "django.contrib.auth.backends.ModelBackend" 
+			auth_login(request, user)
+			
+			info = "You have successfuly confirmed your e-mail."
+			return render_to_response('account_information.html',
+                    RequestContext(request, {
+                            "information": info,
+                            }))
+        else:
+            # Delete expired user profile and account
+            profile.delete()
+            user.delete()
+            info = "The link has been expired. Please, sign-up again."
+            return render_to_response('account_error.html', 
+                    RequestContext(request, {
+                            "information": info,
+                            }))
+    except:
+        raise Http404
+
 def account_list(request):
     accounts = User.objects.all()
 
     return render_to_response('account_list.html',
-            RequestContext(request, {'accounts': accounts}))
+            RequestContext(request, {
+                    'accounts': accounts
+                    }))
 
 def view_profile(request, user_id):
     account = get_object_or_404(User, pk=user_id)
@@ -194,8 +244,7 @@ def reset_password(request):
 
             info = "You have successfuly changed your password"
     
-            return render_to_response(
-                    'account_information.html', 
+            return render_to_response('account_information.html', 
                     RequestContext(request, {
                             "information": info,
                             }))

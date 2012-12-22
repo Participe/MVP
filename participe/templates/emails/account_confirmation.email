@@ -5,7 +5,8 @@
   THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY.
 *******************************************************************************
 
-Dear {{ user.get_full_name }} ({{ user.username }}), You have successfully reset your password.
+Dear {{ user.get_full_name }}, You are about to sign-up to Participe.
+Please, follow this link {{ confirmation_link }}
 
 Thank you,
 Participe Resource Management System

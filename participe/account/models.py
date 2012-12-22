@@ -27,6 +27,8 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, default='')
     receive_newsletter = models.BooleanField(default=False)
     
+    confirmation_code = models.CharField(max_length=33, null=True, blank=True)
+    
     class Meta:
         verbose_name = 'user profile'
         verbose_name_plural = 'user profiles'
