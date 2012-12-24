@@ -30,7 +30,7 @@ def signup(request):
         if uform.is_valid() and pform.is_valid():
             # Create User
             user = User.objects.create(
-                    username = uform.cleaned_data["username"],
+                    username = uform.cleaned_data["email"],
                     first_name = uform.cleaned_data["first_name"],
                     last_name = uform.cleaned_data["last_name"],
                     email = uform.cleaned_data["email"],
@@ -202,12 +202,12 @@ def edit_profile(request):
             # Update User
             user.first_name = pform.cleaned_data["first_name"]
             user.last_name = pform.cleaned_data["last_name"]
-            user.email = pform.cleaned_data["email"]
+            #user.email = pform.cleaned_data["email"]
             user.save()
                                 
             pform.save()
             
-            return HttpResponseRedirect('/accounts/profile/')
+            return HttpResponseRedirect('/accounts/profile/view/')
     
     return render_to_response('account_edit.html',
             RequestContext(request, {

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.validators import email_re
 
 from captcha.fields import CaptchaField
 
@@ -14,11 +15,11 @@ class UserForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
+        #self.fields["username"].required = False
         self.fields["first_name"].required = True
         self.fields["last_name"].required = True
-        self.fields["email"].required = True
+        self.fields["email"].required = False
 
-        self.fields["username"].label = "username"
         self.fields["first_name"].label = "first_name"
         self.fields["last_name"].label = "last_name"
         self.fields["email"].label = "email"
@@ -31,9 +32,9 @@ class UserForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "password",]
+        fields = [#"username",
+            "first_name", "last_name", "email", "password",]
         widgets = {
-            "username": forms.TextInput(attrs={"placeholder": "User name"}),
             "first_name": forms.TextInput(attrs={"placeholder": "First name"}),
             "last_name": forms.TextInput(attrs={"placeholder": "Last name"}),
             "email": widgets.EmailInput(attrs={"placeholder": "E-mail"}),
@@ -42,6 +43,23 @@ class UserForm(forms.ModelForm):
                     "placeholder": "Password"}),
             }
     
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        
+        if not email_re.match(email):
+            raise forms.ValidationError(
+                    "Please, enter valid e-mail address.")
+
+        # E-mail address should be unique
+        try:
+            u = User.objects.get(username=email)
+            raise forms.ValidationError(
+                    "Account with such e-mail address already exists.")
+        except User.DoesNotExist:
+            pass
+            
+        return self.cleaned_data["email"]
+        
     def clean_retry(self):
        if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError("Passwords don't match")
@@ -91,15 +109,17 @@ class UserEditForm(forms.ModelForm):
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.user = user
         
-        self.fields['username'].initial = user.username
-        self.fields['username'].widget.attrs['class'] = 'disabled'
-        self.fields['username'].widget.attrs['readonly'] = True
+        #self.fields['username'].initial = user.username
+        #self.fields['username'].widget.attrs['class'] = 'disabled'
+        #self.fields['username'].widget.attrs['readonly'] = True
         self.fields['first_name'].initial = user.first_name
         self.fields['last_name'].initial = user.last_name
         self.fields['email'].initial = user.email
         self.fields['email'].required = False
+        self.fields['email'].widget.attrs['class'] = 'disabled'
+        self.fields['email'].widget.attrs['readonly'] = True
         
-        self.fields["username"].label = "username"
+        #self.fields["username"].label = "username"
         self.fields["first_name"].label = "first_name"
         self.fields["last_name"].label = "last_name"
         self.fields["email"].label = "email"
@@ -112,8 +132,8 @@ class UserEditForm(forms.ModelForm):
         self.fields["phone_number"].label = "phone_number"
         self.fields["receive_newsletter"].label = "Receive newsletters"
 
-    username = forms.CharField(widget=forms.TextInput(attrs={
-            "placeholder": "User name", "value": ""}))
+    #username = forms.CharField(widget=forms.TextInput(attrs={
+    #        "placeholder": "User name", "value": ""}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={
             "placeholder": "First name", "value": ""}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
@@ -123,7 +143,8 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ["username", "first_name", "last_name", "email",
+        fields = [#"username",
+            "first_name", "last_name", "email",
             "address_1", "address_2", "postal_code", "city", "country",
             #"gender",
             "birth_day", "phone_number", "receive_newsletter",]
