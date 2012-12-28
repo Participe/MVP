@@ -39,3 +39,10 @@ class UserProfile(models.Model):
 
     #def get_absolute_url(self):
     #    return reverse('participe.account.views.profile', args=[str(self.id)])
+    
+    @property
+    def is_completed(self):
+        if (self.address_1 and self.postal_code and self.city and self.country
+                and self.birth_day):
+            return True
+        return False

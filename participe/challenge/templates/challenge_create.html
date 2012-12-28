@@ -16,7 +16,7 @@
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
                         <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
                         <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>Duration {{ form.duration }} hours</div> 
-                        <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>Affiliate with organization {{ form.organization }}{{ form.organization.errors }}</div> 
+                        <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>Affiliate with organization {% if not form.organization.is_hidden %}{{ form.organization }}{{ form.organization.errors }}{% endif %}</div>
                         <div class="input">or <a class="btn" href="/organizations/create/">Create new organization</a></div> 
                         <div class="input">Number of participants:</div> 
                         <div class="input">Minimum {{ form.min_participants }} Maximum {{ form.max_participants }}</div> 
@@ -34,7 +34,7 @@
                         <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>Application {{ form.application }}</div> 
                         <div {% if form.latest_signup.errors %}class="text-error"{% else %}class="input"{% endif %}>Latest sign-up {{ form.latest_signup }}</div> 
                     </div>                    
-                    <div class="span4">
+                    <div class="span2">
                         <p>Goodies/Give-aways</p>
                     </div>         
                 </div>   

@@ -8,13 +8,21 @@ import participe.core.html5_widgets as widgets
 
 
 class ChallengeForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(ChallengeForm, self).__init__(*args, **kwargs)
+        self.user = user
+        
         if self.instance and self.instance.pk:
             pass
 
-        self.fields["organization"].empty_label = None
-        
+        organizations = self.user.organization_set.all()
+        if organizations:
+            self.fields["organization"].empty_label = None
+            self.fields["organization"].queryset = organizations
+        else:
+            self.fields["organization"].required = False
+            self.fields["organization"].widget = self.fields["organization"].hidden_widget()
+            
     contact = forms.CharField(max_length=2)
 
     class Meta:
@@ -126,3 +134,10 @@ class ChallengeForm(forms.ModelForm):
                 del self.cleaned_data["alt_person_phone"]
 
         return self.cleaned_data
+
+    def save(self, commit=True):
+        instance = super(ChallengeForm, self).save(commit=False)
+        instance.contact_person = self.user
+        
+        if commit:
+            instance.save()

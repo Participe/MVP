@@ -21,6 +21,8 @@ class Organization(models.Model):
     video = models.URLField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     
+    affiliated_users = models.ManyToManyField(User, null=True, blank=True)
+    
     is_contact_person = models.BooleanField(default=True)
     contact_person = models.ForeignKey(User, related_name="contact_org_set")
     

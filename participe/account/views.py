@@ -204,7 +204,6 @@ def edit_profile(request):
             user.last_name = pform.cleaned_data["last_name"]
             #user.email = pform.cleaned_data["email"]
             user.save()
-                                
             pform.save()
             
             return HttpResponseRedirect('/accounts/profile/view/')
@@ -243,7 +242,6 @@ def reset_password(request):
             user.save()
 
             info = "You have successfuly changed your password"
-    
             return render_to_response('account_information.html', 
                     RequestContext(request, {
                             "information": info,
