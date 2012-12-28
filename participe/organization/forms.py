@@ -8,6 +8,13 @@ import participe.core.html5_widgets as widgets
 
 
 class OrganizationForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(OrganizationForm, self).__init__(*args, **kwargs)
+        self.user = user
+        
+        if self.instance and self.instance.pk:
+            pass
+
     class Meta:
         model = Organization
         fields = ["avatar", "name", "description", 
@@ -64,3 +71,9 @@ class OrganizationForm(forms.ModelForm):
                             filesizeformat(settings.AVATAR_MAX_SIZE)})
         return self.cleaned_data['avatar']      
 
+    def save(self, commit=True):
+        instance = super(OrganizationForm, self).save(commit=False)
+        instance.contact_person = self.user
+        
+        if commit:
+            instance.save()
