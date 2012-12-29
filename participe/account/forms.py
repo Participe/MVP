@@ -85,7 +85,10 @@ class UserProfileForm(forms.ModelForm):
         self.fields["country"].initial = "CH"
 
     captcha = CaptchaField()
-    
+    birth_day = forms.DateField(
+            input_formats=("%d.%m.%Y", "%d-%m-%Y", "%d/%m/%Y",),
+            widget=widgets.DateInput(attrs={"class": "input-small"}))
+
     class Meta:
         model = UserProfile
         fields = ["address_1", "address_2", "postal_code", "city", "country",
@@ -99,7 +102,7 @@ class UserProfileForm(forms.ModelForm):
             "city": forms.TextInput(attrs={"placeholder": "City"}),
             "country": forms.Select(),
             #"gender": forms.Select(attrs={"class": "input-small"}),
-            "birth_day": widgets.DateInput(attrs={"class": "input-small"}),
+            #"birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(attrs={
                     "placeholder": "Phone number"}),
             }
