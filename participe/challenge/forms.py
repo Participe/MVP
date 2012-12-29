@@ -15,10 +15,11 @@ class ChallengeForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
-        organizations = self.user.organization_set.all()
+        organizations = self.user.organization_set.all().order_by("name")
         if organizations:
-            self.fields["organization"].empty_label = None
+            #self.fields["organization"].empty_label = None
             self.fields["organization"].queryset = organizations
+            self.fields["organization"].initial = organizations[0]
         else:
             self.fields["organization"].required = False
             self.fields["organization"].widget = self.fields["organization"].hidden_widget()
