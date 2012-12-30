@@ -1,35 +1,37 @@
 {% extends 'challenge_base.html' %}
-{% block title %}Challenge details - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Challenge details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>Challenge details</p>
+    <p>{% trans "Challenge details" %}</p>
     <div class="well">
         <div class="row">
             <div class="span12">
                 <div class="row">
                     <div class="span3">
                         <div class=""><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
-                        <div class=""><b>Name: </b>{{ challenge.name }}</div>
-                        <div class=""><b>Description: </b>{{ challenge.description }}</div>
-                        <div class=""><b>Location: </b>{{ challenge.location }}</div>
-                        <div class=""><b>Duration: </b>{{ challenge.duration }} hours</div>
-                        <div class=""><b>Number of participants: </b></div>
-                        <div class="">Minimum {{ challenge.min_participants }} Maximum {{ challenge.max_participants }}</div>
-                        <div class=""><b>Affiliated with </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
+                        <div class=""><b>{% trans "Name:" %} </b>{{ challenge.name }}</div>
+                        <div class=""><b>{% trans "Description:" %} </b>{{ challenge.description }}</div>
+                        <div class=""><b>{% trans "Location:" %} </b>{{ challenge.location }}</div>
+                        <div class=""><b>{% trans "Duration:" %} </b>{{ challenge.duration }} {% trans "hours" %}</div>
+                        <div class=""><b>{% trans "Number of participants:" %} </b></div>
+                        <div class="">{% trans "Minimum" %} {{ challenge.min_participants }} {% trans "Maximum" %} {{ challenge.max_participants }}</div>
+                        <div class=""><b>{% trans "Affiliated with" %} </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
                     </div>
                     <div class="span3">
-                        <div class=""><b>Contact person: </b>{{ challenge.contact_person }}</div>
+                        <div class=""><b>{% trans "Contact person:" %} </b>{{ challenge.contact_person }}</div>
                         <div class="">{{ challenge.alt_person_fullname }}</div>
                         <div class="">{{ challenge.alt_person_email }}</div>
                         <div class="">{{ challenge.alt_person_phone }}</div>
-                        <div class=""><b>Start date: </b>{{ challenge.start_date }} <b>Time: </b>{{ challenge.start_time }}</div>
-                        <div class=""><b>Alternative date: </b>{{ challenge.alt_date }} <b>Time: </b>{{ challenge.alt_time }}</div>
-                        <div class=""><b>Application: </b>{{ challenge.stat_application_name }}</div>
-                        <div class=""><b>Latest sign-up: </b>{{ challenge.stat_latest_signup_name }}</div>
+                        <div class=""><b>{% trans "Start date:" %} </b>{{ challenge.start_date }} <b>{% trans "Time:" %} </b>{{ challenge.start_time }}</div>
+                        <div class=""><b>{% trans "Alternative date:" %} </b>{{ challenge.alt_date }} <b>{% trans "Time:" %} </b>{{ challenge.alt_time }}</div>
+                        <div class=""><b>{% trans "Application:" %} </b>{{ challenge.stat_application_name }}</div>
+                        <div class=""><b>{% trans "Latest sign-up:" %} </b>{{ challenge.stat_latest_signup_name }}</div>
                     </div>
                     <div class="span3">
-                        <div class=""><b>Goodies/Give-aways</b></div>
+                        <div class=""><b>{% trans "Goodies/Give-aways" %}</b></div>
                     </div>
                     <div class="span3">
                     </div>

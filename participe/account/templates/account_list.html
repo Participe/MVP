@@ -1,5 +1,7 @@
 {% extends 'account_base.html' %}
-{% block title %}Accounts list - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Accounts list" %} - {{ block.super }}{% endblock %}
 
 {% load avatar_tags %}
 
@@ -11,7 +13,7 @@
             <div><a href="{% url view_profile account.pk %}">{{ account.get_full_name }}</a></div>
         </li>
     {% empty %}
-        <p>There are no active accounts</p>
+        <p>{% trans "There are no active accounts" %}</p>
     {% endfor %}
     </ul>
 {% endblock %}

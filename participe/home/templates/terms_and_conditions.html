@@ -1,5 +1,7 @@
 {% extends 'home_base.html' %}
-{% block title %}Terms and conditions - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Terms and conditions" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
     <div class="well">

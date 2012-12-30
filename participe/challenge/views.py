@@ -4,6 +4,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
+from django.utils.translation import ugettext as _
 
 from forms import ChallengeForm
 from models import Challenge

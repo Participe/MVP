@@ -1,13 +1,14 @@
-{% block subject %}Congratulations{% endblock %}
+{% load i18n %}
+{% block subject %}{% trans "Congratulations" %}{% endblock %}
 
 {% block plain %}
 *******************************************************************************
-  THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY.
+  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
 *******************************************************************************
 
-Dear {{ user.get_full_name }}, You are about to sign-up to Participe.
-Please, follow this link {{ confirmation_link }}
+{% trans "Dear," %} {{ user.get_full_name }}, {% trans "You are about to sign-up to Participe." %}
+{% trans "Please, follow this link" %} {{ confirmation_link }}
 
-Thank you,
-Participe Resource Management System
+{% trans "Thank you," %}
+{% trans "Participe Resource Management System" %}
 {% endblock %}

@@ -2,7 +2,8 @@ import os
 
 from django import forms
 from django.conf import settings
-                             
+from django.utils.translation import ugettext as _
+                 
 from models import Challenge
 import participe.core.html5_widgets as widgets
 
@@ -22,7 +23,8 @@ class ChallengeForm(forms.ModelForm):
             self.fields["organization"].initial = organizations[0]
         else:
             self.fields["organization"].required = False
-            self.fields["organization"].widget = self.fields["organization"].hidden_widget()
+            self.fields["organization"].widget = \
+                    self.fields["organization"].hidden_widget()
             
     contact = forms.CharField(max_length=2)
 
@@ -35,35 +37,41 @@ class ChallengeForm(forms.ModelForm):
             "min_participants", "max_participants", "latest_signup",
             ]
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Challenge name"}),
-            "description": forms.Textarea(attrs={
-                    "cols": 25, "rows": 5,
-                    "placeholder": "Challenge description"}),
-            "location": forms.TextInput(attrs={"placeholder": "Location"}),
-            "duration": widgets.NumberInput(attrs={
-                    'min': '1', 'max': '10', 'step': '1',
-                    "class": "input-mini"}),
+            "name": forms.TextInput(
+                    attrs={"placeholder": _("Challenge name")}),
+            "description": forms.Textarea(
+                    attrs={"cols": 25, "rows": 5,
+                    "placeholder": _("Challenge description")}),
+            "location": forms.TextInput(
+                    attrs={"placeholder": _("Location")}),
+            "duration": widgets.NumberInput(
+                    attrs={'min': '1', 'max': '10', 'step': '1',
+                            "class": "input-mini"}),
             
-            "alt_person_fullname": forms.TextInput(attrs={
-                    "placeholder": "Full name"}),
-            "alt_person_email": forms.TextInput(attrs={
-                    "placeholder": "E-mail"}),
-            "alt_person_phone": forms.TextInput(attrs={
-                    "placeholder": "Phone number"}),
+            "alt_person_fullname": forms.TextInput(
+                    attrs={"placeholder": _("Full name")}),
+            "alt_person_email": forms.TextInput(
+                    attrs={"placeholder": _("E-mail")}),
+            "alt_person_phone": forms.TextInput(
+                    attrs={"placeholder": _("Phone number")}),
 
-            "start_date": widgets.DateInput(attrs={"class": "input-small"}),
-            "start_time": widgets.TimeInput(attrs={"class": "input-mini"}),
-            "alt_date": widgets.DateInput(attrs={"class": "input-small"}),
-            "alt_time": widgets.TimeInput(attrs={"class": "input-mini"}),
+            "start_date": widgets.DateInput(
+                    attrs={"class": "input-small"}),
+            "start_time": widgets.TimeInput(
+                    attrs={"class": "input-mini"}),
+            "alt_date": widgets.DateInput(
+                    attrs={"class": "input-small"}),
+            "alt_time": widgets.TimeInput(
+                    attrs={"class": "input-mini"}),
             
             "application": forms.RadioSelect(),
 
-            "min_participants": widgets.NumberInput(attrs={
-                    'min': '1', 'max': '10', 'step': '1',
-                    "class": "input-mini"}),
-            "max_participants": widgets.NumberInput(attrs={
-                    'min': '1', 'max': '10', 'step': '1',
-                    "class": "input-mini"}),
+            "min_participants": widgets.NumberInput(
+                    attrs={'min': '1', 'max': '10', 'step': '1',
+                            "class": "input-mini"}),
+            "max_participants": widgets.NumberInput(
+                    attrs={'min': '1', 'max': '10', 'step': '1',
+                            "class": "input-mini"}),
             
             "latest_signup": forms.RadioSelect(),
             }
@@ -76,7 +84,7 @@ class ChallengeForm(forms.ModelForm):
                 (root, ext) = os.path.splitext(data.name.lower())
                 if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
                     raise forms.ValidationError(
-                            u"%(ext)s is an invalid file extension. "
+                            "%(ext)s is an invalid file extension. "
                             "Authorized extensions are : %(valid_exts_list)s" % 
                             {'ext': ext,
                             'valid_exts_list':
@@ -92,17 +100,20 @@ class ChallengeForm(forms.ModelForm):
 
     def clean_duration(self):
         if self.cleaned_data["duration"] < 1:
-            raise forms.ValidationError("Value should be greater or equal 1")
+            raise forms.ValidationError(
+                    _("Value should be greater or equal 1"))
         return self.cleaned_data["duration"]
 
     def clean_min_participants(self):
         if self.cleaned_data["min_participants"] < 1:
-            raise forms.ValidationError("Value should be greater or equal 1")
+            raise forms.ValidationError(
+                    _("Value should be greater or equal 1"))
         return self.cleaned_data["min_participants"]
 
     def clean_max_participants(self):
         if self.cleaned_data["max_participants"] < 1:
-            raise forms.ValidationError("Value should be greater or equal 1")
+            raise forms.ValidationError(
+                    _("Value should be greater or equal 1"))
         return self.cleaned_data["max_participants"]
 
     def clean_contact(self):
@@ -114,7 +125,7 @@ class ChallengeForm(forms.ModelForm):
             self.cleaned_data["is_alt_person"] = True
         else:
             self._errors["contact"] = self.error_class(
-                    ["This field is required.",])
+                    [_("This field is required."),])
             del self.cleaned_data["contact"]
 
         return self.cleaned_data["contact"]
@@ -123,15 +134,15 @@ class ChallengeForm(forms.ModelForm):
         if self.cleaned_data["is_alt_person"] == True:
             if not self.cleaned_data["alt_person_fullname"]:
                 self._errors["alt_person_fullname"] = self.error_class(
-                        ["This field is required.",])
+                        [_("This field is required."),])
                 del self.cleaned_data["alt_person_fullname"]
             if not self.cleaned_data["alt_person_email"]:
                 self._errors["alt_person_email"] = self.error_class(
-                        ["This field is required.",])
+                        [_("This field is required."),])
                 del self.cleaned_data["alt_person_email"]
             if not self.cleaned_data["alt_person_phone"]:
                 self._errors["alt_person_phone"] = self.error_class(
-                        ["This field is required.",])
+                        [_("This field is required."),])
                 del self.cleaned_data["alt_person_phone"]
 
         return self.cleaned_data

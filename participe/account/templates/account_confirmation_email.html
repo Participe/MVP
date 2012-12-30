@@ -1,11 +1,13 @@
 {% extends 'account_base.html' %}
-{% block title %}Confirmation - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Confirmation" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
     <div class="well">
         <div class="row">
             <div class="span12">
-                <p>Confirmation e-mail was sent to the address {{ address }}</p>
+                <p>{% trans "Confirmation e-mail was sent to the address" %} {{ address }}</p>
             </div>
         </div>
     </div>

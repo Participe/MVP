@@ -23,6 +23,13 @@ DATABASES = {
 
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+   ('en', 'English'),
+   ('de', 'German'),
+   ('fr', 'French'),
+   ('it', 'Italian'),
+)
+
 SITE_ID = 1
 
 USE_I18N = True
@@ -74,6 +81,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

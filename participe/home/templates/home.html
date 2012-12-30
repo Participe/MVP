@@ -1,18 +1,19 @@
 {% extends 'home_base.html' %}
-{% block title %}Home - {{ block.super }}{% endblock %}
+{% load i18n %}
 
+{% block title %}{% trans "Home" %} - {{ block.super }}{% endblock %}
 {% block extra_content %}
     <div class="well">
         <div class="row">
             <div class="span12" style="text-align:center;">
-                <h3>Promotes young volunteering</h3>
+                <h3>{% trans "Promotes young volunteering" %}</h3>
                 <video width="400" height="300" controls="controls" poster="video/duel.jpg">
                     <source src="video/duel.ogv" type='video/ogg; codecs="theora, vorbis"'>
                     <source src="video/duel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                     <source src="video/duel.webm" type='video/webm; codecs="vp8, vorbis"'>
-                    Tag "video" not supports with your browser. <a href="video/duel.mp4">Download video</a>.
+                    {% trans "Tag 'video' not supports with your browser." %} <a href="video/duel.mp4">{% trans "Download video" %}</a>.
                 </video>
-                <p>Do you want to <a class="btn" href="/challenges/">Browse challenges</a> or <a class="btn" href="/organizations/">Browse organizations</a> ? </p>
+                <p>{% trans "Do you want to" %} <a class="btn" href="/challenges/">{% trans "Browse challenges" %}</a> {% trans "or" %} <a class="btn" href="/organizations/">{% trans "Browse organizations" %}</a> ? </p>
             </div>
         </div>
     </div>

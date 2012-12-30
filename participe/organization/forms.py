@@ -2,6 +2,7 @@ import os
 
 from django import forms
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 from models import Organization
 import participe.core.html5_widgets as widgets
@@ -23,30 +24,34 @@ class OrganizationForm(forms.ModelForm):
             "alt_person_fullname", "alt_person_email", "alt_person_phone",
             ]
         widgets = {
-            "name": forms.TextInput(attrs={
-                    "placeholder": "Organization name"}),
-            "description": forms.Textarea(attrs={
-                    "cols": 25, "rows": 5,
-                    "placeholder": "Organization description"}),
+            "name": forms.TextInput(
+                    attrs={"placeholder": _("Organization name")}),
+            "description": forms.Textarea(
+                    attrs={"cols": 25, "rows": 5,
+                            "placeholder": _("Organization description")}),
 
-            "address_1": forms.TextInput(attrs={"placeholder": "Address 1"}),
-            "address_2": forms.TextInput(attrs={"placeholder": "Address 2"}),
-            "postal_code": forms.TextInput(attrs={
-                    "placeholder": "Postal code"}),
-            "city": forms.TextInput(attrs={"placeholder": "City"}),
+            "address_1": forms.TextInput(
+                    attrs={"placeholder": _("Address 1")}),
+            "address_2": forms.TextInput(
+                    attrs={"placeholder": _("Address 2")}),
+            "postal_code": forms.TextInput(
+                    attrs={"placeholder": _("Postal code")}),
+            "city": forms.TextInput(
+                    attrs={"placeholder": _("City")}),
             
-            "website": widgets.URLInput(attrs={"placeholder": "Web site"}),
-            "video": widgets.URLInput(attrs={
-                    "placeholder": "Embedd video (link)"}),
-            "email": widgets.EmailInput(attrs={
-                    "placeholder": "Organization e-mail"}),
+            "website": widgets.URLInput(
+                    attrs={"placeholder": _("Web site")}),
+            "video": widgets.URLInput(
+                    attrs={"placeholder": _("Embedd video (link)")}),
+            "email": widgets.EmailInput(
+                    attrs={"placeholder": _("Organization e-mail")}),
 
-            "alt_person_fullname": forms.TextInput(attrs={
-                    "placeholder": "Full name"}),
-            "alt_person_email": forms.TextInput(attrs={
-                    "placeholder": "E-mail"}),
-            "alt_person_phone": forms.TextInput(attrs={
-                    "placeholder": "Phone number"}),
+            "alt_person_fullname": forms.TextInput(
+                    attrs={"placeholder": _("Full name")}),
+            "alt_person_email": forms.TextInput(
+                    attrs={"placeholder": _("E-mail")}),
+            "alt_person_phone": forms.TextInput(
+                    attrs={"placeholder": _("Phone number")}),
             }
 
     def clean_avatar(self):

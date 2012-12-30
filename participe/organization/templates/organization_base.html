@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <ul class="nav nav-tabs">  
-    <li class=""><a href="/">Home</a></li>
-    <li class=""><a href="/accounts/">Accounts</a></li>
-    <li class=""><a href="/challenges/">Challenges</a></li>
-    <li class="active"><a href="/organizations/">Organizations</a></li>
+    <li class=""><a href="/">{% trans "Home" %}</a></li>
+    <li class=""><a href="/accounts/">{% trans "Accounts" %}</a></li>
+    <li class=""><a href="/challenges/">{% trans "Challenges" %}</a></li>
+    <li class="active"><a href="/organizations/">{% trans "Organizations" %}</a></li>
 </ul> 
 
 <div class="main_container">

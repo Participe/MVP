@@ -9,6 +9,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 import datetime
 import json
@@ -83,7 +84,6 @@ def signup(request):
                                 "user": user,
                                 "confirmation_link": confirmation_link,
                                 },)
-
                 return render_to_response('account_confirmation_email.html', 
                         RequestContext(request, {
                                 "address": user.email,
@@ -108,7 +108,6 @@ def signup(request):
             uform.fields['last_name'].initial = fb_profile['last_name']
             uform.fields['email'].initial = fb_profile['email']
     """
-             
     return render_to_response('account_signup.html',
             RequestContext(request, {
                     'uform': uform,
@@ -131,7 +130,7 @@ def email_confirmation(request, confirmation_code):
 			user.backend = "django.contrib.auth.backends.ModelBackend" 
 			auth_login(request, user)
 			
-			info = "You have successfuly confirmed your e-mail."
+			info = _("You have successfuly confirmed your e-mail.")
 			return render_to_response('account_information.html',
                     RequestContext(request, {
                             "information": info,
@@ -140,7 +139,7 @@ def email_confirmation(request, confirmation_code):
             # Delete expired user profile and account
             profile.delete()
             user.delete()
-            info = "The link has been expired. Please, sign-up again."
+            info = _("The link has been expired. Please, sign-up again.")
             return render_to_response('account_error.html', 
                     RequestContext(request, {
                             "information": info,
@@ -164,7 +163,6 @@ def view_profile(request, user_id):
         profile = get_object_or_404(UserProfile, user=account)
     except:
         profile = None
-    
     return render_to_response('account_foreignprofile.html',
             RequestContext(request, {
                     "account": account,
@@ -180,7 +178,6 @@ def view_myprofile(request):
         profile = get_object_or_404(UserProfile, user=user)
     except:
         profile = None
-    
     return render_to_response('account_myprofile.html',
             RequestContext(request, {
                     "user": user,
@@ -241,7 +238,7 @@ def reset_password(request):
             user.set_password(form.cleaned_data["password"])
             user.save()
 
-            info = "You have successfuly changed your password"
+            info = _("You have successfuly changed your password")
             return render_to_response('account_information.html', 
                     RequestContext(request, {
                             "information": info,

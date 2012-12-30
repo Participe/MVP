@@ -1,5 +1,7 @@
 {% extends 'account_base.html' %}
-{% block title %}Sign up - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign up" %} - {{ block.super }}{% endblock %}
     
 {% block extra_script %}
     {% comment %}
@@ -24,10 +26,10 @@
             <div class="span12">
                 <div class="row">
                     <div class="span6">
-                        <p>To participate in a challenge, you first need to sign-up for participe:</p>
+                        <p>{% trans "To participate in a challenge, you first need to sign-up for participe:" %}</p>
                         
                         {% comment %}
-                        <a href="#" onclick="startConnect(); return false;">Click to connect and authenticate with Facebook</a>
+                        <a href="#" onclick="startConnect(); return false;">{% trans "Click to connect and authenticate with Facebook" %}</a>
                         <p>{{ fb_profile }}</p>
                         {% endcomment %}
                         
@@ -52,8 +54,8 @@
                             {% endfor %}
                         </table>
                         
-                        <p>By clicking register, you accept the <a href="/tnc/">terms and conditions</a></p>
-                        <div class="input"><input type="submit" form="signup" class="btn-primary" value="Sign-up for Participe" /></div>
+                        <p>{% trans "By clicking register, you accept the" %} <a href="/tnc/">{% trans "terms and conditions" %}</a></p>
+                        <div class="input"><input type="submit" form="signup" class="btn-primary" value="{% trans 'Sign-up for Participe' %}" /></div>
                     </div>
                 </div>
             </div>        

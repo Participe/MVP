@@ -1,5 +1,7 @@
 {% extends 'account_base.html' %}
-{% block title %}Log in - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Log in" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
     <form id="reset_password" class="well" action="." method="post">{% csrf_token %}
@@ -7,18 +9,18 @@
             <div class="span12">
                 <div class="row">
                     <div class="span4">
-                        <p>Please, login</p>
+                        <p>{% trans "Please, login" %}</p>
                     </div>
                     <div class="span4">
                     </div>
                     <div class="span4">
                         {% if form.errors %}
-                        <p class="error">Sorry, you have entered wrong E-mail or Password</p>
+                        <p class="error">{% trans "Sorry, you have entered wrong E-mail or Password" %}</p>
                         {% endif %}                        
 
-                        <div class="input"><label for="username">Login:</label><input type="text" name="username" value="" id="username"></div>
-                        <div class="input"><label for="password">Password:</label><input type="password" name="password" value="" id="password"></div>
-                        <div class="input"><input type="submit" class="btn-primary" value="login" /></div>
+                        <div class="input"><label for="username">{% trans "Login:" %}</label><input type="text" name="username" value="" id="username"></div>
+                        <div class="input"><label for="password">{% trans "Password:" %}</label><input type="password" name="password" value="" id="password"></div>
+                        <div class="input"><input type="submit" class="btn-primary" value="{% trans 'login' %}" /></div>
                         <div class="input"><input type="hidden" name="next" value="{{ next|escape }}" /></div>
 
                         <a href={% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">

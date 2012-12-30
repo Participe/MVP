@@ -1,0 +1,1890 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-30 15:50+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: account/forms.py:24 account/forms.py:133
+msgid "first_name"
+msgstr ""
+
+#: account/forms.py:25 account/forms.py:134
+msgid "last_name"
+msgstr ""
+
+#: account/forms.py:26 account/forms.py:135
+msgid "email"
+msgstr ""
+
+#: account/forms.py:27
+msgid "password"
+msgstr ""
+
+#: account/forms.py:28
+msgid "retry"
+msgstr ""
+
+#: account/forms.py:32 account/forms.py:191
+msgid "Retry"
+msgstr ""
+
+#: account/forms.py:40 account/forms.py:148
+msgid "First name"
+msgstr ""
+
+#: account/forms.py:42 account/forms.py:150
+msgid "Last name"
+msgstr ""
+
+#: account/forms.py:44 account/forms.py:152 challenge/forms.py:54
+#: challenge/models.py:44 organization/forms.py:52 organization/models.py:31
+#: organization/models.py:45
+msgid "E-mail"
+msgstr ""
+
+#: account/forms.py:47 account/forms.py:188
+msgid "Password"
+msgstr ""
+
+#: account/forms.py:55
+msgid "Please, enter valid e-mail address."
+msgstr ""
+
+#: account/forms.py:61
+msgid "Account with such e-mail address already exists."
+msgstr ""
+
+#: account/forms.py:69 account/forms.py:195
+#: account/templates/account_reset_password.html:18
+msgid "Passwords don't match"
+msgstr ""
+
+#: account/forms.py:78 account/forms.py:136
+msgid "address_1"
+msgstr ""
+
+#: account/forms.py:79 account/forms.py:137
+msgid "address_2"
+msgstr ""
+
+#: account/forms.py:80 account/forms.py:138
+msgid "postal_code"
+msgstr ""
+
+#: account/forms.py:81 account/forms.py:139
+msgid "city"
+msgstr ""
+
+#: account/forms.py:82 account/forms.py:140
+msgid "country"
+msgstr ""
+
+#: account/forms.py:83 account/forms.py:141
+msgid "Birth day"
+msgstr ""
+
+#: account/forms.py:84 account/forms.py:142
+msgid "phone_number"
+msgstr ""
+
+#: account/forms.py:85 account/forms.py:143
+msgid "Receive newsletters"
+msgstr ""
+
+#: account/forms.py:103 account/forms.py:163 account/models.py:18
+#: organization/forms.py:34 organization/models.py:19
+msgid "Address 1"
+msgstr ""
+
+#: account/forms.py:105 account/forms.py:165 account/models.py:20
+#: organization/forms.py:36 organization/models.py:21
+msgid "Address 2"
+msgstr ""
+
+#: account/forms.py:107 account/forms.py:167 organization/forms.py:38
+msgid "Postal code"
+msgstr ""
+
+#: account/forms.py:109 account/forms.py:169 account/models.py:22
+#: organization/forms.py:40 organization/models.py:25
+msgid "City"
+msgstr ""
+
+#: account/forms.py:114 account/forms.py:175 challenge/forms.py:56
+#: organization/forms.py:54
+msgid "Phone number"
+msgstr ""
+
+#: account/models.py:9
+msgid "Male"
+msgstr ""
+
+#: account/models.py:10
+msgid "Female"
+msgstr ""
+
+#: account/models.py:14
+msgid "User"
+msgstr ""
+
+#: account/models.py:21 organization/models.py:23
+msgid "Postal Code"
+msgstr ""
+
+#: account/models.py:23 organization/models.py:27
+msgid "Country"
+msgstr ""
+
+#: account/models.py:27
+msgid "Gender"
+msgstr ""
+
+#: account/models.py:29
+msgid "Birthday"
+msgstr ""
+
+#: account/models.py:32 challenge/models.py:47 organization/models.py:48
+msgid "Phone Number"
+msgstr ""
+
+#: account/models.py:34
+msgid "Receive Newsletters"
+msgstr ""
+
+#: account/models.py:39
+msgid "user profile"
+msgstr ""
+
+#: account/models.py:40
+msgid "user profiles"
+msgstr ""
+
+#: account/views.py:133
+msgid "You have successfuly confirmed your e-mail."
+msgstr ""
+
+#: account/views.py:142
+msgid "The link has been expired. Please, sign-up again."
+msgstr ""
+
+#: account/views.py:241
+msgid "You have successfuly changed your password"
+msgstr ""
+
+#: account/templates/account_base.html:9
+#: challenge/templates/challenge_base.html:6 home/templates/home.html:4
+#: home/templates/home_base.html:6
+#: organization/templates/organization_base.html:6 templates/500.html:4
+msgid "Home"
+msgstr ""
+
+#: account/templates/account_base.html:10
+#: challenge/templates/challenge_base.html:7 home/templates/home_base.html:7
+#: organization/templates/organization_base.html:7
+msgid "Accounts"
+msgstr ""
+
+#: account/templates/account_base.html:11
+#: challenge/templates/challenge_base.html:8 home/templates/home_base.html:8
+#: organization/templates/organization_base.html:8
+msgid "Challenges"
+msgstr ""
+
+#: account/templates/account_base.html:12
+#: challenge/templates/challenge_base.html:9 home/templates/home_base.html:9
+#: organization/templates/organization_base.html:9
+msgid "Organizations"
+msgstr ""
+
+#: account/templates/account_confirmation_email.html:4
+msgid "Confirmation"
+msgstr ""
+
+#: account/templates/account_confirmation_email.html:10
+msgid "Confirmation e-mail was sent to the address"
+msgstr ""
+
+#: account/templates/account_delete.html:4
+msgid "Delete account"
+msgstr ""
+
+#: account/templates/account_delete.html:14
+msgid "Do you really want to delete account?"
+msgstr ""
+
+#: account/templates/account_delete.html:15
+msgid "Delete"
+msgstr ""
+
+#: account/templates/account_delete.html:16
+msgid "Cancel"
+msgstr ""
+
+#: account/templates/account_edit.html:4
+#: account/templates/account_myprofile.html:33
+msgid "Edit profile"
+msgstr ""
+
+#: account/templates/account_edit.html:12
+msgid "Edit your profile"
+msgstr ""
+
+#: account/templates/account_edit.html:24
+msgid "Save changes"
+msgstr ""
+
+#: account/templates/account_error.html:4
+msgid "Error"
+msgstr ""
+
+#: account/templates/account_error.html:11
+msgid "Go back to main page"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:4
+#: account/templates/account_myprofile.html:4
+msgid "Profile"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:7
+msgid "User profile"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:17
+#: account/templates/account_myprofile.html:18
+msgid "Full name:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:18
+#: account/templates/account_myprofile.html:23
+#: organization/templates/organization_detail.html:18
+msgid "City:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:19
+#: account/templates/account_myprofile.html:24
+#: organization/templates/organization_detail.html:19
+msgid "Country:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:21
+#: account/templates/account_myprofile.html:19
+msgid "Email:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:22
+msgid "Phone number:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:26
+msgid "Participated challenges:"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:31
+#: account/templates/account_foreignprofile.html:40
+msgid "Nope"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:35
+msgid "Participated organizations:"
+msgstr ""
+
+#: account/templates/account_information.html:4
+msgid "Information"
+msgstr ""
+
+#: account/templates/account_information.html:11
+msgid "Go back to your profile"
+msgstr ""
+
+#: account/templates/account_list.html:4
+msgid "Accounts list"
+msgstr ""
+
+#: account/templates/account_list.html:16
+msgid "There are no active accounts"
+msgstr ""
+
+#: account/templates/account_login.html:4
+msgid "Log in"
+msgstr ""
+
+#: account/templates/account_login.html:12
+msgid "Please, login"
+msgstr ""
+
+#: account/templates/account_login.html:18
+msgid "Sorry, you have entered wrong E-mail or Password"
+msgstr ""
+
+#: account/templates/account_login.html:21
+msgid "Login:"
+msgstr ""
+
+#: account/templates/account_login.html:22
+msgid "Password:"
+msgstr ""
+
+#: account/templates/account_login.html:23
+msgid "login"
+msgstr ""
+
+#: account/templates/account_myprofile.html:7
+msgid "Your profile"
+msgstr ""
+
+#: account/templates/account_myprofile.html:13
+msgid "Change"
+msgstr ""
+
+#: account/templates/account_myprofile.html:13
+msgid "your avatar"
+msgstr ""
+
+#: account/templates/account_myprofile.html:21
+#: organization/templates/organization_detail.html:16
+msgid "Address:"
+msgstr ""
+
+#: account/templates/account_myprofile.html:22
+#: organization/templates/organization_detail.html:17
+msgid "Postal code:"
+msgstr ""
+
+#: account/templates/account_myprofile.html:27
+msgid "Date of birth:"
+msgstr ""
+
+#: account/templates/account_myprofile.html:28
+msgid "hone number:"
+msgstr ""
+
+#: account/templates/account_myprofile.html:34
+msgid "Delete profile"
+msgstr ""
+
+#: account/templates/account_myprofile.html:35
+#: account/templates/account_reset_password.html:4
+msgid "Reset password"
+msgstr ""
+
+#: account/templates/account_reset_password.html:12
+msgid "Please, enter new password"
+msgstr ""
+
+#: account/templates/account_reset_password.html:23
+msgid "Save"
+msgstr ""
+
+#: account/templates/account_signup.html:4
+msgid "Sign up"
+msgstr ""
+
+#: account/templates/account_signup.html:30
+msgid "To participate in a challenge, you first need to sign-up for participe:"
+msgstr ""
+
+#: account/templates/account_signup.html:59
+msgid "By clicking register, you accept the"
+msgstr ""
+
+#: account/templates/account_signup.html:59
+msgid "terms and conditions"
+msgstr ""
+
+#: account/templates/account_signup.html:60
+msgid "Sign-up for Participe"
+msgstr ""
+
+#: challenge/forms.py:41
+msgid "Challenge name"
+msgstr ""
+
+#: challenge/forms.py:44
+msgid "Challenge description"
+msgstr ""
+
+#: challenge/forms.py:46 challenge/models.py:29
+msgid "Location"
+msgstr ""
+
+#: challenge/forms.py:52 challenge/models.py:42 organization/forms.py:50
+msgid "Full name"
+msgstr ""
+
+#: challenge/forms.py:104 challenge/forms.py:110 challenge/forms.py:116
+msgid "Value should be greater or equal 1"
+msgstr ""
+
+#: challenge/forms.py:128 challenge/forms.py:137 challenge/forms.py:141
+#: challenge/forms.py:145
+msgid "This field is required."
+msgstr ""
+
+#: challenge/models.py:12
+msgid "Not required: participation by application order"
+msgstr ""
+
+#: challenge/models.py:13
+msgid "Confirmation of participation required"
+msgstr ""
+
+#: challenge/models.py:17
+msgid "last minute"
+msgstr ""
+
+#: challenge/models.py:18
+msgid "one week before"
+msgstr ""
+
+#: challenge/models.py:19
+msgid "other"
+msgstr ""
+
+#: challenge/models.py:24 organization/models.py:13
+msgid "Avatar"
+msgstr ""
+
+#: challenge/models.py:25 organization/models.py:14
+msgid "Name"
+msgstr ""
+
+#: challenge/models.py:27 organization/models.py:16
+msgid "Description"
+msgstr ""
+
+#: challenge/models.py:31 challenge/templates/challenge_create.html:20
+msgid "Duration"
+msgstr ""
+
+#: challenge/models.py:38 organization/models.py:39
+msgid "Contact Person"
+msgstr ""
+
+#: challenge/models.py:49
+msgid "Start Date"
+msgstr ""
+
+#: challenge/models.py:50
+msgid "Start Time"
+msgstr ""
+
+#: challenge/models.py:52
+msgid "Alternative Date"
+msgstr ""
+
+#: challenge/models.py:54
+msgid "Alternative Time"
+msgstr ""
+
+#: challenge/models.py:57
+msgid "Organization"
+msgstr ""
+
+#: challenge/models.py:60 challenge/templates/challenge_create.html:36
+msgid "Application"
+msgstr ""
+
+#: challenge/models.py:63
+msgid "Minimum Participants"
+msgstr ""
+
+#: challenge/models.py:66
+msgid "Maximum Participants"
+msgstr ""
+
+#: challenge/models.py:69
+msgid "Latest Sign-up"
+msgstr ""
+
+#: challenge/models.py:74
+msgid "challenge"
+msgstr ""
+
+#: challenge/models.py:75
+msgid "challenges"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:4
+msgid "Create challenge"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:16
+#: organization/templates/organization_create.html:12
+msgid "Avatar:"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:20
+#: challenge/templates/challenge_detail.html:18
+msgid "hours"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:21
+msgid "Affiliate with organization"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:22 home/templates/home.html:16
+msgid "or"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:22
+#: organization/templates/organization_list.html:8
+msgid "Create new organization"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:23
+#: challenge/templates/challenge_detail.html:19
+msgid "Number of participants:"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:24
+#: challenge/templates/challenge_detail.html:20
+msgid "Minimum"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:24
+#: challenge/templates/challenge_detail.html:20
+msgid "Maximum"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:28
+#: challenge/templates/challenge_detail.html:24
+#: organization/templates/organization_create.html:22
+#: organization/templates/organization_detail.html:23
+msgid "Contact person:"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:30
+#: organization/templates/organization_create.html:24
+msgid "Affiliate different person"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:34
+msgid "Start date"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:34
+#: challenge/templates/challenge_create.html:35
+msgid "Time"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:35
+msgid "Alternative date"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:37
+msgid "Latest sign-up"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:40
+#: challenge/templates/challenge_detail.html:34
+msgid "Goodies/Give-aways"
+msgstr ""
+
+#: challenge/templates/challenge_create.html:43
+msgid "Create this challenge"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:4
+#: challenge/templates/challenge_detail.html:8
+msgid "Challenge details"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:15
+#: organization/templates/organization_detail.html:15
+msgid "Name:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:16
+#: organization/templates/organization_detail.html:22
+msgid "Description:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:17
+msgid "Location:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:18
+msgid "Duration:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:21
+msgid "Affiliated with"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:28
+msgid "Start date:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:28
+#: challenge/templates/challenge_detail.html:29
+msgid "Time:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:29
+msgid "Alternative date:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:30
+msgid "Application:"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:31
+msgid "Latest sign-up:"
+msgstr ""
+
+#: challenge/templates/challenge_list.html:4
+msgid "Challenges list"
+msgstr ""
+
+#: challenge/templates/challenge_list.html:8
+msgid "Create new challenge"
+msgstr ""
+
+#: challenge/templates/challenge_list.html:18
+msgid "There are no active challenges"
+msgstr ""
+
+#: core/countries.py:5 core/countries.py:486
+msgid "Switzerland"
+msgstr ""
+
+#: core/countries.py:6 core/countries.py:274
+msgid "Austria"
+msgstr ""
+
+#: core/countries.py:7 core/countries.py:346
+msgid "Germany"
+msgstr ""
+
+#: core/countries.py:8 core/countries.py:392
+msgid "Liechtenstein"
+msgstr ""
+
+#: core/countries.py:9 core/countries.py:259
+msgid "Afghanistan"
+msgstr ""
+
+#: core/countries.py:10 core/countries.py:260
+msgid "Åland Islands"
+msgstr ""
+
+#: core/countries.py:11 core/countries.py:261
+msgid "Albania"
+msgstr ""
+
+#: core/countries.py:12 core/countries.py:262
+msgid "Algeria"
+msgstr ""
+
+#: core/countries.py:13 core/countries.py:263
+msgid "American Samoa"
+msgstr ""
+
+#: core/countries.py:14 core/countries.py:264
+msgid "Andorra"
+msgstr ""
+
+#: core/countries.py:15 core/countries.py:265
+msgid "Angola"
+msgstr ""
+
+#: core/countries.py:16 core/countries.py:266
+msgid "Anguilla"
+msgstr ""
+
+#: core/countries.py:17 core/countries.py:267
+msgid "Antarctica"
+msgstr ""
+
+#: core/countries.py:18 core/countries.py:268
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: core/countries.py:19 core/countries.py:269
+msgid "Argentina"
+msgstr ""
+
+#: core/countries.py:20 core/countries.py:270
+msgid "Armenia"
+msgstr ""
+
+#: core/countries.py:21 core/countries.py:271
+msgid "Aruba"
+msgstr ""
+
+#: core/countries.py:22 core/countries.py:273
+msgid "Australia"
+msgstr ""
+
+#: core/countries.py:23 core/countries.py:275
+msgid "Azerbaijan"
+msgstr ""
+
+#: core/countries.py:24 core/countries.py:276
+msgid "Bahamas"
+msgstr ""
+
+#: core/countries.py:25 core/countries.py:277
+msgid "Bahrain"
+msgstr ""
+
+#: core/countries.py:26 core/countries.py:278
+msgid "Bangladesh"
+msgstr ""
+
+#: core/countries.py:27 core/countries.py:279
+msgid "Barbados"
+msgstr ""
+
+#: core/countries.py:28 core/countries.py:280
+msgid "Belarus"
+msgstr ""
+
+#: core/countries.py:29 core/countries.py:281
+msgid "Belgium"
+msgstr ""
+
+#: core/countries.py:30 core/countries.py:282
+msgid "Belize"
+msgstr ""
+
+#: core/countries.py:31 core/countries.py:283
+msgid "Benin"
+msgstr ""
+
+#: core/countries.py:32 core/countries.py:284
+msgid "Bermuda"
+msgstr ""
+
+#: core/countries.py:33 core/countries.py:285
+msgid "Bhutan"
+msgstr ""
+
+#: core/countries.py:34 core/countries.py:287
+msgid "Bolivia, Plurinational State of"
+msgstr ""
+
+#: core/countries.py:35 core/countries.py:288
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr ""
+
+#: core/countries.py:36 core/countries.py:289
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: core/countries.py:37 core/countries.py:290
+msgid "Botswana"
+msgstr ""
+
+#: core/countries.py:38 core/countries.py:291
+msgid "Bouvet Island"
+msgstr ""
+
+#: core/countries.py:39 core/countries.py:292
+msgid "Brazil"
+msgstr ""
+
+#: core/countries.py:40 core/countries.py:293
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: core/countries.py:41 core/countries.py:295
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: core/countries.py:42 core/countries.py:296
+msgid "Bulgaria"
+msgstr ""
+
+#: core/countries.py:43 core/countries.py:297
+msgid "Burkina Faso"
+msgstr ""
+
+#: core/countries.py:44 core/countries.py:298
+msgid "Burundi"
+msgstr ""
+
+#: core/countries.py:45 core/countries.py:299
+msgid "Cambodia"
+msgstr ""
+
+#: core/countries.py:46 core/countries.py:300
+msgid "Cameroon"
+msgstr ""
+
+#: core/countries.py:47 core/countries.py:301
+msgid "Canada"
+msgstr ""
+
+#: core/countries.py:48 core/countries.py:302
+msgid "Cape Verde"
+msgstr ""
+
+#: core/countries.py:49 core/countries.py:303
+msgid "Cayman Islands"
+msgstr ""
+
+#: core/countries.py:50 core/countries.py:304
+msgid "Central African Republic"
+msgstr ""
+
+#: core/countries.py:51 core/countries.py:305
+msgid "Chad"
+msgstr ""
+
+#: core/countries.py:52 core/countries.py:306
+msgid "Chile"
+msgstr ""
+
+#: core/countries.py:53 core/countries.py:307
+msgid "China"
+msgstr ""
+
+#: core/countries.py:54 core/countries.py:308
+msgid "Christmas Island"
+msgstr ""
+
+#: core/countries.py:55 core/countries.py:309
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: core/countries.py:56 core/countries.py:310
+msgid "Colombia"
+msgstr ""
+
+#: core/countries.py:57 core/countries.py:311
+msgid "Comoros"
+msgstr ""
+
+#: core/countries.py:58 core/countries.py:312
+msgid "Congo"
+msgstr ""
+
+#: core/countries.py:59 core/countries.py:313
+msgid "Congo, The Democratic Republic of the"
+msgstr ""
+
+#: core/countries.py:60 core/countries.py:314
+msgid "Cook Islands"
+msgstr ""
+
+#: core/countries.py:61 core/countries.py:315
+msgid "Costa Rica"
+msgstr ""
+
+#: core/countries.py:62 core/countries.py:316
+msgid "Côte D'ivoire"
+msgstr ""
+
+#: core/countries.py:63 core/countries.py:317
+msgid "Croatia"
+msgstr ""
+
+#: core/countries.py:64 core/countries.py:318
+msgid "Cuba"
+msgstr ""
+
+#: core/countries.py:65 core/countries.py:319
+msgid "Curaçao"
+msgstr ""
+
+#: core/countries.py:66 core/countries.py:320
+msgid "Cyprus"
+msgstr ""
+
+#: core/countries.py:67 core/countries.py:321
+msgid "Czech Republic"
+msgstr ""
+
+#: core/countries.py:68 core/countries.py:323
+msgid "Denmark"
+msgstr ""
+
+#: core/countries.py:69 core/countries.py:324
+msgid "Djibouti"
+msgstr ""
+
+#: core/countries.py:70 core/countries.py:325
+msgid "Dominica"
+msgstr ""
+
+#: core/countries.py:71 core/countries.py:326
+msgid "Dominican Republic"
+msgstr ""
+
+#: core/countries.py:72 core/countries.py:327
+msgid "Ecuador"
+msgstr ""
+
+#: core/countries.py:73 core/countries.py:328
+msgid "Egypt"
+msgstr ""
+
+#: core/countries.py:74 core/countries.py:329
+msgid "El Salvador"
+msgstr ""
+
+#: core/countries.py:75 core/countries.py:330
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: core/countries.py:76 core/countries.py:331
+msgid "Eritrea"
+msgstr ""
+
+#: core/countries.py:77 core/countries.py:332
+msgid "Estonia"
+msgstr ""
+
+#: core/countries.py:78 core/countries.py:333
+msgid "Ethiopia"
+msgstr ""
+
+#: core/countries.py:79 core/countries.py:334
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: core/countries.py:80 core/countries.py:335
+msgid "Faroe Islands"
+msgstr ""
+
+#: core/countries.py:81 core/countries.py:337
+msgid "Fiji"
+msgstr ""
+
+#: core/countries.py:82 core/countries.py:338
+msgid "Finland"
+msgstr ""
+
+#: core/countries.py:83 core/countries.py:339
+msgid "France"
+msgstr ""
+
+#: core/countries.py:84 core/countries.py:340
+msgid "French Guiana"
+msgstr ""
+
+#: core/countries.py:85 core/countries.py:341
+msgid "French Polynesia"
+msgstr ""
+
+#: core/countries.py:86 core/countries.py:342
+msgid "French Southern Territories"
+msgstr ""
+
+#: core/countries.py:87 core/countries.py:343
+msgid "Gabon"
+msgstr ""
+
+#: core/countries.py:88 core/countries.py:344
+msgid "Gambia"
+msgstr ""
+
+#: core/countries.py:89 core/countries.py:345
+msgid "Georgia"
+msgstr ""
+
+#: core/countries.py:90 core/countries.py:347
+msgid "Ghana"
+msgstr ""
+
+#: core/countries.py:91 core/countries.py:348
+msgid "Gibraltar"
+msgstr ""
+
+#: core/countries.py:92 core/countries.py:349
+msgid "Greece"
+msgstr ""
+
+#: core/countries.py:93 core/countries.py:350
+msgid "Greenland"
+msgstr ""
+
+#: core/countries.py:94 core/countries.py:351
+msgid "Grenada"
+msgstr ""
+
+#: core/countries.py:95 core/countries.py:352
+msgid "Guadeloupe"
+msgstr ""
+
+#: core/countries.py:96 core/countries.py:353
+msgid "Guam"
+msgstr ""
+
+#: core/countries.py:97 core/countries.py:354
+msgid "Guatemala"
+msgstr ""
+
+#: core/countries.py:98 core/countries.py:355
+msgid "Guernsey"
+msgstr ""
+
+#: core/countries.py:99 core/countries.py:356
+msgid "Guinea"
+msgstr ""
+
+#: core/countries.py:100 core/countries.py:357
+msgid "Guinea-bissau"
+msgstr ""
+
+#: core/countries.py:101 core/countries.py:358
+msgid "Guyana"
+msgstr ""
+
+#: core/countries.py:102 core/countries.py:359
+msgid "Haiti"
+msgstr ""
+
+#: core/countries.py:103 core/countries.py:360
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#: core/countries.py:104 core/countries.py:361
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: core/countries.py:105 core/countries.py:362
+msgid "Honduras"
+msgstr ""
+
+#: core/countries.py:106 core/countries.py:363
+msgid "Hong Kong"
+msgstr ""
+
+#: core/countries.py:107 core/countries.py:364
+msgid "Hungary"
+msgstr ""
+
+#: core/countries.py:108 core/countries.py:365
+msgid "Iceland"
+msgstr ""
+
+#: core/countries.py:109 core/countries.py:366
+msgid "India"
+msgstr ""
+
+#: core/countries.py:110 core/countries.py:367
+msgid "Indonesia"
+msgstr ""
+
+#: core/countries.py:111 core/countries.py:368
+msgid "Iran, Islamic Republic of"
+msgstr ""
+
+#: core/countries.py:112 core/countries.py:369
+msgid "Iraq"
+msgstr ""
+
+#: core/countries.py:113 core/countries.py:370
+msgid "Ireland"
+msgstr ""
+
+#: core/countries.py:114 core/countries.py:372
+msgid "Isle of Man"
+msgstr ""
+
+#: core/countries.py:115 core/countries.py:373
+msgid "Israel"
+msgstr ""
+
+#: core/countries.py:116 core/countries.py:374
+msgid "Italy"
+msgstr ""
+
+#: core/countries.py:117 core/countries.py:375
+msgid "Jamaica"
+msgstr ""
+
+#: core/countries.py:118 core/countries.py:376
+msgid "Japan"
+msgstr ""
+
+#: core/countries.py:119 core/countries.py:377
+msgid "Jersey"
+msgstr ""
+
+#: core/countries.py:120 core/countries.py:378
+msgid "Jordan"
+msgstr ""
+
+#: core/countries.py:121 core/countries.py:379
+msgid "Kazakhstan"
+msgstr ""
+
+#: core/countries.py:122 core/countries.py:380
+msgid "Kenya"
+msgstr ""
+
+#: core/countries.py:123 core/countries.py:381
+msgid "Kiribati"
+msgstr ""
+
+#: core/countries.py:124 core/countries.py:382
+msgid "Korea, Democratic People's Republic of"
+msgstr ""
+
+#: core/countries.py:125 core/countries.py:383
+msgid "Korea, Republic of"
+msgstr ""
+
+#: core/countries.py:126 core/countries.py:384
+msgid "Kuwait"
+msgstr ""
+
+#: core/countries.py:127 core/countries.py:385
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: core/countries.py:128 core/countries.py:386
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: core/countries.py:129 core/countries.py:387
+msgid "Latvia"
+msgstr ""
+
+#: core/countries.py:130 core/countries.py:388
+msgid "Lebanon"
+msgstr ""
+
+#: core/countries.py:131 core/countries.py:389
+msgid "Lesotho"
+msgstr ""
+
+#: core/countries.py:132 core/countries.py:390
+msgid "Liberia"
+msgstr ""
+
+#: core/countries.py:133 core/countries.py:391
+msgid "Libya"
+msgstr ""
+
+#: core/countries.py:134 core/countries.py:393
+msgid "Lithuania"
+msgstr ""
+
+#: core/countries.py:135 core/countries.py:394
+msgid "Luxembourg"
+msgstr ""
+
+#: core/countries.py:136 core/countries.py:395
+msgid "Macao"
+msgstr ""
+
+#: core/countries.py:137 core/countries.py:396
+msgid "Macedonia, The Former Yugoslav Republic of"
+msgstr ""
+
+#: core/countries.py:138 core/countries.py:397
+msgid "Madagascar"
+msgstr ""
+
+#: core/countries.py:139 core/countries.py:398
+msgid "Malawi"
+msgstr ""
+
+#: core/countries.py:140 core/countries.py:399
+msgid "Malaysia"
+msgstr ""
+
+#: core/countries.py:141 core/countries.py:400
+msgid "Maldives"
+msgstr ""
+
+#: core/countries.py:142 core/countries.py:401
+msgid "Mali"
+msgstr ""
+
+#: core/countries.py:143 core/countries.py:402
+msgid "Malta"
+msgstr ""
+
+#: core/countries.py:144 core/countries.py:403
+msgid "Marshall Islands"
+msgstr ""
+
+#: core/countries.py:145 core/countries.py:404
+msgid "Martinique"
+msgstr ""
+
+#: core/countries.py:146 core/countries.py:405
+msgid "Mauritania"
+msgstr ""
+
+#: core/countries.py:147 core/countries.py:406
+msgid "Mauritius"
+msgstr ""
+
+#: core/countries.py:148 core/countries.py:407
+msgid "Mayotte"
+msgstr ""
+
+#: core/countries.py:149 core/countries.py:408
+msgid "Mexico"
+msgstr ""
+
+#: core/countries.py:150 core/countries.py:409
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#: core/countries.py:151 core/countries.py:410
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: core/countries.py:152 core/countries.py:411
+msgid "Monaco"
+msgstr ""
+
+#: core/countries.py:153 core/countries.py:412
+msgid "Mongolia"
+msgstr ""
+
+#: core/countries.py:154 core/countries.py:413
+msgid "Montenegro"
+msgstr ""
+
+#: core/countries.py:155 core/countries.py:414
+msgid "Montserrat"
+msgstr ""
+
+#: core/countries.py:156 core/countries.py:415
+msgid "Morocco"
+msgstr ""
+
+#: core/countries.py:157 core/countries.py:416
+msgid "Mozambique"
+msgstr ""
+
+#: core/countries.py:158 core/countries.py:417
+msgid "Myanmar"
+msgstr ""
+
+#: core/countries.py:159 core/countries.py:418
+msgid "Namibia"
+msgstr ""
+
+#: core/countries.py:160 core/countries.py:419
+msgid "Nauru"
+msgstr ""
+
+#: core/countries.py:161 core/countries.py:420
+msgid "Nepal"
+msgstr ""
+
+#: core/countries.py:162 core/countries.py:421
+msgid "Netherlands"
+msgstr ""
+
+#: core/countries.py:163 core/countries.py:422
+msgid "New Caledonia"
+msgstr ""
+
+#: core/countries.py:164 core/countries.py:423
+msgid "New Zealand"
+msgstr ""
+
+#: core/countries.py:165 core/countries.py:424
+msgid "Nicaragua"
+msgstr ""
+
+#: core/countries.py:166 core/countries.py:425
+msgid "Niger"
+msgstr ""
+
+#: core/countries.py:167 core/countries.py:426
+msgid "Nigeria"
+msgstr ""
+
+#: core/countries.py:168 core/countries.py:427
+msgid "Niue"
+msgstr ""
+
+#: core/countries.py:169 core/countries.py:428
+msgid "Norfolk Island"
+msgstr ""
+
+#: core/countries.py:170 core/countries.py:429
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: core/countries.py:171 core/countries.py:430
+msgid "Norway"
+msgstr ""
+
+#: core/countries.py:172 core/countries.py:432
+msgid "Oman"
+msgstr ""
+
+#: core/countries.py:173 core/countries.py:433
+msgid "Pakistan"
+msgstr ""
+
+#: core/countries.py:174 core/countries.py:434
+msgid "Palau"
+msgstr ""
+
+#: core/countries.py:175 core/countries.py:435
+msgid "Palestinian Territory, Occupied"
+msgstr ""
+
+#: core/countries.py:176 core/countries.py:436
+msgid "Panama"
+msgstr ""
+
+#: core/countries.py:177 core/countries.py:437
+msgid "Papua New Guinea"
+msgstr ""
+
+#: core/countries.py:178 core/countries.py:438
+msgid "Paraguay"
+msgstr ""
+
+#: core/countries.py:179 core/countries.py:439
+msgid "Peru"
+msgstr ""
+
+#: core/countries.py:180 core/countries.py:440
+msgid "Philippines"
+msgstr ""
+
+#: core/countries.py:181 core/countries.py:441
+msgid "Pitcairn"
+msgstr ""
+
+#: core/countries.py:182 core/countries.py:443
+msgid "Poland"
+msgstr ""
+
+#: core/countries.py:183 core/countries.py:444
+msgid "Portugal"
+msgstr ""
+
+#: core/countries.py:184 core/countries.py:446
+msgid "Puerto Rico"
+msgstr ""
+
+#: core/countries.py:185 core/countries.py:447
+msgid "Qatar"
+msgstr ""
+
+#: core/countries.py:186 core/countries.py:450
+msgid "Réunion"
+msgstr ""
+
+#: core/countries.py:187 core/countries.py:451
+msgid "Romania"
+msgstr ""
+
+#: core/countries.py:188 core/countries.py:452
+msgid "Russian Federation"
+msgstr ""
+
+#: core/countries.py:189 core/countries.py:453
+msgid "Rwanda"
+msgstr ""
+
+#: core/countries.py:190 core/countries.py:454
+msgid "Saint Barthélemy"
+msgstr ""
+
+#: core/countries.py:191 core/countries.py:455
+msgid "Saint Helena, Ascension and Tristan Da Cunha"
+msgstr ""
+
+#: core/countries.py:192 core/countries.py:456
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: core/countries.py:193 core/countries.py:457
+msgid "Saint Lucia"
+msgstr ""
+
+#: core/countries.py:194 core/countries.py:458
+msgid "Saint Martin (French Part)"
+msgstr ""
+
+#: core/countries.py:195 core/countries.py:459
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: core/countries.py:196 core/countries.py:460
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: core/countries.py:197 core/countries.py:461
+msgid "Samoa"
+msgstr ""
+
+#: core/countries.py:198 core/countries.py:462
+msgid "San Marino"
+msgstr ""
+
+#: core/countries.py:199 core/countries.py:463
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: core/countries.py:200 core/countries.py:464
+msgid "Saudi Arabia"
+msgstr ""
+
+#: core/countries.py:201 core/countries.py:465
+msgid "Senegal"
+msgstr ""
+
+#: core/countries.py:202 core/countries.py:466
+msgid "Serbia"
+msgstr ""
+
+#: core/countries.py:203 core/countries.py:467
+msgid "Seychelles"
+msgstr ""
+
+#: core/countries.py:204 core/countries.py:468
+msgid "Sierra Leone"
+msgstr ""
+
+#: core/countries.py:205 core/countries.py:469
+msgid "Singapore"
+msgstr ""
+
+#: core/countries.py:206 core/countries.py:471
+msgid "Sint Maarten (Dutch Part)"
+msgstr ""
+
+#: core/countries.py:207 core/countries.py:472
+msgid "Slovakia"
+msgstr ""
+
+#: core/countries.py:208 core/countries.py:473
+msgid "Slovenia"
+msgstr ""
+
+#: core/countries.py:209 core/countries.py:474
+msgid "Solomon Islands"
+msgstr ""
+
+#: core/countries.py:210 core/countries.py:475
+msgid "Somalia"
+msgstr ""
+
+#: core/countries.py:211 core/countries.py:476
+msgid "South Africa"
+msgstr ""
+
+#: core/countries.py:212 core/countries.py:477
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: core/countries.py:213 core/countries.py:478
+msgid "South Sudan"
+msgstr ""
+
+#: core/countries.py:214 core/countries.py:479
+msgid "Spain"
+msgstr ""
+
+#: core/countries.py:215 core/countries.py:480
+msgid "Sri Lanka"
+msgstr ""
+
+#: core/countries.py:216 core/countries.py:481
+msgid "Sudan"
+msgstr ""
+
+#: core/countries.py:217 core/countries.py:482
+msgid "Suriname"
+msgstr ""
+
+#: core/countries.py:218 core/countries.py:483
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: core/countries.py:219 core/countries.py:484
+msgid "Swaziland"
+msgstr ""
+
+#: core/countries.py:220 core/countries.py:485
+msgid "Sweden"
+msgstr ""
+
+#: core/countries.py:221 core/countries.py:487
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: core/countries.py:222 core/countries.py:488
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: core/countries.py:223 core/countries.py:489
+msgid "Tajikistan"
+msgstr ""
+
+#: core/countries.py:224 core/countries.py:490
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: core/countries.py:225 core/countries.py:491
+msgid "Thailand"
+msgstr ""
+
+#: core/countries.py:226 core/countries.py:494
+msgid "Timor-leste"
+msgstr ""
+
+#: core/countries.py:227 core/countries.py:495
+msgid "Togo"
+msgstr ""
+
+#: core/countries.py:228 core/countries.py:496
+msgid "Tokelau"
+msgstr ""
+
+#: core/countries.py:229 core/countries.py:497
+msgid "Tonga"
+msgstr ""
+
+#: core/countries.py:230 core/countries.py:498
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: core/countries.py:231 core/countries.py:499
+msgid "Tunisia"
+msgstr ""
+
+#: core/countries.py:232 core/countries.py:500
+msgid "Turkey"
+msgstr ""
+
+#: core/countries.py:233 core/countries.py:501
+msgid "Turkmenistan"
+msgstr ""
+
+#: core/countries.py:234 core/countries.py:502
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: core/countries.py:235 core/countries.py:503
+msgid "Tuvalu"
+msgstr ""
+
+#: core/countries.py:236 core/countries.py:505
+msgid "Uganda"
+msgstr ""
+
+#: core/countries.py:237 core/countries.py:506
+msgid "Ukraine"
+msgstr ""
+
+#: core/countries.py:238 core/countries.py:507
+msgid "United Arab Emirates"
+msgstr ""
+
+#: core/countries.py:239 core/countries.py:508
+msgid "United Kingdom"
+msgstr ""
+
+#: core/countries.py:240 core/countries.py:510
+msgid "United States"
+msgstr ""
+
+#: core/countries.py:241 core/countries.py:511
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: core/countries.py:242 core/countries.py:512
+msgid "Uruguay"
+msgstr ""
+
+#: core/countries.py:243 core/countries.py:513
+msgid "Uzbekistan"
+msgstr ""
+
+#: core/countries.py:244 core/countries.py:514
+msgid "Vanuatu"
+msgstr ""
+
+#: core/countries.py:245 core/countries.py:515
+msgid "Venezuela, Bolivarian Republic of"
+msgstr ""
+
+#: core/countries.py:246 core/countries.py:516
+msgid "Viet Nam"
+msgstr ""
+
+#: core/countries.py:247 core/countries.py:517
+msgid "Virgin Islands, British"
+msgstr ""
+
+#: core/countries.py:248 core/countries.py:518
+msgid "Virgin Islands, U.S."
+msgstr ""
+
+#: core/countries.py:249 core/countries.py:519
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: core/countries.py:250 core/countries.py:520
+msgid "Western Sahara"
+msgstr ""
+
+#: core/countries.py:251 core/countries.py:521
+msgid "Yemen"
+msgstr ""
+
+#: core/countries.py:252 core/countries.py:522
+msgid "Zambia"
+msgstr ""
+
+#: core/countries.py:253 core/countries.py:523
+msgid "Zimbabwe"
+msgstr ""
+
+#: core/countries.py:272
+msgid "Ascension and Tristan Da Cunha Saint Helena"
+msgstr ""
+
+#: core/countries.py:286
+msgid "Bolivarian Republic of Venezuela"
+msgstr ""
+
+#: core/countries.py:294
+msgid "British Virgin Islands"
+msgstr ""
+
+#: core/countries.py:322
+msgid "Democratic People's Republic of Korea"
+msgstr ""
+
+#: core/countries.py:336
+msgid "Federated States of Micronesia"
+msgstr ""
+
+#: core/countries.py:371
+msgid "Islamic Republic of Iran"
+msgstr ""
+
+#: core/countries.py:431
+msgid "Occupied Palestinian Territory"
+msgstr ""
+
+#: core/countries.py:442
+msgid "Plurinational State of Bolivia"
+msgstr ""
+
+#: core/countries.py:445
+msgid "Province of China Taiwan"
+msgstr ""
+
+#: core/countries.py:448
+msgid "Republic of Korea"
+msgstr ""
+
+#: core/countries.py:449
+msgid "Republic of Moldova"
+msgstr ""
+
+#: core/countries.py:470
+msgid "Sint Eustatius and Saba Bonaire"
+msgstr ""
+
+#: core/countries.py:492
+msgid "The Democratic Republic of the Congo"
+msgstr ""
+
+#: core/countries.py:493
+msgid "The Former Yugoslav Republic of Macedonia"
+msgstr ""
+
+#: core/countries.py:504
+msgid "U.S. Virgin Islands"
+msgstr ""
+
+#: core/countries.py:509
+msgid "United Republic of Tanzania"
+msgstr ""
+
+#: home/templates/home.html:9
+msgid "Promotes young volunteering"
+msgstr ""
+
+#: home/templates/home.html:14
+msgid "Tag 'video' not supports with your browser."
+msgstr ""
+
+#: home/templates/home.html:14
+msgid "Download video"
+msgstr ""
+
+#: home/templates/home.html:16
+msgid "Do you want to"
+msgstr ""
+
+#: home/templates/home.html:16
+msgid "Browse challenges"
+msgstr ""
+
+#: home/templates/home.html:16
+msgid "Browse organizations"
+msgstr ""
+
+#: home/templates/terms_and_conditions.html:4
+msgid "Terms and conditions"
+msgstr ""
+
+#: organization/forms.py:28
+msgid "Organization name"
+msgstr ""
+
+#: organization/forms.py:31
+msgid "Organization description"
+msgstr ""
+
+#: organization/forms.py:43
+msgid "Web site"
+msgstr ""
+
+#: organization/forms.py:45
+msgid "Embedd video (link)"
+msgstr ""
+
+#: organization/forms.py:47
+msgid "Organization e-mail"
+msgstr ""
+
+#: organization/models.py:29
+msgid "Website"
+msgstr ""
+
+#: organization/models.py:30
+msgid "Video"
+msgstr ""
+
+#: organization/models.py:34
+msgid "Affiliated Users"
+msgstr ""
+
+#: organization/models.py:43
+msgid "Full Name"
+msgstr ""
+
+#: organization/models.py:53
+msgid "organization"
+msgstr ""
+
+#: organization/models.py:54
+msgid "organizations"
+msgstr ""
+
+#: organization/templates/organization_create.html:4
+msgid "Create organization"
+msgstr ""
+
+#: organization/templates/organization_create.html:35
+msgid "Create this organization"
+msgstr ""
+
+#: organization/templates/organization_detail.html:4
+#: organization/templates/organization_detail.html:8
+msgid "Organization details"
+msgstr ""
+
+#: organization/templates/organization_detail.html:27
+msgid "Affiliated users:"
+msgstr ""
+
+#: organization/templates/organization_detail.html:37
+msgid "Web site:"
+msgstr ""
+
+#: organization/templates/organization_detail.html:38
+msgid "Video:"
+msgstr ""
+
+#: organization/templates/organization_detail.html:39
+msgid "E-mail:"
+msgstr ""
+
+#: organization/templates/organization_list.html:4
+msgid "Organizations list"
+msgstr ""
+
+#: organization/templates/organization_list.html:18
+msgid "There are no organizations"
+msgstr ""
+
+#: templates/404.html:4 templates/404.html.py:8
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:10
+msgid "We're sorry, but the requested page could not be found."
+msgstr ""
+
+#: templates/500.html:4
+msgid "Server error"
+msgstr ""
+
+#: templates/500.html:6
+msgid "Server error (500)"
+msgstr ""
+
+#: templates/500.html:9
+msgid "Server Error <em>(500)</em>"
+msgstr ""
+
+#: templates/500.html:10
+msgid ""
+"There's been an error. It's been reported to the site administrators via e-"
+"mail and should be fixed shortly. Thanks for your patience."
+msgstr ""
+
+#: templates/avatar/add.html:5 templates/avatar/change.html:5
+msgid "Your current avatar: "
+msgstr ""
+
+#: templates/avatar/add.html:12 templates/avatar/change.html:12
+msgid "You haven't uploaded an avatar yet. Please upload one now."
+msgstr ""
+
+#: templates/avatar/add.html:16 templates/avatar/change.html:21
+msgid "Upload New Image"
+msgstr ""
+
+#: templates/avatar/change.html:16
+msgid "Change avatar"
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:5
+msgid "Please select the avatars that you would like to delete."
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:11
+#, python-format
+msgid ""
+"You have no avatars to delete. Please <a href=\"%(avatar_change_url)s"
+"\">upload one</a> now."
+msgstr ""
+
+#: templates/avatar/confirm_delete.html:15
+msgid "Delete These"
+msgstr ""
+
+#: templates/avatar_crop/crop.html:75
+msgid "Crop."
+msgstr ""

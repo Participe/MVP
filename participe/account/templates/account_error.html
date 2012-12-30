@@ -1,12 +1,14 @@
 {% extends 'account_base.html' %}
-{% block title %}Error - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Error" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
     <div class="well">
         <div class="row">
             <div class="span12">
                 <p>{{ information }}</p>
-                <a href="/">Go back to main page</a>
+                <a href="/">{% trans "Go back to main page" %}</a>
             </div>
         </div>
     </div>

@@ -6,8 +6,9 @@ from django.contrib.auth.views import login, logout
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Authentication
-        
+    # i18n
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+    
     # Home
     url(r'^$', 'django.views.generic.simple.direct_to_template',
             {'template': 'home.html'}, name='home'),

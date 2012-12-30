@@ -1,9 +1,11 @@
 {% extends 'challenge_base.html' %}
-{% block title %}Challenges list - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Challenges list" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
 
 {% block extra_content %}
-    <a class="btn" href="/challenges/create/">Create new challenge</a>
+    <a class="btn" href="/challenges/create/">{% trans "Create new challenge" %}</a>
     <ul>
     {% for challenge in challenges %}
         <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
@@ -13,7 +15,7 @@
             </a></div>
         </li>
     {% empty %}
-        <p>There are no active challenges</p>
+        <p>{% trans "There are no active challenges" %}</p>
     {% endfor %}
     </ul>
 {% endblock %}

@@ -1,28 +1,30 @@
 {% extends 'organization_base.html' %}
-{% block title %}Organization details - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Organization details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
 {% load avatar_tags %}
 {% block extra_content %}
-    <p>Organization details</p>
+    <p>{% trans "Organization details" %}</p>
     <div class="well">
         <div class="row">
             <div class="span12">
                 <div class="row">
                     <div class="span3">
                         <div class=""><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
-                        <div class=""><b>Name: </b>{{ organization.name }}</div>
-                        <div class=""><b>Address: </b>{{ organization.address_1 }} {{ organization.address_2 }}</div>
-                        <div class=""><b>Postal code: </b>{{ organization.postal_code }}</div>
-                        <div class=""><b>City: </b>{{ organization.city }}</div>
-                        <div class=""><b>Country: </b>{{ organization.country.name }}</div>
+                        <div class=""><b>{% trans "Name:" %} </b>{{ organization.name }}</div>
+                        <div class=""><b>{% trans "Address:" %} </b>{{ organization.address_1 }} {{ organization.address_2 }}</div>
+                        <div class=""><b>{% trans "Postal code:" %} </b>{{ organization.postal_code }}</div>
+                        <div class=""><b>{% trans "City:" %} </b>{{ organization.city }}</div>
+                        <div class=""><b>{% trans "Country:" %} </b>{{ organization.country.name }}</div>
                     </div>
                     <div class="span3">
-                        <div class=""><b>Description: </b>{{ organization.description }}</div>
-                        <div class=""><b>Contact person: </b>{{ organization.contact_person }}</div>
+                        <div class=""><b>{% trans "Description:" %} </b>{{ organization.description }}</div>
+                        <div class=""><b>{% trans "Contact person:" %} </b>{{ organization.contact_person }}</div>
                         <div class="">{{ organization.alt_person_fullname }}</div>
                         <div class="">{{ organization.alt_person_email }}</div>
                         <div class="">{{ organization.alt_person_phone }}</div>
-                        <div class=""><b>Affiliated users: </b></div>
+                        <div class=""><b>{% trans "Affiliated users:" %} </b></div>
                             <ul>
                             {% for auser in affiliated_users %}
                                 <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
@@ -32,9 +34,9 @@
                             </ul>
                     </div>
                     <div class="span3">
-                        <div class=""><b>Web site: </b>{{ organization.website }}</div>
-                        <div class=""><b>Video: </b>{{ organization.video }}</div>
-                        <div class=""><b>E-mail: </b>{{ organization.email }}</div>
+                        <div class=""><b>{% trans "Web site:" %} </b>{{ organization.website }}</div>
+                        <div class=""><b>{% trans "Video:" %} </b>{{ organization.video }}</div>
+                        <div class=""><b>{% trans "E-mail:" %} </b>{{ organization.email }}</div>
                     </div>
                     <div class="span3">
                     </div>

@@ -1,12 +1,14 @@
 {% extends 'account_base.html' %}
-{% block title %}Information - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Information" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
     <div class="well">
         <div class="row">
             <div class="span12">
                 <p>{{ information }}</p>
-                <a href="/accounts/profile/view/">Go back to your profile</a>
+                <a href="/accounts/profile/view/">{% trans "Go back to your profile" %}</a>
             </div>
         </div>
     </div>
