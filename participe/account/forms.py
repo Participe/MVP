@@ -93,6 +93,7 @@ class UserProfileForm(forms.ModelForm):
     birth_day = forms.DateField(
             input_formats=("%d.%m.%Y",),
             widget=widgets.DateInput(
+                    #format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
 
     class Meta:
@@ -158,6 +159,7 @@ class UserEditForm(forms.ModelForm):
     birth_day = forms.DateField(
             input_formats=("%d.%m.%Y",),
             widget=widgets.DateInput(
+                    #format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
 
     class Meta:
