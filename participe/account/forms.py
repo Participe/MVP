@@ -27,9 +27,10 @@ class UserForm(forms.ModelForm):
         self.fields["password"].label = _("password")
         self.fields["retry"].label = _("retry")
         
-    retry = forms.CharField(widget=forms.PasswordInput(
-            attrs={"min_length": 6, "max_length": 30,
-                    "placeholder": _("Retry"), "value": ""}))
+    retry = forms.CharField(
+            widget=forms.PasswordInput(
+                    attrs={"min_length": 6, "max_length": 30,
+                            "placeholder": _("Retry"), "value": ""}))
     
     class Meta:
         model = User
@@ -90,8 +91,9 @@ class UserProfileForm(forms.ModelForm):
 
     captcha = CaptchaField()
     birth_day = forms.DateField(
-            input_formats=("%d.%m.%Y", "%d-%m-%Y", "%d/%m/%Y",),
-            widget=widgets.DateInput(attrs={"class": "input-small"}))
+            input_formats=("%d.%m.%Y",),
+            widget=widgets.DateInput(
+                    attrs={"class": "input-small"}))
 
     class Meta:
         model = UserProfile
@@ -144,12 +146,19 @@ class UserEditForm(forms.ModelForm):
 
     #username = forms.CharField(widget=forms.TextInput(attrs={
     #        "placeholder": "User name", "value": ""}))
-    first_name = forms.CharField(widget=forms.TextInput(
-            attrs={"placeholder": _("First name"), "value": ""}))
-    last_name = forms.CharField(widget=forms.TextInput(
-            attrs={"placeholder": _("Last name"), "value": ""}))
-    email = forms.EmailField(widget=widgets.EmailInput(
-            attrs={"placeholder": _("E-mail"), "value": ""}))
+    first_name = forms.CharField(
+            widget=forms.TextInput(
+                    attrs={"placeholder": _("First name"), "value": ""}))
+    last_name = forms.CharField(
+            widget=forms.TextInput(
+                    attrs={"placeholder": _("Last name"), "value": ""}))
+    email = forms.EmailField(
+            widget=widgets.EmailInput(
+                    attrs={"placeholder": _("E-mail"), "value": ""}))
+    birth_day = forms.DateField(
+            input_formats=("%d.%m.%Y",),
+            widget=widgets.DateInput(
+                    attrs={"class": "input-small"}))
 
     class Meta:
         model = UserProfile
@@ -169,8 +178,7 @@ class UserEditForm(forms.ModelForm):
                     attrs={"placeholder": _("City")}),
             "country": forms.Select(),
             #"gender": forms.Select(attrs={"class": "input-small"}),
-            "birth_day": widgets.DateInput(
-                    attrs={"class": "input-small"}),
+            #"birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(
                     attrs={"placeholder": _("Phone number")}),
             }
@@ -183,12 +191,14 @@ class UserEditForm(forms.ModelForm):
             instance.save()
             
 class ResetPasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput(
-            attrs={"min_length": 6, "max_length": 30,
-                    "placeholder": _("Password"), "value": ""}))
-    retry = forms.CharField(widget=forms.PasswordInput(
-            attrs={"min_length": 6, "max_length": 30,
-                    "placeholder": _("Retry"), "value": ""}))
+    password = forms.CharField(
+            widget=forms.PasswordInput(
+                    attrs={"min_length": 6, "max_length": 30,
+                            "placeholder": _("Password"), "value": ""}))
+    retry = forms.CharField(
+            widget=forms.PasswordInput(
+                    attrs={"min_length": 6, "max_length": 30,
+                            "placeholder": _("Retry"), "value": ""}))
 
     def clean_retry(self):
        if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):

@@ -5,12 +5,17 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8;" />
         <title>{% block title %}Participe{% endblock %}</title>
 
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.css" type="text/css" />
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1-1.4.3.min.js"></script>
+        <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.js"></script>
+        <script src="http://ajax.microsoft.com/ajax/jquery.ui/1.8.5/jquery-ui.js"></script>
+        <script src="http://cachedcommons.org/cache/modernizr/1.5.0/javascripts/modernizr.js"></script>
+        {% comment %}<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1-1.4.3.min.js"></script>{% endcomment %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.min.js"></script>
         <script src="http://connect.facebook.net/en_US/all.js"></script>
             
+        <link href="http://ajax.microsoft.com/ajax/jquery.ui/1.8.5/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.css" type="text/css" />
+
         <script type="text/javascript">
         </script>
 
@@ -62,6 +67,20 @@
             {% endblock %}
         </div>
         {% endblock %}
+
+        <script>
+            $(function() {
+            // Check if the browser supports the date input type
+                if (!Modernizr.inputtypes.date){
+                // Add the jQuery UI DatePicker to all
+                // input tags that have their type attributes
+                // set to 'date'
+                    $('input[type=date]').datepicker({
+                        dateFormat: 'dd.mm.yy'
+                    });
+                }
+            });
+        </script>
 
         <script src="{{ MEDIA_URL }}js/bootstrap-transition.js"></script>
         <script src="{{ MEDIA_URL }}js/bootstrap-alert.js"></script>

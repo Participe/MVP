@@ -27,6 +27,15 @@ class ChallengeForm(forms.ModelForm):
                     self.fields["organization"].hidden_widget()
             
     contact = forms.CharField(max_length=2)
+    start_date = forms.DateField(
+            input_formats=("%d.%m.%Y",),
+            widget=widgets.DateInput(
+                    attrs={"class": "input-small"}))
+    alt_date = forms.DateField(
+            input_formats=("%d.%m.%Y",),
+            widget=widgets.DateInput(
+                    attrs={"class": "input-small"},),
+            required=False)
 
     class Meta:
         model = Challenge
@@ -55,12 +64,10 @@ class ChallengeForm(forms.ModelForm):
             "alt_person_phone": forms.TextInput(
                     attrs={"placeholder": _("Phone number")}),
 
-            "start_date": widgets.DateInput(
-                    attrs={"class": "input-small"}),
+            #"start_date": widgets.DateInput(attrs={"class": "input-small"}),
             "start_time": widgets.TimeInput(
                     attrs={"class": "input-mini"}),
-            "alt_date": widgets.DateInput(
-                    attrs={"class": "input-small"}),
+            #"alt_date": widgets.DateInput(attrs={"class": "input-small"}),
             "alt_time": widgets.TimeInput(
                     attrs={"class": "input-mini"}),
             
