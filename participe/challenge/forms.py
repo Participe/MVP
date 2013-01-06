@@ -25,15 +25,24 @@ class ChallengeForm(forms.ModelForm):
             self.fields["organization"].required = False
             self.fields["organization"].widget = \
                     self.fields["organization"].hidden_widget()
-            
-    contact = forms.CharField(max_length=2)
+
+        self.contact_choices = [
+            ("me", "%s (%s)" % (self.user.get_full_name(), self.user.email)),
+            ("he", _("Affiliate different person")),]
+        self.fields["contact"].choices = self.contact_choices
+        self.fields["contact"].initial = "me"
+         
+    contact = forms.ChoiceField(
+            widget=forms.RadioSelect())
     start_date = forms.DateField(
             input_formats=("%d.%m.%Y",),
-            widget=widgets.DateInput(
+            widget=forms.DateInput(
+                    format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
     alt_date = forms.DateField(
             input_formats=("%d.%m.%Y",),
-            widget=widgets.DateInput(
+            widget=forms.DateInput(
+                    format="%d.%m.%Y",
                     attrs={"class": "input-small"},),
             required=False)
 

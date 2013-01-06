@@ -92,8 +92,8 @@ class UserProfileForm(forms.ModelForm):
     captcha = CaptchaField()
     birth_day = forms.DateField(
             input_formats=("%d.%m.%Y",),
-            widget=widgets.DateInput(
-                    #format="%d.%m.%Y",
+            widget=forms.DateInput(
+                    format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
 
     class Meta:
@@ -158,8 +158,8 @@ class UserEditForm(forms.ModelForm):
                     attrs={"placeholder": _("E-mail"), "value": ""}))
     birth_day = forms.DateField(
             input_formats=("%d.%m.%Y",),
-            widget=widgets.DateInput(
-                    #format="%d.%m.%Y",
+            widget=forms.DateInput(
+                    format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
 
     class Meta:

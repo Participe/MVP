@@ -68,6 +68,7 @@
         </div>
         {% endblock %}
 
+        {% comment %}
         <script>
             $(function() {
             // Check if the browser supports the date input type
@@ -75,12 +76,19 @@
                 // Add the jQuery UI DatePicker to all
                 // input tags that have their type attributes
                 // set to 'date'
-                    $('input[type=date]').datepicker({
+                    $('input[name=start_date]').datepicker({
+                        dateFormat: 'dd.mm.yy'
+                    });
+                    $('input[name=alt_date]').datepicker({
+                        dateFormat: 'dd.mm.yy'
+                    });
+                    $('input[name=birth_day]').datepicker({
                         dateFormat: 'dd.mm.yy'
                     });
                 }
             });
         </script>
+        {% endcomment %}
 
         <script src="{{ MEDIA_URL }}js/bootstrap-transition.js"></script>
         <script src="{{ MEDIA_URL }}js/bootstrap-alert.js"></script>

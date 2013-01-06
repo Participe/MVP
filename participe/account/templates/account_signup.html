@@ -21,6 +21,10 @@
 {% endblock %}
 
 {% block extra_content %}
+    <style type="text/css">
+        #ui-datepicker-div {display: none;}
+    </style>
+
     <form id="signup" class="well" action="." method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">
@@ -61,6 +65,18 @@
             </div>        
         </div>     
     </form>
+
+    <script>
+        $(function() {
+            options = {
+                dateFormat: 'dd.mm.yy',
+                changeYear: true,
+                yearRange: "-50:",
+                changeMonth: true
+            }
+            $('input[name=birth_day]').datepicker(options);
+        });
+    </script>
 
     {% comment %}
     <div id="fb-root"></div>
