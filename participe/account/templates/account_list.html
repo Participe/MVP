@@ -20,9 +20,9 @@
 
             <div><a href="{% url view_profile account.pk %}">
                 {% for profile in account.userprofile_set.all %}
-                    <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="">
+                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="">
                 {% empty %}
-                    <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
+                <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
                 {% endfor %}
                 <br/>{{ account.get_full_name }}
             </a></div>

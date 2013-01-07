@@ -25,9 +25,21 @@ from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
 from models import UserProfile
 
 
+def _attach_avatar(request, instance):
+    try:
+        avatar = request.FILES['avatar']
+    except:
+        return
+
+    try:
+        instance.avatar.save(avatar.name, avatar)
+        instance.save()
+    except:
+        return
+
 def signup(request):
-    uform = UserForm(request.POST or None)
-    pform = UserProfileForm(request.POST or None)
+    uform = UserForm(request.POST or None, request.FILES or None)
+    pform = UserProfileForm(request.POST or None, request.FILES or None)
 
     if request.method == "POST":
         if uform.is_valid() and pform.is_valid():
@@ -63,6 +75,7 @@ def signup(request):
                             "receive_newsletter"],
                     confirmation_code=confirmation_code,
                     )
+            _attach_avatar(request, profile)
 
             """
             user = authenticate(
@@ -147,7 +160,7 @@ def email_confirmation(request, confirmation_code):
         raise Http404
 
 def account_list(request):
-    accounts = User.objects.all()
+    accounts = User.objects.all().filter(is_active=True)
 
     return render_to_response('account_list.html',
             RequestContext(request, {
@@ -257,10 +270,7 @@ def change_avatar(request):
 
     if request.method == "POST":
         if pform.is_valid():
-            avatar = request.FILES['avatar']
-            profile.avatar.save(avatar.name, avatar)
-            profile.save()
-
+            _attach_avatar(request, profile)
             return redirect("view_myprofile")
     
     return render_to_response('account_change_avatar.html', 

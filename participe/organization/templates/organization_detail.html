@@ -3,7 +3,9 @@
 
 {% block title %}{% trans "Organization details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
-{% load avatar_tags %}
+
+{% comment %}{% load avatar_tags %}{% endcomment %}
+
 {% block extra_content %}
     <p>{% trans "Organization details" %}</p>
     <div class="well">
@@ -28,7 +30,17 @@
                             <ul>
                             {% for auser in affiliated_users %}
                                 <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
+                                    <div><a href="{% url view_profile auser.pk %}">
+                                        {% for profile in auser.userprofile_set.all %}
+                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="">
+                                        {% empty %}
+                                        <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
+                                        {% endfor %}
+                                    </a></div>
+                                    
+                                    {% comment %}
                                     <div><a href="{% url view_profile auser.pk %}">{% avatar auser 100 %}{{ auser.get_full_name }}</a></div>
+                                    {% endcomment %}
                                 </li>
                             {% endfor %}
                             </ul>
