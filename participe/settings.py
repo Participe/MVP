@@ -114,8 +114,8 @@ INSTALLED_APPS = (
     
     'south',
     'social_auth',
-    'avatar_crop',
-    'avatar',
+    #'avatar_crop',
+    #'avatar',
     'captcha',
     'easy_thumbnails',
 )

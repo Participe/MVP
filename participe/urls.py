@@ -19,8 +19,8 @@ urlpatterns = patterns('',
             name='terms_and_conditions'),
     
     # Take into account, that Avatar templates are overridden here
-    url(r'^avatar/', include('avatar.urls')),
-    url(r'^avatar_crop/', include('avatar_crop.urls')),
+    #url(r'^avatar/', include('avatar.urls')),
+    #url(r'^avatar_crop/', include('avatar_crop.urls')),
     url(r'', include('social_auth.urls')),
     url(r'^captcha/', include('captcha.urls')),
     
@@ -38,12 +38,14 @@ urlpatterns += patterns('participe.account.views',
     url(r'^accounts/profile/view/(?P<user_id>[\w_-]+)/$', 'view_profile',
             name='view_profile'),
     url(r'^accounts/profile/edit/$', 'edit_profile', name='edit_profile'),
-    url(r'^accounts/profile/delete/$', 'delete_profile', name='delete_profile'),
+    url(r'^accounts/profile/delete/$', 'delete_profile',
+            name='delete_profile'),
     url(r'^accounts/password/reset/$', 'reset_password',
             name='reset_password'),
     url(r'^account/confirmation/(?P<confirmation_code>[0-9a-zA-Z-_:]+)/$',
             'email_confirmation',
             name='email_confirmation'),
+    url(r'^accounts/avatar/change$', 'change_avatar', name='change_avatar'),
     )
 
 urlpatterns += patterns('participe.challenge.views',

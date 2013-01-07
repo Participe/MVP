@@ -1,4 +1,7 @@
+import os
+
 from django import forms
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.validators import email_re
 from django.utils.translation import ugettext as _
@@ -98,7 +101,8 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ["address_1", "address_2", "postal_code", "city", "country",
+        fields = ["avatar",
+            "address_1", "address_2", "postal_code", "city", "country",
             #"gender",
             "birth_day", "phone_number", "receive_newsletter",]
         widgets = {
@@ -206,3 +210,32 @@ class ResetPasswordForm(forms.Form):
        if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError(_("Passwords don't match"))
        return self.cleaned_data["retry"]
+
+class ChangeAvatarForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ChangeAvatarForm, self).__init__(*args, **kwargs)
+    
+    avatar = forms.ImageField()
+    
+    def clean_avatar(self):
+        data = self.cleaned_data['avatar']
+
+        if data:
+            if settings.AVATAR_ALLOWED_FILE_EXTS:
+                (root, ext) = os.path.splitext(data.name.lower())
+                if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
+                    raise forms.ValidationError(
+                            "%(ext)s is an invalid file extension. "
+                            "Authorized extensions are : %(valid_exts_list)s" % 
+                            {'ext': ext,
+                            'valid_exts_list':
+                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
+            if data.size > settings.AVATAR_MAX_SIZE:
+                raise forms.ValidationError(
+                        u"Your file is too big (%(size)s), the maximum "
+                        "allowed size is %(max_valid_size)s" %
+                        {'size': filesizeformat(data.size),
+                        'max_valid_size':
+                            filesizeformat(settings.AVATAR_MAX_SIZE)})
+        return self.cleaned_data['avatar']      
+

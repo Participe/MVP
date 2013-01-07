@@ -20,14 +20,16 @@ import urllib
 from social_auth.utils import setting
 from templated_email import send_templated_mail
 
-from forms import UserForm, UserProfileForm, ResetPasswordForm, UserEditForm
+from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
+        ChangeAvatarForm)
 from models import UserProfile
 
 
 def signup(request):
+    uform = UserForm(request.POST or None)
+    pform = UserProfileForm(request.POST or None)
+
     if request.method == "POST":
-        uform = UserForm(request.POST)
-        pform = UserProfileForm(request.POST)
         if uform.is_valid() and pform.is_valid():
             # Create User
             user = User.objects.create(
@@ -90,9 +92,6 @@ def signup(request):
                                 }))
             except:
                 return HttpResponseRedirect('/')
-    else:
-        uform = UserForm()
-        pform = UserProfileForm()
 
     #XXX Point-blank auth. Uncomment for testing
     """
@@ -249,4 +248,23 @@ def reset_password(request):
     return render_to_response('account_reset_password.html',
             RequestContext(request, {
                     'form': form,
+                    }))
+
+@login_required
+def change_avatar(request):
+    profile = UserProfile.objects.get(user=request.user)
+    pform = ChangeAvatarForm(request.POST or None, request.FILES or None)
+
+    if request.method == "POST":
+        if pform.is_valid():
+            avatar = request.FILES['avatar']
+            profile.avatar.save(avatar.name, avatar)
+            profile.save()
+
+            return redirect("view_myprofile")
+    
+    return render_to_response('account_change_avatar.html', 
+            RequestContext(request, {
+                    "profile": profile,
+                    "pform": pform,
                     }))

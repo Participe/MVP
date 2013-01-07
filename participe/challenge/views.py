@@ -12,15 +12,13 @@ from models import Challenge
 
 @login_required
 def challenge_create(request):
+    form = ChallengeForm(
+            request.user, request.POST or None, request.FILES or None)
+
     if request.method == "POST":
-        form = ChallengeForm(
-                request.user, request.POST or None, request.FILES or None)
         if form.is_valid():
             form.save()
             return redirect("challenge_list")
-    else:
-        form = ChallengeForm(
-                request.user, request.POST or None, request.FILES or None)
     
     return render_to_response('challenge_create.html', 
             RequestContext(request, {'form': form}))

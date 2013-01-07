@@ -1,0 +1,20 @@
+{% extends 'account_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Change Avatar" %} - {{ block.super }}{% endblock %}
+{% load thumbnail %}
+
+{% block extra_content %}
+    <p>{% trans "Your current avatar: " %}</p>
+    <div class="well">
+        <div class="row">
+            <div class="span12">
+                <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
+                <form enctype="multipart/form-data" method="POST" action="">{% csrf_token %}
+                    {{ pform.as_p }}
+                    <input type="submit" value="{% trans "Upload New Image" %}" />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

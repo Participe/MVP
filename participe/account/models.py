@@ -4,6 +4,8 @@ from django.utils.translation import ugettext as _
 
 from django_countries import CountryField
 
+from easy_thumbnails.fields import ThumbnailerImageField
+
 
 gender_choices = [
     ("M", _("Male")),
@@ -11,8 +13,10 @@ gender_choices = [
     ]
 
 class UserProfile(models.Model):
+    avatar = ThumbnailerImageField(
+            upload_to='img/accounts', verbose_name=_("Avatar"),
+            blank=True)
     user = models.ForeignKey(User, unique=True, verbose_name=_("User"))
-    #avatar =
     #description =
             
     address_1 = models.CharField(max_length=80, verbose_name=_("Address 1"))

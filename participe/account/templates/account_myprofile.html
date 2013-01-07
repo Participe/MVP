@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block title %}{% trans "Profile" %} - {{ block.super }}{% endblock %}
+{% load thumbnail %}
 
 {% block extra_content %}
     <p>{% trans "Your profile" %}</p>
@@ -10,9 +11,14 @@
             <div class="span12">
                 <div class="row">
                     <div class="span3">
+                        <div class=""><a href="{% url change_avatar %}">{% trans "Change" %} </a>{% trans "your avatar" %}</div>
+                        <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
+                        
+                        {% comment %}
                         <div class=""><a href="{% url avatar_change %}">{% trans "Change" %} </a>{% trans "your avatar" %}</div>
                         {% load avatar_tags %}
                         {% avatar user 100 %}
+                        {% endcomment %}
                     </div>
                     <div class="span3">
                         <div class=""><b>{% trans "Full name:" %}</b> {{ user.get_full_name }}</div>
