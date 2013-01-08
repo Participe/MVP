@@ -4,6 +4,7 @@ from django.contrib.auth.views import auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from django.core.files.base import ContentFile
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -11,17 +12,28 @@ from django.template import RequestContext, Context, loader
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
+import os
 import datetime
 import json
 import random
 import string
 import urllib
 
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
+
+try:
+    from PIL import Image
+except ImportError:
+    import Image
+
 from social_auth.utils import setting
 from templated_email import send_templated_mail
 
 from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
-        ChangeAvatarForm)
+        ChangeAvatarForm, AvatarCropForm)
 from models import UserProfile
 
 
@@ -263,9 +275,16 @@ def reset_password(request):
                     'form': form,
                     }))
 
+# TODO On general success move this to separate application
 @login_required
 def change_avatar(request):
-    profile = UserProfile.objects.get(user=request.user)
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except:
+        # If profile isn't filled up (i.e. doesn't exist), redirects user to
+        # profile edit page
+        return redirect("edit_profile")
+
     pform = ChangeAvatarForm(request.POST or None, request.FILES or None)
 
     if request.method == "POST":
@@ -277,4 +296,60 @@ def change_avatar(request):
             RequestContext(request, {
                     "profile": profile,
                     "pform": pform,
+                    }))
+
+@login_required
+def crop_avatar(request):
+    form = AvatarCropForm(request.POST or None, request.FILES or None)
+    profile = get_object_or_404(UserProfile, user=request.user)
+    avatar = profile.avatar
+
+    if avatar.width <= avatar.height:
+        result = "width"
+    else:
+        result = "height"
+
+    if request.method == "POST":
+        try:
+            orig = avatar.storage.open(avatar.name, 'rb').read()
+            image = Image.open(StringIO(orig))
+        except IOError:
+            return
+        form = AvatarCropForm(image, request.POST)
+
+        if form.is_valid():
+            top = int(form.cleaned_data["top"])
+            left = int(form.cleaned_data["left"])
+            right = int(form.cleaned_data["right"])
+            bottom = int(form.cleaned_data["bottom"])
+
+            box = [left, top, right, bottom]
+            (w, h) = image.size
+            if result=="width":
+                box = map(lambda x: x*h/settings.AVATAR_CROP_MAX_SIZE, box)
+            else:
+                box = map(lambda x: x*w/settings.AVATAR_CROP_MAX_SIZE, box)
+
+            image = image.crop(box)
+            if image.mode != 'RGB':
+                image = image.convert('RGB')
+
+            thumb = StringIO()
+            image.save(thumb, settings.AVATAR_THUMB_FORMAT, 
+                    quality=settings.AVATAR_THUMB_QUALITY)
+            thumb_file = ContentFile(thumb.getvalue())
+
+            base_name, ext = os.path.splitext(avatar.name)
+            profile.avatar = avatar.storage.save(
+                    "%s_cropped%s" % (base_name, ext), thumb_file)
+            profile.save()
+
+            return redirect("view_myprofile")
+
+    return render_to_response("account_crop_avatar.html", 
+            RequestContext(request, {
+                    'AVATAR_CROP_MAX_SIZE': settings.AVATAR_CROP_MAX_SIZE,
+                    'dim': result,
+                    'avatar': avatar,
+                    'form': form
                     }))

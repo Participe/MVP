@@ -114,8 +114,6 @@ INSTALLED_APPS = (
     
     'south',
     'social_auth',
-    #'avatar_crop',
-    #'avatar',
     'captcha',
     'easy_thumbnails',
 )
@@ -159,7 +157,11 @@ AVATAR_ALLOWED_FILE_EXTS = [".jpg", ".jpeg", ".png",]
 AVATAR_MAX_SIZE = 5*1024*1024
 AVATAR_MAX_AVATARS_PER_USER = 1
 
-AVATAR_CROP_MIN_SIZE = 8
+AVATAR_THUMB_FORMAT = "JPEG"
+AVATAR_THUMB_QUALITY = 85
+
+AVATAR_CROP_MAX_SIZE = 500
+AVATAR_CROP_MIN_SIZE = 10
 
 ###############################################################################
 ### DJANGO SOCIAL AUTH SECTION                                              ###

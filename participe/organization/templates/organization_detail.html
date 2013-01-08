@@ -4,8 +4,6 @@
 {% block title %}{% trans "Organization details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
 
-{% comment %}{% load avatar_tags %}{% endcomment %}
-
 {% block extra_content %}
     <p>{% trans "Organization details" %}</p>
     <div class="well">
@@ -37,10 +35,6 @@
                                         <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
                                         {% endfor %}
                                     </a></div>
-                                    
-                                    {% comment %}
-                                    <div><a href="{% url view_profile auser.pk %}">{% avatar auser 100 %}{{ auser.get_full_name }}</a></div>
-                                    {% endcomment %}
                                 </li>
                             {% endfor %}
                             </ul>

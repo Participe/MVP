@@ -18,9 +18,6 @@ urlpatterns = patterns('',
             {'template': 'terms_and_conditions.html'},
             name='terms_and_conditions'),
     
-    # Take into account, that Avatar templates are overridden here
-    #url(r'^avatar/', include('avatar.urls')),
-    #url(r'^avatar_crop/', include('avatar_crop.urls')),
     url(r'', include('social_auth.urls')),
     url(r'^captcha/', include('captcha.urls')),
     
@@ -45,7 +42,11 @@ urlpatterns += patterns('participe.account.views',
     url(r'^account/confirmation/(?P<confirmation_code>[0-9a-zA-Z-_:]+)/$',
             'email_confirmation',
             name='email_confirmation'),
+
+    # TODO On general success move this to separate application
+    url(r'^accounts/avatar/add$', 'change_avatar', name='add_avatar'),
     url(r'^accounts/avatar/change$', 'change_avatar', name='change_avatar'),
+    url(r'^accounts/avatar/crop$', 'crop_avatar', name='crop_avatar'),
     )
 
 urlpatterns += patterns('participe.challenge.views',
