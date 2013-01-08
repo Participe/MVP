@@ -30,9 +30,9 @@
                                 <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
                                     <div><a href="{% url view_profile auser.pk %}">
                                         {% for profile in auser.userprofile_set.all %}
-                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="">
+                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
                                         {% empty %}
-                                        <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
+                                        <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
                                         {% endfor %}
                                     </a></div>
                                 </li>

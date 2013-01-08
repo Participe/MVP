@@ -309,6 +309,11 @@ def crop_avatar(request):
     else:
         result = "height"
 
+    if settings.AVATAR_CROP_MAX_SIZE > max(avatar.width, avatar.height):
+        AVATAR_CROP_MAX_SIZE = max(avatar.width, avatar.height)
+    else:
+        AVATAR_CROP_MAX_SIZE = settings.AVATAR_CROP_MAX_SIZE
+
     if request.method == "POST":
         try:
             orig = avatar.storage.open(avatar.name, 'rb').read()
@@ -326,9 +331,9 @@ def crop_avatar(request):
             box = [left, top, right, bottom]
             (w, h) = image.size
             if result=="width":
-                box = map(lambda x: x*h/settings.AVATAR_CROP_MAX_SIZE, box)
+                box = map(lambda x: x*h/AVATAR_CROP_MAX_SIZE, box)
             else:
-                box = map(lambda x: x*w/settings.AVATAR_CROP_MAX_SIZE, box)
+                box = map(lambda x: x*w/AVATAR_CROP_MAX_SIZE, box)
 
             image = image.crop(box)
             if image.mode != 'RGB':
@@ -348,7 +353,7 @@ def crop_avatar(request):
 
     return render_to_response("account_crop_avatar.html", 
             RequestContext(request, {
-                    'AVATAR_CROP_MAX_SIZE': settings.AVATAR_CROP_MAX_SIZE,
+                    'AVATAR_CROP_MAX_SIZE': AVATAR_CROP_MAX_SIZE,
                     'dim': result,
                     'avatar': avatar,
                     'form': form
