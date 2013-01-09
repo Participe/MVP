@@ -106,8 +106,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     'participe.core',
-    'participe.auth_pipelines',
-
+    
     'participe.home',
     'participe.challenge',
     'participe.organization',
@@ -225,7 +224,7 @@ LOGIN_REDIRECT_URL = '/accounts/profile/view/'
 LOGIN_ERROR_URL    = '/login-error/'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/view/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/signup/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/edit/'
 #SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = ''
 #SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = ''
 #SOCIAL_AUTH_BACKEND_ERROR_URL = ''
@@ -260,7 +259,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
     'social_auth.backends.pipeline.user.update_user_details',
-    'participe.auth_pipelines.pipelines.get_user_avatar',
+    'participe.core.auth_pipelines.get_user_avatar',
 )
 
 ###############################################################################

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import auth_login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
@@ -35,6 +35,7 @@ from templated_email import send_templated_mail
 from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
         ChangeAvatarForm, AvatarCropForm)
 from models import UserProfile
+from participe.core.user_tests import user_profile_completed
 
 
 def _attach_avatar(request, instance):
@@ -194,6 +195,7 @@ def view_profile(request, user_id):
                     }))    
 
 @login_required
+@user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def view_myprofile(request):
     user = request.user
     

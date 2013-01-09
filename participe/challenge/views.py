@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -9,8 +9,11 @@ from django.utils.translation import ugettext as _
 from forms import ChallengeForm
 from models import Challenge
 
+from participe.core.user_tests import user_profile_completed
 
+            
 @login_required
+@user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def challenge_create(request):
     form = ChallengeForm(
             request.user, request.POST or None, request.FILES or None)

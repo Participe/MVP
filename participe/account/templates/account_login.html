@@ -23,7 +23,7 @@
                         <div class="input"><input type="submit" class="btn-primary" value="{% trans 'login' %}" /></div>
                         <div class="input"><input type="hidden" name="next" value="{{ next|escape }}" /></div>
 
-                        <a href={% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
+                        <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
                             <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
                         </a>
                     </div>
