@@ -83,10 +83,10 @@ class ChallengeForm(forms.ModelForm):
             "application": forms.RadioSelect(),
 
             "min_participants": widgets.NumberInput(
-                    attrs={'min': '1', 'max': '10', 'step': '1',
+                    attrs={'min': '1', 'max': '10000', 'step': '1',
                             "class": "input-mini"}),
             "max_participants": widgets.NumberInput(
-                    attrs={'min': '1', 'max': '10', 'step': '1',
+                    attrs={'min': '1', 'max': '10000', 'step': '1',
                             "class": "input-mini"}),
             
             "latest_signup": forms.RadioSelect(),
