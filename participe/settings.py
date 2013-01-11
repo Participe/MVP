@@ -161,7 +161,7 @@ AVATAR_THUMB_FORMAT = "JPEG"
 AVATAR_THUMB_QUALITY = 85
 
 AVATAR_CROP_MAX_SIZE = 500
-AVATAR_CROP_MIN_SIZE = 10
+AVATAR_CROP_MIN_SIZE = 15
 
 ###############################################################################
 ### DJANGO SOCIAL AUTH SECTION                                              ###

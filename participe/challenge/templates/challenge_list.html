@@ -9,7 +9,7 @@
     <ul>
     {% for challenge in challenges %}
         <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
-            <div><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 %}" alt="">
+            <div><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
                 <br/>{{ challenge.name }}
                 <br/>({{ challenge.organization }})
             </a></div>

@@ -11,7 +11,7 @@
             <div class="span12">
                 <div class="row">
                     <div class="span3">
-                        <div class=""><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
+                        <div class=""><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
                         <div class=""><b>{% trans "Name:" %} </b>{{ organization.name }}</div>
                         <div class=""><b>{% trans "Address:" %} </b>{{ organization.address_1 }} {{ organization.address_2 }}</div>
                         <div class=""><b>{% trans "Postal code:" %} </b>{{ organization.postal_code }}</div>
@@ -30,7 +30,7 @@
                                 <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
                                     <div><a href="{% url view_profile auser.pk %}">
                                         {% for profile in auser.userprofile_set.all %}
-                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
+                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
                                         {% empty %}
                                         <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
                                         {% endfor %}
