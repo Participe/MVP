@@ -21,6 +21,15 @@ class OrganizationForm(forms.ModelForm):
         self.fields["country"].choices = COUNTRIES
         self.fields["country"].initial = "CH"
 
+        self.contact_choices = [
+            ("me", "%s (%s)" % (self.user.get_full_name(), self.user.email)),
+            ("he", _("Affiliate different person")),]
+        self.fields["contact"].choices = self.contact_choices
+        self.fields["contact"].initial = "me"
+
+    contact = forms.ChoiceField(
+            widget=forms.RadioSelect())
+
     class Meta:
         model = Organization
         fields = ["avatar", "name", "description", 
@@ -81,9 +90,39 @@ class OrganizationForm(forms.ModelForm):
                             filesizeformat(settings.AVATAR_MAX_SIZE)})
         return self.cleaned_data['avatar']      
 
+    def clean_contact(self):
+        if self.cleaned_data["contact"] == 'me':
+            self.cleaned_data["is_contact_person"] = True
+            self.cleaned_data["is_alt_person"] = False
+        elif self.cleaned_data["contact"] == 'he':
+            self.cleaned_data["is_contact_person"] = False
+            self.cleaned_data["is_alt_person"] = True
+        else:
+            self._errors["contact"] = self.error_class(
+                    [_("This field is required."),])
+            del self.cleaned_data["contact"]
+        return self.cleaned_data["contact"]
+    
+    def clean(self):
+        if self.cleaned_data["is_alt_person"] == True:
+            if not self.cleaned_data["alt_person_fullname"]:
+                self._errors["alt_person_fullname"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_fullname"]
+            if not self.cleaned_data["alt_person_email"]:
+                self._errors["alt_person_email"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_email"]
+            if not self.cleaned_data["alt_person_phone"]:
+                self._errors["alt_person_phone"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_phone"]
+        return self.cleaned_data
+
     def save(self, commit=True):
         instance = super(OrganizationForm, self).save(commit=False)
         instance.contact_person = self.user
         
         if commit:
             instance.save()
+            instance.affiliated_users.add(self.user)

@@ -18,19 +18,26 @@ class UserProfile(models.Model):
             blank=True)
     user = models.ForeignKey(User, unique=True, verbose_name=_("User"))
     #description =
-            
-    address_1 = models.CharField(max_length=80, verbose_name=_("Address 1"))
+
+    # Appointment of certain required fields was moved to 'forms.py' in favor
+    # of importing facebook avatar pipeline.
+    address_1 = models.CharField(
+            max_length=80, null=True, blank=True, verbose_name=_("Address 1"))
     address_2 = models.CharField(
             max_length=80, null=True, blank=True, verbose_name=_("Address 2"))
-    postal_code = models.PositiveIntegerField(verbose_name=_("Postal Code"))
-    city = models.CharField(max_length=80, verbose_name=_("City"))
+    postal_code = models.PositiveIntegerField(
+            max_length=10, null=True, blank=True,
+            verbose_name=_("Postal Code"))
+    city = models.CharField(
+            max_length=80, null=True, blank=True, verbose_name=_("City"))
     country = CountryField(verbose_name=_("Country"))
 
     gender = models.CharField(
             max_length=2, choices=gender_choices, default="M",
             verbose_name=_("Gender"))
     
-    birth_day = models.DateField(verbose_name=_("Birthday"))
+    birth_day = models.DateField(
+            null=True, blank=True, verbose_name=_("Birthday"))
     phone_number = models.CharField(
             max_length=15, blank=True, default='',
             verbose_name=_("Phone Number"))

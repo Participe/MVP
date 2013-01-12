@@ -21,10 +21,14 @@
                         <div class=""><b>{% trans "Affiliated with" %} </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
                     </div>
                     <div class="span3">
-                        <div class=""><b>{% trans "Contact person:" %} </b>{{ challenge.contact_person }}</div>
-                        <div class="">{{ challenge.alt_person_fullname }}</div>
-                        <div class="">{{ challenge.alt_person_email }}</div>
-                        <div class="">{{ challenge.alt_person_phone }}</div>
+                        <div class=""><b>{% trans "Contact person:" %} </b></div>
+                        {% if challenge.is_contact_person %}
+                            <div class=""><a href="{% url view_profile challenge.contact_person.pk %}">{{ challenge.contact_person.get_full_name }}</a></div>
+                        {% else %}
+                            <div class="">{{ challenge.alt_person_fullname }}</div>
+                            <div class="">{{ challenge.alt_person_email }}</div>
+                            <div class="">{{ challenge.alt_person_phone }}</div>
+                        {% endif %}
                         <div class=""><b>{% trans "Start date:" %} </b>{{ challenge.start_date }} <b>{% trans "Time:" %} </b>{{ challenge.start_time }}</div>
                         <div class=""><b>{% trans "Alternative date:" %} </b>{{ challenge.alt_date }} <b>{% trans "Time:" %} </b>{{ challenge.alt_time }}</div>
                         <div class=""><b>{% trans "Application:" %} </b>{{ challenge.stat_application_name }}</div>

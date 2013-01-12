@@ -20,10 +20,14 @@
                     </div>
                     <div class="span3">
                         <div class=""><b>{% trans "Description:" %} </b>{{ organization.description }}</div>
-                        <div class=""><b>{% trans "Contact person:" %} </b>{{ organization.contact_person }}</div>
-                        <div class="">{{ organization.alt_person_fullname }}</div>
-                        <div class="">{{ organization.alt_person_email }}</div>
-                        <div class="">{{ organization.alt_person_phone }}</div>
+                        <div class=""><b>{% trans "Contact person:" %} </b></div>
+                        {% if organization.is_contact_person %}
+                            <div class=""><a href="{% url view_profile organization.contact_person.pk %}">{{ organization.contact_person.get_full_name }}</a></div>
+                        {% else %}
+                            <div class="">{{ organization.alt_person_fullname }}</div>
+                            <div class="">{{ organization.alt_person_email }}</div>
+                            <div class="">{{ organization.alt_person_phone }}</div>
+                        {% endif %}
                         <div class=""><b>{% trans "Affiliated users:" %} </b></div>
                             <ul>
                             {% for auser in affiliated_users %}

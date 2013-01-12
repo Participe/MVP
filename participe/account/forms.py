@@ -79,6 +79,12 @@ class UserProfileForm(forms.ModelForm):
         if self.instance and self.instance.pk:
             pass
 
+        self.fields["address_1"].required = True
+        self.fields["postal_code"].required = True
+        self.fields["city"].required = True
+        self.fields["country"].required = True
+        self.fields["birth_day"].required = True
+
         self.fields["address_1"].label = _("address_1")
         self.fields["address_2"].label = _("address_2")
         self.fields["postal_code"].label = _("postal_code")
@@ -136,6 +142,12 @@ class UserEditForm(forms.ModelForm):
         self.fields['email'].widget.attrs['class'] = 'disabled'
         self.fields['email'].widget.attrs['readonly'] = True
         
+        self.fields["address_1"].required = True
+        self.fields["postal_code"].required = True
+        self.fields["city"].required = True
+        self.fields["country"].required = True
+        self.fields["birth_day"].required = True
+
         #self.fields["username"].label = "username"
         self.fields["first_name"].label = _("first_name")
         self.fields["last_name"].label = _("last_name")

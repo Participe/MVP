@@ -23,19 +23,17 @@
                         {%endif%}
                     </div>
                     <div class="span3">
-                        <b>{% trans "Participated challenges:" %} </b>
+                        <div><b>{% trans "Participated challenges:" %} </b></div>
                         {% for challenge in account.contact_chl_set.all %}
-                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>
-                            {% if not forloop.last %}<p>, </p>{% endif %}
+                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}{% if not forloop.last %}, {% endif %}</a>
                         {% empty %}
                             <p>{% trans "Nope" %}</p>
                         {% endfor %}
                     </div>
                     <div class="span3">
-                        <b>{% trans "Participated organizations:" %} </b>
+                        <div><b>{% trans "Participated organizations:" %} </b></div>
                         {% for organization in account.contact_org_set.all %}
-                            <a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a>
-                            {% if not forloop.last %}<p>, </p>{% endif %}
+                            <a href="{{ organization.get_absolute_url }}">{{ organization.name }}{% if not forloop.last %}, {% endif %}</a>
                         {% empty %}
                             <p>{% trans "Nope" %}</p>
                         {% endfor %}

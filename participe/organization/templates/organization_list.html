@@ -11,7 +11,9 @@
         <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
             <div><a href="{{ organization.get_absolute_url }}"><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
                 <br/>{{ organization.name }}
-                <br/>({{ organization.contact_person.get_full_name }})
+                {% if organization.is_contact_person %}
+                    <br/>({{ organization.contact_person.get_full_name }})
+                {% endif %}
             </a></div>
         </li>
     {% empty %}

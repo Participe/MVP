@@ -19,6 +19,10 @@ def get_user_avatar(backend, details, response, social_user, uid, user, \
         *args, **kwargs):
     try:
         profile = get_object_or_404(UserProfile, user=user)
+    except:
+        profile = UserProfile.objects.create(user=user)
+
+    try:
         url = ("http://graph.facebook.com/%s/picture?type=large"
                 % response['id'])
         if url:
@@ -30,9 +34,9 @@ def get_user_avatar(backend, details, response, social_user, uid, user, \
                     thumb, settings.AVATAR_THUMB_FORMAT,
                     quality=settings.AVATAR_THUMB_QUALITY)
             thumb_file = ContentFile(thumb.getvalue())
+
             profile.avatar.save("%s_facebook%s" % (uid, ".jpg"), thumb_file)
             profile.save()
     except:
-        # Avatar cannot be attached, unless user filled up all profile's
-        # mandatory fields
+        # Unexpected error. Just pass by.
         pass

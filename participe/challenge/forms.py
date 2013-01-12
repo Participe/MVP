@@ -143,7 +143,6 @@ class ChallengeForm(forms.ModelForm):
             self._errors["contact"] = self.error_class(
                     [_("This field is required."),])
             del self.cleaned_data["contact"]
-
         return self.cleaned_data["contact"]
     
     def clean(self):
@@ -160,7 +159,6 @@ class ChallengeForm(forms.ModelForm):
                 self._errors["alt_person_phone"] = self.error_class(
                         [_("This field is required."),])
                 del self.cleaned_data["alt_person_phone"]
-
         return self.cleaned_data
 
     def save(self, commit=True):

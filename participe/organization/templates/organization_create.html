@@ -4,6 +4,11 @@
 {% block title %}{% trans "Create organization" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
+    <style type="text/css">
+        ul li {list-style: none;}
+        #ui-datepicker-div {display: none;}
+    </style>
+
     <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">
@@ -19,12 +24,11 @@
                     </div>                    
                     <div class="span4">
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div>
-                        <div class="input">{% trans "Contact person:" %} </div>
-                        <div class="input">{{ form.is_contact_person }} {{ user.get_full_name }} ({{ user.username }})</div>
-                        <div class="input">{{ form.is_alt_person }} {% trans "Affiliate different person" %}</div>
-                        <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}</div>
-                        <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}</div>
-                        <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}</div>
+                        <div class="input">{% trans "Contact person:" %}</div>
+                        <div {% if form.contact.errors %}class="text-error"{% else %}class="input"{% endif %}>{{ form.contact }}{{ form.contact.errors }}</div> 
+                        <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}{{ form.alt_person_fullname.errors }}</div> 
+                        <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}{{ form.alt_person_email.errors }}</div> 
+                        <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}{{ form.alt_person_phone.errors }}</div> 
                     </div>                    
                     <div class="span4">
                         <div {% if form.website.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.website }}</div>
