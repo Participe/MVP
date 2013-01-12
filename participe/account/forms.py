@@ -149,6 +149,10 @@ class UserEditForm(forms.ModelForm):
         self.fields["phone_number"].label = _("phone_number")
         self.fields["receive_newsletter"].label = _("Receive newsletters")
 
+        # Override countries order in choice-list
+        self.fields["country"].choices = COUNTRIES
+        self.fields["country"].initial = "CH"
+
     #username = forms.CharField(widget=forms.TextInput(attrs={
     #        "placeholder": "User name", "value": ""}))
     first_name = forms.CharField(

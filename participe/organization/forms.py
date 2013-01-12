@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from models import Organization
+from participe.core.countries import COUNTRIES
 import participe.core.html5_widgets as widgets
 
 
@@ -15,6 +16,10 @@ class OrganizationForm(forms.ModelForm):
         
         if self.instance and self.instance.pk:
             pass
+
+        # Override countries order in choice-list
+        self.fields["country"].choices = COUNTRIES
+        self.fields["country"].initial = "CH"
 
     class Meta:
         model = Organization
