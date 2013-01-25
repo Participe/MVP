@@ -5,20 +5,28 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <ul>
-    {% for account in accounts %}
-        <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
-            <div><a href="{% url view_profile account.pk %}">
-                {% for profile in account.userprofile_set.all %}
-                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
-                {% empty %}
-                <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
-                {% endfor %}
-                <br/>{{ account.get_full_name }}
-            </a></div>
-        </li>
-    {% empty %}
-        <p>{% trans "There are no active accounts" %}</p>
-    {% endfor %}
-    </ul>
+    <div class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <ul>
+            {% for account in accounts %}
+                <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
+                    <div><a href="{% url view_profile account.pk %}">
+                        {% for profile in account.userprofile_set.all %}
+                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
+                        {% empty %}
+                        <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="">
+                        {% endfor %}
+                        <br/>{{ account.get_full_name }}
+                    </a></div>
+                </li>
+            {% empty %}
+                <p>{% trans "There are no active accounts" %}</p>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
 {% endblock %}
