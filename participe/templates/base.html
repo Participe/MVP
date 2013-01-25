@@ -47,14 +47,18 @@
                     {% endif %}
                 </div>
                 <div class="span4">
-                    <form action="/i18n/setlang/" method="POST">{% csrf_token %}
+                    <form id="locale" action="/i18n/setlang/" method="POST">{% csrf_token %}
                         {% trans 'Change your locale' %}:
-                        <select name="language" class="input-mini">
+                        <select name="language" class="input-mini" onchange="document.forms['locale'].submit();">
                         {% for lang in LANGUAGES %}
-                            <option value="{{ lang.0 }}">{{ lang.0 }}</option>
+                            {% if lang.0 == LANGUAGE_CODE %}
+                                <option value="{{ lang.0 }}" selected="selected">{{ lang.0 }}</option>
+                            {% else %}
+                                <option value="{{ lang.0 }}">{{ lang.0 }}</option>
+                            {% endif %}
                         {% endfor %}
                         </select>
-                        <input type="submit" class="btn-primary" value="{% trans 'change' %}" />
+                        <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="visibility:hidden;" />
                     </form>
                 </div>
             </div>
