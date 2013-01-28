@@ -281,7 +281,7 @@ def reset_password(request):
 
 def notify_forgotten_password(request):
     if request.method == "POST":
-        user = get_object_or_404(User, username=request.POST["renew"])
+        user = get_object_or_404(User, email=request.POST["renew"])
         profile = get_object_or_404(UserProfile, user=user)
         
         try:
