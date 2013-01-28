@@ -50,6 +50,14 @@ def _attach_avatar(request, instance):
     except:
         return
 
+def _generate_confirmation_code():
+    confirmation_code = ''.join(random.choice(
+            string.ascii_uppercase + 
+            string.digits +
+            string.ascii_lowercase
+            ) for x in range(33))
+    return confirmation_code
+
 def signup(request):
     uform = UserForm(request.POST or None, request.FILES or None)
     pform = UserProfileForm(request.POST or None, request.FILES or None)
@@ -67,11 +75,7 @@ def signup(request):
             user.set_password(uform.cleaned_data["password"])
             user.save()
             
-            confirmation_code = ''.join(random.choice(
-                    string.ascii_uppercase + 
-                    string.digits +
-                    string.ascii_lowercase
-                ) for x in range(33))
+            confirmation_code = _generate_confirmation_code()
             
             # Create User Profile
             profile = UserProfile.objects.create(
@@ -257,8 +261,9 @@ def delete_profile(request):
 
 @login_required
 def reset_password(request):
+    form = ResetPasswordForm(request.POST or None)
+
     if request.method == "POST":
-        form = ResetPasswordForm(request.POST)
         if form.is_valid():
             user = request.user
             user.set_password(form.cleaned_data["password"])
@@ -269,13 +274,56 @@ def reset_password(request):
                     RequestContext(request, {
                             "information": info,
                             }))
-    else:
-        form = ResetPasswordForm()
-    
     return render_to_response('account_reset_password.html',
             RequestContext(request, {
                     'form': form,
                     }))
+
+def notify_forgotten_password(request):
+    if request.method == "POST":
+        user = get_object_or_404(User, username=request.POST["renew"])
+        profile = get_object_or_404(UserProfile, user=user)
+        
+        try:
+            confirmation_code = _generate_confirmation_code()
+            profile.confirmation_code = confirmation_code
+            profile.save()
+        
+            confirmation_link = (
+                    "http://%s/accounts/password/renew/%s/" %
+                    (settings.DOMAIN_NAME, confirmation_code))
+            send_templated_mail(
+                    template_name="account_password_renew",
+                    from_email="from@example.com", 
+                    recipient_list=[user.email,], 
+                    context={
+                            "user": user,
+                            "confirmation_link": confirmation_link,
+                            },)
+            info = _("Confirmation link to restore password were sent to address '%s'" % user.email)
+            return render_to_response('account_information.html', 
+                    RequestContext(request, {
+                            "information": info,
+                            }))
+        except:
+            info = _("An error has been acquired.")
+            return render_to_response('account_error.html', 
+                    RequestContext(request, {
+                            "information": info,
+                            }))
+    return HttpResponseRedirect('/')
+
+def renew_forgotten_password(request, confirmation_code):
+    try:
+        profile = UserProfile.objects.get(confirmation_code=confirmation_code)
+        user = User.objects.get(pk=profile.user.pk)
+
+        # Instant log-in after confirmation
+        user.backend = "django.contrib.auth.backends.ModelBackend" 
+        auth_login(request, user)
+        return redirect("reset_password")
+    except:
+        raise Http404
 
 # TODO On general success move this to separate application
 @login_required
