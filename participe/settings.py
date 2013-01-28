@@ -185,6 +185,7 @@ AUTHENTICATION_BACKENDS = (
     #'social_auth.backends.contrib.skyrock.SkyrockBackend',
     #'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
     #'social_auth.backends.OpenIDBackend',
+    'participe.core.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
