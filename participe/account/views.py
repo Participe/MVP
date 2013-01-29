@@ -176,6 +176,27 @@ def email_confirmation(request, confirmation_code):
     except:
         raise Http404
 
+# Simple wrapper for django logout. Allows to logout Facebook together with
+# Participe logout.
+@login_required
+def account_logout(request, next_page):
+    from django.contrib.auth.views import logout
+    from social_auth.models import UserSocialAuth
+
+    user = request.user
+    try:
+        instance = UserSocialAuth.objects.filter(
+                provider='facebook').get(user=user)
+        access_token = instance.tokens["access_token"]
+        fb_logout = (
+                'https://www.facebook.com/logout.php?'
+                'next=http://%s&access_token=%s' % 
+                (settings.DOMAIN_NAME, access_token))
+        response = logout(request, next_page=fb_logout)
+    except:
+        response = logout(request, next_page=next_page)
+    return response
+
 def account_list(request):
     accounts = User.objects.all().filter(is_active=True)
 
