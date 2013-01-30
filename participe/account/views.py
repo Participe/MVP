@@ -178,6 +178,17 @@ def email_confirmation(request, confirmation_code):
 
 # Simple wrapper for django logout. Allows to logout Facebook together with
 # Participe logout.
+# As I supposed, FB.logout() works only if user were logged in using FB.init()
+# and FB.login().
+# There's another (but not easiest) way to implement such behaviour:
+# 1. Pass to base template 'access_token' (via 'views' or 'template context');
+# 2. In base template make request to 
+#    'https://www.facebook.com/logout.php?next=http://{%s}&access_token={%s}'
+#    which will logout user from FB and redirect to, e.g.,
+# 3. '/accounts/after_fb_logout/' which will logout user from Participe.
+# This approach has a lot of intermediate steps and makes 'access_token'
+# available for a criminal.
+# So for now following is the best implementation.
 @login_required
 def account_logout(request, next_page):
     from django.contrib.auth.views import logout
