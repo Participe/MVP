@@ -13,12 +13,14 @@ application_choices = [
     ("1", _("Confirmation of participation required")),
     ]
     
+"""
 latest_signup_choices = [
     ("0", _("last minute")),
     ("1", _("one week before")),
     ("2", _("other")),
     ]
-    
+"""
+ 
 class Challenge(models.Model):
     avatar = ThumbnailerImageField(
             upload_to='img/challenges', verbose_name=_("Avatar"))
@@ -48,16 +50,21 @@ class Challenge(models.Model):
     
     start_date = models.DateField(verbose_name=_("Start Date"))
     start_time = models.TimeField(verbose_name=_("Start Time"))
+
+    """
     alt_date = models.DateField(
             null=True, blank=True, verbose_name=_("Alternative Date"))
     alt_time = models.TimeField(
             null=True, blank=True, verbose_name=_("Alternative Time"))
-    
+    """
+
     organization = models.ForeignKey(
             Organization, null=True, verbose_name=_("Organization"))
     application = models.CharField(
             max_length=2, choices=application_choices, default="0",
             verbose_name=_("Application"))
+
+    """
     min_participants = models.PositiveIntegerField(
             default=1, null=True, blank=True,
             verbose_name=_("Minimum Participants"))
@@ -67,7 +74,12 @@ class Challenge(models.Model):
     latest_signup = models.CharField(
             max_length=2, choices=latest_signup_choices, default="0",
             verbose_name=_("Latest Sign-up"))
-    
+    """
+
+    is_deleted = models.BooleanField(default=False)
+    deleted_reason = models.TextField(
+            null=True, blank=True, verbose_name=_("Reason for deletion"))
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -90,10 +102,11 @@ class Challenge(models.Model):
                 return name
         return ''
 
+    """
     @property
     def stat_latest_signup_name(self):
         for code, name in latest_signup_choices:
             if self.latest_signup == code:
                 return name
         return ''
-
+    """

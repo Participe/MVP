@@ -39,20 +39,23 @@ class ChallengeForm(forms.ModelForm):
             widget=forms.DateInput(
                     format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
+    """
     alt_date = forms.DateField(
             input_formats=("%d.%m.%Y",),
             widget=forms.DateInput(
                     format="%d.%m.%Y",
                     attrs={"class": "input-small"},),
             required=False)
+    """
 
     class Meta:
         model = Challenge
         fields = ["avatar", "name", "description", "location", "duration",
             "is_contact_person", "is_alt_person", "alt_person_fullname",
             "alt_person_email", "alt_person_phone", "start_date", "start_time",
-            "alt_date", "alt_time", "organization", "application",
-            "min_participants", "max_participants", "latest_signup",
+            #"alt_date", "alt_time",
+            "organization", "application",
+            #"min_participants", "max_participants", "latest_signup",
             ]
         widgets = {
             "name": forms.TextInput(
@@ -77,19 +80,17 @@ class ChallengeForm(forms.ModelForm):
             "start_time": widgets.TimeInput(
                     attrs={"class": "input-mini"}),
             #"alt_date": widgets.DateInput(attrs={"class": "input-small"}),
-            "alt_time": widgets.TimeInput(
-                    attrs={"class": "input-mini"}),
-            
+            #"alt_time": widgets.TimeInput(attrs={"class": "input-mini"}),
+
             "application": forms.RadioSelect(),
 
-            "min_participants": widgets.NumberInput(
-                    attrs={'min': '1', 'max': '10', 'step': '1',
-                            "class": "input-mini"}),
-            "max_participants": widgets.NumberInput(
-                    attrs={'min': '1', 'max': '10', 'step': '1',
-                            "class": "input-mini"}),
-            
-            "latest_signup": forms.RadioSelect(),
+            #"min_participants": widgets.NumberInput(
+            #        attrs={'min': '1', 'max': '10', 'step': '1',
+            #                "class": "input-mini"}),
+            #"max_participants": widgets.NumberInput(
+            #        attrs={'min': '1', 'max': '10', 'step': '1',
+            #                "class": "input-mini"}),
+            #"latest_signup": forms.RadioSelect(),
             }
 
     def clean_avatar(self):
@@ -120,6 +121,7 @@ class ChallengeForm(forms.ModelForm):
                     _("Value should be greater or equal 1"))
         return self.cleaned_data["duration"]
 
+    """
     def clean_min_participants(self):
         if self.cleaned_data["min_participants"] < 1:
             raise forms.ValidationError(
@@ -131,7 +133,8 @@ class ChallengeForm(forms.ModelForm):
             raise forms.ValidationError(
                     _("Value should be greater or equal 1"))
         return self.cleaned_data["max_participants"]
-
+    """
+    
     def clean_contact(self):
         if self.cleaned_data["contact"] == 'me':
             self.cleaned_data["is_contact_person"] = True
