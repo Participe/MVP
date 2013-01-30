@@ -110,3 +110,45 @@ class Challenge(models.Model):
                 return name
         return ''
     """
+
+participation_status_choices = [
+    ("0", _("Waiting for confirmation")),
+    ("1", _("Confirmation of participation required")),
+    ("2", _("Confirmed")),
+    ("3", _("Cancelled by admin")),
+    ("4", _("Cancelled by user")),
+    ]
+
+class Participation(models.Model):
+    user = models.ForeignKey(User, verbose_name=_("User"))
+    challenge = models.ForeignKey(Challenge, verbose_name=_("Challenge"))
+
+    application_text = models.TextField(
+            null=True, blank=True, verbose_name=_("Application text"))
+    cancellation_text = models.TextField(
+            null=True, blank=True, verbose_name=_("Cancellation text"))
+            
+    status = models.CharField(
+            max_length=2, choices=participation_status_choices, default="0",
+            verbose_name=_("Status"))
+
+    date_created = models.DateField(
+            auto_now_add=True, verbose_name=_("Date created"))
+    date_accepted = models.DateField(
+            null=True, blank=True, verbose_name=_("Date accepted"))
+    date_cancelled = models.DateField(
+            null=True, blank=True, verbose_name=_("Date cancelled"))
+
+    share_on_FB = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _('participation')
+        verbose_name_plural = _('participations')
+        ordering = ['date_created',]
+        
+    @property
+    def stat_participation_status_name(self):
+        for code, name in participation_status_choices:
+            if self.status == code:
+                return name
+        return ''
