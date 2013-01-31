@@ -12,14 +12,6 @@ application_choices = [
     ("0", _("Not required: participation by application order")),
     ("1", _("Confirmation of participation required")),
     ]
-    
-"""
-latest_signup_choices = [
-    ("0", _("last minute")),
-    ("1", _("one week before")),
-    ("2", _("other")),
-    ]
-"""
  
 class Challenge(models.Model):
     avatar = ThumbnailerImageField(
@@ -51,30 +43,11 @@ class Challenge(models.Model):
     start_date = models.DateField(verbose_name=_("Start Date"))
     start_time = models.TimeField(verbose_name=_("Start Time"))
 
-    """
-    alt_date = models.DateField(
-            null=True, blank=True, verbose_name=_("Alternative Date"))
-    alt_time = models.TimeField(
-            null=True, blank=True, verbose_name=_("Alternative Time"))
-    """
-
     organization = models.ForeignKey(
             Organization, null=True, verbose_name=_("Organization"))
     application = models.CharField(
             max_length=2, choices=application_choices, default="0",
             verbose_name=_("Application"))
-
-    """
-    min_participants = models.PositiveIntegerField(
-            default=1, null=True, blank=True,
-            verbose_name=_("Minimum Participants"))
-    max_participants = models.PositiveIntegerField(
-            default=1, null=True, blank=True,
-            verbose_name=_("Maximum Participants"))
-    latest_signup = models.CharField(
-            max_length=2, choices=latest_signup_choices, default="0",
-            verbose_name=_("Latest Sign-up"))
-    """
 
     is_deleted = models.BooleanField(default=False)
     deleted_reason = models.TextField(
@@ -102,18 +75,9 @@ class Challenge(models.Model):
                 return name
         return ''
 
-    """
-    @property
-    def stat_latest_signup_name(self):
-        for code, name in latest_signup_choices:
-            if self.latest_signup == code:
-                return name
-        return ''
-    """
-
 participation_status_choices = [
     ("0", _("Waiting for confirmation")),
-    ("1", _("Confirmation of participation required")),
+    ("1", _("Confirmation denied")),
     ("2", _("Confirmed")),
     ("3", _("Cancelled by admin")),
     ("4", _("Cancelled by user")),

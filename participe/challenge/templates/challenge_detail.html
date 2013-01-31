@@ -16,12 +16,6 @@
                         <div class=""><b>{% trans "Description:" %} </b>{{ challenge.description }}</div>
                         <div class=""><b>{% trans "Location:" %} </b>{{ challenge.location }}</div>
                         <div class=""><b>{% trans "Duration:" %} </b>{{ challenge.duration }} {% trans "hours" %}</div>
-                        
-                        {% comment %}
-                        <div class=""><b>{% trans "Number of participants:" %} </b></div>
-                        <div class="">{% trans "Minimum" %} {{ challenge.min_participants }} {% trans "Maximum" %} {{ challenge.max_participants }}</div>
-                        {% endcomment %}
-                        
                         <div class=""><b>{% trans "Affiliated with" %} </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
                     </div>
                     <div class="span3">
@@ -34,9 +28,7 @@
                             <div class="">{{ challenge.alt_person_phone }}</div>
                         {% endif %}
                         <div class=""><b>{% trans "Start date:" %} </b>{{ challenge.start_date }} <b>{% trans "Time:" %} </b>{{ challenge.start_time }}</div>
-                        {% comment %}<div class=""><b>{% trans "Alternative date:" %} </b>{{ challenge.alt_date }} <b>{% trans "Time:" %} </b>{{ challenge.alt_time }}</div>{% endcomment %}
                         <div class=""><b>{% trans "Application:" %} </b>{{ challenge.stat_application_name }}</div>
-                        {% comment %}<div class=""><b>{% trans "Latest sign-up:" %} </b>{{ challenge.stat_latest_signup_name }}</div>{% endcomment %}
                     </div>
                     <div class="span3">
                         <div class=""><b>{% trans "Goodies/Give-aways" %}</b></div>

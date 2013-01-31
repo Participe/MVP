@@ -21,11 +21,6 @@
                         <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }} {% trans "hours" %}</div> 
                         <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Affiliate with organization" %} {% if not form.organization.is_hidden %}{{ form.organization }}{{ form.organization.errors }}{% endif %}</div>
                         <div class="input">{% trans "or" %} <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
-
-                        {% comment %}
-                        <div class="input">{% trans "Number of participants:" %}</div> 
-                        <div class="input">{% trans "Minimum" %} {{ form.min_participants }} {% trans "Maximum" %} {{ form.max_participants }}</div> 
-                        {% endcomment %}
                     </div>
                     <div class="span4">
                         <div class="input">{% trans "Contact person:" %}</div>
@@ -34,9 +29,7 @@
                         <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}{{ form.alt_person_email.errors }}</div> 
                         <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}{{ form.alt_person_phone.errors }}</div> 
                         <div {% if form.start_date.errors or form.start_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Start date" %} {{ form.start_date }}{{ form.start_date.errors }} {% trans "Time" %} {{ form.start_time }}{{ form.start_time.errors }}</div>
-                        {% comment %}<div {% if form.alt_date.errors or form.alt_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Alternative date" %} {{ form.alt_date }}{{ form.alt_date.errors }} {% trans "Time" %} {{ form.alt_time }}{{ form.alt_time.errors }}</div>{% endcomment %}
                         <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Application" %} {{ form.application }}</div> 
-                        {% comment %}<div {% if form.latest_signup.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Latest sign-up" %} {{ form.latest_signup }}</div>{% endcomment %}
                     </div>                    
                     <div class="span2">
                         <p>{% trans "Goodies/Give-aways" %}</p>

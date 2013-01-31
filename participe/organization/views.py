@@ -28,7 +28,7 @@ def organization_create(request):
             RequestContext(request, {'form': form}))
     
 def organization_list(request):
-    organizations = Organization.objects.all()
+    organizations = Organization.objects.all().order_by("name")
     return render_to_response('organization_list.html',
             RequestContext(request, {
                     'organizations': organizations,
