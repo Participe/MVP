@@ -5,25 +5,43 @@
 {% load thumbnail %}
 
 {% block extra_content %}
+    <style type="text/css">
+        td {vertical-align:top;}
+    </style>
+    
     <div class="modal" style="width:60%; position:relative; top:auto; left:auto; margin:0 auto; z-index:1;">
         <div class="modal-header">
             <a class="btn" href="/challenges/create/">{% trans "Create new challenge" %}</a>
         </div>
         <div class="modal-body">
-            <ul>
-            {% for challenge in challenges %}
-                <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
-                    <div><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
-                        <br/>{{ challenge.name }}
-                        {% if challenge.organization %}
-                            <br/>({{ challenge.organization }})
-                        {% endif %}
-                    </a></div>
-                </li>
+            <table>
+                <tr>
+                    <th></th>
+                    <th style="min-width:50px;"></th>
+                    <th>Name</th>
+                    <th>Organization</th>
+                    <th>Start Date/Time</th>
+                </tr>
+            {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
+            {% for challenges_year in challenges_by_year %}
+                <tr><td>{{ challenges_year.grouper }}</td></tr>
+                {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
+                {% for challenges_month in challenges_by_month %}
+                    <tr><td>{{ challenges_month.grouper }}</td></tr>
+                    {% for challenge in challenges_month.list %}        
+                        <tr>
+                            <td></td>
+                            <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                            <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+                            <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
+                            <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
             {% empty %}
                 <p>{% trans "There are no active challenges" %}</p>
             {% endfor %}
-            </ul>
+            </table>
         </div>
         <div class="modal-footer">
         </div>
