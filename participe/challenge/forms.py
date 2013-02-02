@@ -4,13 +4,13 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext as _
                  
-from models import Challenge
+from models import Challenge, Participation
 import participe.core.html5_widgets as widgets
 
 
-class ChallengeForm(forms.ModelForm):
+class CreateChallengeForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
-        super(ChallengeForm, self).__init__(*args, **kwargs)
+        super(CreateChallengeForm, self).__init__(*args, **kwargs)
         self.user = user
         
         if self.instance and self.instance.pk:
@@ -132,8 +132,33 @@ class ChallengeForm(forms.ModelForm):
         return self.cleaned_data
 
     def save(self, commit=True):
-        instance = super(ChallengeForm, self).save(commit=False)
+        instance = super(CreateChallengeForm, self).save(commit=False)
         instance.contact_person = self.user
+        
+        if commit:
+            instance.save()
+
+class SignupChallengeForm(forms.ModelForm):
+    def __init__(self, user, challenge, *args, **kwargs):
+        super(SignupChallengeForm, self).__init__(*args, **kwargs)
+        self.user = user
+        self.challenge = challenge
+
+        if self.instance and self.instance.pk:
+            pass
+
+    class Meta:
+        model = Participation
+        fields = ["application_text", "share_on_FB",]
+        widgets = {
+            "application_text": forms.Textarea(
+                    attrs={"placeholder": _("Application text")}),
+            }
+
+    def save(self, commit=True):
+        instance = super(SignupChallengeForm, self).save(commit=False)
+        instance.user = self.user
+        instance.challenge = self.challenge
         
         if commit:
             instance.save()

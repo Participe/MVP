@@ -31,12 +31,65 @@
                         <div class=""><b>{% trans "Application:" %} </b>{{ challenge.stat_application_name }}</div>
                     </div>
                     <div class="span3">
-                        <div class=""><b>{% trans "Goodies/Give-aways" %}</b></div>
                     </div>
                     <div class="span3">
+                        {% if user.is_authenticated %}
+                            {% if participation %}
+                            <div><b>{% trans "Your application status: "%}</b></div>
+                            <div>
+                                {% if participation.status == "0" %}
+                                <img src="{{ MEDIA_URL }}img/warning.png">
+                                {% elif participation.status == "1" %}
+                                <img src="{{ MEDIA_URL }}img/remove.png">
+                                {% elif participation.status == "2" %}
+                                <img src="{{ MEDIA_URL }}img/perm_yes.png">
+                                {% else %}
+                                <img src="{{ MEDIA_URL }}img/stop.png">
+                                {% endif %}
+                                <span>{{ participation.stat_participation_status_name }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if form %}
+                            <div><input id="signup-btn" name="signup-btn" type="button" class="btn" value="Sing-up to Challenge"></div>
+                            <div id="signup-form">
+                                <form action="." method="post">{% csrf_token %}
+                                    {% if challenge.application == "1" %}
+                                    <div class="input">{{ form.application_text }}</div>
+                                    {% endif %}
+                                    <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ form.share_on_FB }}</div>
+                                    <br/>
+                                    <div><p>{% trans "By clicking 'Participate', you agree to participate in this challenge" %}</p></div>
+                                    <div><input type="submit" class="btn-primary" value="{% trans 'Participate' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
+                                </form>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <div>
+                                <img src="{{ MEDIA_URL }}img/warning.png">
+                                <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#signup-form").hide();
+
+            $("#signup-btn").click(function(){
+                $("#signup-btn").hide();
+                $('#signup-form').show("slow");
+                return false;
+            });
+            $("#cancel-btn").click(function(){
+                $('#signup-form').hide("slow");
+                $("#signup-btn").show("slow");
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

@@ -110,6 +110,9 @@ class Participation(models.Model):
         verbose_name_plural = _('participations')
         ordering = ['date_created',]
         
+    def __unicode__(self):
+        return unicode("%s - %s" % (self.user.username, self.challenge.name))
+
     @property
     def stat_participation_status_name(self):
         for code, name in participation_status_choices:
@@ -130,5 +133,3 @@ class Comment(models.Model):
         verbose_name = _('commment')
         verbose_name_plural = _('comments')
         ordering = ['created_at',]
-        
-
