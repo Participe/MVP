@@ -21,6 +21,7 @@
                     <th>Name</th>
                     <th>Organization</th>
                     <th>Start Date/Time</th>
+                    <th>Free-for-all</th>
                 </tr>
             {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
             {% for challenges_year in challenges_by_year %}
@@ -35,6 +36,13 @@
                             <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
                             <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
                             <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
+                            <td>
+                                {% if challenge.application == "0" %}
+                                <img src="{{ MEDIA_URL }}img/perm_yes.png" title="Free for all">
+                                {% else %}
+                                <img src="{{ MEDIA_URL }}img/stop.png" title="Confirmation required">
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 {% endfor %}

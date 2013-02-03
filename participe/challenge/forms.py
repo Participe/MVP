@@ -160,5 +160,9 @@ class SignupChallengeForm(forms.ModelForm):
         instance.user = self.user
         instance.challenge = self.challenge
         
+        # If instance if Free-for-All, set Participation status to "Confirmed"
+        if self.challenge.application == "0":
+            instance.status = "2"
+        
         if commit:
             instance.save()

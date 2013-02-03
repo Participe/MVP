@@ -7,9 +7,10 @@ from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 from django.utils.translation import ugettext as _
 
+from templated_email import send_templated_mail
+
 from forms import CreateChallengeForm, SignupChallengeForm
 from models import Challenge, Participation
-
 from participe.core.user_tests import user_profile_completed
 
             
@@ -34,6 +35,7 @@ def challenge_list(request):
 def challenge_detail(request, challenge_id):
     ctx = {}
 
+    user = request.user
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     ctx.update({"challenge": challenge})
 
@@ -50,7 +52,20 @@ def challenge_detail(request, challenge_id):
             if request.method == "POST":
                 if form.is_valid():
                     form.save()
-                    return redirect("challenge_list")
+
+                    if challenge.application == "0":
+                        send_templated_mail(
+                            template_name="challenge_successful_signup",
+                            from_email="from@example.com", 
+                            recipient_list=[user.email,], 
+                            context={
+                                    "user": user,
+                                    "challenge": challenge,
+                                    },)
+                    else:
+                        # TODO Send notification to Chjallenge Admin?
+                        pass
+                    return redirect("challenge_detail", challenge.pk)
             ctx.update({"form": form})
 
     return render_to_response('challenge_detail.html',

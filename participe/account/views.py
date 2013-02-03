@@ -1,3 +1,10 @@
+import os
+import datetime
+import json
+import random
+import string
+import urllib
+
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import auth_login
@@ -12,12 +19,13 @@ from django.template import RequestContext, Context, loader
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
-import os
-import datetime
-import json
-import random
-import string
-import urllib
+from social_auth.utils import setting
+from templated_email import send_templated_mail
+
+from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
+        ChangeAvatarForm, AvatarCropForm)
+from models import UserProfile
+from participe.core.user_tests import user_profile_completed
 
 try:
     from cStringIO import StringIO
@@ -28,14 +36,6 @@ try:
     from PIL import Image
 except ImportError:
     import Image
-
-from social_auth.utils import setting
-from templated_email import send_templated_mail
-
-from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
-        ChangeAvatarForm, AvatarCropForm)
-from models import UserProfile
-from participe.core.user_tests import user_profile_completed
 
 
 def _attach_avatar(request, instance):
