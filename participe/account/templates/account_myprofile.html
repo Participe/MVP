@@ -40,5 +40,53 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span4">
+                        <div><b>Challenges, you signed up for:</b></div>
+                        <div style="width: 100%; height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
+                            <table>
+                                {% for participation in user_participations %}
+                                <tr>
+                                    <td style="min-width:50px;"><a href="{{ participation.challenge.get_absolute_url }}"><img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                    <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                                    <td>{{ participation.challenge.start_date }}</td>
+                                    <td>
+                                        {% if participation.status == "0" %}<img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">
+                                        {% elif participation.status == "2"  %}<img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <p>Nope</p>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div><b>Challenges, you are admin for:</b></div>
+                        <div style="width: 100%; height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
+                            <table>
+                                {% for challenge in admin_challenges %}
+                                <tr>
+                                    <td style="min-width:50px;"><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                    <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+                                    <td>{{ challenge.start_date }}</td>
+                                    <td><img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">{{ challenge.get_confirmed_count }}</td>
+                                    <td><img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">{{ challenge.get_waiting_count }}</td>
+                                </tr>
+                                {% empty %}
+                                <p>Nope</p>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span4">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

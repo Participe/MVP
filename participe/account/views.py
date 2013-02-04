@@ -1,5 +1,6 @@
 import os
 import datetime
+import itertools
 import json
 import random
 import string
@@ -12,6 +13,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
+from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -26,6 +28,7 @@ from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
         ChangeAvatarForm, AvatarCropForm)
 from models import UserProfile
 from participe.core.user_tests import user_profile_completed
+from participe.challenge.models import Participation, Challenge
 
 try:
     from cStringIO import StringIO
@@ -234,7 +237,24 @@ def view_profile(request, user_id):
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def view_myprofile(request):
     user = request.user
-    
+
+    # Get participations, where user signed up
+    user_participations = Participation.objects.all().filter(
+            Q(user=user) & Q(challenge__is_deleted=False) &
+            (Q(status="0") | Q(status="2"))
+            ).order_by("challenge__start_date")
+
+    # Get challenges, where user is admin
+    orgs = user.organization_set.all()
+    chs = [org.challenge_set.all().filter(is_deleted=False) for org in orgs]
+    chs1 = list(itertools.chain(*chs))
+    chs2 = list(Challenge.objects.all().filter(
+            Q(is_deleted=False) & Q(contact_person=user)))
+    admin_challenges = sorted(
+            list(set(chs1 + chs2)),
+            key=lambda x: x.start_date,
+            reverse=False)
+
     #TODO Enhance this behaviour
     try:
         profile = get_object_or_404(UserProfile, user=user)
@@ -244,6 +264,8 @@ def view_myprofile(request):
             RequestContext(request, {
                     "user": user,
                     "profile": profile,
+                    "user_participations": user_participations,
+                    "admin_challenges": admin_challenges,
                     }))
 
 @login_required

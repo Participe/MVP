@@ -75,6 +75,16 @@ class Challenge(models.Model):
                 return name
         return ''
 
+    @property
+    def get_waiting_count(self):
+        return Participation.objects.all().filter(
+                challenge=self, status="0").count()
+
+    @property
+    def get_confirmed_count(self):
+        return Participation.objects.all().filter(
+                challenge=self, status="2").count()
+
 participation_status_choices = [
     ("0", _("Waiting for confirmation")),
     ("1", _("Confirmation denied")),
