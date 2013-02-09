@@ -68,6 +68,11 @@ class Challenge(models.Model):
                 'participe.challenge.views.challenge_detail',
                 args=[str(self.id)])
                 
+    def get_edit_url(self):
+        return reverse(
+                'participe.challenge.views.challenge_edit',
+                args=[str(self.id)])
+                
     @property
     def stat_application_name(self):
         for code, name in application_choices:

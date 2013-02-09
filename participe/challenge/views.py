@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 from templated_email import send_templated_mail
 
-from forms import CreateChallengeForm, SignupChallengeForm
+from forms import CreateChallengeForm, SignupChallengeForm, EditChallengeForm
 from models import Challenge, Participation
 from participe.core.user_tests import user_profile_completed
 
@@ -70,3 +70,18 @@ def challenge_detail(request, challenge_id):
 
     return render_to_response('challenge_detail.html',
             RequestContext(request, ctx))
+
+@login_required
+@user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
+def challenge_edit(request, challenge_id):
+    user = request.user
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    form = EditChallengeForm(
+            user, request.POST or None, request.FILES or None,
+            instance=challenge)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect("challenge_list")
+    return render_to_response('challenge_edit.html', 
+            RequestContext(request, {'form': form}))

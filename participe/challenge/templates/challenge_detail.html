@@ -70,6 +70,10 @@
                                 <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
                             </div>
                         {% endif %}
+                        
+                        {% comment %}
+                        <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
+                        {% endcomment %}
                     </div>
                 </div>
             </div>

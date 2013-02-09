@@ -138,6 +138,61 @@ class CreateChallengeForm(forms.ModelForm):
         if commit:
             instance.save()
 
+class EditChallengeForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(EditChallengeForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+        self.fields['name'].widget.attrs['class'] = 'disabled'
+        self.fields['name'].widget.attrs['readonly'] = True
+
+        self.contact_choices = [
+            ("me", "%s (%s)" % (self.instance.contact_person.get_full_name(),
+                    self.instance.contact_person.email)),
+            ("he", _("Affiliate different person")),]
+        self.fields["contact"].choices = self.contact_choices
+        if self.instance.is_contact_person:
+            self.fields["contact"].initial = "me"
+        else:
+            self.fields["contact"].initial = "he"
+         
+    contact = forms.ChoiceField(
+            widget=forms.RadioSelect())
+    start_date = forms.DateField(
+            input_formats=("%d.%m.%Y",),
+            widget=forms.DateInput(
+                    format="%d.%m.%Y",
+                    attrs={"class": "input-small"}))
+
+    class Meta:
+        model = Challenge
+        fields = ["avatar", "name", "description",
+            "is_contact_person", "is_alt_person", "alt_person_fullname",
+            "alt_person_email", "alt_person_phone", "start_date", "start_time",
+            "application",
+            ]
+        widgets = {
+            "description": forms.Textarea(
+                    attrs={"cols": 25, "rows": 5,
+                    "placeholder": _("Challenge description")}),
+            "alt_person_fullname": forms.TextInput(
+                    attrs={"placeholder": _("Full name")}),
+            "alt_person_email": forms.TextInput(
+                    attrs={"placeholder": _("E-mail")}),
+            "alt_person_phone": forms.TextInput(
+                    attrs={"placeholder": _("Phone number")}),
+            #"start_date": widgets.DateInput(attrs={"class": "input-small"}),
+            "start_time": widgets.TimeInput(
+                    attrs={"class": "input-mini"}),
+            "application": forms.RadioSelect(),
+            }
+
+    def save(self, commit=True):
+        instance = super(EditChallengeForm, self).save(commit=False)
+        
+        if commit:
+            instance.save()
+
 class SignupChallengeForm(forms.ModelForm):
     def __init__(self, user, challenge, *args, **kwargs):
         super(SignupChallengeForm, self).__init__(*args, **kwargs)

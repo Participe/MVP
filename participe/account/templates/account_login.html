@@ -34,6 +34,11 @@
         </div>
     </form>
     <form id="renew_form" action="/accounts/password/renew/" method="post" style="display:none;">{% csrf_token %}
+        {% if renew_err_msg%}
+        <script type="text/javascript">
+            alert("{{ renew_err_msg }}");
+        </script>
+        {% endif %}
         <input id="renew" type="text" name="renew" value="">
     </form>
     <script type="text/javascript">

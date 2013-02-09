@@ -8,9 +8,11 @@ import urllib
 
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import auth_login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import (default_token_generator
+        as token_generator)
+from django.contrib.auth.views import auth_login
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
 from django.db.models import Q
@@ -19,6 +21,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 from django.utils import timezone
+from django.utils.http import int_to_base36, base36_to_int
 from django.utils.translation import ugettext as _
 
 from social_auth.utils import setting
@@ -335,17 +338,20 @@ def reset_password(request):
 
 def notify_forgotten_password(request):
     if request.method == "POST":
-        user = get_object_or_404(User, email=request.POST["renew"])
-        profile = get_object_or_404(UserProfile, user=user)
+        try:
+            user = get_object_or_404(User, email=request.POST["renew"])
+        except:
+            info = _("Sorry, user with such e-mail not found")
+            return render_to_response('account_login.html', 
+                    RequestContext(request, {
+                            "renew_err_msg": info,
+                            }))
         
         try:
-            confirmation_code = _generate_confirmation_code()
-            profile.confirmation_code = confirmation_code
-            profile.save()
-        
+            token = token_generator.make_token(user)
             confirmation_link = (
-                    "http://%s/accounts/password/renew/%s/" %
-                    (settings.DOMAIN_NAME, confirmation_code))
+                    "http://%s/accounts/password/renew/%s-%s/" %
+                    (settings.DOMAIN_NAME, int_to_base36(user.id), token))
             send_templated_mail(
                     template_name="account_password_renew",
                     from_email="from@example.com", 
@@ -354,7 +360,8 @@ def notify_forgotten_password(request):
                             "user": user,
                             "confirmation_link": confirmation_link,
                             },)
-            info = _("Confirmation link to restore password were sent to address '%s'" % user.email)
+            info = _("Confirmation link to restore password "
+                    "were sent to address '%s'" % user.email)
             return render_to_response('account_information.html', 
                     RequestContext(request, {
                             "information": info,
@@ -367,17 +374,26 @@ def notify_forgotten_password(request):
                             }))
     return HttpResponseRedirect('/')
 
-def renew_forgotten_password(request, confirmation_code):
-    try:
-        profile = UserProfile.objects.get(confirmation_code=confirmation_code)
-        user = User.objects.get(pk=profile.user.pk)
+def renew_forgotten_password(request, uidb36=None, token=None):
+    assert uidb36 is not None and token is not None
 
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = User.objects.get(id=uid_int)
+    except (ValueError, User.DoesNotExist):
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
         # Instant log-in after confirmation
         user.backend = "django.contrib.auth.backends.ModelBackend" 
         auth_login(request, user)
         return redirect("reset_password")
-    except:
-        raise Http404
+    else:
+        info = _("An error has been acquired.")
+        return render_to_response('account_error.html', 
+                RequestContext(request, {
+                        "information": info,
+                        }))
 
 # TODO On general success move this to separate application
 @login_required

@@ -27,7 +27,8 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('participe.account.views',
     # Account
-    url(r'^accounts/login/$', login, {"template_name": "account_login.html",}, name='login'),
+    url(r'^accounts/login/$', login, {"template_name": "account_login.html",},
+            name='login'),
     #url(r'^accounts/logout/$', logout, {"next_page": "/"}, name='logout'),
     url(r'^accounts/logout/$', 'account_logout', {"next_page": "/"}, name='logout'),
     url(r'^accounts/$', 'account_list', name='account_list'),
@@ -42,7 +43,8 @@ urlpatterns += patterns('participe.account.views',
             name='reset_password'),
     url(r'^accounts/password/renew/$', 'notify_forgotten_password',
             name='notify_forgotten_password'),
-    url(r'^accounts/password/renew/(?P<confirmation_code>[0-9a-zA-Z-_:]+)/$',
+    url(r'^accounts/password/renew/(?P<uidb36>[0-9A-Za-z]{1,13})-'
+            '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             'renew_forgotten_password',
             name='renew_forgotten_password'),
     url(r'^account/confirmation/(?P<confirmation_code>[0-9a-zA-Z-_:]+)/$',
@@ -59,8 +61,10 @@ urlpatterns += patterns('participe.challenge.views',
     # Challenge
     url(r'^challenges/$', 'challenge_list', name='challenge_list'),
     url(r'^challenges/create/$', 'challenge_create', name='challenge_create'),
-    url(r'^challenges/(?P<challenge_id>\d+)/$', 'challenge_detail',
+    url(r'^challenges/view/(?P<challenge_id>\d+)/$', 'challenge_detail',
             name='challenge_detail'),
+    url(r'^challenges/edit/(?P<challenge_id>\d+)/$', 'challenge_edit',
+            name='challenge_edit'),
     )
 
 urlpatterns += patterns('participe.organization.views',
