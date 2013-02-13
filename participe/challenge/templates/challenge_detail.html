@@ -70,10 +70,8 @@
                                 <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
                             </div>
                         {% endif %}
-                        
-                        {% comment %}
+
                         <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
-                        {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -83,7 +81,6 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#signup-form").hide();
-
             $("#signup-btn").click(function(){
                 $("#signup-btn").hide();
                 $('#signup-form').show("slow");

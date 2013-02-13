@@ -11,6 +11,7 @@ from templated_email import send_templated_mail
 
 from forms import CreateChallengeForm, SignupChallengeForm, EditChallengeForm
 from models import Challenge, Participation
+from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
 
             
@@ -72,6 +73,7 @@ def challenge_detail(request, challenge_id):
             RequestContext(request, ctx))
 
 @login_required
+@challenge_admin
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def challenge_edit(request, challenge_id):
     user = request.user
@@ -79,9 +81,43 @@ def challenge_edit(request, challenge_id):
     form = EditChallengeForm(
             user, request.POST or None, request.FILES or None,
             instance=challenge)
+
     if request.method == "POST":
         if form.is_valid():
+            is_date_time_changed = False
+            if ("start_date" in form.changed_data or
+                    "start_time" in form.changed_data):
+                is_date_time_changed = True
             form.save()
+
+            participations = Participation.objects.all().filter(
+                    Q(challenge=challenge) &
+                    (Q(status="0") | Q(status="2"))
+                    )
+            if "delete" in request.POST:
+                challenge.is_deleted = True
+                challenge.save()
+                
+                for participation in participations:
+                    send_templated_mail(
+                            template_name="challenge_deleted",
+                            from_email="from@example.com", 
+                            recipient_list=[participation.user.email,], 
+                            context={
+                                    "user": participation.user,
+                                    "challenge": participation.challenge,
+                                    },)
+            elif is_date_time_changed:
+                for participation in participations:
+                    send_templated_mail(
+                            template_name="challenge_changed",
+                            from_email="from@example.com", 
+                            recipient_list=[participation.user.email,], 
+                            context={
+                                    "user": participation.user,
+                                    "challenge": participation.challenge,
+                                    },)
             return redirect("challenge_list")
+
     return render_to_response('challenge_edit.html', 
             RequestContext(request, {'form': form}))

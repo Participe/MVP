@@ -169,7 +169,7 @@ class EditChallengeForm(forms.ModelForm):
         fields = ["avatar", "name", "description",
             "is_contact_person", "is_alt_person", "alt_person_fullname",
             "alt_person_email", "alt_person_phone", "start_date", "start_time",
-            "application",
+            "application", "deleted_reason",
             ]
         widgets = {
             "description": forms.Textarea(
@@ -185,11 +185,42 @@ class EditChallengeForm(forms.ModelForm):
             "start_time": widgets.TimeInput(
                     attrs={"class": "input-mini"}),
             "application": forms.RadioSelect(),
+            "deleted_reason": forms.Textarea(
+                    attrs={"placeholder": _("Reason for deletion "
+                            "(at least 20 symbols)")}),
             }
+
+    def clean_contact(self):
+        if self.cleaned_data["contact"] == 'me':
+            self.cleaned_data["is_contact_person"] = True
+            self.cleaned_data["is_alt_person"] = False
+        elif self.cleaned_data["contact"] == 'he':
+            self.cleaned_data["is_contact_person"] = False
+            self.cleaned_data["is_alt_person"] = True
+        else:
+            self._errors["contact"] = self.error_class(
+                    [_("This field is required."),])
+            del self.cleaned_data["contact"]
+        return self.cleaned_data["contact"]
+    
+    def clean(self):
+        if self.cleaned_data["is_alt_person"] == True:
+            if not self.cleaned_data["alt_person_fullname"]:
+                self._errors["alt_person_fullname"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_fullname"]
+            if not self.cleaned_data["alt_person_email"]:
+                self._errors["alt_person_email"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_email"]
+            if not self.cleaned_data["alt_person_phone"]:
+                self._errors["alt_person_phone"] = self.error_class(
+                        [_("This field is required."),])
+                del self.cleaned_data["alt_person_phone"]
+        return self.cleaned_data
 
     def save(self, commit=True):
         instance = super(EditChallengeForm, self).save(commit=False)
-        
         if commit:
             instance.save()
 

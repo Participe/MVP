@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="span4">
                         <div class="input">{% trans "Avatar:" %}</div>
-                        <div>{{ form.avatar }}{{ form.avatar.errors }}</div>
+                        <div {% if form.avatar.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.avatar }}{{ form.avatar.errors }}</div>
                         <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
                     </div>
@@ -30,7 +30,13 @@
                         <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Application" %} {{ form.application }}</div> 
                     </div>                    
                     <div class="span2">
-                        <div><input type="submit" class="btn-primary" value="{% trans 'Save Changes' %}" /></div>
+                        <div><input id="save" name="save" type="submit" class="btn-primary" value="{% trans 'Save Changes' %}" /></div>
+
+                        <div><input id="delete-btn" name="delete-btn" type="button" class="btn" value="Delete challenge"></div>
+                        <div id="delete-form">
+                            <div class="input">{{ form.deleted_reason }}</div>
+                            <div><input id="delete" name="delete" type="submit" class="btn-primary" value="{% trans 'Delete' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
+                        </div>
                     </div>         
                 </div>   
             </div>        
@@ -46,6 +52,20 @@
                 changeMonth: true
             }
             $('input[name=start_date]').datepicker(options);
+        });
+
+        $(document).ready(function(){
+            $("#delete-form").hide();
+            $("#delete-btn").click(function(){
+                $("#delete-btn").hide();
+                $('#delete-form').show("slow");
+                return false;
+            });
+            $("#cancel-btn").click(function(){
+                $('#delete-form').hide("slow");
+                $("#delete-btn").show("slow");
+                return false;
+            });
         });
     </script>
 {% endblock %}

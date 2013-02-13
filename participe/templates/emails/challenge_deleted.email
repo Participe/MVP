@@ -1,0 +1,15 @@
+{% load i18n %}
+{% block subject %}{% trans "Information" %}{% endblock %}
+
+{% block plain %}
+*******************************************************************************
+  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
+*******************************************************************************
+
+{% trans "Dear," %} {{ user.get_full_name }},
+{% trans "The challenge you signed up for, " %} "{{ challenge.name }}" {% trans ", was deleted for the following reason:" %}
+"{{ challenge.deleted_reason }}"
+
+{% trans "Thank you," %}
+{% trans "Participe Resource Management System" %}
+{% endblock %}

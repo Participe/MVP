@@ -1,0 +1,14 @@
+{% load i18n %}
+{% block subject %}{% trans "Information" %}{% endblock %}
+
+{% block plain %}
+*******************************************************************************
+  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
+*******************************************************************************
+
+{% trans "Dear," %} {{ user.get_full_name }},
+{% trans "Start date/time for the challenge " %} "{{ challenge.name }}" {% trans ", has been changed." %}
+
+{% trans "Thank you," %}
+{% trans "Participe Resource Management System" %}
+{% endblock %}
