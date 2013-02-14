@@ -64,14 +64,16 @@
                                 </form>
                             </div>
                             {% endif %}
+
+                            {% if is_admin%}
+                            <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
+                            {% endif %}
                         {% else %}
                             <div>
                                 <img src="{{ MEDIA_URL }}img/warning.png">
                                 <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
                             </div>
                         {% endif %}
-
-                        <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
                     </div>
                 </div>
             </div>

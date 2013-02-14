@@ -11,6 +11,7 @@ from templated_email import send_templated_mail
 
 from forms import CreateChallengeForm, SignupChallengeForm, EditChallengeForm
 from models import Challenge, Participation
+from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
 
@@ -68,6 +69,7 @@ def challenge_detail(request, challenge_id):
                         pass
                     return redirect("challenge_detail", challenge.pk)
             ctx.update({"form": form})
+        ctx.update({"is_admin": is_challenge_admin(user, challenge)})
 
     return render_to_response('challenge_detail.html',
             RequestContext(request, ctx))
