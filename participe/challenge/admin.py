@@ -19,7 +19,9 @@ class ParticipationAdmin(admin.ModelAdmin):
     search_fields = ["user", "challenge",]
 
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["pk", "user", "challenge", "text", "is_deleted",]
+    list_filter = ["user", "challenge",]
+    search_fields = ["user", "challenge",]
 
 
 admin.site.register(Challenge, ChallengeAdmin)

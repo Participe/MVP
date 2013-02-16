@@ -65,6 +65,10 @@ urlpatterns += patterns('participe.challenge.views',
             name='challenge_detail'),
     url(r'^challenges/edit/(?P<challenge_id>\d+)/$', 'challenge_edit',
             name='challenge_edit'),
+    url(r'^challenges/comment/add/$', 'comment_add',
+            name='comment_add'),
+    url(r'^challenges/comment/delete/(?P<comment_id>\d+)/$', 'comment_delete',
+            name='comment_delete'),
     )
 
 urlpatterns += patterns('participe.organization.views',

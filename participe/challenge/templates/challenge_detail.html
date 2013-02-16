@@ -33,6 +33,12 @@
                     <div class="span3">
                     </div>
                     <div class="span3">
+                        {% with "facebook" as service %}
+                        <a href="http://www.facebook.com/share.php?u={{ host }}{{ page_url }}&amp;t={{ title }}" target="_blank" title="{{ share_txt }} {{ service }}">
+                            <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="{{ share_txt }} {{ service }}"/>
+                        </a>
+                        {% endwith %}
+
                         {% if user.is_authenticated %}
                             {% if participation %}
                             <div><b>{% trans "Your application status: "%}</b></div>
@@ -65,7 +71,7 @@
                             </div>
                             {% endif %}
 
-                            {% if is_admin%}
+                            {% if is_admin %}
                             <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
                             {% endif %}
                         {% else %}
@@ -78,8 +84,105 @@
                 </div>
             </div>
         </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span4">
+                    </div>
+                    <div class="span4">
+                        <div><b>People participating in this challenge:</b></div>
+                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
+                            <table>
+                                {% for participation in confirmed %}
+                                <tr>
+                                    {% for profile in participation.user.userprofile_set.all %}
+                                    <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                    {% endfor %}
+                                    <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
+                                    {% if is_admin %}
+                                    <td><a href="#"><input type="button" value="Remove"></a></td>
+                                    {% endif %}
+                                </tr>
+                                {% empty %}
+                                <p>Nope</p>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div><b>People waiting for participation:</b></div>
+                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
+                            <table>
+                                {% for participation in waited %}
+                                <tr>
+                                    {% for profile in participation.user.userprofile_set.all %}
+                                    <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                    {% endfor %}
+                                    <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
+                                    {% if is_admin %}
+                                    <td><a href="#"><input type="button" value="Accept"></a></td>
+                                    {% endif %}
+                                </tr>
+                                {% empty %}
+                                <p>Nope</p>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <div class="span2">
+                    </div>
+                    <div class="span8">
+                        <div ><a id="comments-btn" href="#">Show all {{ comments.count }} comment(s):</a></div>
+                        <div id="comments" style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
+                            <table>
+                                {% for comment in comments %}
+                                <tr>
+                                    {% for profile in comment.user.userprofile_set.all %}
+                                    <td rowspan="2" style="min-width:50px; vertical-align:top;"><a href="{% url view_profile comment.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                    {% endfor %}
+                                    <td><a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a></td>
+                                    <td>{{ comment.created_at }}</td>
+                                    <td>
+                                        {% if user == comment.user or is_admin%}
+                                        <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">{{ comment.text }}</td>
+                                </tr>
+                                {% empty %}
+                                <p>Nope</p>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span2">
+                        <div><input id="add-comment-btn" type="button" value="Add a comment"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
+    <div id="add-comment-dialog">
+        <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
+            <textarea id="comment" name="comment" rows="5" cols="20"></textarea>
+        </form>
+    </div>
+
     <script type="text/javascript">
         $(document).ready(function(){
             $("#signup-form").hide();
@@ -92,6 +195,36 @@
                 $('#signup-form').hide("slow");
                 $("#signup-btn").show("slow");
                 return false;
+            });
+
+            //Start with comments hidden
+            $('#comments').hide();
+            $('#comments-btn').click(function() {
+                $('#comments').slideToggle('slow');
+                $(this).text($(this).text() == 'Hide comment(s):' ? 'Show all {{ comments.count }} comment(s):' : 'Hide comment(s):');
+                return false;
+            });
+            
+            //Leave a comment
+            $("#add-comment-dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                resizable: false,
+                modal: true,
+                buttons: {
+                    "Add": function(){
+                        var challenge_id = $("<input>").attr("type", "hidden").attr("name", "challenge_id").val({{ challenge.pk }});
+                        $("#add-comment-form").append($(challenge_id));
+                        $("#add-comment-form").submit();   
+                    },
+                    "Close": function(){
+                        $(this).dialog('close');   
+                    }
+                }
+            });
+
+            $('input[id="add-comment-btn"]').click(function(){
+                $("#add-comment-dialog").dialog("open");
             });
         });
     </script>

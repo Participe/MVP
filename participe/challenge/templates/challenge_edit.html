@@ -68,10 +68,6 @@
             }
         });
 
-        $('input[id="delete"]').click(function(){
-            $("#dialog").dialog("open");
-        });
-
         $(document).ready(function(){
             $('input[id="delete"]').attr('disabled','disabled');
             $('input[id="delete"]').attr('class','btn');
@@ -88,6 +84,7 @@
                 return false;
             });
 
+            //Delete confirmation dialog window
             $("#dialog").dialog({
                 autoOpen: false,
                 draggable: true,
@@ -103,6 +100,10 @@
                         $(this).dialog('close');   
                     }
                 }
+            });
+
+            $('input[id="delete"]').click(function(){
+                $("#dialog").dialog("open");
             });
         });
     </script>

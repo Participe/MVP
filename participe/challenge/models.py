@@ -139,9 +139,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, verbose_name=_("User"))
     challenge = models.ForeignKey(Challenge, verbose_name=_("Challenge"))
     text = models.TextField(verbose_name=_("Text"))
-    
     is_deleted = models.BooleanField(default=False)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
