@@ -141,7 +141,28 @@ def challenge_edit(request, challenge_id):
             RequestContext(request, {'form': form}))
 
 @login_required
-@user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
+def participation_accept(request, participation_id):
+    from datetime import datetime
+    
+    participation = get_object_or_404(Participation, pk=participation_id)
+
+    if is_challenge_admin(request.user, participation.challenge):
+        participation.status = "2"
+        participation.date_accepted = datetime.now()
+        participation.save()
+        return redirect("challenge_detail", participation.challenge.pk)
+
+    info = _("You don't have permission to perform this action.")
+    return render_to_response('account_information.html', 
+            RequestContext(request, {
+                    "information": info,
+                    }))
+
+@login_required
+def participation_reject(request, participation_id):
+    return
+
+@login_required
 def comment_add(request):
     if request.method == "POST":
         challenge_id = request.POST["challenge_id"]
@@ -158,7 +179,6 @@ def comment_add(request):
     return redirect("challenge_list")
 
 @login_required
-@user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
 
