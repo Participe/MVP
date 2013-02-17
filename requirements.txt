@@ -1,6 +1,6 @@
 Django==1.4.2
 Fabric==1.5.1
-PIL==1.1.7
+Pillow==1.7.8
 South==0.7.6
 argparse==1.2.1
 django-countries==1.5
