@@ -5,10 +5,6 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <style type="text/css">
-        td {vertical-align:top;}
-    </style>
-    
     <div class="well">
         <table class="table table-striped">
             <tr>
@@ -24,7 +20,7 @@
             {% if not forloop.first %}<tr><td colspan="6"><h3>{{ challenges_year.grouper }}</h3></td></tr>{% endif %}
             {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
             {% for challenges_month in challenges_by_month %}
-                <tr><td colspan="6"><h4>{{ challenges_month.grouper }}</h4</td></tr>
+                <tr><td colspan="6"><h4>{{ challenges_month.grouper }}</h4></td></tr>
                 {% for challenge in challenges_month.list %}        
                     <tr>
                         <td></td>
@@ -34,9 +30,9 @@
                         <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
                         <td>
                             {% if challenge.application == "0" %}
-                            <img src="{{ MEDIA_URL }}img/perm_yes.png" title="Free for all">
+                            <img src="{{ MEDIA_URL }}img/perm_yes.png" alt="Free for all">
                             {% else %}
-                            <img src="{{ MEDIA_URL }}img/stop.png" title="Confirmation required">
+                            <img src="{{ MEDIA_URL }}img/stop.png" alt="Confirmation required">
                             {% endif %}
                         </td>
                     </tr>
