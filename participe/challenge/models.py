@@ -47,6 +47,7 @@ class Challenge(models.Model):
 
     organization = models.ForeignKey(
             Organization, null=True, verbose_name=_("Organization"))
+
     application = models.CharField(
             max_length=2, choices=application_choices, default="0",
             verbose_name=_("Application"))
@@ -81,6 +82,10 @@ class Challenge(models.Model):
             if self.application == code:
                 return name
         return ''
+
+    @property
+    def confirmation_required(self):
+        return self.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED
 
     @property
     def get_waiting_count(self):

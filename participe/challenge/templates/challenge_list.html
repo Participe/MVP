@@ -9,49 +9,45 @@
         td {vertical-align:top;}
     </style>
     
-    <div class="modal" style="width:60%; position:relative; top:auto; left:auto; margin:0 auto; z-index:1;">
-        <div class="modal-header">
-            <a class="btn" href="/challenges/create/">{% trans "Create new challenge" %}</a>
-        </div>
-        <div class="modal-body">
-            <table>
-                <tr>
-                    <th></th>
-                    <th style="min-width:50px;"></th>
-                    <th>Name</th>
-                    <th>Organization</th>
-                    <th>Start Date/Time</th>
-                    <th>Free-for-all</th>
-                </tr>
-            {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
-            {% for challenges_year in challenges_by_year %}
-                <tr><td>{{ challenges_year.grouper }}</td></tr>
-                {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
-                {% for challenges_month in challenges_by_month %}
-                    <tr><td>{{ challenges_month.grouper }}</td></tr>
-                    {% for challenge in challenges_month.list %}        
-                        <tr>
-                            <td></td>
-                            <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                            <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
-                            <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
-                            <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
-                            <td>
-                                {% if challenge.application == "0" %}
-                                <img src="{{ MEDIA_URL }}img/perm_yes.png" title="Free for all">
-                                {% else %}
-                                <img src="{{ MEDIA_URL }}img/stop.png" title="Confirmation required">
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
+    <div class="well">
+        <table class="table table-striped">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Organization" %}</th>
+                <th>{% trans "Datum" %}</th>
+                <th>{% trans "Bestätigung nötig" %}</th>
+            </tr>
+        {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
+        {% for challenges_year in challenges_by_year %}
+            {% if not forloop.first %}<tr><td colspan="6"><h3>{{ challenges_year.grouper }}</h3></td></tr>{% endif %}
+            {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
+            {% for challenges_month in challenges_by_month %}
+                <tr><td colspan="6"><h4>{{ challenges_month.grouper }}</h4</td></tr>
+                {% for challenge in challenges_month.list %}        
+                    <tr>
+                        <td></td>
+                        <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                        <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+                        <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
+                        <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
+                        <td>
+                            {% if challenge.application == "0" %}
+                            <img src="{{ MEDIA_URL }}img/perm_yes.png" title="Free for all">
+                            {% else %}
+                            <img src="{{ MEDIA_URL }}img/stop.png" title="Confirmation required">
+                            {% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
-            {% empty %}
-                <p>{% trans "There are no active challenges" %}</p>
             {% endfor %}
-            </table>
-        </div>
-        <div class="modal-footer">
-        </div>
+        {% empty %}
+            <p>{% trans "There are no active challenges" %}</p>
+        {% endfor %}
+        </table>
+    </div>
+    <div class="add-item">
+        <a class="btn" href="/challenges/create/">{% trans "Create new challenge" %}</a>
     </div>
 {% endblock %}
