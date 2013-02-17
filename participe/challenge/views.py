@@ -14,6 +14,8 @@ from models import Challenge, Participation, Comment
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
+from participe.challenge.models import CHALLENGE_MODE
+from participe.challenge.models import PARTICIPATION_STATE
 
             
 @login_required
@@ -55,7 +57,7 @@ def challenge_detail(request, challenge_id):
                 if form.is_valid():
                     form.save()
 
-                    if challenge.application == "0":
+                    if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
                             from_email="from@example.com", 
@@ -73,12 +75,12 @@ def challenge_detail(request, challenge_id):
 
     # Extract participations
     waited = Participation.objects.all().filter(
-            Q(challenge=challenge) & Q(status="0")
+            Q(challenge=challenge) & Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
             )
     ctx.update({"waited": waited})
 
     confirmed = Participation.objects.all().filter(
-            Q(challenge=challenge) & Q(status="2")
+            Q(challenge=challenge) & Q(status=PARTICIPATION_STATE.CONFIRMED)
             )
     ctx.update({"confirmed": confirmed})
 
@@ -110,7 +112,7 @@ def challenge_edit(request, challenge_id):
 
             participations = Participation.objects.all().filter(
                     Q(challenge=challenge) &
-                    (Q(status="0") | Q(status="2"))
+                    (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) | Q(status=PARTICIPATION_STATE.CONFIRMED))
                     )
             if "delete" in request.POST:
                 challenge.is_deleted = True
@@ -147,8 +149,8 @@ def participation_accept(request, participation_id):
     participation = get_object_or_404(Participation, pk=participation_id)
 
     if is_challenge_admin(request.user, participation.challenge):
-        participation.status = "2"
-        participation.date_accepted = datetime.now()
+        participation.status = PARTICIPATION_STATE.CONFIRMED
+        participation.date_accepted = datetime.now() 
         participation.save()
         return redirect("challenge_detail", participation.challenge.pk)
 

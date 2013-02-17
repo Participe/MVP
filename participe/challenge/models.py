@@ -6,11 +6,13 @@ from django.utils.translation import ugettext as _
 from easy_thumbnails.fields import ThumbnailerImageField
 
 from participe.organization.models import Organization
+from participe.enum import enum
 
+CHALLENGE_MODE = enum(FREE_FOR_ALL = "0", CONFIRMATION_REQUIRED="1")
 
 application_choices = [
-    ("0", _("Not required: participation by application order")),
-    ("1", _("Confirmation of participation required")),
+    (CHALLENGE_MODE.FREE_FOR_ALL, _("Not required: participation by application order")),
+    (CHALLENGE_MODE.CONFIRMATION_REQUIRED, _("Confirmation of participation required")),
     ]
  
 class Challenge(models.Model):
@@ -90,12 +92,20 @@ class Challenge(models.Model):
         return Participation.objects.all().filter(
                 challenge=self, status="2").count()
 
+PARTICIPATION_STATE = enum(
+    WAITING_FOR_CONFIRMATION = "0", 
+    CONFIRMATION_DENIED ="1",
+    CONFIRMED = "2",
+    CANCELLED_BY_ADMIN = "3",
+    CANCELLED_BY_USER = "4"
+    )
+
 participation_status_choices = [
-    ("0", _("Waiting for confirmation")),
-    ("1", _("Confirmation denied")),
-    ("2", _("Confirmed")),
-    ("3", _("Cancelled by admin")),
-    ("4", _("Cancelled by user")),
+    (PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION, _("Waiting for confirmation")),
+    (PARTICIPATION_STATE.CONFIRMATION_DENIED, _("Confirmation denied")),
+    (PARTICIPATION_STATE.CONFIRMED, _("Confirmed")),
+    (PARTICIPATION_STATE.CANCELLED_BY_ADMIN, _("Cancelled by admin")),
+    (PARTICIPATION_STATE.CANCELLED_BY_USER, _("Cancelled by user")),
     ]
 
 class Participation(models.Model):

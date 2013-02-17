@@ -116,6 +116,8 @@ INSTALLED_APPS = (
     'social_auth',
     'captcha',
     'easy_thumbnails',
+
+    'django_extensions' #for shell_plus and runserver_plus
 )
 
 # A sample logging configuration. The only tangible logging
