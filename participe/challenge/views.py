@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
@@ -84,7 +85,8 @@ def challenge_detail(request, challenge_id):
 
     # Extract comments
     comments = Comment.objects.all().filter(
-            Q(challenge=challenge) & Q(is_deleted=False))
+            Q(challenge=challenge) & Q(is_deleted=False)
+            ).order_by("created_at")
     ctx.update({"comments": comments})
 
     return render_to_response('challenge_detail.html',
@@ -136,31 +138,58 @@ def challenge_edit(request, challenge_id):
                                     "challenge": participation.challenge,
                                     },)
             return redirect("challenge_list")
-
     return render_to_response('challenge_edit.html', 
             RequestContext(request, {'form': form}))
 
 @login_required
+@challenge_admin
 def participation_accept(request, participation_id):
-    from datetime import datetime
-    
     participation = get_object_or_404(Participation, pk=participation_id)
+    participation.status = "2"
+    participation.date_accepted = datetime.now()
+    participation.save()
 
-    if is_challenge_admin(request.user, participation.challenge):
-        participation.status = "2"
-        participation.date_accepted = datetime.now()
-        participation.save()
-        return redirect("challenge_detail", participation.challenge.pk)
-
-    info = _("You don't have permission to perform this action.")
-    return render_to_response('account_information.html', 
-            RequestContext(request, {
-                    "information": info,
-                    }))
+    send_templated_mail(
+            template_name="challenge_participation_accepted",
+            from_email="from@example.com", 
+            recipient_list=[participation.user.email,], 
+            context={
+                    "user": participation.user,
+                    "challenge": participation.challenge,
+                    },)
+    return redirect("challenge_detail", participation.challenge.pk)
 
 @login_required
-def participation_reject(request, participation_id):
-    return
+@challenge_admin
+def participation_remove(request, challenge_id):
+    # Participation cancelled / Application rejected by admin
+    if request.method == "POST":
+        participation_id = request.POST["participation_id"]
+        value = request.POST["value"]
+        cancellation_text = request.POST["text"]
+        
+        participation = get_object_or_404(Participation, pk=participation_id)
+        participation.status = "3"
+        participation.cancellation_text = cancellation_text
+        participation.date_cancelled = datetime.now()
+        participation.save()
+
+        if value=="Remove":
+            template_name = "challenge_participation_removed"
+        elif value=="Reject":
+            template_name = "challenge_participation_rejected"
+        
+        send_templated_mail(
+                template_name=template_name,
+                from_email="from@example.com", 
+                recipient_list=[participation.user.email,], 
+                context={
+                        "user": participation.user,
+                        "challenge": participation.challenge,
+                        "participation": participation,
+                        },)
+        return redirect("challenge_detail", participation.challenge.pk)
+    return redirect("challenge_list")
 
 @login_required
 def comment_add(request):
@@ -179,17 +208,9 @@ def comment_add(request):
     return redirect("challenge_list")
 
 @login_required
+@challenge_admin
 def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
-
-    if (request.user==comment.user or
-            is_challenge_admin(request.user, comment.challenge)):
-        comment.is_deleted = True
-        comment.save()
-        return redirect("challenge_detail", comment.challenge.pk)
-
-    info = _("You don't have permission to perform this action.")
-    return render_to_response('account_information.html', 
-            RequestContext(request, {
-                    "information": info,
-                    }))
+    comment.is_deleted = True
+    comment.save()
+    return redirect("challenge_detail", comment.challenge.pk)

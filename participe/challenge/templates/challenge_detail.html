@@ -33,11 +33,15 @@
                     <div class="span3">
                     </div>
                     <div class="span3">
+                        {% if user.social_auth.all %}
                         {% with "facebook" as service %}
-                        <a href="http://www.facebook.com/share.php?u={{ host }}{{ page_url }}&amp;t={{ title }}" target="_blank" title="{{ share_txt }} {{ service }}">
+                        <div><a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="{{ challenge.name }} {{ service }}">
                             <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="{{ share_txt }} {{ service }}"/>
-                        </a>
+                        </a></div>
                         {% endwith %}
+                        {% endif %}
+                        <div><b>Direct link to challenge:</b></div>
+                        <div><input type="text" class="disabled" readonly="readonly" value="{{ request.build_absolute_uri }}"/></div>
 
                         {% if user.is_authenticated %}
                             {% if participation %}
@@ -103,7 +107,7 @@
                                     {% endfor %}
                                     <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
                                     {% if is_admin %}
-                                    <td><a href="#"><input type="button" value="Reject"></a></td>
+                                    <td><a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="Remove"></a></td>
                                     {% endif %}
                                 </tr>
                                 {% empty %}
@@ -113,6 +117,7 @@
                         </div>
                     </div>
                     <div class="span4">
+                        {% if is_admin %}
                         <div><b>People waiting for participation:</b></div>
                         <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
                             <table>
@@ -122,8 +127,12 @@
                                     <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
                                     {% endfor %}
                                     <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
+                                    <td>{{ participation.application_text }}</a></td>
                                     {% if is_admin %}
-                                    <td><a href="{% url participation_accept participation.pk %}"><input type="button" value="Accept"></a></td>
+                                    <td>
+                                        <a href="{% url participation_accept participation.pk %}"><input type="button" value="Accept"></a>
+                                        <a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="Reject"></a>
+                                    </td>
                                     {% endif %}
                                 </tr>
                                 {% empty %}
@@ -131,6 +140,7 @@
                                 {% endfor %}
                             </table>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -155,7 +165,7 @@
                                     <td><a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a></td>
                                     <td>{{ comment.created_at }}</td>
                                     <td>
-                                        {% if user == comment.user or is_admin%}
+                                        {% if user == comment.user or is_admin or user.is_staff %}
                                         <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
                                         {% endif %}
                                     </td>
@@ -183,7 +193,24 @@
         </form>
     </div>
 
+    <div id="remove-participation-dialog">
+        <form id="remove-participation-form" action="{% url participation_remove challenge.pk %}" method="post">{% csrf_token %}
+            <textarea id="text" name="text" rows="5" cols="20" placeholder="Cancellation/Rejection reason"></textarea>
+        </form>
+    </div>
+
     <script type="text/javascript">
+        function send_remove_form(){
+            var event = window.event || evt;
+            if (!event.target) event.target = event.srcElement
+            participation_id = event.target.getAttribute("participation");
+            value = event.target.getAttribute("value");
+            
+            $("#remove-participation-dialog").data("participation_id", participation_id);
+            $("#remove-participation-dialog").data("value", value);
+            $("#remove-participation-dialog").dialog("open");
+        }
+        
         $(document).ready(function(){
             $("#signup-form").hide();
             $("#signup-btn").click(function(){
@@ -225,6 +252,28 @@
 
             $('input[id="add-comment-btn"]').click(function(){
                 $("#add-comment-dialog").dialog("open");
+            });
+            
+            //Remove participation (signed participant) or
+            //Reject application
+            $("#remove-participation-dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                resizable: false,
+                modal: true,
+                buttons: {
+                    "Proceed": function(){
+                        participation_id = $(this).data('participation_id');
+                        var input1 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
+                        var input2 = $("<input>").attr("type", "hidden").attr("name", "value").val(value);
+                        $("#remove-participation-form").append($(input1));
+                        $("#remove-participation-form").append($(input2));
+                        $("#remove-participation-form").submit();   
+                    },
+                    "Close": function(){
+                        $(this).dialog('close');   
+                    }
+                }
             });
         });
     </script>
