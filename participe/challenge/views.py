@@ -47,6 +47,16 @@ def challenge_detail(request, challenge_id):
         try:
             participation = Participation.objects.all().get(
                     Q(user=request.user) & Q(challenge=challenge))
+
+            # User withdraws his application
+            if request.method == "POST":
+                cancellation_text = request.POST["text"]
+
+                participation.status = "4"
+                participation.cancellation_text = cancellation_text
+                participation.date_cancelled = datetime.now()
+                participation.save()
+
             ctx.update({"participation": participation})
         except:
             form = SignupChallengeForm(
@@ -169,16 +179,18 @@ def participation_remove(request, challenge_id):
         cancellation_text = request.POST["text"]
         
         participation = get_object_or_404(Participation, pk=participation_id)
-        participation.status = "3"
+
+        if value=="Remove":
+            participation.status = "3"
+            template_name = "challenge_participation_removed"
+        elif value=="Reject":
+            participation.status = "1"
+            template_name = "challenge_participation_rejected"
+        
         participation.cancellation_text = cancellation_text
         participation.date_cancelled = datetime.now()
         participation.save()
 
-        if value=="Remove":
-            template_name = "challenge_participation_removed"
-        elif value=="Reject":
-            template_name = "challenge_participation_rejected"
-        
         send_templated_mail(
                 template_name=template_name,
                 from_email="from@example.com", 

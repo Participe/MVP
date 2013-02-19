@@ -35,8 +35,8 @@
                     <div class="span3">
                         {% if user.social_auth.all %}
                         {% with "facebook" as service %}
-                        <div><a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="{{ challenge.name }} {{ service }}">
-                            <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="{{ share_txt }} {{ service }}"/>
+                        <div><a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="Share on {{ service }}">
+                            <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/>
                         </a></div>
                         {% endwith %}
                         {% endif %}
@@ -53,11 +53,19 @@
                                 <img src="{{ MEDIA_URL }}img/remove.png">
                                 {% elif participation.status == "2" %}
                                 <img src="{{ MEDIA_URL }}img/perm_yes.png">
+                                <div><input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="Withdraw application"></div>
                                 {% else %}
                                 <img src="{{ MEDIA_URL }}img/stop.png">
                                 {% endif %}
                                 <span>{{ participation.stat_participation_status_name }}</span>
                             </div>
+                            {% if participation.status == "0" or participation.status == "2" %}
+                            <div><input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="Withdraw application"></div>
+                            <form id="withdraw-form" action="." method="post">{% csrf_token %}
+                                <div class="input"><textarea id="text" name="text" placeholder="Withdrawing reason"></textarea></div>
+                                <div><input id="withdraw" name="withdraw" type="button" class="btn-primary" value="{% trans 'Withdraw' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
+                            </form>
+                            {% endif %}
                             {% endif %}
 
                             {% if form %}
@@ -199,6 +207,10 @@
         </form>
     </div>
 
+    <div id="withdraw-dialog">
+        <span>Do you really want to withdraw your application?</span>
+    </div>
+    
     <script type="text/javascript">
         function send_remove_form(){
             var event = window.event || evt;
@@ -275,6 +287,39 @@
                     }
                 }
             });
+
+            //User withdraws his application
+            $("#withdraw-form").hide();
+            $("#withdraw-btn").click(function(){
+                $("#withdraw-btn").hide();
+                $('#withdraw-form').show("slow");
+                return false;
+            });
+            $("#cancel-btn").click(function(){
+                $('#withdraw-form').hide("slow");
+                $("#withdraw-btn").show("slow");
+                return false;
+            });
+
+            $("#withdraw-dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                resizable: false,
+                modal: true,
+                buttons: {
+                    "Withdraw": function(){
+                        $("#withdraw-form").submit();   
+                    },
+                    "Close": function(){
+                        $(this).dialog('close');   
+                    }
+                }
+            });
+
+            $('input[id="withdraw"]').click(function(){
+                $("#withdraw-dialog").dialog("open");
+            });
+
         });
     </script>
 {% endblock %}
