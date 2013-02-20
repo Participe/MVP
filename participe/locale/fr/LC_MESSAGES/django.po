@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 15:35+0100\n"
+"POT-Creation-Date: 2013-02-17 12:23-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,7 +152,7 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
-#: account/models.py:19 challenge/models.py:112 challenge/models.py:149
+#: account/models.py:19 challenge/models.py:117 challenge/models.py:154
 msgid "User"
 msgstr ""
 
@@ -229,6 +229,7 @@ msgstr ""
 #: account/templates/account_base.html:11
 #: challenge/templates/challenge_base.html:8 home/templates/home_base.html:8
 #: organization/templates/organization_base.html:8
+#: organization/templates/organization_list.html:19
 msgid "Challenges"
 msgstr ""
 
@@ -276,7 +277,7 @@ msgid "Delete"
 msgstr ""
 
 #: account/templates/account_delete.html:16
-#: challenge/templates/challenge_detail.html:69
+#: challenge/templates/challenge_detail.html:84
 #: challenge/templates/challenge_edit.html:38
 msgid "Cancel"
 msgstr ""
@@ -501,7 +502,7 @@ msgstr ""
 msgid "Reason for deletion (at least 20 symbols)"
 msgstr ""
 
-#: challenge/forms.py:241 challenge/models.py:116
+#: challenge/forms.py:241 challenge/models.py:121
 msgid "Application text"
 msgstr ""
 
@@ -513,11 +514,13 @@ msgstr ""
 msgid "Confirmation of participation required"
 msgstr ""
 
-#: challenge/models.py:21 organization/models.py:14
+#: challenge/models.py:21 challenge/templates/challenge_list.html:13
+#: organization/models.py:14 organization/templates/organization_list.html:17
 msgid "Name"
 msgstr ""
 
 #: challenge/models.py:23 organization/models.py:16
+#: organization/templates/organization_list.html:18
 msgid "Description"
 msgstr ""
 
@@ -537,88 +540,88 @@ msgstr ""
 msgid "Start Time"
 msgstr ""
 
-#: challenge/models.py:49
+#: challenge/models.py:49 challenge/templates/challenge_list.html:14
 msgid "Organization"
 msgstr ""
 
-#: challenge/models.py:52 challenge/templates/challenge_create.html:38
+#: challenge/models.py:53 challenge/templates/challenge_create.html:38
 #: challenge/templates/challenge_edit.html:30
 msgid "Application"
 msgstr ""
 
-#: challenge/models.py:56
+#: challenge/models.py:57
 msgid "Reason for deletion"
 msgstr ""
 
-#: challenge/models.py:61
+#: challenge/models.py:62
 msgid "challenge"
 msgstr ""
 
-#: challenge/models.py:62
+#: challenge/models.py:63
 msgid "challenges"
 msgstr ""
 
-#: challenge/models.py:104
+#: challenge/models.py:109
 msgid "Waiting for confirmation"
 msgstr ""
 
-#: challenge/models.py:105
+#: challenge/models.py:110
 msgid "Confirmation denied"
 msgstr ""
 
-#: challenge/models.py:106
+#: challenge/models.py:111
 msgid "Confirmed"
 msgstr ""
 
-#: challenge/models.py:107
+#: challenge/models.py:112
 msgid "Cancelled by admin"
 msgstr ""
 
-#: challenge/models.py:108
+#: challenge/models.py:113
 msgid "Cancelled by user"
 msgstr ""
 
-#: challenge/models.py:113 challenge/models.py:150
+#: challenge/models.py:118 challenge/models.py:155
 msgid "Challenge"
 msgstr ""
 
-#: challenge/models.py:118
+#: challenge/models.py:123
 msgid "Cancellation text"
 msgstr ""
 
-#: challenge/models.py:122
+#: challenge/models.py:127
 msgid "Status"
 msgstr ""
 
-#: challenge/models.py:125
+#: challenge/models.py:130
 msgid "Date created"
 msgstr ""
 
-#: challenge/models.py:127
+#: challenge/models.py:132
 msgid "Date accepted"
 msgstr ""
 
-#: challenge/models.py:129
+#: challenge/models.py:134
 msgid "Date cancelled"
 msgstr ""
 
-#: challenge/models.py:134
+#: challenge/models.py:139
 msgid "participation"
 msgstr ""
 
-#: challenge/models.py:135
+#: challenge/models.py:140
 msgid "participations"
 msgstr ""
 
-#: challenge/models.py:151
+#: challenge/models.py:156
 msgid "Text"
 msgstr ""
 
-#: challenge/models.py:156
+#: challenge/models.py:161
 msgid "commment"
 msgstr ""
 
-#: challenge/models.py:157
+#: challenge/models.py:162
 msgid "comments"
 msgstr ""
 
@@ -637,7 +640,6 @@ msgid "Avatar:"
 msgstr ""
 
 #: challenge/templates/challenge_create.html:21
-#: challenge/templates/challenge_detail.html:18
 msgid "hours"
 msgstr ""
 
@@ -651,12 +653,11 @@ msgstr ""
 
 #: challenge/templates/challenge_create.html:25
 #: challenge/templates/challenge_create.html:27
-#: organization/templates/organization_list.html:14
+#: organization/templates/organization_list.html:43
 msgid "Create new organization"
 msgstr ""
 
 #: challenge/templates/challenge_create.html:32
-#: challenge/templates/challenge_detail.html:22
 #: challenge/templates/challenge_edit.html:24
 #: organization/templates/organization_create.html:27
 #: organization/templates/organization_detail.html:23
@@ -678,67 +679,76 @@ msgid "Create this challenge"
 msgstr ""
 
 #: challenge/templates/challenge_detail.html:4
-#: challenge/templates/challenge_detail.html:8
 msgid "Challenge details"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:15
-#: organization/templates/organization_detail.html:15
-msgid "Name:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:16
-#: organization/templates/organization_detail.html:22
-msgid "Description:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:17
-msgid "Location:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:18
-msgid "Duration:"
-msgstr ""
-
 #: challenge/templates/challenge_detail.html:19
-msgid "Affiliated with"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:30
-msgid "Start date:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:30
-msgid "Time:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:31
-msgid "Application:"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:44
-msgid "Your application status: "
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:66
-msgid "Share on Facebook"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:68
-msgid "By clicking 'Participate', you agree to participate in this challenge"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:69
-msgid "Participate"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:75
 #: challenge/templates/challenge_edit.html:4
 msgid "Edit challenge"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:80
+#: challenge/templates/challenge_detail.html:28
+msgid "On"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:29
+msgid "at"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:30
+msgid "in"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:32
+msgid "Confirmation required"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:36
+msgid "Organized by"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:45
+msgid "Contact person"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:59
+msgid "Your application"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:75
+msgid "Participe in this Challenge"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:81
+msgid "Share on Facebook"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:83
+msgid "By clicking 'Participate', you agree to participate in this challenge"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:84
+msgid "Participate"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:92
 msgid "Only registered users can sign-up to Challenge"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:104
+msgid "Participants"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:117
+msgid "No participants yet"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:128
+msgid "People waiting for participation"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:150
+msgid "Comments"
 msgstr ""
 
 #: challenge/templates/challenge_edit.html:33
@@ -749,11 +759,19 @@ msgstr ""
 msgid "Challenges list"
 msgstr ""
 
-#: challenge/templates/challenge_list.html:46
+#: challenge/templates/challenge_list.html:15
+msgid "Datum"
+msgstr ""
+
+#: challenge/templates/challenge_list.html:16
+msgid "Bestätigung nötig"
+msgstr ""
+
+#: challenge/templates/challenge_list.html:42
 msgid "There are no active challenges"
 msgstr ""
 
-#: challenge/templates/challenge_list.html:51
+#: challenge/templates/challenge_list.html:47
 msgid "Create new challenge"
 msgstr ""
 
@@ -1902,6 +1920,14 @@ msgstr ""
 msgid "Organization details"
 msgstr ""
 
+#: organization/templates/organization_detail.html:15
+msgid "Name:"
+msgstr ""
+
+#: organization/templates/organization_detail.html:22
+msgid "Description:"
+msgstr ""
+
 #: organization/templates/organization_detail.html:31
 msgid "Affiliated users:"
 msgstr ""
@@ -1918,7 +1944,7 @@ msgstr ""
 msgid "Organizations list"
 msgstr ""
 
-#: organization/templates/organization_list.html:41
+#: organization/templates/organization_list.html:38
 msgid "There are no organizations"
 msgstr ""
 
@@ -1948,10 +1974,10 @@ msgid ""
 "mail and should be fixed shortly. Thanks for your patience."
 msgstr ""
 
-#: templates/base.html:53
+#: templates/base.html:50
 msgid "Change your locale"
 msgstr ""
 
-#: templates/base.html:63
+#: templates/base.html:60
 msgid "change"
 msgstr ""

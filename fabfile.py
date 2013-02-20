@@ -22,9 +22,14 @@ def schema_migration():
         run("/home/django/participe/MVP/manage.py migrate organization")
         run("/home/django/participe/MVP/manage.py migrate challenge")
 
+def get_text():
+    with cd("/home/django/participe/MVP/participe"):
+        run("../manage.py compilemessages")
+
 def deploy():
     stop_all()
     git_pull()
     schema_migration()
+    get_text()
     start_all()
 
