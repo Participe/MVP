@@ -64,6 +64,7 @@
                                 <div>
                                     {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
                                         <img src="{{ MEDIA_URL }}img/warning.png">
+                                        <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="{% trans "Withdraw application" %}">
                                     {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
                                         <img src="{{ MEDIA_URL }}img/remove.png">
                                     {% elif participation.status == PARTICIPATION_STATE.CONFIRMED%}
