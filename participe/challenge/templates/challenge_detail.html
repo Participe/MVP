@@ -147,12 +147,12 @@
             <div class="span12">
                 <div class="well">
                     <h3>{% trans "People waiting for participation" %}</h3>
-                    <table>
+                    <table class="table table-striped">
                         {% for participation in waited %}
                             <tr>
                                 {% for profile in participation.user.userprofile_set.all %}
                                     <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    {% endfor %}
+                                {% endfor %}
                                     <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
                                     <td>{{ participation.application_text }}</td>
                                     <td>
@@ -163,13 +163,11 @@
                                             <input type="button" participation="{{ participation.pk }}" value="Reject">
                                         </a>
                                     </td>
-                                </tr>
-                                {% empty %}
-                                <p>Nope</p>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
+                            </tr>
+                        {% empty %}
+                            <p>Nope</p>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>
