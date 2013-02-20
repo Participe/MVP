@@ -27,27 +27,10 @@
                             <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
                         </a></div>
                         
-                        <div><a href="#" onclick="renew_password_redirect(); return false;">Forgot your password?</a></div>
+                        <div><a href="{% url notify_forgotten_password %}">Forgot your password?</a></div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-
-    <form id="renew_form" action="/accounts/password/renew/" method="post" style="display:none;">{% csrf_token %}
-        {% if renew_err_msg%}
-        <script type="text/javascript">
-            alert("{{ renew_err_msg }}");
-        </script>
-        {% endif %}
-        <input id="renew" type="text" name="renew" value="">
-    </form>
-
-    <script type="text/javascript">
-        function renew_password_redirect(){
-            $("#renew").val(document.getElementById("username").value);
-            document.forms["renew_form"].submit();
-            return false;
-        }
-    </script>
 {% endblock %}

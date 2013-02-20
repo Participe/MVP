@@ -2,6 +2,7 @@ participe/media/avatars/
 participe/media/img/accounts/
 participe/media/img/challenges/
 participe/media/img/organizations/
+participe/local_settings.py
 ve
 django_wsgi.py
 sqlite.db

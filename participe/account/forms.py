@@ -227,6 +227,26 @@ class ResetPasswordForm(forms.Form):
            raise forms.ValidationError(_("Passwords don't match"))
        return self.cleaned_data["retry"]
 
+class RestorePasswordForm(forms.Form):
+    email = forms.EmailField(
+            widget=widgets.EmailInput(
+                    attrs={"placeholder": _("E-mail"), "value": ""}))
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        
+        if not email_re.match(email):
+            raise forms.ValidationError(
+                    _("Please, enter valid e-mail address."))
+
+        # E-mail address should exist
+        try:
+            u = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise forms.ValidationError(
+                    _("Account with such e-mail address does not exist."))
+        return self.cleaned_data["email"]
+
 # TODO On general success move this to separate application
 # TODO Here and elsewhere, move "clean_avatar" code to "validators"
 class ChangeAvatarForm(forms.Form):

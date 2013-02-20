@@ -27,8 +27,8 @@ from django.utils.translation import ugettext as _
 from social_auth.utils import setting
 from templated_email import send_templated_mail
 
-from forms import (UserForm, UserProfileForm, ResetPasswordForm, UserEditForm,
-        ChangeAvatarForm, AvatarCropForm)
+from forms import (UserForm, UserProfileForm, UserEditForm, ResetPasswordForm,
+        RestorePasswordForm, ChangeAvatarForm, AvatarCropForm)
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
@@ -324,42 +324,41 @@ def reset_password(request):
                     }))
 
 def notify_forgotten_password(request):
+    form = RestorePasswordForm(request.POST or None)
+
     if request.method == "POST":
-        try:
-            user = get_object_or_404(User, email=request.POST["renew"])
-        except:
-            info = _("Sorry, user with such e-mail not found")
-            return render_to_response('account_login.html', 
-                    RequestContext(request, {
-                            "renew_err_msg": info,
-                            }))
-        
-        try:
-            token = token_generator.make_token(user)
-            confirmation_link = (
-                    "http://%s/accounts/password/renew/%s-%s/" %
-                    (settings.DOMAIN_NAME, int_to_base36(user.id), token))
-            send_templated_mail(
-                    template_name="account_password_renew",
-                    from_email="from@example.com", 
-                    recipient_list=[user.email,], 
-                    context={
-                            "user": user,
-                            "confirmation_link": confirmation_link,
-                            },)
-            info = _("Confirmation link to restore password "
-                    "were sent to address '%s'" % user.email)
-            return render_to_response('account_information.html', 
-                    RequestContext(request, {
-                            "information": info,
-                            }))
-        except:
-            info = _("An error has been acquired.")
-            return render_to_response('account_error.html', 
-                    RequestContext(request, {
-                            "information": info,
-                            }))
-    return HttpResponseRedirect('/')
+        if form.is_valid():
+            user = get_object_or_404(User, email=form.cleaned_data["email"])
+
+            try:
+                token = token_generator.make_token(user)
+                confirmation_link = (
+                        "http://%s/accounts/password/renew/%s-%s/" %
+                        (settings.DOMAIN_NAME, int_to_base36(user.id), token))
+                send_templated_mail(
+                        template_name="account_password_renew",
+                        from_email="from@example.com", 
+                        recipient_list=[user.email,], 
+                        context={
+                                "user": user,
+                                "confirmation_link": confirmation_link,
+                                },)
+                info = _("Confirmation link to restore password "
+                        "were sent to address '%s'" % user.email)
+                return render_to_response('account_information.html', 
+                        RequestContext(request, {
+                                "information": info,
+                                }))
+            except:
+                info = _("An error has been acquired.")
+                return render_to_response('account_error.html', 
+                        RequestContext(request, {
+                                "information": info,
+                                }))
+    return render_to_response('account_restore_password.html',
+            RequestContext(request, {
+                    'form': form,
+                    }))
 
 def renew_forgotten_password(request, uidb36=None, token=None):
     assert uidb36 is not None and token is not None
