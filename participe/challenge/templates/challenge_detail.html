@@ -5,87 +5,103 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "Challenge details" %}</p>
-    <div class="well">
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span3">
-                        <div class=""><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
-                        <div class=""><b>{% trans "Name:" %} </b>{{ challenge.name }}</div>
-                        <div class=""><b>{% trans "Description:" %} </b>{{ challenge.description }}</div>
-                        <div class=""><b>{% trans "Location:" %} </b>{{ challenge.location }}</div>
-                        <div class=""><b>{% trans "Duration:" %} </b>{{ challenge.duration }} {% trans "hours" %}</div>
-                        <div class=""><b>{% trans "Affiliated with" %} </b><a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a></div>
-                    </div>
-                    <div class="span3">
-                        <div class=""><b>{% trans "Contact person:" %} </b></div>
-                        {% if challenge.is_contact_person %}
-                            <div class=""><a href="{% url view_profile challenge.contact_person.pk %}">{{ challenge.contact_person.get_full_name }}</a></div>
-                        {% else %}
-                            <div class="">{{ challenge.alt_person_fullname }}</div>
-                            <div class="">{{ challenge.alt_person_email }}</div>
-                            <div class="">{{ challenge.alt_person_phone }}</div>
-                        {% endif %}
-                        <div class=""><b>{% trans "Start date:" %} </b>{{ challenge.start_date }} <b>{% trans "Time:" %} </b>{{ challenge.start_time }}</div>
-                        <div class=""><b>{% trans "Application:" %} </b>{{ challenge.stat_application_name }}</div>
-                    </div>
-                    <div class="span3">
-                    </div>
+    <div class="row ">
+        <div class="span12">
+            <div class="well">
+                <div class="pull-right">
                     <div class="span3">
                         {% if user.social_auth.all %}
-                        {% with "facebook" as service %}
-                        <div><a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="Share on {{ service }}">
-                            <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/>
-                        </a></div>
-                        {% endwith %}
+                            {% with "facebook" as service %}
+                                <a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="Share on {{ service }}">
+                                    <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/>
+                                </a>
+                            {% endwith %}
                         {% endif %}
-                        <div><b>Direct link to challenge:</b></div>
-                        <div><input type="text" class="disabled" readonly="readonly" value="{{ request.build_absolute_uri }}"/></div>
+                        <strong>{% trans "Direct link to challenge" %}</strong>
+                        <input type="text" readonly="readonly" value="{{ request.build_absolute_uri }}"/>
+                        {% if is_admin %}
+                            <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <h1>
+                    <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
+                    {{ challenge.name }} ({{ challenge.duration }}h)
+                </h1>
+                <p>
+                    {% trans "On" %} {{ challenge.start_date }} 
+                    {% trans "at" %} {{ challenge.start_time|date:"G:i" }} 
+                    {% trans "in" %} {{ challenge.location }}
+                    {% if challenge.confirmation_required %}
+                        <span class="label">{% trans "Confirmation required" %}</span>
+                    {% endif %}
+                </p>
+                <p>
+                    {% trans "Organized by" %} 
+                    <a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>
+                </p>
+                <blockquote>
+                    <p>{{ challenge.description }}</p>
+                </blockquote>
 
+                <div class="row">
+                    <div class="span3">
+                        <h4>{% trans "Contact person" %} </h4>
+                        {% if challenge.is_contact_person %}
+                            <a href="{% url view_profile challenge.contact_person.pk %}">{{ challenge.contact_person.get_full_name }}</a>
+                        {% else %}
+                            <address>
+                                <strong>{{ challenge.alt_person_fullname }}</strong><br>
+                                {{ challenge.alt_person_email }} <br>
+                                {{ challenge.alt_person_phone }} <br>
+                            </address>
+                        {% endif %}
+                    </div>
+                    <div class="span3">
                         {% if user.is_authenticated %}
                             {% if participation %}
-                            <div><b>{% trans "Your application status: "%}</b></div>
-                            <div>
-                                {% if participation.status == "0" %}
-                                <img src="{{ MEDIA_URL }}img/warning.png">
-                                {% elif participation.status == "1" %}
-                                <img src="{{ MEDIA_URL }}img/remove.png">
-                                {% elif participation.status == "2" %}
-                                <img src="{{ MEDIA_URL }}img/perm_yes.png">
-                                <div><input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="Withdraw application"></div>
-                                {% else %}
-                                <img src="{{ MEDIA_URL }}img/stop.png">
+                                <h4>{% trans "Your application"%}</h4>
+                                <div>
+                                    {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
+                                        <img src="{{ MEDIA_URL }}img/warning.png">
+                                    {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
+                                        <img src="{{ MEDIA_URL }}img/remove.png">
+                                    {% elif participation.status == PARTICIPATION_STATE.CONFIRMED%}
+                                        <img src="{{ MEDIA_URL }}img/perm_yes.png">
+                                        <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="{% trans "Withdraw application" %}">
+                                    {% else %}
+                                        <img src="{{ MEDIA_URL }}img/stop.png">
+                                    {% endif %}
+                                    <span>{{ participation.stat_participation_status_name }}</span>
+                                </div>
+                                {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
+                                    <form id="withdraw-form" action="." method="post">{% csrf_token %}
+                                        <div class="input">
+                                            <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
+                                        </div>
+                                        <div>
+                                            <input id="withdraw" name="withdraw" type="button" class="btn-primary" value="{% trans "Withdraw" %}" />
+                                            <input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans "Cancel" %}">
+                                        </div>
+                                    </form>
                                 {% endif %}
-                                <span>{{ participation.stat_participation_status_name }}</span>
-                            </div>
-                            {% if participation.status == "0" or participation.status == "2" %}
-                            <div><input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="Withdraw application"></div>
-                            <form id="withdraw-form" action="." method="post">{% csrf_token %}
-                                <div class="input"><textarea id="text" name="text" placeholder="Withdrawing reason"></textarea></div>
-                                <div><input id="withdraw" name="withdraw" type="button" class="btn-primary" value="{% trans 'Withdraw' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
-                            </form>
-                            {% endif %}
                             {% endif %}
 
                             {% if form %}
-                            <div><input id="signup-btn" name="signup-btn" type="button" class="btn" value="Sing-up to Challenge"></div>
-                            <div id="signup-form">
-                                <form action="." method="post">{% csrf_token %}
-                                    {% if challenge.application == "1" %}
-                                    <div class="input">{{ form.application_text }}</div>
-                                    {% endif %}
-                                    <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ form.share_on_FB }}</div>
-                                    <br/>
-                                    <div><p>{% trans "By clicking 'Participate', you agree to participate in this challenge" %}</p></div>
-                                    <div><input type="submit" class="btn-primary" value="{% trans 'Participate' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
-                                </form>
-                            </div>
+                                <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participe in this Challenge" %}">
+                                <div id="signup-form">
+                                    <form action="." method="post">{% csrf_token %}
+                                        {% if challenge.application == "1" %}
+                                            <div class="input">{{ form.application_text }}</div>
+                                        {% endif %}
+                                        <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ form.share_on_FB }}</div>
+                                        <br/>
+                                        <p>{% trans "By clicking 'Participate', you agree to participate in this challenge" %}</p>
+                                        <input type="submit" class="btn-primary" value="{% trans 'Participate' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                    </form>
+                                </div>
                             {% endif %}
 
-                            {% if is_admin %}
-                            <div class="input"><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></div>
-                            {% endif %}
                         {% else %}
                             <div>
                                 <img src="{{ MEDIA_URL }}img/warning.png">
@@ -96,100 +112,88 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <br/>
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h3>{% trans "Participants" %}</h3>
+                <table class="table table-striped">
+                    {% for participation in confirmed %}
+                        <tr>
+                            {% for profile in participation.user.userprofile_set.all %}
+                                <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                            {% endfor %}
+                            <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
+                            {% if is_admin %}
+                                <td>
+                                    <a href="#" onclick="send_remove_form()">
+                                        <input type="button" participation="{{ participation.pk }}" value="Remove">
+                                    </a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% empty %}
+                        <tr><td><p>{% trans "No participants yet" %}</p></td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
 
+    {% if waited and is_admin %}
         <div class="row">
             <div class="span12">
-                <div class="row">
-                    <div class="span4">
-                    </div>
-                    <div class="span4">
-                        <div><b>People participating in this challenge:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for participation in confirmed %}
-                                <tr>
-                                    {% for profile in participation.user.userprofile_set.all %}
+                <div class="well">
+                    <h3>{% trans "People waiting for participation" %}</h3>
+                    <table>
+                        {% for participation in waited %}
+                            <tr>
+                                {% for profile in participation.user.userprofile_set.all %}
                                     <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
                                     {% endfor %}
                                     <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
-                                    {% if is_admin %}
-                                    <td><a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="Remove"></a></td>
-                                    {% endif %}
-                                </tr>
-                                {% empty %}
-                                <p>Nope</p>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        {% if is_admin %}
-                        <div><b>People waiting for participation:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for participation in waited %}
-                                <tr>
-                                    {% for profile in participation.user.userprofile_set.all %}
-                                    <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    {% endfor %}
-                                    <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
-                                    <td>{{ participation.application_text }}</a></td>
-                                    {% if is_admin %}
+                                    <td>{{ participation.application_text }}</td>
                                     <td>
-                                        <a href="{% url participation_accept participation.pk %}"><input type="button" value="Accept"></a>
-                                        <a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="Reject"></a>
+                                        <a href="{% url participation_accept participation.pk %}">
+                                            <input type="button" value="Accept">
+                                        </a>
+                                        <a href="#" onclick="send_remove_form()">
+                                            <input type="button" participation="{{ participation.pk }}" value="Reject">
+                                        </a>
                                     </td>
-                                    {% endif %}
                                 </tr>
                                 {% empty %}
                                 <p>Nope</p>
                                 {% endfor %}
                             </table>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
+    {% endif %}
 
-        <br/>
-
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span2">
-                    </div>
-                    <div class="span8">
-                        <div ><a id="comments-btn" href="#">Show all {{ comments.count }} comment(s):</a></div>
-                        <div id="comments" style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for comment in comments %}
-                                <tr>
-                                    {% for profile in comment.user.userprofile_set.all %}
-                                    <td rowspan="2" style="min-width:50px; vertical-align:top;"><a href="{% url view_profile comment.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    {% endfor %}
-                                    <td><a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a></td>
-                                    <td>{{ comment.created_at }}</td>
-                                    <td>
-                                        {% if user == comment.user or is_admin or user.is_staff %}
-                                        <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{ comment.text }}</td>
-                                </tr>
-                                {% empty %}
-                                <p>Nope</p>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span2">
-                        <div><input id="add-comment-btn" type="button" value="Add a comment"></div>
-                    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h3>{% trans "Comments" %}</h3>
+                    {% for comment in comments %}
+                            <blockquote class="">
+                                <p>{{ comment.text }}</p>
+                                <small>
+                                    <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a>
+                                    {{ comment.created_at }}
+                                </small>
+                                {% if user == comment.user or is_admin or user.is_staff %}
+                                    <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
+                                {% endif %}
+                            </blockquote>
+                    {% endfor %}
+                <div>
+                    {% if request.user.is_authenticated %}
+                        <input id="add-comment-btn" type="button" value="Add a comment">
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -236,14 +240,6 @@
                 return false;
             });
 
-            //Start with comments hidden
-            $('#comments').hide();
-            $('#comments-btn').click(function() {
-                $('#comments').slideToggle('slow');
-                $(this).text($(this).text() == 'Hide comment(s):' ? 'Show all {{ comments.count }} comment(s):' : 'Hide comment(s):');
-                return false;
-            });
-            
             //Leave a comment
             $("#add-comment-dialog").dialog({
                 autoOpen: false,

@@ -15,6 +15,8 @@ from models import Challenge, Participation, Comment
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
+from participe.challenge.models import CHALLENGE_MODE
+from participe.challenge.models import PARTICIPATION_STATE
 
             
 @login_required
@@ -66,7 +68,7 @@ def challenge_detail(request, challenge_id):
                 if form.is_valid():
                     form.save()
 
-                    if challenge.application == "0":
+                    if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
                             from_email="from@example.com", 
@@ -84,12 +86,12 @@ def challenge_detail(request, challenge_id):
 
     # Extract participations
     waited = Participation.objects.all().filter(
-            Q(challenge=challenge) & Q(status="0")
+            Q(challenge=challenge) & Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
             )
     ctx.update({"waited": waited})
 
     confirmed = Participation.objects.all().filter(
-            Q(challenge=challenge) & Q(status="2")
+            Q(challenge=challenge) & Q(status=PARTICIPATION_STATE.CONFIRMED)
             )
     ctx.update({"confirmed": confirmed})
 
@@ -98,6 +100,8 @@ def challenge_detail(request, challenge_id):
             Q(challenge=challenge) & Q(is_deleted=False)
             ).order_by("created_at")
     ctx.update({"comments": comments})
+
+    ctx.update({"PARTICIPATION_STATE": PARTICIPATION_STATE})
 
     return render_to_response('challenge_detail.html',
             RequestContext(request, ctx))
@@ -122,7 +126,7 @@ def challenge_edit(request, challenge_id):
 
             participations = Participation.objects.all().filter(
                     Q(challenge=challenge) &
-                    (Q(status="0") | Q(status="2"))
+                    (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) | Q(status=PARTICIPATION_STATE.CONFIRMED))
                     )
             if "delete" in request.POST:
                 challenge.is_deleted = True
@@ -172,7 +176,6 @@ def participation_accept(request, participation_id):
 @login_required
 @challenge_admin
 def participation_remove(request, challenge_id):
-    # Participation cancelled / Application rejected by admin
     if request.method == "POST":
         participation_id = request.POST["participation_id"]
         value = request.POST["value"]
@@ -181,14 +184,15 @@ def participation_remove(request, challenge_id):
         participation = get_object_or_404(Participation, pk=participation_id)
 
         if value=="Remove":
-            participation.status = "3"
+            participation.status = PARTICIPATION_STATE.CANCELLED_BY_USER
             template_name = "challenge_participation_removed"
         elif value=="Reject":
-            participation.status = "1"
+            participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
             template_name = "challenge_participation_rejected"
         
         participation.cancellation_text = cancellation_text
         participation.date_cancelled = datetime.now()
+
         participation.save()
 
         send_templated_mail(

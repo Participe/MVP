@@ -9,17 +9,14 @@
         td {vertical-align:top;}
     </style>
     
-    <div class="modal" style="width:60%; position:relative; top:auto; left:auto; margin:0 auto; z-index:1;">
-        <div class="modal-header">
-            <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a>
-        </div>
-        <div class="modal-body">
-            <table>
+    <div class="list">
+        <div class="well">
+            <table class="table table-striped">
                 <tr>
-                    <th style="min-width:50px;"></th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Challenges</th>
+                    <th></th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Description" %}</th>
+                    <th>{% trans "Challenges" %}</th>
                 </tr>
             {% for organization in organizations %}
                 <tr>
@@ -42,7 +39,8 @@
             {% endfor %}
             </table>
         </div>
-        <div class="modal-footer">
+        <div>
+            <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a>
         </div>
     </div>
 {% endblock %}

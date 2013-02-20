@@ -1,12 +1,11 @@
 {% load i18n %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8;" />
         <title>{% block title %}Participe{% endblock %}</title>
 
-        <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.js"></script>
-        <script src="http://ajax.microsoft.com/ajax/jquery.ui/1.8.5/jquery-ui.js"></script>
+        <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.9.1.js"></script>
+        <script src="http://ajax.microsoft.com/ajax/jquery.ui/1.10.0/jquery-ui.js"></script>
         <script src="http://cachedcommons.org/cache/modernizr/1.5.0/javascripts/modernizr.js"></script>
         {% comment %}<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1-1.4.3.min.js"></script>{% endcomment %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.min.js"></script>
@@ -15,6 +14,7 @@
         <link href="http://ajax.microsoft.com/ajax/jquery.ui/1.8.5/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.css" type="text/css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/participe.css" type="text/css" />
 
         <script type="text/javascript">
         </script>
@@ -27,41 +27,36 @@
     <body>
         {% block container %}
         <div class="container">
-            <div id="" class="">
-                <noscript style="font-family:Verdana;font-size:10px;font-weight:bold;color:red;width:100%;">
-                    Javascript must be enabled to properly navigate this site.
-                </noscript>
-            </div>
+            <noscript style="font-family:Verdana;font-size:10px;font-weight:bold;color:red;width:100%;">
+                Javascript must be enabled to properly navigate this site.
+            </noscript>
 
             {% block header %}
-            <div class="row">
-                <div class="span8">
-                    <a label="Home" href="/"><img src="{{ MEDIA_URL }}img/logo_285x93.jpg"/></a>
-                    {% if user.is_authenticated %}
-                        <a href='/accounts/profile/view/'>{{ user.get_full_name }}</a>
-                        <a href='/accounts/logout/'>(Log out)</a>
-                    {% else %}
-                        <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><img src="{{ MEDIA_URL }}img/footer-link-fb.png"></a>
-                        <a href='/accounts/login/'>Log in</a>
-                        <a href='/accounts/signup/'>Sign up</a>
-                    {% endif %}
-                </div>
-                <div class="span4">
-                    <form id="locale" action="/i18n/setlang/" method="POST">{% csrf_token %}
-                        {% trans 'Change your locale' %}:
-                        <select name="language" class="input-mini" onchange="document.forms['locale'].submit();">
-                        {% for lang in LANGUAGES %}
-                            {% if lang.0 == LANGUAGE_CODE %}
-                                <option value="{{ lang.0 }}" selected="selected">{{ lang.0 }}</option>
+                <a href="/"><img src="{{ MEDIA_URL }}img/logo_285x93.jpg" alt="participe logo"/></a>
+                <div class="pull-right">
+                    <form class="form-inline" id="locale" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                        <div class="">
+                            {% if user.is_authenticated %}
+                                <a href='/accounts/profile/view/'>{{ user.get_full_name }}</a>
+                                <a href='/accounts/logout/'>(Log out)</a>
                             {% else %}
-                                <option value="{{ lang.0 }}">{{ lang.0 }}</option>
+                                <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><img src="{{ MEDIA_URL }}img/footer-link-fb.png" alt="{% trans "login with facebook" %}"></a>
+                                <a href='/accounts/login/'>{% trans "Log in" %}</a>
+                                <a href='/accounts/signup/'>{% trans "Sign up" %}</a>
                             {% endif %}
-                        {% endfor %}
-                        </select>
-                        <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="visibility:hidden;" />
+                            <select name="language" class="input-mini" onchange="document.forms['locale'].submit();">
+                                {% for lang in LANGUAGES %}
+                                    {% if lang.0 == LANGUAGE_CODE %}
+                                        <option value="{{ lang.0 }}" selected="selected">{{ lang.0 }}</option>
+                                    {% else %}
+                                        <option value="{{ lang.0 }}">{{ lang.0 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="display:none;" />
+                        </div>
                     </form>
                 </div>
-            </div>
             {% endblock %}
 
             {% block content %}
