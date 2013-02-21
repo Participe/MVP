@@ -4,6 +4,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.validators import email_re
+from django.forms.forms import NON_FIELD_ERRORS
+from django.forms.util import ErrorList
 from django.utils.translation import ugettext as _
 
 from captcha.fields import CaptchaField
@@ -12,6 +14,22 @@ from models import UserProfile
 from participe.core.countries import COUNTRIES
 import participe.core.html5_widgets as widgets
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+            label=_("E-mail"),
+            widget=forms.TextInput(
+                    attrs={"placeholder": _("E-mail"), "value": ""}))
+    password = forms.CharField(
+            label=_("Password"),
+            widget=forms.PasswordInput(
+                    attrs={"min_length": 6, "max_length": 30,
+                            "placeholder": _("Password"), "value": ""}))
+    remember_me = forms.BooleanField(label=_("Remember me"), required=False)
+
+    def add_non_field_error(self, message):
+        error_list = self.errors.setdefault(NON_FIELD_ERRORS, ErrorList())
+        error_list.append(message)
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

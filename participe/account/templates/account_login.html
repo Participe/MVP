@@ -14,12 +14,11 @@
                     <div class="span4">
                     </div>
                     <div class="span4">
-                        {% if form.errors %}
-                        <p class="error">{% trans "Sorry, you have entered wrong E-mail or Password" %}</p>
-                        {% endif %}                        
-
-                        <div class="input"><label for="username">{% trans "E-mail:" %}</label><input type="text" name="username" value="" id="username"></div>
-                        <div class="input"><label for="password">{% trans "Password:" %}</label><input type="password" name="password" value="" id="password"></div>
+                        {% if form.errors %}<p>{% trans "Sorry, you have entered wrong E-mail or Password" %}</p>{% endif %}
+                        <p>{{ form.username.label_tag }}<p><div class="input">{{ form.username }}</div>
+                        <p>{{ form.password.label_tag }}<p><div class="input">{{ form.password }}</div>
+                        <div class="input"><span>Remember me</span> {{ form.remember_me }}</div>
+                        
                         <div class="input"><input type="submit" class="btn-primary" value="{% trans 'login' %}" /></div>
                         <div class="input"><input type="hidden" name="next" value="{{ next|escape }}" /></div>
 

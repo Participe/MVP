@@ -85,6 +85,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'auth_remember.middleware.AuthRememberMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -117,6 +118,7 @@ INSTALLED_APPS = (
     'social_auth',
     'captcha',
     'easy_thumbnails',
+    'auth_remember',
 
     'django_extensions' #for shell_plus and runserver_plus
 )
@@ -190,6 +192,7 @@ AUTHENTICATION_BACKENDS = (
     #'social_auth.backends.OpenIDBackend',
     'participe.core.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'auth_remember.backend.AuthRememberBackend',
 )
 
 #TODO Override this in local_settings.py
@@ -265,6 +268,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details',
     'participe.core.auth_pipelines.get_user_avatar',
 )
+
+###############################################################################
+### "Remember me"                                                           ###
+###############################################################################
+AUTH_REMEMBER_COOKIE_NAME = 'remember_token'
+AUTH_REMEMBER_COOKIE_AGE = 365 * 24 * 60 * 60 # 1 year
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ###############################################################################
 ###                                                                         ###

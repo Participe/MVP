@@ -24,11 +24,13 @@ from django.utils import timezone
 from django.utils.http import int_to_base36, base36_to_int
 from django.utils.translation import ugettext as _
 
+from auth_remember import remember_user
 from social_auth.utils import setting
 from templated_email import send_templated_mail
 
-from forms import (UserForm, UserProfileForm, UserEditForm, ResetPasswordForm,
-        RestorePasswordForm, ChangeAvatarForm, AvatarCropForm)
+from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
+        ResetPasswordForm, RestorePasswordForm, ChangeAvatarForm,
+        AvatarCropForm)
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
@@ -183,6 +185,35 @@ def email_confirmation(request, confirmation_code):
     except:
         raise Http404
 
+def account_login(request):
+    form = LoginForm(request.POST or None)
+    redirect_to = request.REQUEST.get('next', '')
+    
+    if request.method == 'POST':
+        if form.is_valid():
+            if not redirect_to:
+                redirect_to = settings.LOGIN_REDIRECT_URL
+
+            data = form.cleaned_data
+            user = authenticate(
+                    username=data['username'],
+                    password=data['password'])
+
+            if user:
+                login(request, user)
+                if data['remember_me']:
+                    remember_user(request, user)
+                return HttpResponseRedirect(redirect_to)
+            else:
+                form.add_non_field_error(
+                        _("Sorry, you have entered wrong E-mail or Password"))
+
+    return render_to_response('account_login.html', 
+            RequestContext(request, {
+                    'form': form,
+                    'next': redirect_to,
+                    }))
+
 # Simple wrapper for django logout. Allows to logout Facebook together with
 # Participe logout.
 # As I supposed, FB.logout() works only if user were logged in using FB.init()
@@ -217,7 +248,6 @@ def account_logout(request, next_page):
 
 def account_list(request):
     accounts = User.objects.all().filter(is_active=True)
-
     return render_to_response('account_list.html',
             RequestContext(request, {
                     'accounts': accounts
