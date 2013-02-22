@@ -5,87 +5,84 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "Your profile" %}</p>
-    <div class="well">
-        <div class="row">
-            <div class="span12">
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h1>{% trans "Your profile" %}</h1>
                 <div class="row">
                     <div class="span3">
                         {% if profile.avatar %}
-                        <div class=""><a href="{% url change_avatar %}">{% trans "Change" %}</a>/<a href="{% url crop_avatar %}">{% trans "Crop" %}</a> {% trans "your avatar" %}</div>
+                        <p><a href="{% url change_avatar %}">{% trans "Change" %}</a>/<a href="{% url crop_avatar %}">{% trans "Crop" %}</a> {% trans "your avatar" %}</p>
                         {% else %}
-                        <div class=""><a href="{% url add_avatar %}">{% trans "Add" %}</a> {% trans "your avatar" %}</div>
+                        <p><a href="{% url add_avatar %}">{% trans "Add" %}</a> {% trans "your avatar" %}</p>
                         {% endif %}
-                        <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
+                        <p><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></p>
                     </div>
                     <div class="span3">
-                        <div class=""><b>{% trans "Full name:" %}</b> {{ user.get_full_name }}</div>
-                        <div class=""><b>{% trans "Email:" %}</b> {{ user.email }}</div>
+                        <p><b>{% trans "Full name:" %}</b> {{ user.get_full_name }}</p>
+                        <p><b>{% trans "Email:" %}</b> {{ user.email }}</p>
 
-                        <div class=""><b>{% trans "Address:" %}</b> {{ profile.address_1 }} {{ profile.address_2 }}</div>
-                        <div class=""><b>{% trans "Postal code:" %}</b> {{ profile.postal_code }}</div>
-                        <div class=""><b>{% trans "City:" %}</b> {{ profile.city }}</div>
-                        <div class=""><b>{% trans "Country:" %}</b> {{ profile.country.name }}</div>
-                        {% comment %}<div class=""><b>{% trans "Gender:" %}</b> {{ profile.gender }}</div>{% endcomment %}
-                        <div class=""><b>{% trans "Date of birth:" %}</b> {{ profile.birth_day }}</div>
-                        <div class=""><b>{% trans "Phone number:" %}</b> {{ profile.phone_number }}</div>
+                        <p><b>{% trans "Address:" %}</b> {{ profile.address_1 }} {{ profile.address_2 }}</p>
+                        <p><b>{% trans "Postal code:" %}</b> {{ profile.postal_code }}</p>
+                        <p><b>{% trans "City:" %}</b> {{ profile.city }}</p>
+                        <p><b>{% trans "Country:" %}</b> {{ profile.country.name }}</p>
+                        {% comment %}<div class=""><b>{% trans "Gender:" %}</b> {{ profile.gender }}</p>{% endcomment %}
+                        <p><b>{% trans "Date of birth:" %}</b> {{ profile.birth_day }}</p>
+                        <p><b>{% trans "Phone number:" %}</b> {{ profile.phone_number }}</p>
                     </div>
-                    <div class="span3">
-                    </div>
-                    <div class="span3">
-                        <div class="input"><a class="btn" href="/accounts/profile/edit/">{% trans "Edit profile" %}</a></div>
-                        <div class="input"><a class="btn" href="/accounts/profile/delete/">{% trans "Delete profile" %}</a></div>
-                        <div class="input"><a class="btn" href="/accounts/password/reset/">{% trans "Reset password" %}</a></div>
+                    <div class="pull-right">
+                        <div class="span3">
+                            <div class="input"><a class="btn" href="/accounts/profile/edit/">{% trans "Edit profile" %}</a></div>
+                            <div class="input"><a class="btn" href="/accounts/profile/delete/">{% trans "Delete profile" %}</a></div>
+                            <div class="input"><a class="btn" href="/accounts/password/reset/">{% trans "Reset password" %}</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span4">
-                        <div><b>Challenges, you signed up for:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for participation in user_participations %}
-                                <tr>
-                                    <td style="min-width:50px;"><a href="{{ participation.challenge.get_absolute_url }}"><img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
-                                    <td>{{ participation.challenge.start_date }}</td>
-                                    <td>
-                                        {% if participation.status == "0" %}<img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">
-                                        {% elif participation.status == "2"  %}<img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <a href="{% url challenge_list %}">Browse challenges</a>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <div><b>Challenges, you are admin for:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for challenge in admin_challenges %}
-                                <tr>
-                                    <td style="min-width:50px;"><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
-                                    <td>{{ challenge.start_date }}</td>
-                                    <td><img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">{{ challenge.get_confirmed_count }}</td>
-                                    <td><img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">{{ challenge.get_waiting_count }}</td>
-                                </tr>
-                                {% empty %}
-                                <p>Nope</p>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span4">
-                    </div>
-                </div>
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h3>{% trans "Challenges, you signed up for" %}</h3>
+                <table class="table table-striped">
+                {% for participation in user_participations %}
+                    <tr>
+                        <td><a href="{{ participation.challenge.get_absolute_url }}"><img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                        <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                        <td>{{ participation.challenge.start_date }}</td>
+                        <td>
+                            {% if participation.status == "0" %}<p><span class="label label-warning">{% trans "Waiting for confirmation" %}</span></p>
+                            {% elif participation.status == "2" %}<p><span class="label label-success">{% trans "Confirmed" %}</span></p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td><a href="{% url challenge_list %}">{% trans "Browse challenges" %}</a></td></tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h3>{% trans "Challenges, you are admin for" %}</h3>
+                <table class="table table-striped">
+                {% for challenge in admin_challenges %}
+                    <tr>
+                        <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                        <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
+                        <td>{{ challenge.start_date }}</td>
+                        <td><p><span class="badge badge-success">{{ challenge.get_confirmed_count }}</span></p></td>
+                        <td><p><span class="badge badge-warning">{{ challenge.get_waiting_count }}</span></p></td>
+                    </tr>
+                {% empty %}
+                    <p>{% trans "No challenges" %}</p>
+                {% endfor %}
+                </table>
             </div>
         </div>
     </div>
