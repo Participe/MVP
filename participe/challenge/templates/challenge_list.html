@@ -27,7 +27,7 @@
                         <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
                         <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
                         <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
-                        <td>{{ challenge.start_date|date:"j.n.Y" }} {{ challenge.start_time|date:"H:i" }}</td>
+                        <td>{{ challenge.start_date|date:"j.n.Y" }} {{ challenge.start_time|date:"H:i"|default:"00:00" }}</td>
                         <td>
                             {% if challenge.application == "0" %}
                             <img src="{{ MEDIA_URL }}img/perm_yes.png" alt="Free for all">
