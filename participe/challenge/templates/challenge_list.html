@@ -18,7 +18,7 @@
         {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
         {% for challenges_year in challenges_by_year %}
             {% if not forloop.first %}<tr><td colspan="6"><h3>{{ challenges_year.grouper }}</h3></td></tr>{% endif %}
-            {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
+            {% regroup challenges_year.list by start_date|date:"F" as challenges_by_month %}
             {% for challenges_month in challenges_by_month %}
                 <tr><td colspan="6"><h4>{{ challenges_month.grouper }}</h4></td></tr>
                 {% for challenge in challenges_month.list %}        
@@ -27,7 +27,7 @@
                         <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
                         <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
                         <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
-                        <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
+                        <td>{{ challenge.start_date|date:"j.n.Y" }} {{ challenge.start_time|date:"H:i" }}</td>
                         <td>
                             {% if challenge.application == "0" %}
                             <img src="{{ MEDIA_URL }}img/perm_yes.png" alt="Free for all">
@@ -39,7 +39,7 @@
                 {% endfor %}
             {% endfor %}
         {% empty %}
-            <p>{% trans "There are no active challenges" %}</p>
+            <tr><td><p>{% trans "There are no active challenges" %}</p></tr></td>
         {% endfor %}
         </table>
     </div>
