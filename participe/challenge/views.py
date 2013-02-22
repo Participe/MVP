@@ -35,7 +35,10 @@ def challenge_create(request):
 def challenge_list(request):
     challenges = Challenge.objects.all()
     return render_to_response('challenge_list.html',
-            RequestContext(request, {'challenges': challenges}))
+            RequestContext(request, {
+                'challenges': challenges,
+                'CHALLENGE_MODE': CHALLENGE_MODE
+            }))
 
 def challenge_detail(request, challenge_id):
     ctx = {}

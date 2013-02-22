@@ -1,49 +1,58 @@
-{% extends 'challenge_base.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Create challenge" %} - {{ block.super }}{% endblock %}
 
-{% block extra_content %}
-    <style type="text/css">
-        ul li {list-style: none;}
-        #ui-datepicker-div {display: none;}
-    </style>
-    
-    <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span4">
-                        <div class="input">{% trans "Avatar:" %} {{ form.avatar }}{{ form.avatar.errors }}</div>
-                        <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
-                        <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
-                        <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
-                        <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }} {% trans "hours" %}</div> 
+{% block content %}
+    <ul class="nav nav-tabs">  
+        <li class=""><a href="/">{% trans "What is Participe?" %}</a></li>
+        <li class=""><a href="{% url challenge_list %}">{% trans "Challenges" %}</a></li>
+        <li class=""><a href="{% url organization_list %}">{% trans "Organizations" %}</a></li>
+        <li class="active"><a href="{% url challenge_create %}">{% trans "Create a Challenge" %}</a></li>
+    </ul> 
 
-                        {% if not form.organization.is_hidden %}
-                        <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Affiliate with organization" %} {{ form.organization }}{{ form.organization.errors }}</div>
-                        <div class="input">{% trans "or" %} <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
-                        {% else %}
-                        <div class="input"><a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
-                        {% endif %}
+    <div class="main_container">
+        <style type="text/css">
+            ul li {list-style: none;}
+            #ui-datepicker-div {display: none;}
+        </style>
+        
+        <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
+            <div class="row">
+                <div class="span12">
+                    <div class="row">
+                        <div class="span4">
+                            <div class="input">{% trans "Avatar:" %} {{ form.avatar }}{{ form.avatar.errors }}</div>
+                            <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
+                            <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
+                            <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
+                            <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }} {% trans "hours" %}</div> 
 
-                    </div>
-                    <div class="span4">
-                        <div class="input">{% trans "Contact person:" %}</div>
-                        <div {% if form.contact.errors %}class="text-error"{% else %}class="input"{% endif %}>{{ form.contact }}{{ form.contact.errors }}</div> 
-                        <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}{{ form.alt_person_fullname.errors }}</div> 
-                        <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}{{ form.alt_person_email.errors }}</div> 
-                        <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}{{ form.alt_person_phone.errors }}</div> 
-                        <div {% if form.start_date.errors or form.start_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Start date" %} {{ form.start_date }}{{ form.start_date.errors }} {% trans "Time" %} {{ form.start_time }}{{ form.start_time.errors }}</div>
-                        <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Application" %} {{ form.application }}</div> 
-                    </div>                    
-                    <div class="span2">
-                        <div><input type="submit" class="btn-primary" value="{% trans 'Create this challenge' %}" /></div>
-                    </div>         
-                </div>   
-            </div>        
-        </div>     
-    </form>
+                            {% if not form.organization.is_hidden %}
+                            <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Affiliate with organization" %} {{ form.organization }}{{ form.organization.errors }}</div>
+                            <div class="input">{% trans "or" %} <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
+                            {% else %}
+                            <div class="input"><a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
+                            {% endif %}
+
+                        </div>
+                        <div class="span4">
+                            <div class="input">{% trans "Contact person:" %}</div>
+                            <div {% if form.contact.errors %}class="text-error"{% else %}class="input"{% endif %}>{{ form.contact }}{{ form.contact.errors }}</div> 
+                            <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}{{ form.alt_person_fullname.errors }}</div> 
+                            <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}{{ form.alt_person_email.errors }}</div> 
+                            <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}{{ form.alt_person_phone.errors }}</div> 
+                            <div {% if form.start_date.errors or form.start_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Start date" %} {{ form.start_date }}{{ form.start_date.errors }} {% trans "Time" %} {{ form.start_time }}{{ form.start_time.errors }}</div>
+                            <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Application" %} {{ form.application }}</div> 
+                        </div>                    
+                        <div class="span2">
+                            <div><input type="submit" class="btn-primary" value="{% trans 'Create this challenge' %}" /></div>
+                        </div>         
+                    </div>   
+                </div>        
+            </div>     
+        </form>
+    </div>
 
     <script>
         $(function() {

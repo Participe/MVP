@@ -5,45 +5,36 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <div class="well">
-        <table class="table table-striped">
-            <tr>
-                <th></th>
-                <th></th>
-                <th>{% trans "Name" %}</th>
-                <th>{% trans "Organization" %}</th>
-                <th>{% trans "Datum" %}</th>
-                <th>{% trans "Bestätigung nötig" %}</th>
-            </tr>
-        {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
-        {% for challenges_year in challenges_by_year %}
-            {% if not forloop.first %}<tr><td colspan="6"><h3>{{ challenges_year.grouper }}</h3></td></tr>{% endif %}
-            {% regroup challenges_year.list by start_date|date:"M" as challenges_by_month %}
-            {% for challenges_month in challenges_by_month %}
-                <tr><td colspan="6"><h4>{{ challenges_month.grouper }}</h4></td></tr>
+    {% regroup challenges|dictsort:"start_date" by start_date|date:"Y" as challenges_by_year %}
+    {% for challenges_year in challenges_by_year %}
+        {% if not forloop.first %}
+            <h3>{{ challenges_year.grouper }}</h3>
+        {% endif %}
+        {% regroup challenges_year.list by start_date|date:"F" as challenges_by_month %}
+        {% for challenges_month in challenges_by_month %}
+            <div class="row">
+                <div class="span12">
+                    <div class="">
+                        <h3>{{ challenges_month.grouper }}</h3>
+                    </div>
+                </div>
+            </div>
+            <ul class="thumbnails">
                 {% for challenge in challenges_month.list %}        
-                    <tr>
-                        <td></td>
-                        <td><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                        <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
-                        <td>{% if challenge.organization %}<a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>{% endif %}</td>
-                        <td>{{ challenge.start_date }} at {{ challenge.start_time }}</td>
-                        <td>
-                            {% if challenge.application == "0" %}
-                            <img src="{{ MEDIA_URL }}img/perm_yes.png" alt="Free for all">
-                            {% else %}
-                            <img src="{{ MEDIA_URL }}img/stop.png" alt="Confirmation required">
-                            {% endif %}
-                        </td>
-                    </tr>
+                    <li class="span4">
+                        <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                            <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="">
+                            <h3>
+                                {{ challenge.name }}
+                            </h3>
+                            <p>
+                                <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
+                                {{ challenge.location }}
+                            </p>
+                        </a>
+                    </li>
                 {% endfor %}
-            {% endfor %}
-        {% empty %}
-            <p>{% trans "There are no active challenges" %}</p>
+            </ul>
         {% endfor %}
-        </table>
-    </div>
-    <div class="add-item">
-        <a class="btn" href="/challenges/create/">{% trans "Create new challenge" %}</a>
-    </div>
+    {% endfor %}
 {% endblock %}
