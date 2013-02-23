@@ -8,6 +8,15 @@
         #ui-datepicker-div {display: none;}
     </style>
 
+    {% if profile.avatar %}
+        <a class="btn" href="{% url change_avatar %}">{% trans "Change profile image" %}</a><br>
+        <a class="btn" href="{% url crop_avatar %}">{% trans "Crop profile image" %}</a><br>
+    {% else %}
+        <a class="btn" href="{% url add_avatar %}">{% trans "Add profile image" %}</a><br>
+    {% endif %}
+    <a class="btn" href="{% url reset_password %}">{% trans "Change password" %}</a><br>
+    <a class="btn" href="{% url delete_profile %}">{% trans "Delete profile" %}</a><br>
+
     <form id="edit" class="well" action="." method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">

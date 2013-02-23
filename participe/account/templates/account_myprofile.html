@@ -5,88 +5,69 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "Your profile" %}</p>
-    <div class="well">
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span3">
-                        {% if profile.avatar %}
-                        <div class=""><a href="{% url change_avatar %}">{% trans "Change" %}</a>/<a href="{% url crop_avatar %}">{% trans "Crop" %}</a> {% trans "your avatar" %}</div>
-                        {% else %}
-                        <div class=""><a href="{% url add_avatar %}">{% trans "Add" %}</a> {% trans "your avatar" %}</div>
+    <div class="row">
+        <div class="span3">
+            <div class="well">
+                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 400x200 crop %}" alt="">
+                <h2>{{ user.get_full_name }}</h2>
+                <address>
+                    <p>
+                        {{ profile.address_1 }}<br>
+                        {% if profile.address_2 %}
+                            {{ profile.address_2 }}<br>
                         {% endif %}
-                        <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
-                    </div>
-                    <div class="span3">
-                        <div class=""><b>{% trans "Full name:" %}</b> {{ user.get_full_name }}</div>
-                        <div class=""><b>{% trans "Email:" %}</b> {{ user.email }}</div>
-
-                        <div class=""><b>{% trans "Address:" %}</b> {{ profile.address_1 }} {{ profile.address_2 }}</div>
-                        <div class=""><b>{% trans "Postal code:" %}</b> {{ profile.postal_code }}</div>
-                        <div class=""><b>{% trans "City:" %}</b> {{ profile.city }}</div>
-                        <div class=""><b>{% trans "Country:" %}</b> {{ profile.country.name }}</div>
-                        {% comment %}<div class=""><b>{% trans "Gender:" %}</b> {{ profile.gender }}</div>{% endcomment %}
-                        <div class=""><b>{% trans "Date of birth:" %}</b> {{ profile.birth_day }}</div>
-                        <div class=""><b>{% trans "Phone number:" %}</b> {{ profile.phone_number }}</div>
-                    </div>
-                    <div class="span3">
-                    </div>
-                    <div class="span3">
-                        <div class="input"><a class="btn" href="/accounts/profile/edit/">{% trans "Edit profile" %}</a></div>
-                        <div class="input"><a class="btn" href="/accounts/profile/delete/">{% trans "Delete profile" %}</a></div>
-                        <div class="input"><a class="btn" href="/accounts/password/reset/">{% trans "Reset password" %}</a></div>
-                    </div>
-                </div>
+                        {{ profile.postal_code}} {{ profile.city }}<br>
+                        {{ profile.country }}
+                    </p>
+                    <p>
+                        {{ user.email }}<br>
+                        {{ profile.phone_number}}<br>
+                        {{ profile.birth_day }}
+                    </p>
+                </address>
+                <a class="btn btn-primary btn-large" href="/accounts/profile/edit/">{% trans "Edit profile" %}</a><br>
             </div>
         </div>
-
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span4">
-                        <div><b>Challenges, you signed up for:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for participation in user_participations %}
-                                <tr>
-                                    <td style="min-width:50px;"><a href="{{ participation.challenge.get_absolute_url }}"><img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
-                                    <td>{{ participation.challenge.start_date }}</td>
-                                    <td>
-                                        {% if participation.status == "0" %}<img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">
-                                        {% elif participation.status == "2"  %}<img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <a href="{% url challenge_list %}">Browse challenges</a>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <div><b>Challenges, you are admin for:</b></div>
-                        <div style="width: 85%; max-height: 200px; overflow: auto; background: #ffffff; padding: 5px; border: dotted 1px black;">
-                            <table>
-                                {% for challenge in admin_challenges %}
-                                <tr>
-                                    <td style="min-width:50px;"><a href="{{ challenge.get_absolute_url }}"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                    <td><a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a></td>
-                                    <td>{{ challenge.start_date }}</td>
-                                    <td><img src="{{ MEDIA_URL }}img/perm_yes.png" title="Confirmed">{{ challenge.get_confirmed_count }}</td>
-                                    <td><img src="{{ MEDIA_URL }}img/warning.png" title="Waiting for confirmation">{{ challenge.get_waiting_count }}</td>
-                                </tr>
-                                {% empty %}
-                                <p>Nope</p>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                    <div class="span4">
-                    </div>
-                </div>
-            </div>
+        <div class="span9">
+            <h3>{% trans "Challenges you signed up for" %}</h3>
+            <ul class="thumbnails">
+                {% for participation in user_participations %}        
+                    <li class="span3">
+                        <a class="thumbnail" href="{{ participation.challenge.get_absolute_url }}">
+                            <img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ participation.challenge.name }}">
+                            <h4>
+                                {{ participation.challenge.name }}
+                            </h4>
+                            <p>
+                                <strong>{{ participation.challenge.start_date|date:"l j. F o" }}</strong><br>
+                                {{ participation.challenge.location }}
+                            </p>
+                            {% if participation.status == PARTICIPATION_STATUS.WAITING_FOR_CONFIRMATION %}
+                                <span class="label label-warning">{% trans "Waiting for confirmation" %}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if admin_challenges %}
+                <h3>{% trans "Challenges you are responsible for" %}</h3>
+                <ul class="thumbnails">
+                    {% for challenge in admin_challenges %}        
+                        <li class="span3">
+                            <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                                <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ challenge.name }}">
+                                <h4>
+                                    {{ challenge.name }}
+                                </h4>
+                                <p>
+                                    <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
+                                    {{ challenge.location }}
+                                </p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

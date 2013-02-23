@@ -5,6 +5,9 @@ env.hosts = ['django@beta.partici.pe:17566']
 def git_pull():
     run("cd /home/django/participe/MVP/; git pull origin master")
 
+def install_requirements():
+    run("source /home/django/participe/ve/bin/activate; cd /home/django/participe/MVP/; pip install -r requirements.txt")
+
 def stop_all():
     sudo("service nginx stop")
     sudo("service supervisor stop")
@@ -29,6 +32,7 @@ def get_text():
 def deploy():
     stop_all()
     git_pull()
+    install_requirements()
     schema_migration()
     get_text()
     start_all()

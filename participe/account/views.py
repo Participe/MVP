@@ -34,7 +34,7 @@ from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import Participation, Challenge
+from participe.challenge.models import Participation, Challenge, PARTICIPATION_STATE
 
 try:
     from cStringIO import StringIO
@@ -286,6 +286,7 @@ def view_myprofile(request):
                     "profile": profile,
                     "user_participations": user_participations,
                     "admin_challenges": admin_challenges,
+                    "PARTICIPATION_STATE": PARTICIPATION_STATE
                     }))
 
 @login_required

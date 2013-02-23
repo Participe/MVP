@@ -5,31 +5,47 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "Organization details" %}</p>
-    <div class="well">
-        <div class="row">
-            <div class="span12">
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <img src="{% thumbnail organization.avatar|default:'img/default.jpg' 0x200 %}" alt="">
+                <h1>
+                    {{ organization.name }}
+                </h1>
+                <blockquote>
+                    {{ organization.description }}
+                </blockquote>
+                <address>
+                    <strong>{{ organization.address_1 }}</strong><br>
+                    {% if organization.address_2 %}
+                        {{ organization.address_2 }}<br>
+                    {% endif %}
+                    {{ organization.postal_code }} {{ organization.city }}<br>
+                    {{ organization.country.name }}<br>
+                </address>
                 <div class="row">
                     <div class="span3">
-                        <div class=""><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
-                        <div class=""><b>{% trans "Name:" %} </b>{{ organization.name }}</div>
-                        <div class=""><b>{% trans "Address:" %} </b>{{ organization.address_1 }} {{ organization.address_2 }}</div>
-                        <div class=""><b>{% trans "Postal code:" %} </b>{{ organization.postal_code }}</div>
-                        <div class=""><b>{% trans "City:" %} </b>{{ organization.city }}</div>
-                        <div class=""><b>{% trans "Country:" %} </b>{{ organization.country.name }}</div>
-                    </div>
-                    <div class="span3">
-                        <div class=""><b>{% trans "Description:" %} </b>{{ organization.description }}</div>
-                        <div class=""><b>{% trans "Contact person:" %} </b></div>
+                        <h4>{% trans "Contact person" %} </h4>
                         {% if organization.is_contact_person %}
-                            <div class=""><a href="{% url view_profile organization.contact_person.pk %}">{{ organization.contact_person.get_full_name }}</a></div>
+                            <a href="{% url view_profile organization.contact_person.pk %}">{{ organization.contact_person.get_full_name }}</a>
                         {% else %}
-                            <div class="">{{ organization.alt_person_fullname }}</div>
-                            <div class="">{{ organization.alt_person_email }}</div>
-                            <div class="">{{ organization.alt_person_phone }}</div>
+                            <address>
+                                <strong>{{ organization.alt_person_fullname }}</strong><br>
+                                {{ organization.alt_person_email }} <br>
+                                {{ organization.alt_person_phone }} <br>
+                            </address>
                         {% endif %}
-                        <div class=""><b>{% trans "Affiliated users:" %} </b></div>
-                            <ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h2>
+                    {% trans "Administrators of of {{ organization.name }} on Participe" %} </b></div>
+                        <ul>
                             {% for auser in affiliated_users %}
                                 <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
                                     <div><a href="{% url view_profile auser.pk %}">

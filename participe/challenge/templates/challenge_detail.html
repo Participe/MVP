@@ -24,25 +24,31 @@
                         {% endif %}
                     </div>
                 </div>
-                <h1>
-                    <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 100x100 crop %}" alt="">
-                    {{ challenge.name }} ({{ challenge.duration }}h)
-                </h1>
+                <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 00x200 %}" alt="">
                 <p>
-                    {% trans "On" %} {{ challenge.start_date }} 
-                    {% trans "at" %} {{ challenge.start_time|date:"G:i" }} 
-                    {% trans "in" %} {{ challenge.location }}
-                    {% if challenge.confirmation_required %}
-                        <span class="label">{% trans "Confirmation required" %}</span>
-                    {% endif %}
+                    <h1>
+                        {{ challenge.name }} ({{ challenge.duration }}h)
+                    </h1>
                 </p>
                 <p>
-                    {% trans "Organized by" %} 
-                    <a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>
+                    {{ challenge.start_date }} 
+                    | {{ challenge.start_time|date:"G:i" }} 
+                    | {{ challenge.location }}
                 </p>
+                {% if challenge.organization %}
+                    <p>
+                        {% trans "Organized by" %} 
+                        <a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>
+                    </p>
+                {% endif %}
                 <blockquote>
                     <p>{{ challenge.description }}</p>
                 </blockquote>
+                {% if challenge.confirmation_required %}
+                    <p>
+                        <span class="label">{% trans "Confirmation required" %}</span>
+                    </p>
+                {% endif %}
 
                 <div class="row">
                     <div class="span3">
@@ -115,62 +121,61 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="span12">
-            <div class="well">
-                <h3>{% trans "Participants" %}</h3>
-                <table class="table table-striped">
-                    {% for participation in confirmed %}
-                        <tr>
+    <h3>{% trans "Participants" %}</h3>
+    <ul class="thumbnails">
+        {% for participation in confirmed %}
+            <li class="span2">
+                {% if is_admin %}
+                    <div class="thumbnail well">
+                        <a href="{% url view_profile participation.user.pk %}">
                             {% for profile in participation.user.userprofile_set.all %}
-                                <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
+                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
                             {% endfor %}
-                            <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
-                            {% if is_admin %}
-                                <td>
-                                    <a href="#" onclick="send_remove_form()">
-                                        <input type="button" participation="{{ participation.pk }}" value="Remove">
-                                    </a>
-                                </td>
-                            {% endif %}
-                        </tr>
-                    {% empty %}
-                        <tr><td><p>{% trans "No participants yet" %}</p></td></tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
+                            <h4>{{ participation.user.get_full_name }}</h4>
+                        </a>
+                        <a href="#" onclick="send_remove_form()">
+                            <input type="button" class="btn" participation="{{ participation.pk }}" value="Remove">
+                        </a>
+                    </div>
+                {% else %}
+                    <a class="thumbnail well" href="{% url view_profile participation.user.pk %}">
+                        {% for profile in participation.user.userprofile_set.all %}
+                            <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
+                        {% endfor %}
+                        <h4>{{ participation.user.get_full_name }}</h4>
+                    </a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>{% trans "No participants yet" %}</li>
+        {% endfor %}
+    </ul>
 
     {% if waited and is_admin %}
-        <div class="row">
-            <div class="span12">
-                <div class="well">
-                    <h3>{% trans "People waiting for participation" %}</h3>
-                    <table class="table table-striped">
-                        {% for participation in waited %}
-                            <tr>
-                                {% for profile in participation.user.userprofile_set.all %}
-                                    <td style="min-width:50px;"><a href="{% url view_profile participation.user.pk %}"><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                                {% endfor %}
-                                    <td><a href="{% url view_profile participation.user.pk %}">{{ participation.user.get_full_name }}</a></td>
-                                    <td>{{ participation.application_text }}</td>
-                                    <td>
-                                        <a href="{% url participation_accept participation.pk %}">
-                                            <input type="button" value="Accept">
-                                        </a>
-                                        <a href="#" onclick="send_remove_form()">
-                                            <input type="button" participation="{{ participation.pk }}" value="Reject">
-                                        </a>
-                                    </td>
-                            </tr>
-                        {% empty %}
-                            <p>Nope</p>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-        </div>
+        <h3>{% trans "People waiting for confirmation" %}</h3>
+        <ul class="thumbnails">
+            {% for participation in waited %}
+                <li class="span3">
+                    <div class="thumbnail well">
+                        <a href="{% url view_profile participation.user.pk %}">
+                            {% for profile in participation.user.userprofile_set.all %}
+                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 230x150 crop %}" alt="{{ particiation.user.get_full_name }}">
+                            {% endfor %}
+                            <h4>{{ participation.user.get_full_name }}</h4>
+                        </a>
+                        <blockquote>
+                            {{ participation.application_text }}
+                        </blockquote>
+                        <a href="{% url participation_accept participation.pk %}">
+                            <input type="button" value="{% trans "Accept" %}">
+                        </a>
+                        <a href="#" onclick="send_remove_form()">
+                            <input type="button" participation="{{ participation.pk }}" value="{% trans "Reject" %}">
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 
     <div class="row">
