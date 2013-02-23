@@ -1,9 +1,9 @@
-.centered-text {
-    text-align: center;
-}
-
 .thumbnail {
     padding: 20px;
+}
+
+.centered-text {
+    text-align: center;
 }
 
 .thumbnail:hover {
