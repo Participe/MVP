@@ -23,13 +23,16 @@
                 {% for challenge in challenges_month.list %}        
                     <li class="span4">
                         <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
-                            <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="">
+                            {% if challenge.organization %}
+                                <p class="brand">{{ challenge.organization.name }}</p>
+                            {% endif %}
+                            <p><img class="img-rounded" src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt=""></p>
                             <h3>
                                 {{ challenge.name }}
                             </h3>
                             <p>
                                 <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
-                                {{ challenge.location }}
+                                {{ challenge.location }}<br>
                             </p>
                         </a>
                     </li>
