@@ -12,13 +12,11 @@
                     <div class="span3">
                         {% if user.social_auth.all %}
                             {% with "facebook" as service %}
-                                <a href="http://www.facebook.com/share.php?u={{ request.build_absolute_uri }}&amp;t={{ challenge.name }}" target="_blank" title="Share on {{ service }}">
-                                    <img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/>
-                                </a>
+                                <a href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
                             {% endwith %}
                         {% endif %}
                         <strong>{% trans "Direct link to challenge" %}</strong>
-                        <input type="text" readonly="readonly" value="{{ request.build_absolute_uri }}"/>
+                        <input type="text" readonly="readonly" onclick="$(this).select();" value="{{ request.build_absolute_uri }}"/>
                         {% if is_admin %}
                             <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
                         {% endif %}
@@ -196,17 +194,15 @@
                     {% endfor %}
                 <div>
                     {% if request.user.is_authenticated %}
-                        <input id="add-comment-btn" type="button" value="Add a comment">
+                        <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
+                            <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
+                            <textarea id="comment" name="comment" rows="5" cols="40"></textarea>
+                            <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" />
+                        </form>
                     {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="add-comment-dialog">
-        <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
-            <textarea id="comment" name="comment" rows="5" cols="20"></textarea>
-        </form>
     </div>
 
     <div id="remove-participation-dialog">
@@ -244,28 +240,6 @@
                 return false;
             });
 
-            //Leave a comment
-            $("#add-comment-dialog").dialog({
-                autoOpen: false,
-                draggable: true,
-                resizable: false,
-                modal: true,
-                buttons: {
-                    "Add": function(){
-                        var challenge_id = $("<input>").attr("type", "hidden").attr("name", "challenge_id").val({{ challenge.pk }});
-                        $("#add-comment-form").append($(challenge_id));
-                        $("#add-comment-form").submit();   
-                    },
-                    "Close": function(){
-                        $(this).dialog('close');   
-                    }
-                }
-            });
-
-            $('input[id="add-comment-btn"]').click(function(){
-                $("#add-comment-dialog").dialog("open");
-            });
-            
             //Remove participation (signed participant) or
             //Reject application
             $("#remove-participation-dialog").dialog({
@@ -319,7 +293,16 @@
             $('input[id="withdraw"]').click(function(){
                 $("#withdraw-dialog").dialog("open");
             });
-
+            
+            //Add comment control
+            $('input[id="add-comment-btn"]').attr('disabled','disabled');
+            $("#comment").keyup(function() {
+                if (this.value.length >= 20){
+                    $('input[id="add-comment-btn"]').removeAttr('disabled');
+                } else {
+                    $('input[id="add-comment-btn"]').attr('disabled','disabled');
+                }
+            });            
         });
     </script>
 {% endblock %}

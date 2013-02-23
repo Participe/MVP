@@ -99,7 +99,7 @@ class Challenge(models.Model):
 
 PARTICIPATION_STATE = enum(
     WAITING_FOR_CONFIRMATION = "0", 
-    CONFIRMATION_DENIED ="1",
+    CONFIRMATION_DENIED = "1",
     CONFIRMED = "2",
     CANCELLED_BY_ADMIN = "3",
     CANCELLED_BY_USER = "4"

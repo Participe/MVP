@@ -15,8 +15,7 @@ from models import Challenge, Participation, Comment
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import CHALLENGE_MODE
-from participe.challenge.models import PARTICIPATION_STATE
+from participe.challenge.models import CHALLENGE_MODE, PARTICIPATION_STATE
 
             
 @login_required
@@ -213,8 +212,8 @@ def participation_remove(request, challenge_id):
 @login_required
 def comment_add(request):
     if request.method == "POST":
-        challenge_id = request.POST["challenge_id"]
-        comment_text = request.POST["comment"]
+        challenge_id = request.POST.get('challenge_id', '')
+        comment_text = request.POST.get('comment', '')
         
         challenge = get_object_or_404(Challenge, pk=challenge_id)
         comment = Comment.objects.create(
