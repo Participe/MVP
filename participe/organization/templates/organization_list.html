@@ -5,42 +5,48 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <style type="text/css">
-        td {vertical-align:top;}
-    </style>
-    
-    <div class="list">
-        <div class="well">
-            <table class="table table-striped">
-                <tr>
-                    <th></th>
-                    <th>{% trans "Name" %}</th>
-                    <th>{% trans "Description" %}</th>
-                    <th>{% trans "Challenges" %}</th>
-                </tr>
-            {% for organization in organizations %}
-                <tr>
-                    <td><a href="{{ organization.get_absolute_url }}"><img src="{% thumbnail organization.avatar|default:'img/default.jpg' 50x50 crop %}" alt=""></a></td>
-                    <td><a href="{{ organization.get_absolute_url }}">{{ organization.name }}</a></td>
-                    <td>{{ organization.description }}</td>
-                    <td>
-                    {% with challenges=organization.challenge_set.all %}
-                        {% for challenge in challenges|slice:":4"|dictsort:"start_date" %}
-                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }} ({{ challenge.start_date }}){% if not forloop.last %}, {% endif %}</a>
-                        {% endfor %}
-                        {% if challenges.count > 4 %}
-                            <a href="{{ organization.get_absolute_url }}">... show {{ challenges.count|add:"-4" }} more challenge(s)</a></td>
-                        {% endif %}
-                    {% endwith %}
-                    </td>
-                </tr>
-            {% empty %}
-                <p>{% trans "There are no organizations" %}</p>
-            {% endfor %}
-            </table>
+    {% for organization in organizations %}
+        <div class="row">
+            <div class="span12">
+                <div class="well">
+                    <a href="{{ organization.get_absolute_url }}">
+                        <img src="{% thumbnail organization.avatar|default:'img/default.jpg' 300x200 crop %}" alt="">
+                        <h3>{{ organization.name }}</h3>
+                    </a>
+                    <blockquote>
+                        {{ organization.description }}
+                    </blockquote>
+                    {% if organization.challenge_set.all %}
+                        <div class="row">
+                            {% with challenges=organization.challenge_set.all %}
+                                <div class="span12">
+                                    <ul class="thumbnails">
+                                        {% for challenge in challenges|slice:":6"|dictsort:"start_date" %}
+                                            <li class="span2">
+                                                <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                                                    <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 150x150 crop %}" alt="{{ challenge.name }}">
+                                                    <strong>
+                                                        {{ challenge.name }}
+                                                    </strong>
+                                                    <p>
+                                                        <small>
+                                                            {{ challenge.start_date|date:"l j. F o" }}<br>
+                                                            {{ challenge.location }}
+                                                        </small>
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% if challenges.count > 6 %}
+                                        <a href="{{ organization.get_absolute_url }}">... show {{ challenges.count|add:"-6" }} more challenge(s)</a></td>
+                                    {% endif %}
+                                </div>
+                            {% endwith %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div>
-            <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a>
-        </div>
-    </div>
+    {% endfor %}
 {% endblock %}

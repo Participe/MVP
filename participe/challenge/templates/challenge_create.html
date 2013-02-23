@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+u{% extends 'base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Create challenge" %} - {{ block.super }}{% endblock %}
@@ -29,10 +29,7 @@
                             <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }} {% trans "hours" %}</div> 
 
                             {% if not form.organization.is_hidden %}
-                            <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Affiliate with organization" %} {{ form.organization }}{{ form.organization.errors }}</div>
-                            <div class="input">{% trans "or" %} <a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
-                            {% else %}
-                            <div class="input"><a class="btn" href="/organizations/create/">{% trans "Create new organization" %}</a></div> 
+                                <div {% if form.organization.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Affiliate with organization" %} {{ form.organization }}{{ form.organization.errors }}</div>
                             {% endif %}
 
                         </div>

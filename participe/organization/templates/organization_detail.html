@@ -6,7 +6,7 @@
 
 {% block extra_content %}
     <div class="row">
-        <div class="span12">
+        <div class="span6">
             <div class="well">
                 <img src="{% thumbnail organization.avatar|default:'img/default.jpg' 0x200 %}" alt="">
                 <h1>
@@ -22,6 +22,8 @@
                     {% endif %}
                     {{ organization.postal_code }} {{ organization.city }}<br>
                     {{ organization.country.name }}<br>
+                    {{ organization.email}}<br>
+                    {{ organization.website }}<br>
                 </address>
                 <div class="row">
                     <div class="span3">
@@ -39,35 +41,32 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="span12">
-            <div class="well">
-                <h2>
-                    {% trans "Administrators of of {{ organization.name }} on Participe" %} </b></div>
-                        <ul>
-                            {% for auser in affiliated_users %}
-                                <li style="vertical-align:top; text-align:center; max-width:100px; display:inline-block;">
-                                    <div><a href="{% url view_profile auser.pk %}">
-                                        {% for profile in auser.userprofile_set.all %}
-                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
-                                        {% empty %}
-                                        <img src="{% thumbnail 'img/default.jpg' 100x100 %}" alt="{{ auser.get_full_name }}" title="{{ auser.get_full_name }}">
-                                        {% endfor %}
-                                    </a></div>
-                                </li>
+
+        <div class="span6">
+            <h3>{% trans "Administrators" %}</h3>
+            <ul class="row thumbnails">
+                {% for user in affiliated_users %}
+                    <li class="span2">
+                        <a class="thumbnail well" href="{% url view_profile user.pk %}">
+                            {% for profile in user.userprofile_set.all %}
+                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ user.get_full_name }}">
                             {% endfor %}
-                            </ul>
-                    </div>
-                    <div class="span3">
-                        <div class=""><b>{% trans "Web site:" %} </b>{{ organization.website }}</div>
-                        <div class=""><b>{% trans "Video:" %} </b>{{ organization.video }}</div>
-                        <div class=""><b>{% trans "E-mail:" %} </b>{{ organization.email }}</div>
-                    </div>
-                    <div class="span3">
-                    </div>
-                </div>
-            </div>
+                            <h4>{{ user.get_full_name }}</h4>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3>{% trans "Challenges" %}</h3>
+            <ul class="thumbnails">
+                {% for challenge in challenges %}
+                    <li class="span2">
+                        <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
+                            <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
+                            <h4>{{ challenge.name }}</h4>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}
