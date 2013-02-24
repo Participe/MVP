@@ -1,4 +1,4 @@
-# Django settings for participe project.
+## Django settings for participe project.
 import os
 
 DEBUG = True
@@ -98,29 +98,25 @@ WSGI_APPLICATION = 'participe.wsgi.application'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-
-    'participe.core',
-    
-    'participe.home',
-    'participe.challenge',
-    'participe.organization',
-    'participe.account',
+    'django.contrib.contenttypes',
     
     'south',
     'social_auth',
     'captcha',
     'easy_thumbnails',
     'auth_remember',
+    'django_extensions', #for shell_plus and runserver_plus
 
-    'django_extensions' #for shell_plus and runserver_plus
+    'participe.core',
+    'participe.home',
+    'participe.challenge',
+    'participe.organization',
+    'participe.account',
+
 )
 
 # A sample logging configuration. The only tangible logging
