@@ -1,10 +1,12 @@
 import os
+from datetime import datetime
 
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext as _
                  
-from models import Challenge, Participation
+from models import (Challenge, Participation, CHALLENGE_MODE,
+        PARTICIPATION_STATE)
 import participe.core.html5_widgets as widgets
 
 
@@ -245,10 +247,34 @@ class SignupChallengeForm(forms.ModelForm):
         instance = super(SignupChallengeForm, self).save(commit=False)
         instance.user = self.user
         instance.challenge = self.challenge
+        instance.date_created = datetime.now()
         
         # If instance if Free-for-All, set Participation status to "Confirmed"
-        if self.challenge.application == "0":
-            instance.status = "2"
+        if self.challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED:
+            instance.status = PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
         
+        if commit:
+            instance.save()
+
+class WithdrawSignupForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(WithdrawSignupForm, self).__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+            pass
+
+    class Meta:
+        model = Participation
+        fields = ["cancellation_text",]
+        widgets = {
+            "application_text": forms.Textarea(
+                    attrs={"placeholder": _("Reason for withdrawing")}),
+            }
+
+    def save(self, commit=True):
+        instance = super(WithdrawSignupForm, self).save(commit=False)
+        instance.status = PARTICIPATION_STATE.CANCELLED_BY_USER
+        instance.date_cancelled = datetime.now()
+
         if commit:
             instance.save()

@@ -10,12 +10,13 @@ from django.utils.translation import ugettext as _
 
 from templated_email import send_templated_mail
 
-from forms import CreateChallengeForm, SignupChallengeForm, EditChallengeForm
-from models import Challenge, Participation, Comment
+from forms import (CreateChallengeForm, SignupChallengeForm, EditChallengeForm,
+        WithdrawSignupForm)
+from models import (Challenge, Participation, Comment, CHALLENGE_MODE,
+        PARTICIPATION_STATE)
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import CHALLENGE_MODE, PARTICIPATION_STATE
 
             
 @login_required
@@ -51,25 +52,35 @@ def challenge_detail(request, challenge_id):
         try:
             participation = Participation.objects.all().get(
                     Q(user=request.user) & Q(challenge=challenge))
-
-            # User withdraws his application
-            if request.method == "POST":
-                cancellation_text = request.POST["text"]
-
-                participation.status = "4"
-                participation.cancellation_text = cancellation_text
-                participation.date_cancelled = datetime.now()
-                participation.save()
-
             ctx.update({"participation": participation})
-        except:
-            form = SignupChallengeForm(
-                    request.user, challenge, request.POST or None,
-                    request.FILES or None)
-            if request.method == "POST":
-                if form.is_valid():
-                    form.save()
 
+            if (participation.status==PARTICIPATION_STATE.CONFIRMED or
+                    participation.status==
+                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION):
+                wform = WithdrawSignupForm(
+                        request.POST or None, request.FILES or None,
+                        instance=participation)
+                ctx.update({"wform": wform})
+
+            if participation.status==PARTICIPATION_STATE.CANCELLED_BY_USER:
+                sform = SignupChallengeForm(
+                        request.user, challenge, 
+                        request.POST or None, request.FILES or None,
+                        instance=participation)
+                ctx.update({"sform": sform})
+        except:
+            sform = SignupChallengeForm(
+                    request.user, challenge, 
+                    request.POST or None, request.FILES or None)
+            ctx.update({"sform": sform})
+
+        # Weird block, but it's the only way to describe the logic with
+        # processing of states with forms, such (None, sform, wform)
+        if request.method == "POST":
+            # User signs up to challenge
+            try:
+                if sform.is_valid():
+                    sform.save()
                     if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
@@ -79,16 +90,22 @@ def challenge_detail(request, challenge_id):
                                     "user": user,
                                     "challenge": challenge,
                                     },)
-                    else:
-                        # TODO Send notification to Challenge Admin?
-                        pass
-                    return redirect("challenge_detail", challenge.pk)
-            ctx.update({"form": form})
+            except:
+                pass
+
+            # User withdraws his application
+            try:
+                if wform.is_valid:
+                    wform.save()
+            except:
+                pass
+            return redirect("challenge_detail", challenge.pk)
         ctx.update({"is_admin": is_challenge_admin(user, challenge)})
 
     # Extract participations
     waited = Participation.objects.all().filter(
-            Q(challenge=challenge) & Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
+            Q(challenge=challenge) & 
+            Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
             )
     ctx.update({"waited": waited})
 

@@ -18,7 +18,7 @@
                 </p>
                 <p>
                     {{ challenge.start_date }} 
-                    | {{ challenge.start_time|date:"G:i" }} 
+                    | {{ challenge.start_time|date:"G:i"|default:"0:00" }} 
                     | {{ challenge.location }}
                 </p>
                 {% if challenge.organization %}
@@ -30,35 +30,36 @@
                 <blockquote>
                     <p>{{ challenge.description }}</p>
                 </blockquote>
-    <h3>{% trans "Participants" %}</h3>
-    <ul class="thumbnails">
-        {% for participation in confirmed %}
-            <li class="span2">
-                {% if is_admin %}
-                    <div class="thumbnail well">
-                        <a href="{% url view_profile participation.user.pk %}">
-                            {% for profile in participation.user.userprofile_set.all %}
-                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
-                            {% endfor %}
-                            <h4>{{ participation.user.get_full_name }}</h4>
-                        </a>
-                        <a href="#" onclick="send_remove_form()">
-                            <input type="button" class="btn" participation="{{ participation.pk }}" value="Remove">
-                        </a>
-                    </div>
-                {% else %}
-                    <a class="thumbnail well" href="{% url view_profile participation.user.pk %}">
-                        {% for profile in participation.user.userprofile_set.all %}
-                            <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
-                        {% endfor %}
-                        <h4>{{ participation.user.get_full_name }}</h4>
-                    </a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>{% trans "No participants yet" %}</li>
-        {% endfor %}
-    </ul>
+           
+                <h3>{% trans "Participants" %}</h3>
+                <ul class="thumbnails">
+                    {% for participation in confirmed %}
+                        <li class="span2">
+                            {% if is_admin %}
+                                <div class="thumbnail well">
+                                    <a href="{% url view_profile participation.user.pk %}">
+                                        {% for profile in participation.user.userprofile_set.all %}
+                                            <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
+                                        {% endfor %}
+                                        <h4>{{ participation.user.get_full_name }}</h4>
+                                    </a>
+                                    <a href="#" onclick="send_remove_form()">
+                                        <input type="button" class="btn" participation="{{ participation.pk }}" value="Remove">
+                                    </a>
+                                </div>
+                            {% else %}
+                                <a class="thumbnail well" href="{% url view_profile participation.user.pk %}">
+                                    {% for profile in participation.user.userprofile_set.all %}
+                                        <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
+                                    {% endfor %}
+                                    <h4>{{ participation.user.get_full_name }}</h4>
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li>{% trans "No participants yet" %}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
         <div class="span3">
@@ -108,7 +109,8 @@
                         {% endif %}
                     {% endif %}
 
-                    {% if form %}
+                    {% if sform %}
+
                         <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participate in this Challenge" %}">
                         <div id="signup-form">
                             <form action="." method="post">{% csrf_token %}
@@ -136,7 +138,7 @@
                                         {% trans "By clicking participate, you agree to take part in this challenge and to do your best." %}
                                     </strong>
                                 </p>
-                                <p>{{ form.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
+                                <p>{{ sform.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
                                 <div class="btn-group">
                                     <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Participate' %}" />
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
