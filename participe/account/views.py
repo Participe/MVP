@@ -34,7 +34,7 @@ from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import Participation, Challenge, PARTICIPATION_STATE
+from participe.challenge.models import Participation, Challenge, Organization, PARTICIPATION_STATE
 
 try:
     from cStringIO import StringIO
@@ -261,10 +261,24 @@ def view_profile(request, user_id):
         profile = get_object_or_404(UserProfile, user=account)
     except:
         profile = None
+
+    participated_challenges = Challenge.objects.filter(pk__in=
+        Participation.objects.filter(
+            user=account, 
+            challenge__is_deleted=False, 
+            status=PARTICIPATION_STATE.CONFIRMED
+        ).values_list("challenge_id", flat=True))
+
+    affiliated_organizations = Organization.objects.filter(
+        affiliated_users=account,
+    )
+
     return render_to_response('account_foreignprofile.html',
             RequestContext(request, {
                     "account": account,
                     "profile": profile,
+                    "participated_challenges": participated_challenges,
+                    "affiliated_organizations": affiliated_organizations
                     }))    
 
 @login_required

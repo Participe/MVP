@@ -5,41 +5,71 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "User profile" %}</p>
-    <div class="well">
-        <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span3">
-                        <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 crop %}" alt=""></div>
-                    </div>
-                    <div class="span3">
-                        <div class=""><b>{% trans "Full name:" %}</b> {{ account.get_full_name }}</div>
-                        <div class=""><b>{% trans "City:" %}</b> {{ profile.city }}</div>
-                        <div class=""><b>{% trans "Country:" %}</b> {{ profile.country.name }}</div>
-                        {% if account.contact_chl_set.all or account.contact_org_set.all %}
-                            <div class=""><b>{% trans "Email:" %}</b> {{ account.email }}</div>
-                            <div class=""><b>{% trans "Phone number:" %}</b> {{ profile.phone_number }}</div>
-                        {%endif%}
-                    </div>
-                    <div class="span3">
-                        <div><b>{% trans "Participated challenges:" %} </b></div>
-                        {% for challenge in account.contact_chl_set.all %}
-                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}{% if not forloop.last %}, {% endif %}</a>
-                        {% empty %}
-                            <p>{% trans "Nope" %}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="span3">
-                        <div><b>{% trans "Participated organizations:" %} </b></div>
-                        {% for organization in account.contact_org_set.all %}
-                            <a href="{{ organization.get_absolute_url }}">{{ organization.name }}{% if not forloop.last %}, {% endif %}</a>
-                        {% empty %}
-                            <p>{% trans "Nope" %}</p>
-                        {% endfor %}
-                    </div>
-                </div>
+    <div class="row">
+        <div class="span3">
+            <div class="well">
+                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 400x200 crop %}" alt="">
+                <h2>{{ account.get_full_name }}</h2>
+                {% if user_may_see_account_details %}
+                {# see issue 85 #}
+                    <address>
+                        <p>
+                            {{ profile.address_1 }}<br>
+                            {% if profile.address_2 %}
+                                {{ profile.address_2 }}<br>
+                            {% endif %}
+                            {{ profile.postal_code}} {{ profile.city }}<br>
+                            {{ profile.country }}
+                        </p>
+                        <p>
+                            {{ user.email }}<br>
+                            {{ profile.phone_number}}<br>
+                            {{ profile.birth_day }}
+                        </p>
+                    </address>
+                {% endif %}
             </div>
+        </div>
+
+        <div class="span9">
+            {% if participated_challenges %}
+                <h3>{% trans "Participated challenges" %}</h3>
+                <ul class="thumbnails">
+                    {% for challenge in participated_challenges %}
+                        <li class="span3">
+                            <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                                <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span3' }}" alt="{{ challenge.name }}">
+                                <h4>
+                                    {{ challenge.name }}
+                                </h4>
+                                <p>
+                                    <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
+                                    {{ challenge.location }}
+                                </p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ account.get_full_name}} {% trans "did not participate in any challenges yet" %}</p>
+            {% endif %}
+
+            {% if affiliated_organizations %}
+                <h3>{% trans "Affiliated with" %}</h3>
+                <ul class="thumbnails">
+                    {% for organization in affiliated_organizations %}
+                        <li class="span3">
+                            <a class="thumbnail" href="{{organization.get_absolute_url }}">
+                                <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span3'  }}" alt="{{ organization.name }}">
+                                <h4>
+                                    {{ organization.name }}
+                                </h4>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}
