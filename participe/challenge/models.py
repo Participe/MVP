@@ -107,10 +107,10 @@ PARTICIPATION_STATE = enum(
 
 participation_status_choices = [
     (PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION, _("Waiting for confirmation")),
-    (PARTICIPATION_STATE.CONFIRMATION_DENIED, _("Confirmation denied")),
-    (PARTICIPATION_STATE.CONFIRMED, _("Confirmed")),
-    (PARTICIPATION_STATE.CANCELLED_BY_ADMIN, _("Cancelled by admin")),
-    (PARTICIPATION_STATE.CANCELLED_BY_USER, _("Cancelled by user")),
+    (PARTICIPATION_STATE.CONFIRMATION_DENIED, _("Rejected")),
+    (PARTICIPATION_STATE.CONFIRMED, _("Signed up")),
+    (PARTICIPATION_STATE.CANCELLED_BY_ADMIN, _("Rejected")),
+    (PARTICIPATION_STATE.CANCELLED_BY_USER, _("Withdrawn")),
     ]
 
 class Participation(models.Model):

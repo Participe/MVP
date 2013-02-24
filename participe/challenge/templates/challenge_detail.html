@@ -64,26 +64,27 @@
         </div>
         <div class="span3">
             <div class="well">
-                {% if challenge.confirmation_required %}
+                {% if challenge.confirmation_required and not participation.status == PARTICIPATION_STATE.CONFIRMED %}
                     <p>
-                        <span class="label">{% trans "Confirmation required" %}</span>
+                        <span class="label">{% trans "Confirmation required" %}</span><br>
+                        {% trans "You need to write an application to participate in this challenge. The challenge organizer will use your application text and your history on Participe to decide whether you are a good fit for this challenge." %}
                     </p>
                 {% endif %}
                 {% if user.is_authenticated %}
                     {% if is_admin %}
                         <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
                     {% elif participation %}
-                        <h4>{% trans "Your application"%}</h4>
-
                         <p>
                             {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
-                                <span class="label label-info">{{ participation.stat_participation_status_name }}</span>
+                                <span class="label label-info">{{ participation.stat_participation_status_name }}</span><br>
+                                {% trans "You have submitted an application to this challenge. You must now wait for the organizer to decide whether they want to accept your offer to help" %}
 
                             {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
                                 <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
 
                             {% elif participation.status == PARTICIPATION_STATE.CONFIRMED %}
-                                <span class="label label-success">{{ participation.stat_participation_status_name }}</span>
+                                <span class="label label-success">{{ participation.stat_participation_status_name }}</span><br>
+                                {% trans "You are signed up for this challenge. The organizer is expecting you to be there and do your best." %}
 
                             {% elif participation.status == PARTICIPATION_STATE.CANCELLED_BY_ADMIN %}
                                 <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
@@ -93,7 +94,7 @@
 
                         {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION or participation.status = PARTICIPATION_STATE.CONFIRMED %}
                             <p class="btn-group">
-                                <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn btn-danger btn-mini" value="{% trans "Withdraw application" %}">
+                                <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn btn-danger btn-large" value="{% trans "Withdraw application" %}">
                             </p>
                         {% endif %}
                         {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
@@ -122,17 +123,11 @@
 
                     {% if not is_admin and sform %}
 
-                        <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participate in this Challenge" %}">
+                        <input id="signup-btn" name="signup-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans "Participate" %}">
                         <div id="signup-form">
                             <form action="." method="post">{% csrf_token %}
                                 {% if challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED %}
-                                    <small>
-                                        <p>
-                                            <span class="label">{% trans "Confirmation required" %}</span><br>
-                                            {% trans "To participate in this challenge, you need to be accepted by the challenge organizer. Please write about why you want to help and how you can be of use." %}
-                                        </p>
-                                        <div class="input">{{ sform.application_text }}</div>
-                                    </small>
+                                    <div class="input">{{ sform.application_text }}</div>
                                 {% endif %}
                                 <br/>
                                 <small>
@@ -160,8 +155,8 @@
 
                 {% else %}
                     <div>
-                        <img src="{{ MEDIA_URL }}img/warning.png">
-                        <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
+                        <span class="label label-warning">{% trans "Login required" %}</span><br>
+                        {% trans "You must have a user account to participate in this challenge." %}
                     </div>
                 {% endif %}
             </div>
@@ -174,15 +169,25 @@
                     <a href="{% url view_profile challenge.contact_person.pk %}">
                         <h3>{{ challenge.contact_person.get_full_name }}</h3>
                     </a>
-                        <address>
-                            {{ challenge.contact_person.email}} <br>
-                            {{ challenge.contact_person.get_profile.phone_number }} <br>
-                        </address>
+                        {% if request.user.is_authenticated %}
+                            <address>
+                                {{ challenge.contact_person.email}} <br>
+                                {{ challenge.contact_person.get_profile.phone_number }} <br>
+                            </address>
+                        {% else %}
+                            <span class="label label-warning">{% trans "Information hidden" %}</span><br>
+                            {% trans "Log in to see the telephone number and email address of the contact person." %}
+                        {% endif %}
                 {% else %}
                     <address>
                         <strong>{{ challenge.alt_person_fullname }}</strong><br>
-                        {{ challenge.alt_person_email }} <br>
-                        {{ challenge.alt_person_phone }} <br>
+                        {% if request.user.is_authenticated %}
+                            {{ challenge.alt_person_email }} <br>
+                            {{ challenge.alt_person_phone }} <br>
+                        {% else %}
+                            <span class="label label-warning">{% trans "Information hidden" %}</span><br>
+                            {% trans "Log in to see the telephone number and email address of the contact person.." %}
+                        {% endif %}
                     </address>
                 {% endif %}
             </div>
