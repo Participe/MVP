@@ -59,7 +59,7 @@
                         {% for organization in affiliated_organizations %}
                             <li class="span2">
                                 <a class="thumbnail" href="{{organization.get_absolute_url }}">
-                                    <img src="{{ organization.avatar|default:'img/default.jpg'|tthumbnail_url:'span2_thumb'  }}" alt="{{ organization.name }}">
+                                    <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span2_thumb'  }}" alt="{{ organization.name }}">
                                     <h4>
                                         {{ organization.name }}
                                     </h4>
