@@ -175,6 +175,11 @@ THUMBNAIL_ALIASES = {
                 'crop': "smart",
                 'upscale': True,
             },
+            'span12_wide': {
+                'size': (1170, 200), 
+                'crop': "smart",
+                'upscale': True,
+            },
     },
 }
 

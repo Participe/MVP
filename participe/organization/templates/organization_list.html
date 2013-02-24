@@ -10,16 +10,19 @@
             <div class="span12">
                 <div class="well">
                     <a href="{{ organization.get_absolute_url }}">
-                        <img src="{% thumbnail organization.avatar|default:'img/default.jpg' 300x200 crop %}" alt="">
                         <h3>{{ organization.name }}</h3>
+                        <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span12_wide' }}" alt="">
                     </a>
-                    <blockquote>
-                        {{ organization.description }}
-                    </blockquote>
+                    <p>
+                        <blockquote>
+                            {{ organization.description }}
+                        </blockquote>
+                    </p>
                     {% if organization.challenge_set.all %}
                         <div class="row">
                             {% with challenges=organization.challenge_set.all %}
                                 <div class="span12">
+                                    <h4>{% trans "Current Challenges" %}</h4>
                                     <ul class="thumbnails">
                                         {% for challenge in challenges|slice:":6"|dictsort:"start_date" %}
                                             <li class="span2">
