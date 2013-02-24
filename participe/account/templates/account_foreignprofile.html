@@ -8,7 +8,7 @@
     <div class="row">
         <div class="span3">
             <div class="well">
-                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 400x200 crop %}" alt="">
+                <img src="{{ profile.avatar|default:'img/default.jpg'|thumbnail_url:'span3_large' }}" alt="">
                 <h2>{{ account.get_full_name }}</h2>
                 {% if user_may_see_account_details %}
                 {# see issue 85 #}
@@ -32,44 +32,43 @@
         </div>
 
         <div class="span9">
-            {% if participated_challenges %}
-                <h3>{% trans "Participated challenges" %}</h3>
-                <ul class="thumbnails">
-                    {% for challenge in participated_challenges %}
-                        <li class="span3">
-                            <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
-                                <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span3' }}" alt="{{ challenge.name }}">
-                                <h4>
-                                    {{ challenge.name }}
-                                </h4>
-                                <p>
-                                    <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
-                                    {{ challenge.location }}
-                                </p>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>{{ account.get_full_name}} {% trans "did not participate in any challenges yet" %}</p>
-            {% endif %}
+            <div class="well">
+                {% if participated_challenges %}
+                    <h3>{% trans "Participated challenges" %}</h3>
+                    <ul class="thumbnails">
+                        {% for challenge in participated_challenges %}
+                            <li class="span4">
+                                <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                                    <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ challenge.name }}">
+                                    <h4>
+                                        {{ challenge.name }}
+                                    </h4>
+                                    <p>
+                                        <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
+                                        {{ challenge.location }}
+                                    </p>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
-            {% if affiliated_organizations %}
-                <h3>{% trans "Affiliated with" %}</h3>
-                <ul class="thumbnails">
-                    {% for organization in affiliated_organizations %}
-                        <li class="span3">
-                            <a class="thumbnail" href="{{organization.get_absolute_url }}">
-                                <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span3'  }}" alt="{{ organization.name }}">
-                                <h4>
-                                    {{ organization.name }}
-                                </h4>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
+                {% if affiliated_organizations %}
+                    <h3>{% trans "Affiliated with" %}</h3>
+                    <ul class="thumbnails">
+                        {% for organization in affiliated_organizations %}
+                            <li class="span2">
+                                <a class="thumbnail" href="{{organization.get_absolute_url }}">
+                                    <img src="{{ organization.avatar|default:'img/default.jpg'|tthumbnail_url:'span2_thumb'  }}" alt="{{ organization.name }}">
+                                    <h4>
+                                        {{ organization.name }}
+                                    </h4>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -155,8 +155,18 @@ DOMAIN_NAME = "www.ddaemon.info"
 
 THUMBNAIL_ALIASES = {
     '': {
-            'span3': {
-                'size': (220, 100), 
+            'span2_thumb': {
+                'size': (130, 60), 
+                'crop': "smart",
+                'upscale': True,
+            },
+            'span4_thumb': {
+                'size': (370, 210), 
+                'crop': "smart",
+                'upscale': True,
+            },
+            'span3_large': {
+                'size': (220, 220), 
                 'crop': "smart",
                 'upscale': True,
             },
