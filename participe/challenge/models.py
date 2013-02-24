@@ -123,7 +123,8 @@ class Participation(models.Model):
             null=True, blank=True, verbose_name=_("Cancellation text"))
             
     status = models.CharField(
-            max_length=2, choices=participation_status_choices, default="0",
+            max_length=2, choices=participation_status_choices,
+            default=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
             verbose_name=_("Status"))
 
     date_created = models.DateField(

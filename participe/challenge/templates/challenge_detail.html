@@ -30,7 +30,7 @@
                 </p>
                 <p>
                     {{ challenge.start_date }} 
-                    | {{ challenge.start_time|date:"G:i" }} 
+                    | {{ challenge.start_time|date:"G:i"|default:"0:00" }} 
                     | {{ challenge.location }}
                 </p>
                 {% if challenge.organization %}
@@ -79,11 +79,9 @@
                                     {% endif %}
                                     <span>{{ participation.stat_participation_status_name }}</span>
                                 </div>
-                                {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
+                                {% if wform %}
                                     <form id="withdraw-form" action="." method="post">{% csrf_token %}
-                                        <div class="input">
-                                            <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
-                                        </div>
+                                        <div class="input">{{ wform.cancellation_text }}</div>
                                         <div>
                                             <input id="withdraw" name="withdraw" type="button" class="btn-primary" value="{% trans "Withdraw" %}" />
                                             <input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans "Cancel" %}">
@@ -92,14 +90,14 @@
                                 {% endif %}
                             {% endif %}
 
-                            {% if form %}
+                            {% if sform %}
                                 <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participe in this Challenge" %}">
                                 <div id="signup-form">
                                     <form action="." method="post">{% csrf_token %}
-                                        {% if challenge.application == "1" %}
-                                            <div class="input">{{ form.application_text }}</div>
+                                        {% if challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED %}
+                                            <div class="input">{{ sform.application_text }}</div>
                                         {% endif %}
-                                        <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ form.share_on_FB }}</div>
+                                        <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ sform.share_on_FB }}</div>
                                         <br/>
                                         <p>{% trans "By clicking 'Participate', you agree to participate in this challenge" %}</p>
                                         <input type="submit" class="btn-primary" value="{% trans 'Participate' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
