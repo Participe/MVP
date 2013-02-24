@@ -11,6 +11,8 @@
                 <div class="well">
                     <a href="{{ organization.get_absolute_url }}">
                         <h3>{{ organization.name }}</h3>
+                    </a>
+                    <a href="{{ organization.get_absolute_url }}">
                         <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span12_wide' }}" alt="">
                     </a>
                     <p>
