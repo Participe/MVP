@@ -1,4 +1,4 @@
-## Django settings for participe project.
+#Django settings for participe project.
 import os
 
 DEBUG = True
@@ -170,6 +170,11 @@ THUMBNAIL_ALIASES = {
                 'crop': "smart",
                 'upscale': True,
             },
+            'span9_wide': {
+                'size': (830, 400), 
+                'crop': "smart",
+                'upscale': True,
+            },
     },
 }
 
@@ -287,6 +292,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details',
     'participe.core.auth_pipelines.get_user_avatar',
 )
+
+AUTH_PROFILE_MODULE = 'account.UserProfile'
 
 ###############################################################################
 ### "Remember me"                                                           ###

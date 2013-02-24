@@ -6,23 +6,11 @@
 
 {% block extra_content %}
     <div class="row ">
-        <div class="span12">
+        <div class="span9">
             <div class="well">
                 <div class="pull-right">
-                    <div class="span3">
-                        {% if user.social_auth.all %}
-                            {% with "facebook" as service %}
-                                <a href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
-                            {% endwith %}
-                        {% endif %}
-                        <strong>{% trans "Direct link to challenge" %}</strong>
-                        <input type="text" readonly="readonly" onclick="$(this).select();" value="{{ request.build_absolute_uri }}"/>
-                        {% if is_admin %}
-                            <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
-                        {% endif %}
-                    </div>
                 </div>
-                <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 00x200 %}" alt="">
+                <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span9_wide' }}" alt="">
                 <p>
                     <h1>
                         {{ challenge.name }} ({{ challenge.duration }}h)
@@ -42,83 +30,6 @@
                 <blockquote>
                     <p>{{ challenge.description }}</p>
                 </blockquote>
-                {% if challenge.confirmation_required %}
-                    <p>
-                        <span class="label">{% trans "Confirmation required" %}</span>
-                    </p>
-                {% endif %}
-
-                <div class="row">
-                    <div class="span3">
-                        <h4>{% trans "Contact person" %} </h4>
-                        {% if challenge.is_contact_person %}
-                            <a href="{% url view_profile challenge.contact_person.pk %}">{{ challenge.contact_person.get_full_name }}</a>
-                        {% else %}
-                            <address>
-                                <strong>{{ challenge.alt_person_fullname }}</strong><br>
-                                {{ challenge.alt_person_email }} <br>
-                                {{ challenge.alt_person_phone }} <br>
-                            </address>
-                        {% endif %}
-                    </div>
-                    <div class="span3">
-                        {% if user.is_authenticated %}
-                            {% if participation %}
-                                <h4>{% trans "Your application"%}</h4>
-                                <div>
-                                    {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
-                                        <img src="{{ MEDIA_URL }}img/warning.png">
-                                        <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="{% trans "Withdraw application" %}">
-                                    {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
-                                        <img src="{{ MEDIA_URL }}img/remove.png">
-                                    {% elif participation.status == PARTICIPATION_STATE.CONFIRMED%}
-                                        <img src="{{ MEDIA_URL }}img/perm_yes.png">
-                                        <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn" value="{% trans "Withdraw application" %}">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }}img/stop.png">
-                                    {% endif %}
-                                    <span>{{ participation.stat_participation_status_name }}</span>
-                                </div>
-                                {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
-                                    <form id="withdraw-form" action="." method="post">{% csrf_token %}
-                                        <div class="input">
-                                            <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
-                                        </div>
-                                        <div>
-                                            <input id="withdraw" name="withdraw" type="button" class="btn-primary" value="{% trans "Withdraw" %}" />
-                                            <input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans "Cancel" %}">
-                                        </div>
-                                    </form>
-                                {% endif %}
-                            {% endif %}
-
-                            {% if form %}
-                                <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participe in this Challenge" %}">
-                                <div id="signup-form">
-                                    <form action="." method="post">{% csrf_token %}
-                                        {% if challenge.application == "1" %}
-                                            <div class="input">{{ form.application_text }}</div>
-                                        {% endif %}
-                                        <div class="input"><span>{% trans "Share on Facebook" %}</span> {{ form.share_on_FB }}</div>
-                                        <br/>
-                                        <p>{% trans "By clicking 'Participate', you agree to participate in this challenge" %}</p>
-                                        <input type="submit" class="btn-primary" value="{% trans 'Participate' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
-                                    </form>
-                                </div>
-                            {% endif %}
-
-                        {% else %}
-                            <div>
-                                <img src="{{ MEDIA_URL }}img/warning.png">
-                                <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <h3>{% trans "Participants" %}</h3>
     <ul class="thumbnails">
         {% for participation in confirmed %}
@@ -148,6 +59,129 @@
             <li>{% trans "No participants yet" %}</li>
         {% endfor %}
     </ul>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="well">
+                {% if user.is_authenticated %}
+                    {% if participation %}
+                        <h4>{% trans "Your application"%}</h4>
+                        {% if challenge.confirmation_required %}
+                            <p>
+                                <span class="label">{% trans "Confirmation required" %}</span>
+                            </p>
+                        {% endif %}
+
+                        <p>
+                            {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
+                                <span class="label label-info">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
+                                <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.CONFIRMED %}
+                                <span class="label label-success">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.CANCELLED_BY_ADMIN %}
+                                <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
+
+                            {% else %}
+                                <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
+                            {% endif %}
+                        </p>
+
+                        {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION or participation.status = PARTICIPATION_STATE.CONFIRMED %}
+                            <p class="btn-group">
+                                <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn btn-danger btn-mini" value="{% trans "Withdraw application" %}">
+                            </p>
+                        {% endif %}
+                        {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
+                            <form id="withdraw-form" action="." method="post">{% csrf_token %}
+                                <div class="input">
+                                    <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
+                                </div>
+                                <div>
+                                    <input id="withdraw" name="withdraw" type="button" class="btn btn-danger btn-mini" value="{% trans "Withdraw" %}" />
+                                    <input id="cancel-btn" name="cancel-btn" type="button" class="btn btn-mini" value="{% trans "Cancel" %}">
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if form %}
+                        <input id="signup-btn" name="signup-btn" type="button" class="btn" value="{% trans "Participate in this Challenge" %}">
+                        <div id="signup-form">
+                            <form action="." method="post">{% csrf_token %}
+                                {% if challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED %}
+                                    <small>
+                                        <p>
+                                            <span class="label">{% trans "Confirmation required" %}</span><br>
+                                            {% trans "To participate in this challenge, you need to be accepted by the challenge organizer. Please write about why you want to help and how you can be of use." %}
+                                        </p>
+                                        <div class="input">{{ form.application_text }}</div>
+                                    </small>
+                                {% endif %}
+                                <br/>
+                                <small>
+                                    <p>
+                                        <span class="label label-warning">
+                                            {% trans "Privacy warning" %}
+                                        </span>
+                                        <br>
+                                        {% trans "When you sign up for a challenge, the organizer of the challenge can see your personal information, including telephone number, email, and birth date." %}
+                                    </p>
+                                </small>
+                                <p>
+                                    <strong>
+                                        {% trans "By clicking participate, you agree to take part in this challenge and to do your best." %}
+                                    </strong>
+                                </p>
+                                <p>{{ form.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
+                                <div class="btn-group">
+                                    <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Participate' %}" />
+                                    <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                {% else %}
+                    <div>
+                        <img src="{{ MEDIA_URL }}img/warning.png">
+                        <b>{% trans "Only registered users can sign-up to Challenge" %}</b>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="well">
+                <h4>{% trans "Contact person" %} </h4>
+                {% if challenge.is_contact_person %}
+                    <a href="{% url view_profile challenge.contact_person.pk %}">
+                        <img src="{{ challenge.contact_person.get_profile.avatar|thumbnail_url:'span3_large' }}" alt="{{ challenge.contact_person.get_full_name }}">
+                        <h3>{{ challenge.contact_person.get_full_name }}</h3>
+                    </a>
+                {% else %}
+                    <address>
+                        <strong>{{ challenge.alt_person_fullname }}</strong><br>
+                        {{ challenge.alt_person_email }} <br>
+                        {{ challenge.alt_person_phone }} <br>
+                    </address>
+                {% endif %}
+            </div>
+            <div class="well">
+                {% if user.social_auth.all %}
+                    {% with "facebook" as service %}
+                        <a href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
+                    {% endwith %}
+                {% endif %}
+                <strong>{% trans "Direct link to challenge" %}</strong>
+                <input type="text" readonly="readonly" onclick="$(this).select();" value="{{ request.build_absolute_uri }}"/>
+                {% if is_admin %}
+                    <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
 
     {% if waited and is_admin %}
         <h3>{% trans "People waiting for confirmation" %}</h3>
@@ -177,8 +211,8 @@
     {% endif %}
 
     <div class="row">
-        <div class="span12">
-            <div class="well">
+        <div class="span9">
+            <div class="">
                 <h3>{% trans "Comments" %}</h3>
                     {% for comment in comments %}
                             <blockquote class="">
@@ -190,16 +224,16 @@
                                 {% if user == comment.user or is_admin or user.is_staff %}
                                     <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
                                 {% endif %}
-                            </blockquote>
-                    {% endfor %}
-                <div>
-                    {% if request.user.is_authenticated %}
-                        <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
-                            <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
-                            <textarea id="comment" name="comment" rows="5" cols="40"></textarea>
-                            <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" />
-                        </form>
-                    {% endif %}
+                        </blockquote>
+                {% endfor %}
+            <div>
+            {% if request.user.is_authenticated %}
+                <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
+                    <textarea id="comment" name="comment" rows="5" cols="80"></textarea>
+                        <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" /><br>
+                        <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
+                    </form>
+                {% endif %}
                 </div>
             </div>
         </div>
@@ -297,7 +331,7 @@
             //Add comment control
             $('input[id="add-comment-btn"]').attr('disabled','disabled');
             $("#comment").keyup(function() {
-                if (this.value.length >= 20){
+                if (this.value.length >= 1){
                     $('input[id="add-comment-btn"]').removeAttr('disabled');
                 } else {
                     $('input[id="add-comment-btn"]').attr('disabled','disabled');

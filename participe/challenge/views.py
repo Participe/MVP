@@ -104,6 +104,7 @@ def challenge_detail(request, challenge_id):
     ctx.update({"comments": comments})
 
     ctx.update({"PARTICIPATION_STATE": PARTICIPATION_STATE})
+    ctx.update({"CHALLENGE_MODE": CHALLENGE_MODE})
 
     return render_to_response('challenge_detail.html',
             RequestContext(request, ctx))
