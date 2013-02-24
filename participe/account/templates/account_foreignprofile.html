@@ -27,6 +27,11 @@
                             {{ profile.birth_day }}
                         </p>
                     </address>
+                {% else %}
+                    <p class="note">
+                        <span class="label label-info">{% trans "Information hidden" %}</span><br>
+                        {% trans "This user does not to share their email address or phone number with the public." %}
+                    </p>
                 {% endif %}
             </div>
         </div>

@@ -8,13 +8,15 @@
     <div class="row">
         <div class="span6">
             <div class="well">
-                <img src="{% thumbnail organization.avatar|default:'img/default.jpg' 0x200 %}" alt="">
                 <h1>
                     {{ organization.name }}
                 </h1>
-                <blockquote>
-                    {{ organization.description }}
-                </blockquote>
+                <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span6_wide' }}" alt="{{ organization.name}} logo image">
+                <p>
+                    <blockquote>
+                        {{ organization.description }}
+                    </blockquote>
+                </p>
                 <address>
                     <strong>{{ organization.address_1 }}</strong><br>
                     {% if organization.address_2 %}
@@ -23,7 +25,7 @@
                     {{ organization.postal_code }} {{ organization.city }}<br>
                     {{ organization.country.name }}<br>
                     {{ organization.email}}<br>
-                    {{ organization.website }}<br>
+                    <a href="{{ organization.website }}">Webseite</a><br>
                 </address>
                 <div class="row">
                     <div class="span3">
@@ -43,30 +45,39 @@
         </div>
 
         <div class="span6">
-            <h3>{% trans "Administrators" %}</h3>
-            <ul class="row thumbnails">
-                {% for user in affiliated_users %}
-                    <li class="span2">
-                        <a class="thumbnail well" href="{% url view_profile user.pk %}">
-                            {% for profile in user.userprofile_set.all %}
-                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ user.get_full_name }}">
-                            {% endfor %}
-                            <h4>{{ user.get_full_name }}</h4>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <h3>{% trans "Challenges" %}</h3>
-            <ul class="thumbnails">
-                {% for challenge in challenges %}
-                    <li class="span2">
-                        <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
-                            <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
-                            <h4>{{ challenge.name }}</h4>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div class="well">
+                <ul class="thumbnails">
+                    {% for challenge in challenges %}
+                        <li class="span2">
+                            <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
+                                <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
+                                <h4>{{ challenge.name }}</h4>
+                            </a>
+                        </li>
+                    {% empty %}
+                    <p>
+                        <li><span class="label label-info">{% trans "No open challenges" %}</span><br>
+                        {% trans "This organization has no open challenges at the moment" %}</li>
+                    </p>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="well">
+                <h3>{% trans "Staff" %}</h3>
+                <p>{% trans "These users can create challenges in the name of this organization" %}</p>
+                <ul class="row thumbnails">
+                    {% for user in affiliated_users %}
+                        <li class="span2">
+                            <a class="thumbnail well" href="{% url view_profile user.pk %}">
+                                {% for profile in user.userprofile_set.all %}
+                                    <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ user.get_full_name }}">
+                                {% endfor %}
+                                <h4>{{ user.get_full_name }}</h4>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

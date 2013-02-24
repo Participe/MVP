@@ -61,11 +61,35 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="">
+                <h3>{% trans "Comments" %}</h3>
+                    {% for comment in comments %}
+                            <blockquote class="">
+                                <p>{{ comment.text }}</p>
+                                <small>
+                                    <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a>
+                                    {{ comment.created_at }}
+                                </small>
+                                {% if user == comment.user or is_admin or user.is_staff %}
+                                    <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
+                                {% endif %}
+                        </blockquote>
+                {% endfor %}
+            <div>
+            {% if request.user.is_authenticated %}
+                <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
+                    <textarea id="comment" name="comment" rows="5" cols="80"></textarea>
+                        <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" /><br>
+                        <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
+                    </form>
+                {% endif %}
+                </div>
+            </div>
         </div>
         <div class="span3">
             <div class="well">
                 {% if challenge.confirmation_required and not participation.status == PARTICIPATION_STATE.CONFIRMED %}
-                    <p>
+                    <p class="note">
                         <span class="label">{% trans "Confirmation required" %}</span><br>
                         {% trans "You need to write an application to participate in this challenge. The challenge organizer will use your application text and your history on Participe to decide whether you are a good fit for this challenge." %}
                     </p>
@@ -74,10 +98,10 @@
                     {% if is_admin %}
                         <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
                     {% elif participation %}
-                        <p>
+                        <p class="note">
                             {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
                                 <span class="label label-info">{{ participation.stat_participation_status_name }}</span><br>
-                                {% trans "You have submitted an application to this challenge. You must now wait for the organizer to decide whether they want to accept your offer to help" %}
+                                {% trans "You have submitted an application to this challenge. You must now wait for the organizer to decide whether they want to accept your offer to help." %}
 
                             {% elif participation.status == PARTICIPATION_STATE.CONFIRMATION_DENIED %}
                                 <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
@@ -99,20 +123,21 @@
                         {% endif %}
                         {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
                             <form id="withdraw-form" action="." method="post">{% csrf_token %}
-                                <p>
+                                <p class="note">
                                     <strong>
-                                        {% trans "Withdrawing from a challenge can be very inconvenient for the organizer. Please write a note explaining why you can't make it this time" %}
+                                    <span class="label label-warning">{% trans "Explain yourself" %}</span><br>
+                                        {% trans "Withdrawing from a challenge can be very inconvenient for the organizer. Please write a note explaining why you can't make it this time." %}
                                     </strong>
                                 </p>
-                                <small>
-                                    <p>
-                                        <span class="label label-warning">Warning</span><br>
-                                        {% trans "If you apply to a challenge in the future, the organizer will be able to see all challenges you withdrew from and the reason you entered. Seeing no or few withdrawals will make you look more trustworthy." %}
-                                    </p>
-                                </small>
                                 <div class="input">
                                     <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
                                 </div>
+                                <small>
+                                    <p class="note">
+                                        <span class="label label-warning">Warning</span><br>
+                                        {% trans "If you apply to a challenge in the future, the organizer will be able to see all challenges you withdrew from and the reason you entered. Seeing fewer withdrawals will make you look more trustworthy." %}
+                                    </p>
+                                </small>
                                 <div>
                                     <input id="withdraw" name="withdraw" type="button" class="btn btn-danger btn-mini" value="{% trans "Withdraw" %}" />
                                     <input id="cancel-btn" name="cancel-btn" type="button" class="btn btn-mini" value="{% trans "Cancel" %}">
@@ -131,19 +156,18 @@
                                 {% endif %}
                                 <br/>
                                 <small>
-                                    <p>
-                                        <span class="label label-warning">
-                                            {% trans "Privacy warning" %}
-                                        </span>
+                                    <p class="note">
+                                        <span class="label label-warning">{% trans "Privacy warning" %}</span>
                                         <br>
                                         {% trans "When you sign up for a challenge, the organizer of the challenge can see your personal information, including telephone number, email, and birth date." %}
                                     </p>
                                 </small>
-                                <p>
-                                    <strong>
+                                <strong>
+                                    <p class="note">
+                                         <span class="label label-warning">{% trans "This is important" %}</span><br>
                                         {% trans "By clicking participate, you agree to take part in this challenge and to do your best." %}
-                                    </strong>
-                                </p>
+                                    </p>
+                                </strong>
                                 <p>{{ sform.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
                                 <div class="btn-group">
                                     <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Participate' %}" />
@@ -175,8 +199,10 @@
                                 {{ challenge.contact_person.get_profile.phone_number }} <br>
                             </address>
                         {% else %}
-                            <span class="label label-warning">{% trans "Information hidden" %}</span><br>
-                            {% trans "Log in to see the telephone number and email address of the contact person." %}
+                            <p class="note">
+                                <span class="label label-warning">{% trans "Information hidden" %}</span><br>
+                                {% trans "Log in to see the telephone number and email address of the contact person." %}
+                            </p>
                         {% endif %}
                 {% else %}
                     <address>
@@ -185,8 +211,10 @@
                             {{ challenge.alt_person_email }} <br>
                             {{ challenge.alt_person_phone }} <br>
                         {% else %}
-                            <span class="label label-warning">{% trans "Information hidden" %}</span><br>
-                            {% trans "Log in to see the telephone number and email address of the contact person.." %}
+                            <p class="note">
+                                <span class="label label-warning">{% trans "Information hidden" %}</span><br>
+                                {% trans "Log in to see the telephone number and email address of the contact person.." %}
+                            </p>
                         {% endif %}
                     </address>
                 {% endif %}
@@ -197,8 +225,10 @@
                         <a href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
                     {% endwith %}
                 {% endif %}
-                <strong>{% trans "Direct link to challenge" %}</strong>
-                <input type="text" readonly="readonly" onclick="$(this).select();" value="{{ request.build_absolute_uri }}"/>
+                <p>
+                    <strong>{% trans "Link to this page" %}</strong>
+                    <input type="text" readonly="readonly" onclick="$(this).select();" value="{{ request.build_absolute_uri }}"/>
+                </p>
             </div>
         </div>
     </div>
@@ -231,34 +261,6 @@
         </ul>
     {% endif %}
 
-    <div class="row">
-        <div class="span9">
-            <div class="">
-                <h3>{% trans "Comments" %}</h3>
-                    {% for comment in comments %}
-                            <blockquote class="">
-                                <p>{{ comment.text }}</p>
-                                <small>
-                                    <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a>
-                                    {{ comment.created_at }}
-                                </small>
-                                {% if user == comment.user or is_admin or user.is_staff %}
-                                    <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
-                                {% endif %}
-                        </blockquote>
-                {% endfor %}
-            <div>
-            {% if request.user.is_authenticated %}
-                <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
-                    <textarea id="comment" name="comment" rows="5" cols="80"></textarea>
-                        <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" /><br>
-                        <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
-                    </form>
-                {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div id="remove-participation-dialog">
         <form id="remove-participation-form" action="{% url participation_remove challenge.pk %}" method="post">{% csrf_token %}

@@ -10,6 +10,11 @@
             <div class="well">
                 <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 400x200 crop %}" alt="">
                 <h2>{{ user.get_full_name }}</h2>
+                <h4>{% trans "Contact" %}</h4>
+                <p class="note">
+                    <span class="label label-info">{% trans "Privacy information" %}</span><br>
+                    {% trans "This information can only be seen by organizers of challenges you participate in." %}
+                </p>
                 <address>
                     <p>
                         {{ profile.address_1 }}<br>

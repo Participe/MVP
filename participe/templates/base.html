@@ -35,25 +35,30 @@
                 <a href="/"><img src="{{ MEDIA_URL }}img/logo_285x93.jpg" alt="participe logo"/></a>
                 <div class="pull-right">
                     <form class="form-inline" id="locale" action="/i18n/setlang/" method="POST">{% csrf_token %}
-                        <div class="">
-                            {% if user.is_authenticated %}
-                                <a href='/accounts/profile/view/'>{{ user.get_full_name }}</a>
-                                <a href='/accounts/logout/'>(Log out)</a>
-                            {% else %}
-                                <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><img src="{{ MEDIA_URL }}img/footer-link-fb.png" alt="{% trans "login with facebook" %}"></a>
-                                <a href='/accounts/login/'>{% trans "Log in" %}</a>
-                                <a href='/accounts/signup/'>{% trans "Sign up" %}</a>
-                            {% endif %}
-                            <select name="language" class="input-mini" onchange="document.forms['locale'].submit();">
-                                {% for lang in LANGUAGES %}
-                                    {% if lang.0 == LANGUAGE_CODE %}
-                                        <option value="{{ lang.0 }}" selected="selected">{{ lang.0 }}</option>
-                                    {% else %}
-                                        <option value="{{ lang.0 }}">{{ lang.0 }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="display:none;" />
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                {% if user.is_authenticated %}
+                                    <a class="btn" href='/accounts/profile/view/'>{% trans "My profile" %}</a>
+                                    <a class="btn" href='/accounts/logout/'>{% trans "Log out" %}</a>
+                                {% else %}
+                                    <a class="btn" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
+                                        <img src="{{ MEDIA_URL }}img/footer-link-fb.png" alt="{% trans "login with facebook" %}">
+                                        Connect with Facebook
+                                    </a>
+                                    <a class="btn" href='/accounts/signup/'>{% trans "No account yet?" %}</a>
+                                    <a class="btn" href='/accounts/login/'>{% trans "Log in" %}</a>
+                                {% endif %}
+                                <select name="language" class="input-small" onchange="document.forms['locale'].submit();">
+                                    {% for lang in LANGUAGES %}
+                                        {% if lang.0 == LANGUAGE_CODE %}
+                                            <option value="{{ lang.0 }}" selected="selected">{{ lang.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="display:none;" />
+                            </div>
                         </div>
                     </form>
                 </div>
