@@ -64,14 +64,14 @@
         </div>
         <div class="span3">
             <div class="well">
+                {% if challenge.confirmation_required %}
+                    <p>
+                        <span class="label">{% trans "Confirmation required" %}</span>
+                    </p>
+                {% endif %}
                 {% if user.is_authenticated %}
                     {% if participation %}
                         <h4>{% trans "Your application"%}</h4>
-                        {% if challenge.confirmation_required %}
-                            <p>
-                                <span class="label">{% trans "Confirmation required" %}</span>
-                            </p>
-                        {% endif %}
 
                         <p>
                             {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
@@ -86,8 +86,6 @@
                             {% elif participation.status == PARTICIPATION_STATE.CANCELLED_BY_ADMIN %}
                                 <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
 
-                            {% else %}
-                                <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
                             {% endif %}
                         </p>
 
@@ -120,7 +118,7 @@
                                             <span class="label">{% trans "Confirmation required" %}</span><br>
                                             {% trans "To participate in this challenge, you need to be accepted by the challenge organizer. Please write about why you want to help and how you can be of use." %}
                                         </p>
-                                        <div class="input">{{ form.application_text }}</div>
+                                        <div class="input">{{ sform.application_text }}</div>
                                     </small>
                                 {% endif %}
                                 <br/>
