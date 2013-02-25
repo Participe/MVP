@@ -1,0 +1,16 @@
+{% extends 'account_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Challenge deleted" %} - {{ block.super }}{% endblock %}
+
+{% block extra_content %}
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <p>{% trans "The challenge, you are looking for, was deleted for the next reason" %}:</p>
+                <p>{{ challenge.deleted_reason }}</p>
+                <a class="btn btn-primary" href="{% url challenge_list %}">{% trans "Browse challenges" %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

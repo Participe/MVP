@@ -16,9 +16,11 @@
                 <div class="row">
                     <div class="span4">
                         <div class="input">{% trans "Avatar:" %}</div>
+                        <img src="{{ form.instance.avatar|default:'img/default.jpg'|thumbnail_url:'span9_wide' }}" alt="">
                         <div {% if form.avatar.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.avatar }}{{ form.avatar.errors }}</div>
                         <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
+                        <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
                     </div>
                     <div class="span4">
                         <div class="input">{% trans "Contact person:" %}</div>

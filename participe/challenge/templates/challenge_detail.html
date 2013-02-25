@@ -147,7 +147,6 @@
                     {% endif %}
 
                     {% if not is_admin and sform %}
-
                         <input id="signup-btn" name="signup-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans "Participate" %}">
                         <div id="signup-form">
                             <form action="." method="post">{% csrf_token %}

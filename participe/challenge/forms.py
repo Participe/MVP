@@ -168,18 +168,21 @@ class EditChallengeForm(forms.ModelForm):
 
     class Meta:
         model = Challenge
-        fields = ["avatar", "name", "description",
+        fields = ["avatar", "name", "description", "location",
             "is_contact_person", "is_alt_person", "alt_person_fullname",
             "alt_person_email", "alt_person_phone", "start_date", "start_time",
             "application", "deleted_reason",
             ]
         widgets = {
+            "location": forms.TextInput(
+                    attrs={"placeholder": _("Location")}),
             "description": forms.Textarea(
                     attrs={"cols": 25, "rows": 5,
                     "placeholder": _("Challenge description")}),
             "alt_person_fullname": forms.TextInput(
                     attrs={"placeholder": _("Full name")}),
-            "alt_person_email": forms.TextInput(
+            #"alt_person_email": forms.TextInput(attrs={"placeholder": _("E-mail")}),
+            "alt_person_email": widgets.EmailInput(
                     attrs={"placeholder": _("E-mail")}),
             "alt_person_phone": forms.TextInput(
                     attrs={"placeholder": _("Phone number")}),

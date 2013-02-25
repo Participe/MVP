@@ -33,12 +33,12 @@ def challenge_create(request):
             RequestContext(request, {'form': form}))
     
 def challenge_list(request):
-    challenges = Challenge.objects.all()
+    challenges = Challenge.objects.all().filter(is_deleted=False)
     return render_to_response('challenge_list.html',
             RequestContext(request, {
                 'challenges': challenges,
-                'CHALLENGE_MODE': CHALLENGE_MODE
-            }))
+                'CHALLENGE_MODE': CHALLENGE_MODE,
+                }))
 
 def challenge_detail(request, challenge_id):
     ctx = {}
@@ -46,6 +46,12 @@ def challenge_detail(request, challenge_id):
     user = request.user
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     ctx.update({"challenge": challenge})
+
+    if challenge.is_deleted:
+        return render_to_response('challenge_deleted_info.html', 
+                RequestContext(request, {
+                        "challenge": challenge,
+                        }))    
 
     # Only authenticated users may signup to challenge
     if request.user.is_authenticated():
@@ -138,15 +144,16 @@ def challenge_edit(request, challenge_id):
 
     if request.method == "POST":
         if form.is_valid():
-            is_date_time_changed = False
-            if ("start_date" in form.changed_data or
-                    "start_time" in form.changed_data):
-                is_date_time_changed = True
             form.save()
 
             participations = Participation.objects.all().filter(
                     Q(challenge=challenge) &
-                    (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) | Q(status=PARTICIPATION_STATE.CONFIRMED))
+                    (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+                            Q(status=PARTICIPATION_STATE.CONFIRMED))
+                    )
+            waited = Participation.objects.all().filter(
+                    Q(challenge=challenge) &
+                    Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
                     )
             if "delete" in request.POST:
                 challenge.is_deleted = True
@@ -161,7 +168,9 @@ def challenge_edit(request, challenge_id):
                                     "user": participation.user,
                                     "challenge": participation.challenge,
                                     },)
-            elif is_date_time_changed:
+            #is_date_time_changed:
+            elif ("start_date" in form.changed_data or
+                    "start_time" in form.changed_data):
                 for participation in participations:
                     send_templated_mail(
                             template_name="challenge_changed",
@@ -171,7 +180,23 @@ def challenge_edit(request, challenge_id):
                                     "user": participation.user,
                                     "challenge": participation.challenge,
                                     },)
-            return redirect("challenge_list")
+            #is_application_changed:
+            if ("application" in form.changed_data and
+                    challenge.application==CHALLENGE_MODE.FREE_FOR_ALL):
+                for participation in waited:
+                    participation.status = PARTICIPATION_STATE.CONFIRMED
+                    participation.date_accepted = datetime.now()
+                    participation.save()
+
+                    send_templated_mail(
+                            template_name="challenge_application_changed",
+                            from_email="from@example.com", 
+                            recipient_list=[participation.user.email,], 
+                            context={
+                                    "user": participation.user,
+                                    "challenge": participation.challenge,
+                                    },)
+            return redirect("challenge_detail", challenge_id)
     return render_to_response('challenge_edit.html', 
             RequestContext(request, {'form': form}))
 
@@ -179,7 +204,7 @@ def challenge_edit(request, challenge_id):
 @challenge_admin
 def participation_accept(request, participation_id):
     participation = get_object_or_404(Participation, pk=participation_id)
-    participation.status = "2"
+    participation.status = PARTICIPATION_STATE.CONFIRMED
     participation.date_accepted = datetime.now()
     participation.save()
 
