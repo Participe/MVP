@@ -7,8 +7,9 @@
 *******************************************************************************
 
 {% trans "Dear," %} {{ user.get_full_name }},
-{% trans "You application to challenge" %} "{{ challenge.name }}" {% trans "has been accepted!" %}
-{% trans "You are now signed up for the challenge on" %} {{ challenge.start_date }} {% trans "Please don’t forget to show up!" %}
+{% trans "Your application to" %} {{ challenge.name }} {% trans "has been accepted!" %}
+{% trans "You are now signed up for the challenge on" %} {{ challenge.start_date }}.
+{% trans "Please don’t forget to show up!" %}
 
 {% trans "Thank you," %}
 {% trans "Participe Resource Management System" %}

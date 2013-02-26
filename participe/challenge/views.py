@@ -87,7 +87,7 @@ def challenge_detail(request, challenge_id):
             try:
                 if sform.is_valid():
                     sform.save()
-                    if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
+                    if challenge.application==CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
                             from_email="from@example.com", 
