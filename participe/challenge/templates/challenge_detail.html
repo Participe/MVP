@@ -71,7 +71,7 @@
                                     {{ comment.created_at }}
                                 </small>
                                 {% if user == comment.user or is_admin or user.is_staff %}
-                                    <a href="{% url comment_delete comment.pk %}"><input type="button" value="Delete"></a>
+                                    <a href="#" onclick="delete_comment()"><input url="{% url comment_delete comment.pk %}" type="button" value="Delete"></a>
                                 {% endif %}
                         </blockquote>
                 {% endfor %}
@@ -268,11 +268,16 @@
     <div id="withdraw-dialog">
         <span>Do you really want to withdraw your application?</span>
     </div>
+
+    <div id="delete-comment-dialog">
+        <p name="header">Do you really want to delete comment?</p>
+        <p name="text"></p>
+    </div>
     
     <script type="text/javascript">
         function send_remove_form(){
             var event = window.event || evt;
-            if (!event.target) event.target = event.srcElement
+            if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
             value = event.target.getAttribute("value");
             
@@ -281,6 +286,18 @@
             $("#remove-participation-dialog").dialog("open");
         }
         
+        function delete_comment(){
+            var event = window.event || evt;
+            if (!event.target) event.target = event.srcElement;
+            
+            var comment_text = $(event.target).parent().parent().find('p').text();
+            var redirect_url = $(event.target).attr("url");
+            
+            $("#delete-comment-dialog").find("p[name='text']").text(comment_text);
+            $("#delete-comment-dialog").data("redirect_url", redirect_url);
+            $("#delete-comment-dialog").dialog("open");
+        }
+
         $(document).ready(function(){
             $("#signup-form").hide();
             $("#signup-btn").click(function(){
@@ -356,7 +373,25 @@
                 } else {
                     $('input[id="add-comment-btn"]').attr('disabled','disabled');
                 }
-            });            
+            });
+
+            //Delete comment
+            $("#delete-comment-dialog").dialog({
+                autoOpen: false,
+                draggable: true,
+                resizable: false,
+                modal: true,
+                buttons: {
+                    "Proceed": function(){
+                        redirect_url = $(this).data("redirect_url");
+                        window.location.href = redirect_url;
+                    },
+                    "Close": function(){
+                        $(this).dialog('close');   
+                    }
+                }
+            });
+
         });
     </script>
 {% endblock %}
