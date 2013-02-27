@@ -116,12 +116,10 @@
                             {% endif %}
                         </p>
 
-                        {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION or participation.status = PARTICIPATION_STATE.CONFIRMED %}
+                        {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION or participation.status == PARTICIPATION_STATE.CONFIRMED %}
                             <p class="btn-group">
                                 <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn btn-danger btn-large" value="{% trans "Withdraw application" %}">
                             </p>
-                        {% endif %}
-                        {% if participation.status == PARTICIPATION_STATE.CONFIRMED or participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
                             <form id="withdraw-form" action="." method="post">{% csrf_token %}
                                 <p class="note">
                                     <strong>

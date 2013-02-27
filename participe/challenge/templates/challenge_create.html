@@ -1,4 +1,4 @@
-u{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Create challenge" %} - {{ block.super }}{% endblock %}
@@ -61,6 +61,16 @@ u{% extends 'base.html' %}
             }
             $('input[name=start_date]').datepicker(options);
             $('input[name=alt_date]').datepicker(options);
+        });
+
+        $(function() {
+            options = {
+                showNowButton: true,
+                showDeselectButton: true,
+                defaultTime: '',
+                showCloseButton: true
+            }
+            $('input[name=start_time]').timepicker(options);
         });
     </script>
 {% endblock %}

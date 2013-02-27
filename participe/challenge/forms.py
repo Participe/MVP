@@ -42,6 +42,11 @@ class CreateChallengeForm(forms.ModelForm):
             widget=forms.DateInput(
                     format="%d.%m.%Y",
                     attrs={"class": "input-small"}))
+    start_time = forms.TimeField(
+            input_formats=("%H:%M",),
+            widget=forms.TimeInput(
+                    format="%H:%M",
+                    attrs={"class": "input-mini"}))
 
     class Meta:
         model = Challenge
@@ -70,8 +75,8 @@ class CreateChallengeForm(forms.ModelForm):
                     attrs={"placeholder": _("Phone number")}),
 
             #"start_date": widgets.DateInput(attrs={"class": "input-small"}),
-            "start_time": widgets.TimeInput(
-                    attrs={"class": "input-mini"}),
+            #"start_time": widgets.TimeInput(
+            #        attrs={"class": "input-mini"}),
 
             "application": forms.RadioSelect(),
             }
@@ -253,8 +258,8 @@ class SignupChallengeForm(forms.ModelForm):
         instance.date_created = datetime.now()
         
         # If instance if Free-for-All, set Participation status to "Confirmed"
-        if self.challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED:
-            instance.status = PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+        if self.challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
+            instance.status = PARTICIPATION_STATE.CONFIRMED
         
         if commit:
             instance.save()

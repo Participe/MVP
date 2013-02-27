@@ -96,14 +96,14 @@ def challenge_detail(request, challenge_id):
                                     "user": user,
                                     "challenge": challenge,
                                     },)
-            except:
+            except NameError:
                 pass
 
             # User withdraws his application
             try:
                 if wform.is_valid:
                     wform.save()
-            except:
+            except NameError:
                 pass
             return redirect("challenge_detail", challenge.pk)
         ctx.update({"is_admin": is_challenge_admin(user, challenge)})
