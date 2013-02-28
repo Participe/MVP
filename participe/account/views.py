@@ -290,17 +290,15 @@ def view_profile(request, user_id):
                 status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
             ).values_list("challenge_id", flat=True))
 
-        related_participated_challenges = []
-        for challenge in participated_challenges:
-            if challenge in admin_challenges:
-                related_participated_challenges.append(challenge)
+        related_participated_challenges = [
+                challenge for challenge in participated_challenges
+                if challenge in admin_challenges]
         ctx.update({"related_participated_challenges":
                 related_participated_challenges})
 
-        related_desired_challenges = []
-        for challenge in desired_challenges:
-            if challenge in admin_challenges:
-                related_desired_challenges.append(challenge)
+        related_desired_challenges = [
+                challenge for challenge in desired_challenges
+                if challenge in admin_challenges]
         ctx.update({"related_desired_challenges": related_desired_challenges})
 
         if related_participated_challenges or related_desired_challenges:
