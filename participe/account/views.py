@@ -254,13 +254,19 @@ def account_list(request):
                     }))
 
 def view_profile(request, user_id):
+    ctx = {}
+    user = request.user
+    user_may_see_account_details = False
+
     account = get_object_or_404(User, pk=user_id)
+    ctx.update({"account": account})
     
     #TODO Enhance this behaviour
     try:
         profile = get_object_or_404(UserProfile, user=account)
     except:
         profile = None
+    ctx.update({"profile": profile})
 
     participated_challenges = Challenge.objects.filter(pk__in=
         Participation.objects.filter(
@@ -268,18 +274,43 @@ def view_profile(request, user_id):
             challenge__is_deleted=False, 
             status=PARTICIPATION_STATE.CONFIRMED
         ).values_list("challenge_id", flat=True))
+    ctx.update({"participated_challenges": participated_challenges})
 
     affiliated_organizations = Organization.objects.filter(
         affiliated_users=account,
-    )
+        )
+    ctx.update({"affiliated_organizations": affiliated_organizations})
 
+    if user.is_authenticated():
+        admin_challenges = get_admin_challenges(user)
+        desired_challenges = Challenge.objects.filter(pk__in=
+            Participation.objects.filter(
+                user=account, 
+                challenge__is_deleted=False, 
+                status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+            ).values_list("challenge_id", flat=True))
+
+        related_participated_challenges = []
+        for challenge in participated_challenges:
+            if challenge in admin_challenges:
+                related_participated_challenges.append(challenge)
+        ctx.update({"related_participated_challenges":
+                related_participated_challenges})
+
+        related_desired_challenges = []
+        for challenge in desired_challenges:
+            if challenge in admin_challenges:
+                related_desired_challenges.append(challenge)
+        ctx.update({"related_desired_challenges": related_desired_challenges})
+
+        if related_participated_challenges or related_desired_challenges:
+            user_may_see_account_details = True
+
+
+
+    ctx.update({"user_may_see_account_details": user_may_see_account_details})
     return render_to_response('account_foreignprofile.html',
-            RequestContext(request, {
-                    "account": account,
-                    "profile": profile,
-                    "participated_challenges": participated_challenges,
-                    "affiliated_organizations": affiliated_organizations
-                    }))    
+            RequestContext(request, ctx))    
 
 @login_required
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")

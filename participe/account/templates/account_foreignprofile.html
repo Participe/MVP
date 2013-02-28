@@ -19,7 +19,7 @@
                                 {{ profile.address_2 }}<br>
                             {% endif %}
                             {{ profile.postal_code}} {{ profile.city }}<br>
-                            {{ profile.country }}
+                            {{ profile.country.name }}
                         </p>
                         <p>
                             {{ user.email }}<br>
@@ -27,9 +27,27 @@
                             {{ profile.birth_day }}
                         </p>
                     </address>
+
+                    <b>{% trans "You can see details, because user is" %}</b>
+                    {% if related_participated_challenges %}
+                    <p class="note">
+                        <span class="label label-success">{% trans "Signed-up for your challenge" %}:</span><br>
+                        {% for challenge in related_participated_challenges %}
+                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                    {% if related_desired_challenges %}
+                    <p class="note">
+                        <span class="label label-warning">{% trans "Waitnig for confirmation on your challenge" %}:</span><br>
+                        {% for challenge in related_desired_challenges %}
+                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    {% endif %}
                 {% else %}
                     <p class="note">
-                        <span class="label label-info">{% trans "Information hidden" %}</span><br>
+                        <span class="label label-alert">{% trans "Information hidden" %}</span><br>
                         {% trans "This user does not to share their email address or phone number with the public." %}
                     </p>
                 {% endif %}

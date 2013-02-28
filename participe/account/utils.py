@@ -2,8 +2,8 @@ import itertools
 
 from django.db.models import Q
 
-from participe.challenge.models import Participation, Challenge
-
+from participe.challenge.models import (Participation, Challenge,
+        PARTICIPATION_STATE)
 
 #TODO Expand django.contrib.auth.models.User and move methods there
 
@@ -18,7 +18,8 @@ def get_user_participations(user):
     # Get participations, where user signed up
     user_participations = Participation.objects.all().filter(
             Q(user=user) & Q(challenge__is_deleted=False) &
-            (Q(status="0") | Q(status="2"))
+            (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+            Q(status=PARTICIPATION_STATE.CONFIRMED))
             ).order_by("challenge__start_date")
     return user_participations
 
