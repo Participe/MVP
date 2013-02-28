@@ -167,7 +167,7 @@
                                 </strong>
                                 <p>{{ sform.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
                                 <div class="btn-group">
-                                    <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Participate' %}" />
+                                    <input type="submit" class="btn btn-success btn-primary" onclick="share_on_fb();" value="{% trans 'Participate' %}" />
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
                                 </div>
                             </form>
@@ -219,7 +219,7 @@
             <div class="well">
                 {% if user.social_auth.all %}
                     {% with "facebook" as service %}
-                        <a href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
+                        <a id="share-on-fb" href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
                     {% endwith %}
                 {% endif %}
                 <p>
@@ -275,6 +275,16 @@
     </div>
     
     <script type="text/javascript">
+        function share_on_fb(){
+            try {
+                redirect_to = $("#share-on-fb").attr("href");
+                if ($("#id_share_on_FB").is(":checked") && redirect_to) {
+                    window.open(redirect_to, '_blank');
+                }
+            } catch(err) {
+            }
+        }
+        
         function send_remove_form(){
             var event = window.event || evt;
             if (!event.target) event.target = event.srcElement;
