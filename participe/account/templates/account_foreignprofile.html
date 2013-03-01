@@ -93,5 +93,51 @@
                 {% endif %}
             </div>
         </div>
+                
+        <div class="span9">
+            <div class="well">
+                {% if user_may_see_account_details %}
+                    {% if user_cancelled_participations %}
+                    <h3>{% trans "Participations, cancelled by user" %}</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Challenge name</th>
+                            <th>Date signed up</th>
+                            <th>Date cancelled</th>
+                            <th>Cancellation reason</th>
+                        </tr>
+                        {% for participation in user_cancelled_participations %}
+                        <tr>
+                            <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                            <td>{{ participation.date_created }}</td>
+                            <td>{{ participation.date_cancelled }}</td>
+                            <td>{{ participation.cancellation_text }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+
+                    {% if admin_cancelled_participations %}
+                    <h3>{% trans "Participations, cancelled by challenge admin" %}</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Challenge name</th>
+                            <th>Date signed up</th>
+                            <th>Date cancelled</th>
+                            <th>Cancellation reason</th>
+                        </tr>
+                        {% for participation in admin_cancelled_participations %}
+                        <tr>
+                            <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                            <td>{{ participation.date_created }}</td>
+                            <td>{{ participation.date_cancelled }}</td>
+                            <td>{{ participation.cancellation_text }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}

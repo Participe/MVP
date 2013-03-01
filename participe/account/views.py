@@ -290,6 +290,7 @@ def view_profile(request, user_id):
                 status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
             ).values_list("challenge_id", flat=True))
 
+        # Related to viewer Challenges
         related_participated_challenges = [
                 challenge for challenge in participated_challenges
                 if challenge in admin_challenges]
@@ -299,12 +300,26 @@ def view_profile(request, user_id):
         related_desired_challenges = [
                 challenge for challenge in desired_challenges
                 if challenge in admin_challenges]
-        ctx.update({"related_desired_challenges": related_desired_challenges})
+        ctx.update({"related_desired_challenges":
+                related_desired_challenges})
 
+        # Cancelled Participations
+        user_cancelled_participations = Participation.objects.filter(
+                user=account,
+                status=PARTICIPATION_STATE.CANCELLED_BY_USER
+                )
+        ctx.update({"user_cancelled_participations":
+                user_cancelled_participations})
+
+        admin_cancelled_participations = Participation.objects.filter(
+                user=account,
+                status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN
+                )
+        ctx.update({"admin_cancelled_participations":
+                admin_cancelled_participations})
+        
         if related_participated_challenges or related_desired_challenges:
             user_may_see_account_details = True
-
-
 
     ctx.update({"user_may_see_account_details": user_may_see_account_details})
     return render_to_response('account_foreignprofile.html',
