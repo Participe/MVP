@@ -89,6 +89,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # The HTTP 403 exception
+    'participe.core.middleware.Http403Middleware',
 )
 
 ROOT_URLCONF = 'participe.urls'
@@ -149,10 +152,10 @@ LOGGING = {
 }
 
 DOMAIN_NAME = "www.ddaemon.info"
+
 ###############################################################################
 ### DJANGO EASY THUMBNAILS SECTION                                          ###
 ###############################################################################
-
 THUMBNAIL_ALIASES = {
     '': {
             'span2_thumb': {

@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Permission denied' %}{% endblock %}
+
+{% block content %}
+
+<h2>{% trans 'The force is not with you today.' %}</h2>
+
+<p>{% trans "You cannot jedi mind trick your way into viewing this page, try again later." %}</p>
+
+{% endblock %}

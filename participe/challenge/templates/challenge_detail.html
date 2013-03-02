@@ -116,7 +116,7 @@
                             {% endif %}
                         </p>
 
-                        {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION or participation.status == PARTICIPATION_STATE.CONFIRMED %}
+                        {% if wform %}
                             <p class="btn-group">
                                 <input id="withdraw-btn" name="withdraw-btn" type="button" class="btn btn-danger btn-large" value="{% trans "Withdraw application" %}">
                             </p>
@@ -128,7 +128,7 @@
                                     </strong>
                                 </p>
                                 <div class="input">
-                                    <textarea id="text" name="text" placeholder="{% trans "Reason for withdrawing" %}"></textarea>
+                                    {{ wform.cancellation_text }}{{ form.cancellation_text.errors }}
                                 </div>
                                 <small>
                                     <p class="note">
@@ -375,6 +375,16 @@
                 $("#withdraw-dialog").dialog("open");
             });
             
+            //Cancellation text control
+            $('#withdraw').attr('disabled','disabled');
+            $("#id_cancellation_text").keyup(function() {
+                if (this.value.length >= 20){
+                    $('#withdraw').removeAttr('disabled');
+                } else {
+                    $('#withdraw').attr('disabled','disabled');
+                }
+            });
+
             //Add comment control
             $('input[id="add-comment-btn"]').attr('disabled','disabled');
             $("#comment").keyup(function() {

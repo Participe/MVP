@@ -4,7 +4,7 @@ from datetime import datetime
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext as _
-                 
+
 from models import (Challenge, Participation, CHALLENGE_MODE,
         PARTICIPATION_STATE)
 import participe.core.html5_widgets as widgets
@@ -275,10 +275,22 @@ class WithdrawSignupForm(forms.ModelForm):
         model = Participation
         fields = ["cancellation_text",]
         widgets = {
-            "application_text": forms.Textarea(
+            "cancellation_text": forms.Textarea(
                     attrs={"placeholder": _("Reason for withdrawing")}),
             }
 
+    def clean_cancellation_text(self):
+        # XXX Issue #0081
+        # If user opens Challenge details page, e.g. 4 times, and pushes 
+        # "Participate" at first time, he signs up to challenge.
+        # If user pushes "Participate" on 2nd, 3rd and other pages, following
+        # prevents unpredictable behaviour.
+        text = self.cleaned_data["cancellation_text"]
+        if len(text) < 1:
+            self._errors["cancellation_text"] = self.error_class(
+                    [_("This field is required."),])
+            del self.cleaned_data["cancellation_text"]
+            
     def save(self, commit=True):
         instance = super(WithdrawSignupForm, self).save(commit=False)
         instance.status = PARTICIPATION_STATE.CANCELLED_BY_USER

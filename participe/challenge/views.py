@@ -61,8 +61,7 @@ def challenge_detail(request, challenge_id):
             ctx.update({"participation": participation})
 
             if (participation.status==PARTICIPATION_STATE.CONFIRMED or
-                    participation.status==
-                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION):
+                    participation.status==PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION):
                 wform = WithdrawSignupForm(
                         request.POST or None, request.FILES or None,
                         instance=participation)
@@ -101,7 +100,7 @@ def challenge_detail(request, challenge_id):
 
             # User withdraws his application
             try:
-                if wform.is_valid:
+                if wform.is_valid():
                     wform.save()
             except NameError:
                 pass
