@@ -30,7 +30,8 @@ def organization_create(request):
             RequestContext(request, {'form': form}))
     
 def organization_list(request):
-    organizations = Organization.objects.all().order_by("name")
+    organizations = Organization.objects.all().filter(
+            is_deleted=False).order_by("name")
     return render_to_response('organization_list.html',
             RequestContext(request, {
                     'organizations': organizations,

@@ -23,7 +23,7 @@
                 {% for challenge in challenges_month.list %}        
                     <li class="span4">
                         <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
-                            {% if challenge.organization %}
+                            {% if challenge.organization and not challenge.organization.is_deleted %}
                                 <p class="brand">{{ challenge.organization.name }}</p>
                             {% endif %}
                             <p><img class="img-rounded" src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt=""></p>

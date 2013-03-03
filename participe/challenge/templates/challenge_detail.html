@@ -21,7 +21,7 @@
                     | {{ challenge.start_time|date:"G:i"|default:"0:00" }} 
                     | {{ challenge.location }}
                 </p>
-                {% if challenge.organization %}
+                {% if challenge.organization and not challenge.organization.is_deleted %}
                     <p>
                         {% trans "Organized by" %} 
                         <a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>

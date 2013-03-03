@@ -4,4 +4,12 @@ from django.utils.translation import ugettext as _
 from participe.organization.models import Organization
 
 
-admin.site.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = [
+            "pk", "name", "contact_person", "is_deleted",]
+    list_filter = [
+            "name", "contact_person", "is_deleted",]
+    search_fields = [
+            "name",]
+
+admin.site.register(Organization, OrganizationAdmin)
