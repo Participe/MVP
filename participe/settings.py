@@ -24,10 +24,10 @@ DATABASES = {
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 LANGUAGES = (
-   ('en', 'English'),
-   ('de', 'German'),
-   ('fr', 'French'),
-   ('it', 'Italian'),
+    ('en', 'English'),
+    ('de', 'German'),
+    ('fr', 'French'),
+    ('it', 'Italian'),
 )
 
 SITE_ID = 1
@@ -106,6 +106,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     
     'south',
     'social_auth',
@@ -119,7 +121,6 @@ INSTALLED_APPS = (
     'participe.challenge',
     'participe.organization',
     'participe.account',
-
 )
 
 # A sample logging configuration. The only tangible logging

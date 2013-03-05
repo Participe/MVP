@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # i18n
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^about/', include('django.contrib.flatpages.urls')),
     
     # Home
     url(r'^$', 'django.views.generic.simple.direct_to_template',
