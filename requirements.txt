@@ -3,6 +3,9 @@ Fabric==1.5.1
 Pillow==1.7.8
 South==0.7.6
 Werkzeug==0.8.3
+Celery
+django-celery
+django-kombu
 argparse==1.2.1
 django-countries==1.5
 django-extensions==1.0.3
