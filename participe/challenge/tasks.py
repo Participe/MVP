@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from celery.schedules import crontab
 from celery.task import task, periodic_task
 from templated_email import send_templated_mail
 
@@ -32,17 +33,37 @@ def remind_accept_reject_application():
                         user=user,
                         challenge=challenge,
                         status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION                    
-                )
+                        )
                 content += ("<p>There are {0} of people,"
                         " waiting for approval on challenge"
                         " <a href='http://{1}{2}'>{3}</a></p><br/>".format(
                         participations.count(), settings.DOMAIN_NAME, 
                         challenge.get_absolute_url(), challenge.name))
                 send_templated_mail(
-                    template_name="remind_accept_reject_application",
+                        template_name="remind_accept_reject_application",
+                        from_email="from@example.com", 
+                        recipient_list=[user.email,], 
+                        context={
+                                "user": user,
+                                "content": content,
+                                },)
+
+@periodic_task(run_every=crontab(hour=19, minute=0))
+def remind_challenge_participation():
+    participations = Participation.objects.filter(
+            challenge__is_deleted=False,
+            status=PARTICIPATION_STATE.CONFIRMED
+            )
+    for participation in participations:
+        user = participation.user
+        challenge = participation.challenge
+        td = challenge.start_date - date.today()
+        if td.days==1:
+            send_templated_mail(
+                    template_name="remind_challenge_participation",
                     from_email="from@example.com", 
                     recipient_list=[user.email,], 
                     context={
                             "user": user,
-                            "content": content,
+                            "challenge": challenge,
                             },)
