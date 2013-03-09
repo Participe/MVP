@@ -8,7 +8,7 @@ from templated_email import send_templated_mail
 from models import Challenge, Participation, PARTICIPATION_STATE
 
 
-@periodic_task(run_every=timedelta(minutes=1))
+@periodic_task(run_every=timedelta(hours=24))
 def remind_accept_reject_application():
     # Select users, who have created Challenge(s)
     users = User.objects.filter(
