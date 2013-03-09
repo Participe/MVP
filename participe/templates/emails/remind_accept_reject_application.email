@@ -1,0 +1,15 @@
+{% load i18n %}
+{% block subject %}{% trans "Congratulations" %}{% endblock %}
+
+{% block html %}
+*******************************************************************************<br/>
+  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY" %}.              <br/>
+*******************************************************************************<br/>
+
+{% trans "Dear" %}, {{ user.get_full_name }},<br/>
+{{ content }}
+{% trans "Please confirm or reject these people as soon as possible" %}.<br/>
+
+{% trans "Thank you" %},<br/>
+{% trans "Participe Resource Management System" %}<br/>
+{% endblock %}

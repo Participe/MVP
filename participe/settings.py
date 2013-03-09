@@ -155,6 +155,22 @@ LOGGING = {
 DOMAIN_NAME = "www.ddaemon.info"
 
 ###############################################################################
+### DJANGO CELERY Y MESSAGE BROKER SECTION                                  ###
+###############################################################################
+import djcelery
+djcelery.setup_loader()
+
+INSTALLED_APPS += (
+        "djcelery",
+        "djkombu",)
+
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERY_IMPORTS = (
+        "participe.challenge.tasks",)
+
+###############################################################################
 ### DJANGO EASY THUMBNAILS SECTION                                          ###
 ###############################################################################
 THUMBNAIL_ALIASES = {

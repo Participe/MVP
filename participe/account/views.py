@@ -34,7 +34,9 @@ from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import Participation, Challenge, Organization, PARTICIPATION_STATE
+from participe.challenge.models import (Participation, Challenge,
+        PARTICIPATION_STATE)
+from participe.organization.models import Organization 
 
 try:
     from cStringIO import StringIO
