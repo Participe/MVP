@@ -165,7 +165,9 @@
                                         {% trans "By clicking participate, you agree to take part in this challenge and to do your best." %}
                                     </p>
                                 </strong>
+                                {% if user.social_auth.all %}
                                 <p>{{ sform.share_on_FB }} <span>{% trans "Share on Facebook" %}</span></p>
+                                {% endif %}
                                 <div class="btn-group">
                                     <input type="submit" class="btn btn-success btn-primary" onclick="share_on_fb();" value="{% trans 'Participate' %}" />
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
@@ -219,7 +221,8 @@
             <div class="well">
                 {% if user.social_auth.all %}
                     {% with "facebook" as service %}
-                        <a id="share-on-fb" href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></a>
+                        <div class="input"><a href="#" onclick="share_on_fb();"><img src="{{ MEDIA_URL }}img/share_on_FB.jpg" alt="Share on {{ service }}"/></div>
+                        <div class="input"><input type="hidden"><a id="share-on-fb" href="http://www.facebook.com/sharer.php?s=100&p[url]={{ request.build_absolute_uri }}&p[images][0]=http://{{ request.get_host }}{{ challenge.avatar.url }}&p[title]={{ challenge.name }}&p[summary]={{ challenge.description }}" target="_blank" title="Share on {{ service }}"></a></input></div>
                     {% endwith %}
                 {% endif %}
                 <p>
@@ -229,7 +232,6 @@
             </div>
         </div>
     </div>
-
 
     {% if waited and is_admin %}
         <h3>{% trans "People waiting for confirmation" %}</h3>
@@ -258,7 +260,6 @@
         </ul>
     {% endif %}
 
-
     <div id="remove-participation-dialog">
         <form id="remove-participation-form" action="{% url participation_remove challenge.pk %}" method="post">{% csrf_token %}
             <textarea id="text" name="text" rows="5" cols="20" placeholder="Cancellation/Rejection reason"></textarea>
@@ -278,8 +279,12 @@
         function share_on_fb(){
             try {
                 redirect_to = $("#share-on-fb").attr("href");
-                if ($("#id_share_on_FB").is(":checked") && redirect_to) {
-                    window.open(redirect_to, '_blank');
+                if ($("#id_share_on_FB").is(":checked") && redirect_to){
+                    height = 300;
+                    width = 500;
+                    centeredY = (screen.height - height)/2;
+                    centeredX = (screen.width - width)/2;
+                    window.open(redirect_to, "_blank", "height="+height+",width="+width+",left="+centeredX+",top="+centeredY).focus();
                 }
             } catch(err) {
             }
@@ -411,7 +416,6 @@
                     }
                 }
             });
-
         });
     </script>
 {% endblock %}
