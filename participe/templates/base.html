@@ -69,35 +69,32 @@
             {% endblock %}
 
             {% block footer %}
-            <div class="row">
-                <div class="span12">
-                    <div class="well">
-                        <div class="row">
-                            <div class="span3">
-                                <ul class="popover-content">
-                                    <li><a href="/about/for_organizers/">For Organizers</a></li>
-                                    <li><a href="/about/for_partners/">For Partners</a></li>
-                                    <li><a href="/about/for_media/">For Media</a></li>
-                                </ul>
-                            </div>
-                            <div class="span3">
-                                <ul class="popover-content">
-                                    <li><a href="/about/fork_us/">Fork us on GitHub</a></li>
-                                    <li><a href="/about/privacy_policy/">Privacy Policy</a></li>
-                                    <li><a href="/about/tnc/">Terms and Conditions</a></li>
-                                </ul>
-                            </div>
-                            <div class="span3">
-                                <ul class="popover-content">
-                                    <li><a href="/about/feedback/">Feedback</a></li>
-                                    <li><a href="/about/team/">Team</a></li>
-                                    <li><a href="/about/join_us/">Join us</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="row footer">
+                    <div class="span4">
+                        <h4>{% trans "For Partners" %}</h4> 
+                        <ul> 
+                            <li><a href="/about/organizers/">{% trans "For Organizers" %}</a></li> 
+                            <li><a href="/about/sponsors/">{% trans "For Sponsors" %}</a></li> 
+                            <li><a href="/about/media/">{% trans "For Media" %}</a></li> 
+                        </ul> 
+                    </div>
+                    <div class="span4">
+                        <h4>{% trans "For Users" %}</h4> 
+                        <ul>
+                            <li><a href="/about/privacy_policy/">{% trans "Privacy Policy" %}</a></li>
+                            <li><a href="/about/tnc/">{% trans "Terms and Conditions" %}</a></li>
+                            <li><a href="/about/sourcecode/">{% trans "Fork us on GitHub" %}</a></li>
+                        </ul>
+                    </div>
+                    <div class="span4">
+                        <h4>{% trans "About Participe" %}</h4> 
+                        <ul>
+                            <li><a href="/about/team/">{% trans "Team" %}</a></li>
+                            <li><a href="/about/feedback/">{% trans "Feedback" %}</a></li>
+                            <li><a href="/about/join_us/">{% trans "Join Us" %}</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
             {% endblock %}
         </div>
         {% endblock %}

@@ -6,7 +6,8 @@ def git_pull():
     run("cd /home/django/participe/MVP/; git pull origin master")
 
 def install_requirements():
-    run("source /home/django/participe/ve/bin/activate; cd /home/django/participe/MVP/; pip install -r requirements.txt")
+    with cd("/home/django/participe/MVP"):
+        run("source /home/django/participe/ve/bin/activate; pip install -r requirements.txt")
 
 def stop_all():
     sudo("service nginx stop")
@@ -18,16 +19,17 @@ def start_all():
 
 def schema_migration():
     with settings(warn_only=True):
-        run("/home/django/participe/MVP/manage.py schemamigration account --auto")
-        run("/home/django/participe/MVP/manage.py schemamigration organization --auto")
-        run("/home/django/participe/MVP/manage.py schemamigration challenge --auto")
-        run("/home/django/participe/MVP/manage.py migrate account ")
-        run("/home/django/participe/MVP/manage.py migrate organization")
-        run("/home/django/participe/MVP/manage.py migrate challenge")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py syncdb")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py schemamigration account --auto")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py schemamigration organization --auto")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py schemamigration challenge --auto")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py migrate account ")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py migrate organization")
+        run("source /home/django/participe/ve/bin/activate && /home/django/participe/MVP/manage.py migrate challenge")
 
 def get_text():
     with cd("/home/django/participe/MVP/participe"):
-        run("../manage.py compilemessages")
+        run("source /home/django/participe/ve/bin/activate && ../manage.py compilemessages")
 
 def deploy():
     stop_all()

@@ -13,3 +13,13 @@
 h3 {
     line-height: 110%;
 }
+
+.footer ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.footer {
+    margin-bottom: 15px;
+}
