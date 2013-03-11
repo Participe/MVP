@@ -63,6 +63,7 @@
             $('input[name=alt_date]').datepicker(options);
         });
 
+        {% comment %}
         $(function() {
             options = {
                 showNowButton: true,
@@ -72,5 +73,6 @@
             }
             $('input[name=start_time]').timepicker(options);
         });
+        {% endcomment %}
     </script>
 {% endblock %}
