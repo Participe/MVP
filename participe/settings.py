@@ -152,7 +152,9 @@ LOGGING = {
     }
 }
 
-DOMAIN_NAME = "www.ddaemon.info"
+# Put here the proper domain name. For testing needs this value could be 
+# overriden in local_settings.py (or not)
+DOMAIN_NAME = "beta.partici.pe"
 
 ###############################################################################
 ### DJANGO CELERY Y MESSAGE BROKER SECTION                                  ###
