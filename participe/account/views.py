@@ -235,6 +235,7 @@ def account_logout(request, next_page):
     from social_auth.models import UserSocialAuth
 
     user = request.user
+    DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
     try:
         instance = UserSocialAuth.objects.filter(
                 provider='facebook').get(user=user)
@@ -242,7 +243,7 @@ def account_logout(request, next_page):
         fb_logout = (
                 'https://www.facebook.com/logout.php?'
                 'next=http://%s&access_token=%s' % 
-                (settings.DOMAIN_NAME, access_token))
+                (DOMAIN_NAME, access_token))
         response = logout(request, next_page=fb_logout)
     except:
         response = logout(request, next_page=next_page)
