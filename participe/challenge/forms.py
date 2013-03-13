@@ -261,6 +261,9 @@ class SignupChallengeForm(forms.ModelForm):
         if self.challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
             instance.status = PARTICIPATION_STATE.CONFIRMED
         
+        if not self.cleaned_data.get("share_on_FB", ""):
+            instance.share_on_FB = False
+
         if commit:
             instance.save()
 
