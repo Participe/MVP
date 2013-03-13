@@ -8,25 +8,33 @@
         <div class="row">
             <div class="span12">
                 <div class="row">
-                    <div class="span4">
-                        <p>{% trans "Please, login" %}</p>
+                    <div class="span4 offset2 centered-text">
+                        <h3>{% trans "Sign in with Facebook" %}</h3>
+                        <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
+                            <img src="{{ MEDIA_URL }}img/facebook_logo.png" border="0" alt="{% trans "Sign in with Facebook" %}" width="200" height="200">
+                        </a>
                     </div>
                     <div class="span4">
-                    </div>
-                    <div class="span4">
+                        <h3>{% trans "Sign in with email address" %}</h3>
                         {% if form.errors %}<p>{% trans "Sorry, you have entered wrong E-mail or Password" %}</p>{% endif %}
-                        <p>{{ form.username.label_tag }}<p><div class="input">{{ form.username }}</div>
-                        <p>{{ form.password.label_tag }}<p><div class="input">{{ form.password }}</div>
-                        <div class="input"><span>Remember me</span> {{ form.remember_me }}</div>
+                        <p>
+                            {{ form.username.label_tag }}{{ form.username }}<br>
+                            {{ form.password.label_tag }}{{ form.password }}<br>
+                            {{ form.remember_me }}
+                            {% trans "Remember me" %}
+                        </p>
                         
-                        <div class="input"><input type="submit" class="btn-primary" value="{% trans 'login' %}" /></div>
-                        <div class="input"><input type="hidden" name="next" value="{{ next|escape }}" /></div>
+                        <p>
+                        <input type="submit" class="btn btn-primary btn-large" value="{% trans 'Sign in' %}" />
+                        <input type="hidden" name="next" value="{{ next|escape }}" />
+                        </p>
 
-                        <div><a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
-                            <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
-                        </a></div>
-                        
-                        <div><a href="{% url notify_forgotten_password %}">Forgot your password?</a></div>
+                        <p>
+                            <div class="btn-group">
+                                <a class="btn" href="{% url notify_forgotten_password %}">Forgot your password?</a>
+                                <a class="btn" href="{% url signup %}">No account yet?</a>
+                            </div>
+                        </p>
                     </div>
                 </div>
             </div>

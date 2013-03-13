@@ -28,41 +28,29 @@
     <form id="signup" class="well" enctype="multipart/form-data" action="." method="post">{% csrf_token %}
         <div class="row">
             <div class="span12">
-                <div class="row">
-                    <div class="span6">
-                        <p>{% trans "To participate in a challenge, you first need to sign-up for participe:" %}</p>
-                        
-                        {% comment %}
-                        <a href="#" onclick="startConnect(); return false;">{% trans "Click to connect and authenticate with Facebook" %}</a>
-                        <p>{{ fb_profile }}</p>
-                        {% endcomment %}
-                        
-                        <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
-                            <img src="{{ MEDIA_URL }}img/connect_light_medium_long.gif" border="0" alt="">
-                        </a>
-                    </div>
-                    <div class="span6">
-                        <table>
-                            {% for field in uform%}
-                            <tr>
-                                <th>{{ field.label_tag }}</th>
-                                <td><div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div></td>
-                            </tr>
-                            {% endfor %}
+                <h3>{% trans "Create a new account" %}</h3>
+                <p>{% trans "This information is only visible to people who need to see it, and is private by default. To understand who can see what if this information, please read our Privacy Policy" %}</p>
+                <table cellpadding="5">
+                    {% for field in uform%}
+                    <tr>
+                        <th align="right">{{ field.label_tag }}</th>
+                        <td>
+                            <div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
 
-                            {% for field in pform%}
-                            <tr>
-                                <th>{{ field.label_tag }}</th>
-                                <td><div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        
-                        <p>{% trans "By clicking register, you accept the" %} <a href="/tnc/">{% trans "terms and conditions" %}</a></p>
-                        <div class="input"><input type="submit" form="signup" class="btn-primary" value="{% trans 'Sign-up for Participe' %}" /></div>
-                    </div>
-                </div>
-            </div>        
+                    {% for field in pform%}
+                    <tr>
+                        <th align="right">{{ field.label_tag }}</th>
+                        <td><div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                
+                <p>{% trans "By signing up, you accept the" %} <a href="/about/tnc/">{% trans "terms and conditions" %}</a>.</p>
+                <div class="input"><input type="submit" form="signup" class="btn btn-primary btn-large" value="{% trans 'Sign up' %}" /></div>
+            </div>
         </div>     
     </form>
 
