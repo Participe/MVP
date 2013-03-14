@@ -228,7 +228,7 @@ def participation_remove(request, challenge_id):
         participation = get_object_or_404(Participation, pk=participation_id)
 
         if value=="Remove":
-            participation.status = PARTICIPATION_STATE.CANCELLED_BY_USER
+            participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
             template_name = "challenge_participation_removed"
         elif value=="Reject":
             participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
@@ -236,7 +236,6 @@ def participation_remove(request, challenge_id):
         
         participation.cancellation_text = cancellation_text
         participation.date_cancelled = datetime.now()
-
         participation.save()
 
         send_templated_mail(

@@ -291,6 +291,7 @@
         
         function send_remove_form(){
             var event = window.event || evt;
+            event.preventDefault();
             if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
             value = event.target.getAttribute("value");
