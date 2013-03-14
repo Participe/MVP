@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import urllib
 
@@ -58,11 +59,11 @@ def get_extra_data(backend, details, response, social_user, uid, user, \
         fb_profile = urllib.urlopen(
                 'https://graph.facebook.com/me?access_token=%s' % access_token)
         fb_profile = json.load(fb_profile)
-        
+
         birthday = fb_profile.get("birthday", "")
         if birthday:
             profile.birth_day = datetime.strptime(birthday, "%m/%d/%Y"
-                    ).strftime("%d.%m.%Y")
+                    ).strftime("%Y-%m-%d")
 
         location = fb_profile.get("location", "").get("name", "")
         city, country = location.split(", ")
@@ -74,6 +75,8 @@ def get_extra_data(backend, details, response, social_user, uid, user, \
                     profile.country = code
 
         profile.save()
-    except:
+    except Exception, exc:
         # Unexpected error. Just pass by.
         pass
+
+#https://graph.facebook.com/me/friends?access_token=
