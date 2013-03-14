@@ -256,10 +256,12 @@ class SignupChallengeForm(forms.ModelForm):
         instance.user = self.user
         instance.challenge = self.challenge
         instance.date_created = datetime.now()
-        
+
         # If instance if Free-for-All, set Participation status to "Confirmed"
         if self.challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
             instance.status = PARTICIPATION_STATE.CONFIRMED
+        else:
+            instance.status = PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
         
         if not self.cleaned_data.get("share_on_FB", ""):
             instance.share_on_FB = False
@@ -293,7 +295,8 @@ class WithdrawSignupForm(forms.ModelForm):
             self._errors["cancellation_text"] = self.error_class(
                     [_("This field is required."),])
             del self.cleaned_data["cancellation_text"]
-            
+        return self.cleaned_data["cancellation_text"]
+
     def save(self, commit=True):
         instance = super(WithdrawSignupForm, self).save(commit=False)
         instance.status = PARTICIPATION_STATE.CANCELLED_BY_USER
