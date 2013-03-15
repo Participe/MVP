@@ -42,10 +42,22 @@ def organization_detail(request, organization_id):
     if organization.is_deleted:
         raise Http404
     affiliated_users = organization.affiliated_users.all()
-    challenges = Challenge.objects.filter(organization=organization, is_deleted=False)
+    challenges = Challenge.objects.filter(
+            organization=organization, is_deleted=False)
     return render_to_response('organization_detail.html',
             RequestContext(request, {
                     'organization': organization,
                     'affiliated_users': affiliated_users,
+                    'challenges': challenges,
+                    }))
+
+def organization_iframe(request, organization_id):
+    organization = get_object_or_404(Organization, pk=organization_id)
+    challenges = Challenge.objects.filter(
+            organization=organization, is_deleted=False
+            ).order_by("created_at")
+    return render_to_response('organization_iframe.html',
+            RequestContext(request, {
+                    'organization': organization,
                     'challenges': challenges,
                     }))

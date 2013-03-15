@@ -62,6 +62,7 @@
                     {% endfor %}
                 </ul>
             </div>
+
             <div class="well">
                 <h3>{% trans "Staff" %}</h3>
                 <p>{% trans "These users can create challenges in the name of this organization" %}</p>
@@ -77,6 +78,18 @@
                         </li>
                     {% endfor %}
                 </ul>
+            </div>
+
+            <div class="well">
+                <h5>{% trans "Put iFrame to this Organization on your site" %}</h5>
+                <pre class="prettyprint">
+&lt;iframe src="http://{{ request.get_host }}{% url organization_iframe organization.pk %}" name="iframe" width="300" height="200" align="right" scrolling="auto"&gt;
+    &lt;p&gt;{% trans "Not supproted" %}&lt;/p&gt;
+&lt;/iframe&gt;
+                </pre>
+                <iframe src="{% url organization_iframe organization.pk %}" name="iframe" width="300" height="200" align="right" scrolling="auto">
+                    <p>{% trans "Not supproted" %}</p>
+                </iframe>
             </div>
         </div>
     </div>

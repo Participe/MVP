@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load thumbnail %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        {#<link href="https://github.com/ckrack/fbootstrapp/blob/master/lib/bootstrap.min.less" rel="stylesheet" type="text/css" />#}
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.css" type="text/css" />
+    </head>
+    <body>
+        <a href="http://{{ request.get_host }}"><img src="{{ 'img/logo_285x93.jpg'|default:'img/default.jpg'|thumbnail_url:'span2_thumb' }}" alt="participe logo"/></a>
+        <a href="http://{{ request.get_host }}{% url organization_detail organization.pk %}"><img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span2_thumb' }}" alt="{{ organization.name}}"/></a>
+        
+        <h5>{{ organization.name }} {% trans "upcoming challenges on Participe" %}:</h5>
+        <table class="table condensed-table">
+        {% for challenge in challenges %}
+            <tr>
+                <td><a class="" href="{% url challenge_detail challenge.pk %}">{{ challenge.name }}</a></td>
+                <td>{{ challenge.start_date }}</td>
+                <td><span class="label label-info">{{ challenge.duration }}h</span></td>
+                <td><span class="badge badge-success">{{ challenge.get_confirmed_count }}</span></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <span class="label label-info">{% trans "This organization has no open challenges at the moment" %}</span>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
