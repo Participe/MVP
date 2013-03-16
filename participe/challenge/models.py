@@ -8,13 +8,29 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from participe.organization.models import Organization
 from participe.enum import enum
 
-CHALLENGE_MODE = enum(FREE_FOR_ALL = "0", CONFIRMATION_REQUIRED="1")
+
+CHALLENGE_MODE = enum(
+    FREE_FOR_ALL = "0", 
+    CONFIRMATION_REQUIRED = "1",
+    )
 
 application_choices = [
-    (CHALLENGE_MODE.FREE_FOR_ALL, _("Not required: participation by application order")),
-    (CHALLENGE_MODE.CONFIRMATION_REQUIRED, _("Confirmation of participation required")),
+    (CHALLENGE_MODE.FREE_FOR_ALL,
+            _("Not required: participation by application order")),
+    (CHALLENGE_MODE.CONFIRMATION_REQUIRED,
+            _("Confirmation of participation required")),
     ]
- 
+
+CHALLENGE_STATUS = enum(
+    UPCOMING = "0",
+    COMPLETED = "1",
+    )
+
+challenge_status_choices = [
+    (CHALLENGE_STATUS.UPCOMING, _("Upcoming")),
+    (CHALLENGE_STATUS.COMPLETED, _("Completed")),
+    ]
+
 class Challenge(models.Model):
     avatar = ThumbnailerImageField(
             upload_to='img/challenges', verbose_name=_("Avatar"))
@@ -25,6 +41,11 @@ class Challenge(models.Model):
             max_length=80, null=True, blank=True, verbose_name=_("Location"))
     duration = models.PositiveIntegerField(
             default=1, null=True, blank=True, verbose_name=_("Duration"))
+
+    status = models.CharField(
+            max_length=2, choices=challenge_status_choices,
+            default=CHALLENGE_STATUS.UPCOMING,
+            verbose_name=_("Status"))
 
     # Even if primary contact person isn't set, despite everything,
     # value 'contact_person' can be used to identify who has created challenge
@@ -49,7 +70,8 @@ class Challenge(models.Model):
             Organization, null=True, verbose_name=_("Organization"))
 
     application = models.CharField(
-            max_length=2, choices=application_choices, default="0",
+            max_length=2, choices=application_choices,
+            default=CHALLENGE_MODE.FREE_FOR_ALL,
             verbose_name=_("Application"))
 
     is_deleted = models.BooleanField(default=False)
@@ -84,6 +106,13 @@ class Challenge(models.Model):
         return ''
 
     @property
+    def stat_status_name(self):
+        for code, name in challenge_status_choices:
+            if self.status == code:
+                return name
+        return ''
+
+    @property
     def confirmation_required(self):
         return self.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED
 
@@ -102,15 +131,24 @@ PARTICIPATION_STATE = enum(
     CONFIRMATION_DENIED = "1",
     CONFIRMED = "2",
     CANCELLED_BY_ADMIN = "3",
-    CANCELLED_BY_USER = "4"
+    CANCELLED_BY_USER = "4",
+    WAITING_FOR_SELFREFLECTION = "5",
+    WAITING_FOR_ACKNOWLEDGEMENT = "6",
+    ACKNOWLEDGED = "7",
     )
 
 participation_status_choices = [
-    (PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION, _("Waiting for confirmation")),
+    (PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+            _("Waiting for confirmation")),
     (PARTICIPATION_STATE.CONFIRMATION_DENIED, _("Rejected")),
     (PARTICIPATION_STATE.CONFIRMED, _("Signed up")),
     (PARTICIPATION_STATE.CANCELLED_BY_ADMIN, _("Rejected")),
     (PARTICIPATION_STATE.CANCELLED_BY_USER, _("Withdrawn")),
+    (PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
+            _("Waiting for self-reflection")),
+    (PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+            _("Waiting for acknowledgement")),
+    (PARTICIPATION_STATE.ACKNOWLEDGED, _("Acknowledged")),
     ]
 
 class Participation(models.Model):
@@ -121,7 +159,18 @@ class Participation(models.Model):
             null=True, blank=True, verbose_name=_("Application text"))
     cancellation_text = models.TextField(
             null=True, blank=True, verbose_name=_("Cancellation text"))
-            
+    selfreflection_activity_text = models.TextField(
+            null=True, blank=True,
+            verbose_name=_("Self-reflection activity text"))
+    selfreflection_learning_text = models.TextField(
+            null=True, blank=True,
+            verbose_name=_("Self-reflection learning text"))
+    selfreflection_rejection_text = models.TextField(
+            null=True, blank=True,
+            verbose_name=_("Self-reflection rejection text"))
+    acknowledgement_text = models.TextField(
+            null=True, blank=True, verbose_name=_("Acknowledgement text"))
+
     status = models.CharField(
             max_length=2, choices=participation_status_choices,
             default=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
@@ -133,7 +182,14 @@ class Participation(models.Model):
             null=True, blank=True, verbose_name=_("Date accepted"))
     date_cancelled = models.DateField(
             null=True, blank=True, verbose_name=_("Date cancelled"))
-
+    date_selfreflection = models.DateField(
+            null=True, blank=True, verbose_name=_("Date of self-reflection"))
+    date_selfreflection_rejection = models.DateField(
+            null=True, blank=True,
+            verbose_name=_("Date of self-reflection rejection"))
+    date_acknowledged = models.DateField(
+            null=True, blank=True, verbose_name=_("Date acknowledged"))
+    
     share_on_FB = models.BooleanField(default=True)
 
     class Meta:

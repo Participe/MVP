@@ -24,10 +24,10 @@ DATABASES = {
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 LANGUAGES = (
-    ('en', 'English'),
-    ('de', 'German'),
-    ('fr', 'French'),
-    ('it', 'Italian'),
+    ('en', u'English'),
+    ('de', u'Deutsch'),
+    ('fr', u'Fran\xe7ais'),
+    ('it', u'Italiano'),
 )
 
 SITE_ID = 1

@@ -3,13 +3,24 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from django_countries import CountryField
-
 from easy_thumbnails.fields import ThumbnailerImageField
+
+from participe.enum import enum
 
 
 gender_choices = [
     ("M", _("Male")),
     ("F", _("Female")),
+    ]
+
+PRIVACY_MODE = enum(
+    PARANOID = "0", 
+    NORMAL = "1",
+    )
+
+privacy_choices = [
+    (PRIVACY_MODE.PARANOID, _("Paranoid")),
+    (PRIVACY_MODE.NORMAL, _("Normal")),
     ]
 
 class UserProfile(models.Model):
@@ -43,6 +54,10 @@ class UserProfile(models.Model):
             verbose_name=_("Phone Number"))
     receive_newsletter = models.BooleanField(
             default=False, verbose_name=_("Receive Newsletters"))
+
+    privacy_mode = models.CharField(
+            max_length=2, choices=privacy_choices, default=PRIVACY_MODE.NORMAL,
+            verbose_name=_("Privacy mode"))
     
     confirmation_code = models.CharField(max_length=33, null=True, blank=True)
     
