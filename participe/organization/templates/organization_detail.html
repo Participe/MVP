@@ -46,8 +46,9 @@
 
         <div class="span6">
             <div class="well">
+                <h3>{% trans "Upcoming challenges" %}</h3>
                 <ul class="thumbnails">
-                    {% for challenge in challenges %}
+                    {% for challenge in upcoming_challenges %}
                         <li class="span2">
                             <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
                                 <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
@@ -56,8 +57,27 @@
                         </li>
                     {% empty %}
                     <p>
-                        <li><span class="label label-info">{% trans "No open challenges" %}</span><br>
-                        {% trans "This organization has no open challenges at the moment" %}</li>
+                        <li><span class="label label-info">{% trans "No upcoming challenges" %}</span><br>
+                        {% trans "This organization has no upcoming challenges at the moment" %}</li>
+                    </p>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="well">
+                <h3>{% trans "Past challenges" %}</h3>
+                <ul class="thumbnails">
+                    {% for challenge in completed_challenges %}
+                        <li class="span2">
+                            <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
+                                <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
+                                <h4>{{ challenge.name }}</h4>
+                            </a>
+                        </li>
+                    {% empty %}
+                    <p>
+                        <li><span class="label label-info">{% trans "No past challenges" %}</span><br>
+                        {% trans "This organization has no past challenges at the moment" %}</li>
                     </p>
                     {% endfor %}
                 </ul>

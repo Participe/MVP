@@ -9,8 +9,7 @@ from django.utils.translation import ugettext as _
 from forms import OrganizationForm
 from models import Organization
 
-from participe.challenge.models import Challenge
-
+from participe.challenge.models import Challenge, CHALLENGE_STATUS
 from participe.core.user_tests import user_profile_completed
 
 
@@ -42,13 +41,22 @@ def organization_detail(request, organization_id):
     if organization.is_deleted:
         raise Http404
     affiliated_users = organization.affiliated_users.all()
-    challenges = Challenge.objects.filter(
-            organization=organization, is_deleted=False)
+    upcoming_challenges = Challenge.objects.filter(
+            organization=organization,
+            status=CHALLENGE_STATUS.UPCOMING,
+            is_deleted=False,
+            )
+    completed_challenges = Challenge.objects.filter(
+            organization=organization,
+            status=CHALLENGE_STATUS.COMPLETED,
+            is_deleted=False,
+            )
     return render_to_response('organization_detail.html',
             RequestContext(request, {
                     'organization': organization,
                     'affiliated_users': affiliated_users,
-                    'challenges': challenges,
+                    'upcoming_challenges': upcoming_challenges,
+                    'completed_challenges': completed_challenges,
                     }))
 
 def organization_iframe(request, organization_id):
