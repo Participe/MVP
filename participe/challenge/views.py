@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
@@ -13,7 +13,7 @@ from templated_email import send_templated_mail
 from forms import (CreateChallengeForm, SignupChallengeForm, EditChallengeForm,
         WithdrawSignupForm)
 from models import (Challenge, Participation, Comment, CHALLENGE_MODE,
-        PARTICIPATION_STATE)
+        CHALLENGE_STATUS, PARTICIPATION_STATE)
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.user_tests import user_profile_completed
@@ -33,7 +33,10 @@ def challenge_create(request):
             RequestContext(request, {'form': form}))
     
 def challenge_list(request):
-    challenges = Challenge.objects.all().filter(is_deleted=False)
+    challenges = Challenge.objects.all().filter(
+            status=CHALLENGE_STATUS.UPCOMING,
+            start_date__gte=date.today(),
+            is_deleted=False)
     return render_to_response('challenge_list.html',
             RequestContext(request, {
                 'challenges': challenges,
