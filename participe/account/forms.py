@@ -110,7 +110,9 @@ class UserProfileForm(forms.ModelForm):
         self.fields["country"].label = _("Country")
         self.fields["birth_day"].label = _("Date of birth")
         self.fields["phone_number"].label = _("Phone number")
-        self.fields["receive_newsletter"].label = _("I want to get the Participe newsletter")
+        self.fields["privacy_mode"].label = _("Privacy mode")
+        self.fields["receive_newsletter"].label =\
+                _("I want to get the Participe newsletter")
                 
         # Override countries order in choice-list
         self.fields["country"].choices = COUNTRIES
@@ -128,7 +130,8 @@ class UserProfileForm(forms.ModelForm):
         fields = ["avatar",
             "address_1", "address_2", "postal_code", "city", "country",
             #"gender",
-            "birth_day", "phone_number", "receive_newsletter",]
+            "birth_day", "phone_number", "receive_newsletter", "privacy_mode",
+            ]
         widgets = {
             "address_1": forms.TextInput(
                     attrs={"placeholder": _("Address 1")}),
@@ -143,6 +146,7 @@ class UserProfileForm(forms.ModelForm):
             #"birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(
                     attrs={"placeholder": _("Phone number")}),
+            "privacy_mode": forms.RadioSelect(),
             }
             
 class UserEditForm(forms.ModelForm):
@@ -177,7 +181,9 @@ class UserEditForm(forms.ModelForm):
         self.fields["country"].label = _("country")
         self.fields["birth_day"].label = _("Birth day")
         self.fields["phone_number"].label = _("phone_number")
-        self.fields["receive_newsletter"].label = _("Receive newsletters")
+        self.fields["privacy_mode"].label = _("Privacy mode")
+        self.fields["receive_newsletter"].label =\
+                _("I want to get the Participe newsletter")
 
         # Override countries order in choice-list
         self.fields["country"].choices = COUNTRIES
@@ -206,7 +212,8 @@ class UserEditForm(forms.ModelForm):
             "first_name", "last_name", "email",
             "address_1", "address_2", "postal_code", "city", "country",
             #"gender",
-            "birth_day", "phone_number", "receive_newsletter",]
+            "birth_day", "phone_number", "receive_newsletter", "privacy_mode",
+            ]
         widgets = {
             "address_1": forms.TextInput(
                     attrs={"placeholder": _("Address 1")}),
@@ -221,6 +228,7 @@ class UserEditForm(forms.ModelForm):
             #"birth_day": widgets.DateInput(attrs={"class": "input-small"}),
             "phone_number": forms.TextInput(
                     attrs={"placeholder": _("Phone number")}),
+            "privacy_mode": forms.RadioSelect(),
             }
         
     def save(self, commit=True):
