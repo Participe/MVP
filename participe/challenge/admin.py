@@ -6,10 +6,10 @@ from participe.challenge.models import Challenge, Participation, Comment
 
 class ChallengeAdmin(admin.ModelAdmin):
     list_display = [
-            "pk", "name", "start_date", "organization", "application",
+            "pk", "name", "status", "start_date", "organization", "application",
             "contact_person", "is_deleted",]
     list_filter = [
-            "name", "start_date", "organization", "application",]
+            "name", "status", "start_date", "organization", "application",]
     search_fields = [
             "name", "organization",]
 

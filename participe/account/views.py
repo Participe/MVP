@@ -34,8 +34,8 @@ from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.core.user_tests import user_profile_completed
-from participe.challenge.models import (Participation, Challenge,
-        PARTICIPATION_STATE)
+from participe.challenge.models import (Challenge, Participation,
+        CHALLENGE_STATUS, PARTICIPATION_STATE)
 from participe.organization.models import Organization 
 
 try:
@@ -333,8 +333,46 @@ def view_profile(request, user_id):
 def view_myprofile(request):
     user = request.user
 
-    user_participations = get_user_participations(user)
-    admin_challenges = get_admin_challenges(user)
+    user_participations = get_user_participations(user).order_by(
+            "challenge__start_date")
+    user_participations_action_required = user_participations.filter(
+            status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION)
+    user_participations_upcoming = user_participations.filter(
+            Q(challenge__status=CHALLENGE_STATUS.UPCOMING) &
+            (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+                    Q(status=PARTICIPATION_STATE.CONFIRMED)))
+    user_participations_completed = user_participations.filter(
+            Q(challenge__status=CHALLENGE_STATUS.UPCOMING) &
+            (Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT) |
+                    Q(status=PARTICIPATION_STATE.ACKNOWLEDGED)))
+
+    admin_challenges = get_admin_challenges(user).order_by("start_date")
+    admin_challenges_action_required = admin_challenges.filter(
+        Q(pk__in=Participation.objects.filter(
+            Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+            Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT)
+            ).values_list("challenge_id", flat=True)
+        ) | (
+        Q(start_date__lt=datetime.date.today()) & 
+        Q(status=CHALLENGE_STATUS.UPCOMING)
+        )
+    )
+    admin_challenges_upcoming = admin_challenges.exclude(
+        pk__in=Participation.objects.filter(
+            Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+            Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT)
+            ).values_list("challenge_id", flat=True)
+        ).filter(
+            status=CHALLENGE_STATUS.UPCOMING,
+            start_date__gte=datetime.date.today()
+            )
+    admin_challenges_completed = admin_challenges.exclude(
+        pk__in=Participation.objects.filter(
+            status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+            ).values_list("challenge_id", flat=True)
+        ).filter(
+            status=CHALLENGE_STATUS.COMPLETED
+            )
 
     #TODO Enhance this behaviour
     try:
@@ -345,8 +383,20 @@ def view_myprofile(request):
             RequestContext(request, {
                     "user": user,
                     "profile": profile,
-                    "user_participations": user_participations,
-                    "admin_challenges": admin_challenges,
+                    "user_participations":
+                            [(user_participations_action_required,
+                                    _("where an action is required")),
+                            (user_participations_upcoming,
+                                    _("that have the status 'Upcoming'")),
+                            (user_participations_completed,
+                                    _("that have the status 'Completed'")),],
+                    "admin_challenges":
+                            [(admin_challenges_action_required,
+                                    _("where an action is required")),
+                            (admin_challenges_upcoming,
+                                    _("that have the status 'Upcoming'")),
+                            (admin_challenges_completed,
+                                    _("that have the status 'Completed'")),],
                     "PARTICIPATION_STATE": PARTICIPATION_STATE
                     }))
 

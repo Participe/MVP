@@ -33,10 +33,13 @@
                 <a class="btn btn-primary btn-large" href="/accounts/profile/edit/">{% trans "Edit profile" %}</a><br>
             </div>
         </div>
+
         <div class="span9">
-            <h3>{% trans "Challenges you signed up for" %}</h3>
+            <h3>{% trans "Challenges you are participating in" %}</h3>
+            {% for participations, header in user_participations %} 
+            <h4>{{ header }}</h4>
             <ul class="thumbnails">
-                {% for participation in user_participations %}        
+                {% for participation in participations %}        
                     <li class="span3">
                         <a class="thumbnail" href="{{ participation.challenge.get_absolute_url }}">
                             <img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ participation.challenge.name }}">
@@ -47,17 +50,21 @@
                                 <strong>{{ participation.challenge.start_date|date:"l j. F o" }}</strong><br>
                                 {{ participation.challenge.location }}
                             </p>
-                            {% if participation.status == PARTICIPATION_STATUS.WAITING_FOR_CONFIRMATION %}
+                            {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
                                 <span class="label label-warning">{% trans "Waiting for confirmation" %}</span>
                             {% endif %}
                         </a>
                     </li>
                 {% endfor %}
             </ul>
+            {% endfor %}
+
             {% if admin_challenges %}
                 <h3>{% trans "Challenges you are responsible for" %}</h3>
+                {% for challenges, header in admin_challenges %} 
+                <h4>{{ header }}</h4>
                 <ul class="thumbnails">
-                    {% for challenge in admin_challenges %}        
+                    {% for challenge in challenges %}        
                         <li class="span3">
                             <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
                                 <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ challenge.name }}">
@@ -72,6 +79,7 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
