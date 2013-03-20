@@ -16,156 +16,155 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: account/forms.py:20 account/forms.py:22 account/forms.py:66
 #: account/forms.py:202 account/forms.py:259 challenge/forms.py:73
 #: challenge/forms.py:191 challenge/models.py:61 organization/forms.py:66
 #: organization/models.py:31 organization/models.py:45
 msgid "E-mail"
-msgstr "E-Mail"
+msgstr ""
 
 #: account/forms.py:24 account/forms.py:27 account/forms.py:48
 #: account/forms.py:69 account/forms.py:245
 msgid "Password"
-msgstr "Passwort"
+msgstr ""
 
 #: account/forms.py:28 account/templates/account_login.html:24
 msgid "Remember me"
-msgstr "Eingeloggt bleiben"
+msgstr ""
 
 #: account/forms.py:45 account/forms.py:62 account/forms.py:196
 msgid "First name"
-msgstr "Vorname"
+msgstr ""
 
 #: account/forms.py:46 account/forms.py:64 account/forms.py:199
 msgid "Last name"
-msgstr "Nachname"
+msgstr ""
 
 #: account/forms.py:47
 msgid "Email"
-msgstr "E-Mail"
+msgstr ""
 
 #: account/forms.py:49
 msgid "Password again"
-msgstr "Passwort nochmals"
+msgstr ""
 
 #: account/forms.py:54 account/forms.py:249
 msgid "Retry"
-msgstr "Erneut versuchen"
+msgstr ""
 
 #: account/forms.py:77 account/forms.py:266
 msgid "Please, enter valid e-mail address."
-msgstr "Bitte trage eine gültige E-Mail Adresse ein"
+msgstr ""
 
 #: account/forms.py:83
 msgid "Account with such e-mail address already exists."
-msgstr "Ein Konto mit dieser E-Mail Adresse gibt es bereits."
+msgstr ""
 
 #: account/forms.py:91 account/forms.py:253
 #: account/templates/account_reset_password.html:18
 msgid "Passwords don't match"
-msgstr "Die beiden Passwörter stimmen nicht überein."
+msgstr ""
 
 #: account/forms.py:106
 msgid "Street and house number"
-msgstr "Strasse und Hausnummer"
+msgstr ""
 
 #: account/forms.py:107
 msgid "Additional address info"
-msgstr "Zusätzliche Adresszeile"
+msgstr ""
 
 #: account/forms.py:108 account/models.py:41 organization/models.py:23
 msgid "Postal Code"
-msgstr "Postleitzahl"
+msgstr ""
 
 #: account/forms.py:109 account/forms.py:143 account/forms.py:225
 #: account/models.py:43 organization/forms.py:54 organization/models.py:25
 msgid "City"
-msgstr "Stadt"
+msgstr ""
 
 #: account/forms.py:110 account/models.py:44 organization/models.py:27
 msgid "Country"
-msgstr "Land"
+msgstr ""
 
 #: account/forms.py:111
 msgid "Date of birth"
-msgstr "Geburtsdatum"
+msgstr ""
 
 #: account/forms.py:112 account/forms.py:148 account/forms.py:230
 #: challenge/forms.py:75 challenge/forms.py:193 organization/forms.py:68
 msgid "Phone number"
-msgstr "Telefonnummer"
+msgstr ""
 
 #: account/forms.py:113 account/forms.py:184 account/models.py:60
 msgid "Privacy mode"
-msgstr "Privatshphäre-Modus"
+msgstr ""
 
 #: account/forms.py:115 account/forms.py:186
 msgid "I want to get the Participe newsletter"
-msgstr "Ich möchte den Participe Newsletter abonnieren"
+msgstr ""
 
 #: account/forms.py:137 account/forms.py:219 account/models.py:36
 #: organization/forms.py:48 organization/models.py:19
 msgid "Address 1"
-msgstr "Strasse und Hausnummer"
+msgstr ""
 
 #: account/forms.py:139 account/forms.py:221 account/models.py:38
 #: organization/forms.py:50 organization/models.py:21
 msgid "Address 2"
-msgstr "Adresszustz"
+msgstr ""
 
 #: account/forms.py:141 account/forms.py:223 organization/forms.py:52
 msgid "Postal code"
-msgstr "Postleitzahl"
+msgstr ""
 
 #: account/forms.py:174
 msgid "first_name"
-msgstr "Vorname"
+msgstr ""
 
 #: account/forms.py:175
 msgid "last_name"
-msgstr "Nachname"
+msgstr ""
 
 #: account/forms.py:176
 msgid "email"
-msgstr "E-Mail"
+msgstr ""
 
 #: account/forms.py:177
 msgid "address_1"
-msgstr "Strasse und Hausnummer"
+msgstr ""
 
 #: account/forms.py:178
 msgid "address_2"
-msgstr "Adresszusatz"
+msgstr ""
 
 #: account/forms.py:179
 msgid "postal_code"
-msgstr "Postleitzahl"
+msgstr ""
 
 #: account/forms.py:180
 msgid "city"
-msgstr "Stadt"
+msgstr ""
 
 #: account/forms.py:181
 msgid "country"
-msgstr "Land"
+msgstr ""
 
 #: account/forms.py:182
 msgid "Birth day"
-msgstr "Geburtsdatum"
+msgstr ""
 
 #: account/forms.py:183
 msgid "phone_number"
-msgstr "Telefonnummer"
+msgstr ""
 
 #: account/forms.py:273
 msgid "Account with such e-mail address does not exist."
-msgstr "Es gibt kein Konto mit dieser E-Mail Adresse."
+msgstr ""
 
 #: account/forms.py:321
 msgid "You need to make a selection"
-msgstr "Du musst eine Auswahl treffen"
+msgstr ""
 
 #: account/forms.py:328
 #, python-format
@@ -173,109 +172,105 @@ msgid ""
 "You must select a portion of the image with a minimum of %(size)dx%(size)d "
 "pixels."
 msgstr ""
-"Deine Auswahl ist zu klein. Bitte wähle ein grösseres Bildstück aus, "
-"mindestens %(size)dx%(size)d Pixel gross."
 
 #: account/models.py:12
 msgid "Male"
-msgstr "Männlich"
+msgstr ""
 
 #: account/models.py:13
 msgid "Female"
-msgstr "Weiblich"
+msgstr ""
 
 #: account/models.py:22
 msgid "Paranoid"
-msgstr "Sehr sicher"
+msgstr ""
 
 #: account/models.py:23
 msgid "Normal"
-msgstr "Sicher"
+msgstr ""
 
 #: account/models.py:28 challenge/models.py:36 organization/models.py:13
 msgid "Avatar"
-msgstr "Logo"
+msgstr ""
 
 #: account/models.py:30 challenge/models.py:155 challenge/models.py:211
 msgid "User"
-msgstr "Benutzer"
+msgstr ""
 
 #: account/models.py:48
 msgid "Gender"
-msgstr "Geschlecht"
+msgstr ""
 
 #: account/models.py:51
 msgid "Birthday"
-msgstr "Geburtsdatum"
+msgstr ""
 
 #: account/models.py:54 challenge/models.py:64 organization/models.py:48
 msgid "Phone Number"
-msgstr "Telefonnummer"
+msgstr ""
 
 #: account/models.py:56
 msgid "Receive Newsletters"
-msgstr "Newsletter abonnieren"
+msgstr ""
 
 #: account/models.py:65
 msgid "user profile"
-msgstr "Benutzerprofil"
+msgstr ""
 
 #: account/models.py:66
 msgid "user profiles"
-msgstr "Benutzerprofile"
+msgstr ""
 
 #: account/views.py:173
 msgid "You have successfuly confirmed your e-mail."
-msgstr "Deine E-Mail Adresse wurde bestätigt."
+msgstr ""
 
 #: account/views.py:182
 msgid "The link has been expired. Please, sign-up again."
-msgstr "Der Link ist nicht mehr gültig. Bitte melde dich erneut an."
+msgstr ""
 
 #: account/views.py:211 account/templates/account_login.html:19
 msgid "Sorry, you have entered wrong E-mail or Password"
-msgstr "Falsche E-Mail Adresse oder falsches Passwort eingetragen."
+msgstr ""
 
 #: account/views.py:388 account/views.py:395
 msgid "where an action is required"
-msgstr "eine Aktion ist erfordert"
+msgstr ""
 
 #: account/views.py:390 account/views.py:397
 msgid "that have the status 'Upcoming'"
-msgstr "welche in der Zukunft liegen"
+msgstr ""
 
 #: account/views.py:392 account/views.py:399
 msgid "that have the status 'Completed'"
-msgstr "welche in der Vergangenheit liege"
+msgstr ""
 
 #: account/views.py:458
 msgid "You have successfuly changed your password"
-msgstr "Dein Passwort wurde geändert."
+msgstr ""
 
 #: account/views.py:488
 #, python-format
 msgid "Confirmation link to restore password were sent to address '%s'"
 msgstr ""
-"Ein E-Mail mit einem Link, um das Passwort zurück zu setzen, wurde an die "
-"Adresse '%s' geschickt."
 
 #: account/views.py:495 account/views.py:520
 msgid "An error has been acquired."
-msgstr "Es ist ein Fehler aufgetreten."
+msgstr ""
 
 #: account/templates/account_base.html:10
 #: challenge/templates/challenge_base.html:6
 #: challenge/templates/challenge_create.html:8 home/templates/home_base.html:6
 #: organization/templates/organization_base.html:6
 msgid "What is Participe?"
-msgstr "Was ist Participe?"
+msgstr ""
 
 #: account/templates/account_base.html:11
 #: challenge/templates/challenge_base.html:7
 #: challenge/templates/challenge_create.html:9 home/templates/home_base.html:7
 #: organization/templates/organization_base.html:7
 msgid "Challenges"
-msgstr "Engagements"
+msgstr ""
 
 #: account/templates/account_base.html:12
 #: challenge/templates/challenge_base.html:8
@@ -283,7 +278,7 @@ msgstr "Engagements"
 #: home/templates/home_base.html:8
 #: organization/templates/organization_base.html:8
 msgid "Organizations"
-msgstr "Organisationen"
+msgstr ""
 
 #: account/templates/account_base.html:13
 #: challenge/templates/challenge_base.html:9
@@ -291,115 +286,115 @@ msgstr "Organisationen"
 #: home/templates/home_base.html:9
 #: organization/templates/organization_base.html:9
 msgid "Create a Challenge"
-msgstr "Engagement erfassen"
+msgstr ""
 
 #: account/templates/account_change_avatar.html:4
 msgid "Change Avatar"
-msgstr "Profilfoto ändern"
+msgstr ""
 
 #: account/templates/account_change_avatar.html:8
 msgid "Your current avatar: "
-msgstr "Dein jetziges Profilfoto: "
+msgstr ""
 
 #: account/templates/account_change_avatar.html:15
 msgid "Upload New Image"
-msgstr "Neues Bild hochladen"
+msgstr ""
 
 #: account/templates/account_confirmation_email.html:4
 msgid "Confirmation"
-msgstr "Bestätigung"
+msgstr ""
 
 #: account/templates/account_confirmation_email.html:10
 msgid "Confirmation e-mail was sent to the address"
-msgstr "Eine E-Mail mit einer Bestätigung wurde an folgende Adresse geschickt"
+msgstr ""
 
 #: account/templates/account_crop_avatar.html:74
 msgid "Crop."
-msgstr "Zuschneiden"
+msgstr ""
 
 #: account/templates/account_delete.html:4
 msgid "Delete account"
-msgstr "Benutzerkonto löschen"
+msgstr ""
 
 #: account/templates/account_delete.html:14
 msgid "Do you really want to delete account?"
-msgstr "Möchtest du dein Benutzerkonto bei Participe wirklich löschen?"
+msgstr ""
 
 #: account/templates/account_delete.html:15
 #: challenge/templates/challenge_edit.html:40
 msgid "Delete"
-msgstr "Löschen"
+msgstr ""
 
 #: account/templates/account_delete.html:16
 #: challenge/templates/challenge_detail.html:141
 #: challenge/templates/challenge_detail.html:173
 #: challenge/templates/challenge_edit.html:40
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
 
 #: account/templates/account_edit.html:4
 #: account/templates/account_myprofile.html:33
 msgid "Edit profile"
-msgstr "Benutzerprofil bearbeiten"
+msgstr ""
 
 #: account/templates/account_edit.html:13
 msgid "Change profile image"
-msgstr "Profilfoto ändern"
+msgstr ""
 
 #: account/templates/account_edit.html:14
 msgid "Crop profile image"
-msgstr "Profilfoto zuschneiden"
+msgstr ""
 
 #: account/templates/account_edit.html:16
 msgid "Add profile image"
-msgstr "Profilfoto hinzufügen"
+msgstr ""
 
 #: account/templates/account_edit.html:18
 msgid "Change password"
-msgstr "Passwort ändern"
+msgstr ""
 
 #: account/templates/account_edit.html:19
 msgid "Delete profile"
-msgstr "Benutzerkonto löschen"
+msgstr ""
 
 #: account/templates/account_edit.html:26
 msgid "Edit your profile"
-msgstr "Bearbeite dein Benutzerprofil"
+msgstr ""
 
 #: account/templates/account_edit.html:38
 msgid "Save changes"
-msgstr "Änderungen speichern"
+msgstr ""
 
 #: account/templates/account_error.html:4
 msgid "Error"
-msgstr "Fehler"
+msgstr ""
 
 #: account/templates/account_error.html:11
 msgid "Go back to main page"
-msgstr "Zur Startseite zurückkehren"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:4
 #: account/templates/account_myprofile.html:4
 msgid "Profile"
-msgstr "Benutzerprofil"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:31
 msgid "You can see details, because user is"
-msgstr "Du kannst diese Details sehen, weil der Benutyer"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:34
 msgid "Signed-up for your challenge"
-msgstr "Haben sich für dein Engagement angemeldet"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:42
 msgid "Waitnig for confirmation on your challenge"
-msgstr "Warte auf Bestätigung"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:50
 #: challenge/templates/challenge_detail.html:202
 #: challenge/templates/challenge_detail.html:214
 msgid "Information hidden"
-msgstr "Informationen versteckt"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:51
 msgid ""
@@ -409,60 +404,60 @@ msgstr ""
 
 #: account/templates/account_foreignprofile.html:60
 msgid "Participated challenges"
-msgstr "Geleistete Einsätze"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:80
 msgid "Affiliated with"
-msgstr "Verknüpft mit"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:101
 msgid "Participations, cancelled by user"
-msgstr "Durch Benutzer abgebrochene Engagements"
+msgstr ""
 
 #: account/templates/account_foreignprofile.html:125
 msgid "Participations, cancelled by challenge admin"
-msgstr "Engagements, welche durch den Organisator abgebrochen wurden"
+msgstr ""
 
 #: account/templates/account_information.html:4
 msgid "Information"
-msgstr "Informationen"
+msgstr ""
 
 #: account/templates/account_information.html:11
 msgid "Go back to your profile"
-msgstr "Zurück zum Benutzerprofil"
+msgstr ""
 
 #: account/templates/account_list.html:4
 msgid "Accounts list"
-msgstr "Benutzerkonto liste"
+msgstr ""
 
 #: account/templates/account_list.html:25
 msgid "There are no active accounts"
-msgstr "Es gibt keine aktiven Benutzerkonten"
+msgstr ""
 
 #: account/templates/account_login.html:4 templates/base.html:50
 msgid "Log in"
-msgstr "Einloggen"
+msgstr ""
 
 #: account/templates/account_login.html:12
 #: account/templates/account_login.html:14
 msgid "Sign in with Facebook"
-msgstr "Mit Facebook anmelden"
+msgstr ""
 
 #: account/templates/account_login.html:18
 msgid "Sign in with email address"
-msgstr "Mit Email-Adresse anmelden"
+msgstr ""
 
 #: account/templates/account_login.html:28
 msgid "Sign in"
-msgstr "Anmelden"
+msgstr ""
 
 #: account/templates/account_myprofile.html:13
 msgid "Contact"
-msgstr "Kontaktperson"
+msgstr ""
 
 #: account/templates/account_myprofile.html:15
 msgid "Privacy information"
-msgstr "Informationen zur Privatspäre"
+msgstr ""
 
 #: account/templates/account_myprofile.html:16
 msgid ""
@@ -472,48 +467,48 @@ msgstr ""
 
 #: account/templates/account_myprofile.html:38
 msgid "Challenges you are participating in"
-msgstr "Engagements in denen du mit machst"
+msgstr ""
 
 #: account/templates/account_myprofile.html:54 challenge/models.py:142
 msgid "Waiting for confirmation"
-msgstr "Warte auf Bestätigung"
+msgstr ""
 
 #: account/templates/account_myprofile.html:63
 msgid "Challenges you are responsible for"
-msgstr "Von dir administrierte Engagements"
+msgstr ""
 
 #: account/templates/account_reset_password.html:4
 msgid "Reset password"
-msgstr "Passwort zurücksetzen"
+msgstr ""
 
 #: account/templates/account_reset_password.html:12
 msgid "Please, enter new password"
-msgstr "Trage ein neues Passwort ein"
+msgstr ""
 
 #: account/templates/account_reset_password.html:23
 msgid "Save"
-msgstr "Speichern"
+msgstr ""
 
 #: account/templates/account_restore_password.html:4
 msgid "Restore password"
-msgstr "Passwort zurücksetzen"
+msgstr ""
 
 #: account/templates/account_restore_password.html:10
 msgid "Forgotten password"
-msgstr "Passwort zurücksetzen"
+msgstr ""
 
 #: account/templates/account_restore_password.html:15
 msgid "Send me an e-mail"
-msgstr "Schick mir ein Email"
+msgstr ""
 
 #: account/templates/account_signup.html:4
 #: account/templates/account_signup.html:54
 msgid "Sign up"
-msgstr "Registrieren"
+msgstr ""
 
 #: account/templates/account_signup.html:33
 msgid "Create a new account"
-msgstr "Neues Konto erfassen"
+msgstr ""
 
 #: account/templates/account_signup.html:34
 msgid ""
@@ -524,36 +519,36 @@ msgstr ""
 
 #: account/templates/account_signup.html:53
 msgid "By signing up, you accept the"
-msgstr "Indem du dich anmeldest, akzeptierst du die"
+msgstr ""
 
 #: account/templates/account_signup.html:53
 msgid "terms and conditions"
-msgstr "Allgemeinen Schenkbedingungen"
+msgstr ""
 
 #: challenge/forms.py:34 challenge/forms.py:159 organization/forms.py:26
 msgid "Affiliate different person"
-msgstr "Andere Person berechtigen"
+msgstr ""
 
 #: challenge/forms.py:60
 msgid "Challenge name"
-msgstr "Name"
+msgstr ""
 
 #: challenge/forms.py:63 challenge/forms.py:186
 msgid "Challenge description"
-msgstr "Beschreibung"
+msgstr ""
 
 #: challenge/forms.py:65 challenge/forms.py:183 challenge/models.py:41
 msgid "Location"
-msgstr "Ort"
+msgstr ""
 
 #: challenge/forms.py:71 challenge/forms.py:188 challenge/models.py:59
 #: organization/forms.py:64
 msgid "Full name"
-msgstr "Vollständiger Name"
+msgstr ""
 
 #: challenge/forms.py:109
 msgid "Value should be greater or equal 1"
-msgstr "Wert sollte mindestens 1 sein"
+msgstr ""
 
 #: challenge/forms.py:121 challenge/forms.py:129 challenge/forms.py:133
 #: challenge/forms.py:137 challenge/forms.py:212 challenge/forms.py:220
@@ -561,118 +556,116 @@ msgstr "Wert sollte mindestens 1 sein"
 #: organization/forms.py:102 organization/forms.py:110
 #: organization/forms.py:114 organization/forms.py:118
 msgid "This field is required."
-msgstr "Bitte fülle dieses Feld aus."
+msgstr ""
 
 #: challenge/forms.py:199
 msgid "Reason for deletion (at least 20 symbols)"
 msgstr ""
-"Warum löschst du dein Benutzerkonto? Dein Feedback hilft uns, Participe zu "
-"verbessern."
 
 #: challenge/forms.py:251 challenge/models.py:159
 msgid "Application text"
-msgstr "Dein Bewerbungstext"
+msgstr ""
 
 #: challenge/forms.py:284
 msgid "Reason for withdrawing"
-msgstr "Grund des Rückzugs"
+msgstr ""
 
 #: challenge/models.py:19
 msgid "Not required: participation by application order"
-msgstr "Nicht benötigt."
+msgstr ""
 
 #: challenge/models.py:21
 msgid "Confirmation of participation required"
-msgstr "Bewerbung benötigt"
+msgstr ""
 
 #: challenge/models.py:30
 msgid "Upcoming"
-msgstr "Demnächst"
+msgstr ""
 
 #: challenge/models.py:31
 msgid "Completed"
-msgstr "Vergangen"
+msgstr ""
 
 #: challenge/models.py:37 organization/models.py:14
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: challenge/models.py:39 organization/models.py:16
 msgid "Description"
-msgstr "Beschreibung"
+msgstr ""
 
 #: challenge/models.py:43 challenge/templates/challenge_create.html:29
 msgid "Duration"
-msgstr "Dauer"
+msgstr ""
 
 #: challenge/models.py:48 challenge/models.py:177
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: challenge/models.py:55 organization/models.py:39
 msgid "Contact Person"
-msgstr "Kontaktperson"
+msgstr ""
 
 #: challenge/models.py:66
 msgid "Start Date"
-msgstr "Datum"
+msgstr ""
 
 #: challenge/models.py:67
 msgid "Start Time"
-msgstr "Uhrzeit"
+msgstr ""
 
 #: challenge/models.py:70
 msgid "Organization"
-msgstr "Organisation"
+msgstr ""
 
 #: challenge/models.py:75 challenge/templates/challenge_create.html:43
 #: challenge/templates/challenge_edit.html:32
 msgid "Application"
-msgstr "Bewerbung"
+msgstr ""
 
 #: challenge/models.py:79
 msgid "Reason for deletion"
-msgstr "Grund des Löschens"
+msgstr ""
 
 #: challenge/models.py:84
 msgid "challenge"
-msgstr "Engagement"
+msgstr ""
 
 #: challenge/models.py:85
 msgid "challenges"
-msgstr "Engagements"
+msgstr ""
 
 #: challenge/models.py:143 challenge/models.py:145
 msgid "Rejected"
-msgstr "Abgelehnt"
+msgstr ""
 
 #: challenge/models.py:144
 msgid "Signed up"
-msgstr "Angemeldet"
+msgstr ""
 
 #: challenge/models.py:146
 msgid "Withdrawn"
-msgstr "Zurückgezogen"
+msgstr ""
 
 #: challenge/models.py:148
 msgid "Waiting for self-reflection"
-msgstr "Warte auf Selbsteinschätzung"
+msgstr ""
 
 #: challenge/models.py:150
 msgid "Waiting for acknowledgement"
-msgstr "Warte auf Bestätigung"
+msgstr ""
 
 #: challenge/models.py:151
 msgid "Acknowledged"
-msgstr "Bestätigt"
+msgstr ""
 
 #: challenge/models.py:156 challenge/models.py:212
 msgid "Challenge"
-msgstr "Engagement"
+msgstr ""
 
 #: challenge/models.py:161
 msgid "Cancellation text"
-msgstr "Grund des Abbruchs"
+msgstr ""
 
 #: challenge/models.py:164
 msgid "Self-reflection activity text"
@@ -692,15 +685,15 @@ msgstr ""
 
 #: challenge/models.py:180
 msgid "Date created"
-msgstr "Erstellungsdatum"
+msgstr ""
 
 #: challenge/models.py:182
 msgid "Date accepted"
-msgstr "Bestätigungsdatum"
+msgstr ""
 
 #: challenge/models.py:184
 msgid "Date cancelled"
-msgstr "Abbruchdatum"
+msgstr ""
 
 #: challenge/models.py:186
 msgid "Date of self-reflection"
@@ -712,101 +705,101 @@ msgstr ""
 
 #: challenge/models.py:191
 msgid "Date acknowledged"
-msgstr "Bestätigungsdatum"
+msgstr ""
 
 #: challenge/models.py:196
 msgid "participation"
-msgstr "Teilnahme"
+msgstr ""
 
 #: challenge/models.py:197
 msgid "participations"
-msgstr "Teilnahmen"
+msgstr ""
 
 #: challenge/models.py:213
 msgid "Text"
-msgstr "Text"
+msgstr ""
 
 #: challenge/models.py:218
 msgid "commment"
-msgstr "Kommentar"
+msgstr ""
 
 #: challenge/models.py:219
 msgid "comments"
-msgstr "Kommentare"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:4
 msgid "Create challenge"
-msgstr "Engagement erfassen"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:25
 #: challenge/templates/challenge_edit.html:18
 #: organization/templates/organization_create.html:17
 msgid "Avatar:"
-msgstr "Logo:"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:29
 msgid "hours"
-msgstr "Stunden"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:32
 msgid "Affiliate with organization"
-msgstr "Mit Organisation verknüpfen"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:37
 #: challenge/templates/challenge_edit.html:26
 #: organization/templates/organization_create.html:27
 msgid "Contact person:"
-msgstr "Kontaktperson:"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:42
 #: challenge/templates/challenge_edit.html:31
 msgid "Start date"
-msgstr "Datum"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:42
 #: challenge/templates/challenge_edit.html:31
 msgid "Time"
-msgstr "Uhrzeit"
+msgstr ""
 
 #: challenge/templates/challenge_create.html:46
 msgid "Create this challenge"
-msgstr "Engagement erfassen"
+msgstr ""
 
 #: challenge/templates/challenge_deleted_info.html:4
 msgid "Challenge deleted"
-msgstr "Engagement gelöscht"
+msgstr ""
 
 #: challenge/templates/challenge_deleted_info.html:10
 msgid "The challenge, you are looking for, was deleted for the next reason"
-msgstr "Dieses Engagement wurde aus folgendem Grund gelöscht"
+msgstr ""
 
 #: challenge/templates/challenge_deleted_info.html:12
 msgid "Browse challenges"
-msgstr "Engagements anschauen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:4
 msgid "Challenge details"
-msgstr "Details des Engagements"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:26
 msgid "Organized by"
-msgstr "Veranstaltet von"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:34
 msgid "Participants"
-msgstr "Teilnehmer_innen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:60
 msgid "No participants yet"
-msgstr "Es nimmt noch niemand an diesem Engagement teil"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:65
 msgid "Comments"
-msgstr "Kommentare"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:93
 msgid "Confirmation required"
-msgstr "Bewerbung erforderlich"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:94
 msgid ""
@@ -818,7 +811,7 @@ msgstr ""
 #: challenge/templates/challenge_detail.html:99
 #: challenge/templates/challenge_edit.html:4
 msgid "Edit challenge"
-msgstr "Engagement bearbeiten"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:104
 msgid ""
@@ -834,11 +827,11 @@ msgstr ""
 
 #: challenge/templates/challenge_detail.html:121
 msgid "Withdraw application"
-msgstr "Bewerbung zurückziehen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:126
 msgid "Explain yourself"
-msgstr "Erkläre dich"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:127
 msgid ""
@@ -855,16 +848,16 @@ msgstr ""
 
 #: challenge/templates/challenge_detail.html:140
 msgid "Withdraw"
-msgstr "Zurückziehen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:148
 #: challenge/templates/challenge_detail.html:172
 msgid "Participate"
-msgstr "Mitmachen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:157
 msgid "Privacy warning"
-msgstr "Warnung: Privatsphäre"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:159
 msgid ""
@@ -874,34 +867,30 @@ msgstr ""
 
 #: challenge/templates/challenge_detail.html:164
 msgid "This is important"
-msgstr "Das ist wichtig"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:165
 msgid ""
 "By clicking participate, you agree to take part in this challenge and to do "
 "your best."
 msgstr ""
-"Hiermit bestätigst du, an diesem Engagement mitzumachen und dein Bestes zu "
-"geben."
 
 #: challenge/templates/challenge_detail.html:169
 msgid "Share on Facebook"
-msgstr "Auf Facebook teilen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:181
 msgid "Login required"
-msgstr "Anmeldung erforderlich"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:182
 msgid "You must have a user account to participate in this challenge."
 msgstr ""
-"Hiermit bestätigst du, an diesem Engagement mitzumachen und dein Bestes zu "
-"geben."
 
 #: challenge/templates/challenge_detail.html:187
 #: organization/templates/organization_detail.html:32
 msgid "Contact person"
-msgstr "Kontaktperson"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:203
 msgid ""
@@ -915,43 +904,43 @@ msgstr ""
 
 #: challenge/templates/challenge_detail.html:229
 msgid "Link to this page"
-msgstr "Link zu dieser Seite"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:237
 msgid "People waiting for confirmation"
-msgstr "Unbestätigte Anmeldungen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:252
 msgid "Accept"
-msgstr "Bestätigen"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:255
 msgid "Reject"
-msgstr "Ablehnen"
+msgstr ""
 
 #: challenge/templates/challenge_edit.html:35
 msgid "Save Changes"
-msgstr "Änderungen speichern"
+msgstr ""
 
 #: challenge/templates/challenge_list.html:4
 msgid "Challenges list"
-msgstr "Liste der Engagements"
+msgstr ""
 
 #: core/countries.py:5 core/countries.py:486
 msgid "Switzerland"
-msgstr "Schweiz"
+msgstr ""
 
 #: core/countries.py:6 core/countries.py:274
 msgid "Austria"
-msgstr "Österreich"
+msgstr ""
 
 #: core/countries.py:7 core/countries.py:346
 msgid "Germany"
-msgstr "Deutschland"
+msgstr ""
 
 #: core/countries.py:8 core/countries.py:392
 msgid "Liechtenstein"
-msgstr "Leichtenstein"
+msgstr ""
 
 #: core/countries.py:9 core/countries.py:259
 msgid "Afghanistan"
@@ -1999,11 +1988,11 @@ msgstr ""
 
 #: core/decorators.py:35
 msgid "You don't have permission to perform this action."
-msgstr "Du bist nicht berechtigt, dies zu tun."
+msgstr ""
 
 #: home/templates/home.html:6
 msgid "Let's change the world. Together."
-msgstr "Ändern wir die Welt. Gemeinsam."
+msgstr ""
 
 #: home/templates/home.html:11
 msgid "Tag 'video' not supports with your browser."
@@ -2011,83 +2000,83 @@ msgstr ""
 
 #: home/templates/home.html:11
 msgid "Download video"
-msgstr "Video herunterladen"
+msgstr ""
 
 #: home/templates/home.html:14
 msgid "Find a Challenge"
-msgstr "Finde ein Engagement"
+msgstr ""
 
 #: home/templates/home.html:15
 msgid "Find an Organization"
-msgstr "Finde eine Organisation"
+msgstr ""
 
 #: home/templates/terms_and_conditions.html:4
 msgid "Terms and conditions"
-msgstr "Allgemeine Schenkbedingungen"
+msgstr ""
 
 #: organization/forms.py:42
 msgid "Organization name"
-msgstr "Name"
+msgstr ""
 
 #: organization/forms.py:45
 msgid "Organization description"
-msgstr "Beschreibung"
+msgstr ""
 
 #: organization/forms.py:57
 msgid "Web site"
-msgstr "Webseite"
+msgstr ""
 
 #: organization/forms.py:59
 msgid "Embedd video (link)"
-msgstr "Video"
+msgstr ""
 
 #: organization/forms.py:61
 msgid "Organization e-mail"
-msgstr "Kontakt E-Mail"
+msgstr ""
 
 #: organization/models.py:29
 msgid "Website"
-msgstr "Webseite"
+msgstr ""
 
 #: organization/models.py:30
 msgid "Video"
-msgstr "Video"
+msgstr ""
 
 #: organization/models.py:34
 msgid "Affiliated Users"
-msgstr "Verknüpfte Benutzer"
+msgstr ""
 
 #: organization/models.py:43
 msgid "Full Name"
-msgstr "Vollständiger Name"
+msgstr ""
 
 #: organization/models.py:55
 msgid "organization"
-msgstr "Organisation"
+msgstr ""
 
 #: organization/models.py:56
 msgid "organizations"
-msgstr "Organisationen"
+msgstr ""
 
 #: organization/templates/organization_create.html:4
 msgid "Create organization"
-msgstr "Organisation erfassen"
+msgstr ""
 
 #: organization/templates/organization_create.html:39
 msgid "Create this organization"
-msgstr "Organisation erfassen"
+msgstr ""
 
 #: organization/templates/organization_detail.html:4
 msgid "Organization details"
-msgstr "Detils der Organisation"
+msgstr ""
 
 #: organization/templates/organization_detail.html:49
 msgid "Upcoming challenges"
-msgstr "Zukünftige Engagements"
+msgstr ""
 
 #: organization/templates/organization_detail.html:60
 msgid "No upcoming challenges"
-msgstr "Keine zukünftigen Engagements"
+msgstr ""
 
 #: organization/templates/organization_detail.html:61
 msgid "This organization has no upcoming challenges at the moment"
@@ -2095,23 +2084,23 @@ msgstr ""
 
 #: organization/templates/organization_detail.html:68
 msgid "Past challenges"
-msgstr "Vergangene Engagements"
+msgstr ""
 
 #: organization/templates/organization_detail.html:79
 msgid "No past challenges"
-msgstr "Keine vergangenen Engagements"
+msgstr ""
 
 #: organization/templates/organization_detail.html:80
 msgid "This organization has no past challenges at the moment"
-msgstr "Diese Organisation hat keine vergangenen Engagemente"
+msgstr ""
 
 #: organization/templates/organization_detail.html:87
 msgid "Staff"
-msgstr "Mitarbeiter_innen"
+msgstr ""
 
 #: organization/templates/organization_detail.html:88
 msgid "These users can create challenges in the name of this organization"
-msgstr "Diese Benutzer_innen können Engagements im Namen dieser Organisation erfassen"
+msgstr ""
 
 #: organization/templates/organization_detail.html:104
 msgid "Put iFrame to this Organization on your site"
@@ -2120,31 +2109,31 @@ msgstr ""
 #: organization/templates/organization_detail.html:107
 #: organization/templates/organization_detail.html:111
 msgid "Not supproted"
-msgstr "Nicht unterstützt"
+msgstr ""
 
 #: organization/templates/organization_iframe.html:13
 msgid "upcoming challenges on Participe"
-msgstr "nächste Engagements auf Participe"
+msgstr ""
 
 #: organization/templates/organization_iframe.html:24
 msgid "This organization has no open challenges at the moment"
-msgstr "Diese Organisation hat gegenwärtig keine Engagements"
+msgstr ""
 
 #: organization/templates/organization_list.html:4
 msgid "Organizations list"
-msgstr "Liste von Organisationen"
+msgstr ""
 
 #: organization/templates/organization_list.html:27
 msgid "Current Challenges"
-msgstr "Gegenwärtige Engagements"
+msgstr ""
 
 #: templates/403.html:4
 msgid "Permission denied"
-msgstr "Keine Bewilligung"
+msgstr ""
 
 #: templates/403.html:8
 msgid "The force is not with you today."
-msgstr "Die Macht ist heute nicht mir dir"
+msgstr ""
 
 #: templates/403.html:10
 msgid ""
@@ -2153,271 +2142,108 @@ msgstr ""
 
 #: templates/404.html:4 templates/404.html.py:8
 msgid "Page not found"
-msgstr "Seite nicht gefunden"
+msgstr ""
 
 #: templates/404.html:10
 msgid "We're sorry, but the requested page could not be found."
-msgstr "Diese Seite wurde nicht gefunden."
+msgstr ""
 
 #: templates/500.html:4
 msgid "Home"
-msgstr "Start"
+msgstr ""
 
 #: templates/500.html:4
 msgid "Server error"
-msgstr "Interner Fehler."
+msgstr ""
 
 #: templates/500.html:6
 msgid "Server error (500)"
-msgstr "Server-Fehler (500)"
+msgstr ""
 
 #: templates/500.html:9
 msgid "Server Error <em>(500)</em>"
-msgstr "Server Fehler <em>(500)</em>"
+msgstr ""
 
 #: templates/500.html:10
 msgid ""
 "There's been an error. It's been reported to the site administrators via e-"
 "mail and should be fixed shortly. Thanks for your patience."
-msgstr "Es gab einen Fehler. Sorry."
+msgstr ""
 
 #: templates/base.html:42
 msgid "My profile"
-msgstr "Mein Profil"
+msgstr ""
 
 #: templates/base.html:43
 msgid "Log out"
-msgstr "Ausloggen"
+msgstr ""
 
 #: templates/base.html:46
 msgid "login with facebook"
-msgstr "Login mit Facebook"
+msgstr ""
 
 #: templates/base.html:49
 msgid "No account yet?"
-msgstr "Noch kein Konto?"
+msgstr ""
 
 #: templates/base.html:61
 msgid "change"
-msgstr "ändern"
+msgstr ""
 
 #: templates/base.html:69
 msgid "Test Version"
-msgstr "Test Version"
+msgstr ""
 
 #: templates/base.html:70
 msgid ""
 "All information on beta.partici.pe is fictional and for testing purposes "
 "only."
-msgstr "Alle Einträge auf beta.partici.pe sind frei erfunden und nur zu Testzwecken."
+msgstr ""
 
 #: templates/base.html:79
 msgid "For Partners"
-msgstr "Für Partner_innen"
+msgstr ""
 
 #: templates/base.html:81
 msgid "For Organizers"
-msgstr "Für Organisatoren"
+msgstr ""
 
 #: templates/base.html:82
 msgid "For Sponsors"
-msgstr "Für Sponsor_innen"
+msgstr ""
 
 #: templates/base.html:83
 msgid "For Media"
-msgstr "Für Medien"
+msgstr ""
 
 #: templates/base.html:87
 msgid "For Users"
-msgstr "Für Benutzer_innen"
+msgstr ""
 
 #: templates/base.html:89
 msgid "Privacy Policy"
-msgstr "Privatsphäre"
+msgstr ""
 
 #: templates/base.html:90
 msgid "Terms and Conditions"
-msgstr "Allgemeine Schenkbedingungen"
+msgstr ""
 
 #: templates/base.html:91
 msgid "Fork us on GitHub"
-msgstr "Wir sind Open Source"
+msgstr ""
 
 #: templates/base.html:95
 msgid "About Participe"
-msgstr "Über Participe"
+msgstr ""
 
 #: templates/base.html:97
 msgid "Team"
-msgstr "Team"
+msgstr ""
 
 #: templates/base.html:98
 msgid "Feedback"
-msgstr "Feedback"
+msgstr ""
 
 #: templates/base.html:99
 msgid "Join Us"
-msgstr "Mach mit"
-
-#~ msgid "password"
-#~ msgstr "Passwort"
-
-#~ msgid "retry"
-#~ msgstr "Erneut versuchen"
-
-#~ msgid "Receive newsletters"
-#~ msgstr "Participe Newsletter abonnieren"
-
-#~ msgid "User profile"
-#~ msgstr "Benutzerprofil"
-
-#~ msgid "Full name:"
-#~ msgstr "Vollständiger Name:"
-
-#~ msgid "City:"
-#~ msgstr "Stadt:"
-
-#~ msgid "Country:"
-#~ msgstr "Land:"
-
-#~ msgid "Phone number:"
-#~ msgstr "Telefonnummer:"
-
-#~ msgid "Nope"
-#~ msgstr "keine"
-
-#~ msgid "Participated organizations:"
-#~ msgstr "Mitglied folgender Organisationen:"
-
-#~ msgid "Please, login"
-#~ msgstr "Bitte logge dich ein"
-
-#~ msgid "login"
-#~ msgstr "einloggen"
-
-#~ msgid "Challenges you signed up for"
-#~ msgstr "Deine Engagements"
-
-#~ msgid ""
-#~ "To participate in a challenge, you first need to sign-up for participe:"
-#~ msgstr "Um an diesem Engagement mit zu machen."
-
-#~ msgid "Confirmed"
-#~ msgstr "Bestätigt"
-
-#~ msgid "Cancelled by admin"
-#~ msgstr "Durch Administrator abgebrochen"
-
-#~ msgid "Direct link to challenge"
-#~ msgstr "Direktlink zum Engagement"
-
-#~ msgid "Your application"
-#~ msgstr "Deine Bewerbung"
-
-#~ msgid "Participe in this Challenge"
-#~ msgstr "Mitmachen"
-
-#~ msgid "Only registered users can sign-up to Challenge"
-#~ msgstr "Nur angemeldete Benutzer können sich zu Engagement anmelden"
-
-#~ msgid "Administrators"
-#~ msgstr "Administratoren"
-
-#~ msgid "Sorry, user with such e-mail not found"
-#~ msgstr "Kein Benutzerkonto mit dieser E-Mail Adresse gefunden."
-
-#~ msgid "Accounts"
-#~ msgstr "Freiwillige"
-
-#~ msgid "E-mail:"
-#~ msgstr "E-Mail:"
-
-#~ msgid "Password:"
-#~ msgstr "Passwort:"
-
-#~ msgid "Your profile"
-#~ msgstr "Dein Benutzerprofil"
-
-#~ msgid "Change"
-#~ msgstr "Ändern"
-
-#~ msgid "Crop"
-#~ msgstr "Zuschneiden"
-
-#~ msgid "your avatar"
-#~ msgstr "Dein Profilfoto"
-
-#~ msgid "Add"
-#~ msgstr "Hinzufügen"
-
-#~ msgid "Address:"
-#~ msgstr "Adresse:"
-
-#~ msgid "Postal code:"
-#~ msgstr "Postleitzahl:"
-
-#~ msgid "or"
-#~ msgstr "oder"
-
-#~ msgid "On"
-#~ msgstr "Am"
-
-#~ msgid "at"
-#~ msgstr "um"
-
-#~ msgid "in"
-#~ msgstr "in"
-
-#~ msgid "People waiting for participation"
-#~ msgstr "Offene Bewerbungen"
-
-#~ msgid "Datum"
-#~ msgstr "Datum"
-
-#~ msgid "There are no active challenges"
-#~ msgstr "Es gibt derzeit keine Engagements"
-
-#~ msgid "Promotes young volunteering"
-#~ msgstr "Fördert freiwilliges Engagement"
-
-#~ msgid "Do you want to"
-#~ msgstr "Möchtest du"
-
-#~ msgid "Browse organizations"
-#~ msgstr "Organisationen anschauen"
-
-#~ msgid "Name:"
-#~ msgstr "Name:"
-
-#~ msgid "Description:"
-#~ msgstr "Beschreibung:"
-
-#~ msgid "Affiliated users:"
-#~ msgstr "Verknüpfte Benutzer:"
-
-#~ msgid "Web site:"
-#~ msgstr "Webseite:"
-
-#~ msgid "Video:"
-#~ msgstr "Video:"
-
-#~ msgid "There are no organizations"
-#~ msgstr "Es sind derzeit keine Organisationen erfasst."
-
-#~ msgid "Change your locale"
-#~ msgstr "Sprache"
-
-#~ msgid "Location:"
-#~ msgstr "Ort:"
-
-#~ msgid "Duration:"
-#~ msgstr "Dauer:"
-
-#~ msgid "Start date:"
-#~ msgstr "Datum:"
-
-#~ msgid "Time:"
-#~ msgstr "Zeit:"
-
-#~ msgid "Application:"
-#~ msgstr "Bewerbung:"
+msgstr ""

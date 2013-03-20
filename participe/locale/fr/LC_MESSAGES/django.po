@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-23 07:32-0600\n"
+"POT-Creation-Date: 2013-03-20 15:26-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,54 +19,42 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: account/forms.py:20 account/forms.py:22 account/forms.py:66
-#: account/forms.py:196 account/forms.py:251 challenge/forms.py:66
-#: challenge/forms.py:181 challenge/models.py:40 organization/forms.py:66
+#: account/forms.py:202 account/forms.py:259 challenge/forms.py:73
+#: challenge/forms.py:191 challenge/models.py:61 organization/forms.py:66
 #: organization/models.py:31 organization/models.py:45
 msgid "E-mail"
 msgstr ""
 
-#: account/forms.py:24 account/forms.py:27 account/forms.py:69
-#: account/forms.py:237
+#: account/forms.py:24 account/forms.py:27 account/forms.py:48
+#: account/forms.py:69 account/forms.py:245
 msgid "Password"
 msgstr ""
 
-#: account/forms.py:28
+#: account/forms.py:28 account/templates/account_login.html:24
 msgid "Remember me"
 msgstr ""
 
-#: account/forms.py:45 account/forms.py:170
-msgid "first_name"
-msgstr ""
-
-#: account/forms.py:46 account/forms.py:171
-msgid "last_name"
-msgstr ""
-
-#: account/forms.py:47 account/forms.py:172
-msgid "email"
-msgstr ""
-
-#: account/forms.py:48
-msgid "password"
-msgstr ""
-
-#: account/forms.py:49
-msgid "retry"
-msgstr ""
-
-#: account/forms.py:54 account/forms.py:241
-msgid "Retry"
-msgstr ""
-
-#: account/forms.py:62 account/forms.py:190
+#: account/forms.py:45 account/forms.py:62 account/forms.py:196
 msgid "First name"
 msgstr ""
 
-#: account/forms.py:64 account/forms.py:193
+#: account/forms.py:46 account/forms.py:64 account/forms.py:199
 msgid "Last name"
 msgstr ""
 
-#: account/forms.py:77 account/forms.py:258
+#: account/forms.py:47
+msgid "Email"
+msgstr ""
+
+#: account/forms.py:49
+msgid "Password again"
+msgstr ""
+
+#: account/forms.py:54 account/forms.py:249
+msgid "Retry"
+msgstr ""
+
+#: account/forms.py:77 account/forms.py:266
 msgid "Please, enter valid e-mail address."
 msgstr ""
 
@@ -74,152 +62,200 @@ msgstr ""
 msgid "Account with such e-mail address already exists."
 msgstr ""
 
-#: account/forms.py:91 account/forms.py:245
+#: account/forms.py:91 account/forms.py:253
 #: account/templates/account_reset_password.html:18
 msgid "Passwords don't match"
 msgstr ""
 
-#: account/forms.py:106 account/forms.py:173
-msgid "address_1"
+#: account/forms.py:106
+msgid "Street and house number"
 msgstr ""
 
-#: account/forms.py:107 account/forms.py:174
-msgid "address_2"
+#: account/forms.py:107
+msgid "Additional address info"
 msgstr ""
 
-#: account/forms.py:108 account/forms.py:175
-msgid "postal_code"
+#: account/forms.py:108 account/models.py:41 organization/models.py:23
+msgid "Postal Code"
 msgstr ""
 
-#: account/forms.py:109 account/forms.py:176
-msgid "city"
+#: account/forms.py:109 account/forms.py:143 account/forms.py:225
+#: account/models.py:43 organization/forms.py:54 organization/models.py:25
+msgid "City"
 msgstr ""
 
-#: account/forms.py:110 account/forms.py:177
-msgid "country"
+#: account/forms.py:110 account/models.py:44 organization/models.py:27
+msgid "Country"
 msgstr ""
 
-#: account/forms.py:111 account/forms.py:178
-msgid "Birth day"
+#: account/forms.py:111
+msgid "Date of birth"
 msgstr ""
 
-#: account/forms.py:112 account/forms.py:179
-msgid "phone_number"
+#: account/forms.py:112 account/forms.py:148 account/forms.py:230
+#: challenge/forms.py:75 challenge/forms.py:193 organization/forms.py:68
+msgid "Phone number"
 msgstr ""
 
-#: account/forms.py:113 account/forms.py:180
-msgid "Receive newsletters"
+#: account/forms.py:113 account/forms.py:184 account/models.py:60
+msgid "Privacy mode"
 msgstr ""
 
-#: account/forms.py:134 account/forms.py:212 account/models.py:25
+#: account/forms.py:115 account/forms.py:186
+msgid "I want to get the Participe newsletter"
+msgstr ""
+
+#: account/forms.py:137 account/forms.py:219 account/models.py:36
 #: organization/forms.py:48 organization/models.py:19
 msgid "Address 1"
 msgstr ""
 
-#: account/forms.py:136 account/forms.py:214 account/models.py:27
+#: account/forms.py:139 account/forms.py:221 account/models.py:38
 #: organization/forms.py:50 organization/models.py:21
 msgid "Address 2"
 msgstr ""
 
-#: account/forms.py:138 account/forms.py:216 organization/forms.py:52
+#: account/forms.py:141 account/forms.py:223 organization/forms.py:52
 msgid "Postal code"
 msgstr ""
 
-#: account/forms.py:140 account/forms.py:218 account/models.py:32
-#: organization/forms.py:54 organization/models.py:25
-msgid "City"
+#: account/forms.py:174
+msgid "first_name"
 msgstr ""
 
-#: account/forms.py:145 account/forms.py:223 challenge/forms.py:68
-#: challenge/forms.py:183 organization/forms.py:68
-msgid "Phone number"
+#: account/forms.py:175
+msgid "last_name"
 msgstr ""
 
-#: account/forms.py:265
+#: account/forms.py:176
+msgid "email"
+msgstr ""
+
+#: account/forms.py:177
+msgid "address_1"
+msgstr ""
+
+#: account/forms.py:178
+msgid "address_2"
+msgstr ""
+
+#: account/forms.py:179
+msgid "postal_code"
+msgstr ""
+
+#: account/forms.py:180
+msgid "city"
+msgstr ""
+
+#: account/forms.py:181
+msgid "country"
+msgstr ""
+
+#: account/forms.py:182
+msgid "Birth day"
+msgstr ""
+
+#: account/forms.py:183
+msgid "phone_number"
+msgstr ""
+
+#: account/forms.py:273
 msgid "Account with such e-mail address does not exist."
 msgstr ""
 
-#: account/forms.py:313
+#: account/forms.py:321
 msgid "You need to make a selection"
 msgstr ""
 
-#: account/forms.py:320
+#: account/forms.py:328
 #, python-format
 msgid ""
 "You must select a portion of the image with a minimum of %(size)dx%(size)d "
 "pixels."
 msgstr ""
 
-#: account/models.py:11
+#: account/models.py:12
 msgid "Male"
 msgstr ""
 
-#: account/models.py:12
+#: account/models.py:13
 msgid "Female"
 msgstr ""
 
-#: account/models.py:17 challenge/models.py:20 organization/models.py:13
+#: account/models.py:22
+msgid "Paranoid"
+msgstr ""
+
+#: account/models.py:23
+msgid "Normal"
+msgstr ""
+
+#: account/models.py:28 challenge/models.py:36 organization/models.py:13
 msgid "Avatar"
 msgstr ""
 
-#: account/models.py:19 challenge/models.py:117 challenge/models.py:154
+#: account/models.py:30 challenge/models.py:155 challenge/models.py:211
 msgid "User"
 msgstr ""
 
-#: account/models.py:30 organization/models.py:23
-msgid "Postal Code"
-msgstr ""
-
-#: account/models.py:33 organization/models.py:27
-msgid "Country"
-msgstr ""
-
-#: account/models.py:37
+#: account/models.py:48
 msgid "Gender"
 msgstr ""
 
-#: account/models.py:40
+#: account/models.py:51
 msgid "Birthday"
 msgstr ""
 
-#: account/models.py:43 challenge/models.py:43 organization/models.py:48
+#: account/models.py:54 challenge/models.py:64 organization/models.py:48
 msgid "Phone Number"
 msgstr ""
 
-#: account/models.py:45
+#: account/models.py:56
 msgid "Receive Newsletters"
 msgstr ""
 
-#: account/models.py:50
+#: account/models.py:65
 msgid "user profile"
 msgstr ""
 
-#: account/models.py:51
+#: account/models.py:66
 msgid "user profiles"
 msgstr ""
 
-#: account/views.py:171
+#: account/views.py:173
 msgid "You have successfuly confirmed your e-mail."
 msgstr ""
 
-#: account/views.py:180
+#: account/views.py:182
 msgid "The link has been expired. Please, sign-up again."
 msgstr ""
 
-#: account/views.py:209 account/templates/account_login.html:17
+#: account/views.py:211 account/templates/account_login.html:19
 msgid "Sorry, you have entered wrong E-mail or Password"
 msgstr ""
 
-#: account/views.py:347
+#: account/views.py:388 account/views.py:395
+msgid "where an action is required"
+msgstr ""
+
+#: account/views.py:390 account/views.py:397
+msgid "that have the status 'Upcoming'"
+msgstr ""
+
+#: account/views.py:392 account/views.py:399
+msgid "that have the status 'Completed'"
+msgstr ""
+
+#: account/views.py:458
 msgid "You have successfuly changed your password"
 msgstr ""
 
-#: account/views.py:377
+#: account/views.py:488
 #, python-format
 msgid "Confirmation link to restore password were sent to address '%s'"
 msgstr ""
 
-#: account/views.py:384 account/views.py:409
+#: account/views.py:495 account/views.py:520
 msgid "An error has been acquired."
 msgstr ""
 
@@ -234,7 +270,6 @@ msgstr ""
 #: challenge/templates/challenge_base.html:7
 #: challenge/templates/challenge_create.html:9 home/templates/home_base.html:7
 #: organization/templates/organization_base.html:7
-#: organization/templates/organization_detail.html:59
 msgid "Challenges"
 msgstr ""
 
@@ -287,47 +322,47 @@ msgid "Do you really want to delete account?"
 msgstr ""
 
 #: account/templates/account_delete.html:15
-#: challenge/templates/challenge_edit.html:38
+#: challenge/templates/challenge_edit.html:40
 msgid "Delete"
 msgstr ""
 
 #: account/templates/account_delete.html:16
-#: challenge/templates/challenge_detail.html:91
-#: challenge/templates/challenge_detail.html:107
-#: challenge/templates/challenge_edit.html:38
+#: challenge/templates/challenge_detail.html:141
+#: challenge/templates/challenge_detail.html:173
+#: challenge/templates/challenge_edit.html:40
 msgid "Cancel"
 msgstr ""
 
 #: account/templates/account_edit.html:4
-#: account/templates/account_myprofile.html:28
+#: account/templates/account_myprofile.html:33
 msgid "Edit profile"
 msgstr ""
 
-#: account/templates/account_edit.html:12
+#: account/templates/account_edit.html:13
 msgid "Change profile image"
 msgstr ""
 
-#: account/templates/account_edit.html:13
+#: account/templates/account_edit.html:14
 msgid "Crop profile image"
 msgstr ""
 
-#: account/templates/account_edit.html:15
+#: account/templates/account_edit.html:16
 msgid "Add profile image"
 msgstr ""
 
-#: account/templates/account_edit.html:17
+#: account/templates/account_edit.html:18
 msgid "Change password"
 msgstr ""
 
-#: account/templates/account_edit.html:18
+#: account/templates/account_edit.html:19
 msgid "Delete profile"
 msgstr ""
 
-#: account/templates/account_edit.html:25
+#: account/templates/account_edit.html:26
 msgid "Edit your profile"
 msgstr ""
 
-#: account/templates/account_edit.html:37
+#: account/templates/account_edit.html:38
 msgid "Save changes"
 msgstr ""
 
@@ -344,41 +379,44 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: account/templates/account_foreignprofile.html:8
-msgid "User profile"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:17
-msgid "Full name:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:18
-msgid "City:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:19
-msgid "Country:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:21
-msgid "Email:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:22
-msgid "Phone number:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:26
-msgid "Participated challenges:"
-msgstr ""
-
-#: account/templates/account_foreignprofile.html:30
-#: account/templates/account_foreignprofile.html:38
-msgid "Nope"
+#: account/templates/account_foreignprofile.html:31
+msgid "You can see details, because user is"
 msgstr ""
 
 #: account/templates/account_foreignprofile.html:34
-msgid "Participated organizations:"
+msgid "Signed-up for your challenge"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:42
+msgid "Waitnig for confirmation on your challenge"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:50
+#: challenge/templates/challenge_detail.html:202
+#: challenge/templates/challenge_detail.html:214
+msgid "Information hidden"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:51
+msgid ""
+"This user does not to share their email address or phone number with the "
+"public."
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:60
+msgid "Participated challenges"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:80
+msgid "Affiliated with"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:101
+msgid "Participations, cancelled by user"
+msgstr ""
+
+#: account/templates/account_foreignprofile.html:125
+msgid "Participations, cancelled by challenge admin"
 msgstr ""
 
 #: account/templates/account_information.html:4
@@ -397,27 +435,46 @@ msgstr ""
 msgid "There are no active accounts"
 msgstr ""
 
-#: account/templates/account_login.html:4 templates/base.html:46
+#: account/templates/account_login.html:4 templates/base.html:50
 msgid "Log in"
 msgstr ""
 
 #: account/templates/account_login.html:12
-msgid "Please, login"
+#: account/templates/account_login.html:14
+msgid "Sign in with Facebook"
 msgstr ""
 
-#: account/templates/account_login.html:22
-msgid "login"
+#: account/templates/account_login.html:18
+msgid "Sign in with email address"
 msgstr ""
 
-#: account/templates/account_myprofile.html:32
-msgid "Challenges you signed up for"
+#: account/templates/account_login.html:28
+msgid "Sign in"
 msgstr ""
 
-#: account/templates/account_myprofile.html:46 challenge/models.py:109
+#: account/templates/account_myprofile.html:13
+msgid "Contact"
+msgstr ""
+
+#: account/templates/account_myprofile.html:15
+msgid "Privacy information"
+msgstr ""
+
+#: account/templates/account_myprofile.html:16
+msgid ""
+"This information can only be seen by organizers of challenges you "
+"participate in."
+msgstr ""
+
+#: account/templates/account_myprofile.html:38
+msgid "Challenges you are participating in"
+msgstr ""
+
+#: account/templates/account_myprofile.html:54 challenge/models.py:142
 msgid "Waiting for confirmation"
 msgstr ""
 
-#: account/templates/account_myprofile.html:53
+#: account/templates/account_myprofile.html:63
 msgid "Challenges you are responsible for"
 msgstr ""
 
@@ -437,185 +494,237 @@ msgstr ""
 msgid "Restore password"
 msgstr ""
 
-#: account/templates/account_restore_password.html:12
-msgid "Restore forgotten password"
+#: account/templates/account_restore_password.html:10
+msgid "Forgotten password"
 msgstr ""
 
-#: account/templates/account_restore_password.html:21
+#: account/templates/account_restore_password.html:15
 msgid "Send me an e-mail"
 msgstr ""
 
-#: account/templates/account_signup.html:4 templates/base.html:47
+#: account/templates/account_signup.html:4
+#: account/templates/account_signup.html:54
 msgid "Sign up"
 msgstr ""
 
+#: account/templates/account_signup.html:33
+msgid "Create a new account"
+msgstr ""
+
 #: account/templates/account_signup.html:34
-msgid "To participate in a challenge, you first need to sign-up for participe:"
+msgid ""
+"This information is only visible to people who need to see it, and is "
+"private by default. To understand who can see what if this information, "
+"please read our Privacy Policy"
 msgstr ""
 
-#: account/templates/account_signup.html:63
-msgid "By clicking register, you accept the"
+#: account/templates/account_signup.html:53
+msgid "By signing up, you accept the"
 msgstr ""
 
-#: account/templates/account_signup.html:63
+#: account/templates/account_signup.html:53
 msgid "terms and conditions"
 msgstr ""
 
-#: account/templates/account_signup.html:64
-msgid "Sign-up for Participe"
-msgstr ""
-
-#: challenge/forms.py:32 challenge/forms.py:152 organization/forms.py:26
+#: challenge/forms.py:34 challenge/forms.py:159 organization/forms.py:26
 msgid "Affiliate different person"
 msgstr ""
 
-#: challenge/forms.py:53
+#: challenge/forms.py:60
 msgid "Challenge name"
 msgstr ""
 
-#: challenge/forms.py:56 challenge/forms.py:177
+#: challenge/forms.py:63 challenge/forms.py:186
 msgid "Challenge description"
 msgstr ""
 
-#: challenge/forms.py:58 challenge/models.py:25
+#: challenge/forms.py:65 challenge/forms.py:183 challenge/models.py:41
 msgid "Location"
 msgstr ""
 
-#: challenge/forms.py:64 challenge/forms.py:179 challenge/models.py:38
+#: challenge/forms.py:71 challenge/forms.py:188 challenge/models.py:59
 #: organization/forms.py:64
 msgid "Full name"
 msgstr ""
 
-#: challenge/forms.py:102
+#: challenge/forms.py:109
 msgid "Value should be greater or equal 1"
 msgstr ""
 
-#: challenge/forms.py:114 challenge/forms.py:122 challenge/forms.py:126
-#: challenge/forms.py:130 challenge/forms.py:202 challenge/forms.py:210
-#: challenge/forms.py:214 challenge/forms.py:218 organization/forms.py:102
-#: organization/forms.py:110 organization/forms.py:114
-#: organization/forms.py:118
+#: challenge/forms.py:121 challenge/forms.py:129 challenge/forms.py:133
+#: challenge/forms.py:137 challenge/forms.py:212 challenge/forms.py:220
+#: challenge/forms.py:224 challenge/forms.py:228 challenge/forms.py:296
+#: organization/forms.py:102 organization/forms.py:110
+#: organization/forms.py:114 organization/forms.py:118
 msgid "This field is required."
 msgstr ""
 
-#: challenge/forms.py:189
+#: challenge/forms.py:199
 msgid "Reason for deletion (at least 20 symbols)"
 msgstr ""
 
-#: challenge/forms.py:241 challenge/models.py:121
+#: challenge/forms.py:251 challenge/models.py:159
 msgid "Application text"
 msgstr ""
 
-#: challenge/models.py:14
+#: challenge/forms.py:284
+msgid "Reason for withdrawing"
+msgstr ""
+
+#: challenge/models.py:19
 msgid "Not required: participation by application order"
 msgstr ""
 
-#: challenge/models.py:15
+#: challenge/models.py:21
 msgid "Confirmation of participation required"
 msgstr ""
 
-#: challenge/models.py:21 organization/models.py:14
+#: challenge/models.py:30
+msgid "Upcoming"
+msgstr ""
+
+#: challenge/models.py:31
+msgid "Completed"
+msgstr ""
+
+#: challenge/models.py:37 organization/models.py:14
 msgid "Name"
 msgstr ""
 
-#: challenge/models.py:23 organization/models.py:16
+#: challenge/models.py:39 organization/models.py:16
 msgid "Description"
 msgstr ""
 
-#: challenge/models.py:27 challenge/templates/challenge_create.html:29
+#: challenge/models.py:43 challenge/templates/challenge_create.html:29
 msgid "Duration"
 msgstr ""
 
-#: challenge/models.py:34 organization/models.py:39
-msgid "Contact Person"
-msgstr ""
-
-#: challenge/models.py:45
-msgid "Start Date"
-msgstr ""
-
-#: challenge/models.py:46
-msgid "Start Time"
-msgstr ""
-
-#: challenge/models.py:49
-msgid "Organization"
-msgstr ""
-
-#: challenge/models.py:53 challenge/templates/challenge_create.html:43
-#: challenge/templates/challenge_edit.html:30
-msgid "Application"
-msgstr ""
-
-#: challenge/models.py:57
-msgid "Reason for deletion"
-msgstr ""
-
-#: challenge/models.py:62
-msgid "challenge"
-msgstr ""
-
-#: challenge/models.py:63
-msgid "challenges"
-msgstr ""
-
-#: challenge/models.py:110
-msgid "Confirmation denied"
-msgstr ""
-
-#: challenge/models.py:111
-msgid "Confirmed"
-msgstr ""
-
-#: challenge/models.py:112
-msgid "Cancelled by admin"
-msgstr ""
-
-#: challenge/models.py:113
-msgid "Cancelled by user"
-msgstr ""
-
-#: challenge/models.py:118 challenge/models.py:155
-msgid "Challenge"
-msgstr ""
-
-#: challenge/models.py:123
-msgid "Cancellation text"
-msgstr ""
-
-#: challenge/models.py:127
+#: challenge/models.py:48 challenge/models.py:177
 msgid "Status"
 msgstr ""
 
-#: challenge/models.py:130
-msgid "Date created"
+#: challenge/models.py:55 organization/models.py:39
+msgid "Contact Person"
 msgstr ""
 
-#: challenge/models.py:132
-msgid "Date accepted"
+#: challenge/models.py:66
+msgid "Start Date"
 msgstr ""
 
-#: challenge/models.py:134
-msgid "Date cancelled"
+#: challenge/models.py:67
+msgid "Start Time"
 msgstr ""
 
-#: challenge/models.py:139
-msgid "participation"
+#: challenge/models.py:70
+msgid "Organization"
 msgstr ""
 
-#: challenge/models.py:140
-msgid "participations"
+#: challenge/models.py:75 challenge/templates/challenge_create.html:43
+#: challenge/templates/challenge_edit.html:32
+msgid "Application"
 msgstr ""
 
-#: challenge/models.py:156
-msgid "Text"
+#: challenge/models.py:79
+msgid "Reason for deletion"
+msgstr ""
+
+#: challenge/models.py:84
+msgid "challenge"
+msgstr ""
+
+#: challenge/models.py:85
+msgid "challenges"
+msgstr ""
+
+#: challenge/models.py:143 challenge/models.py:145
+msgid "Rejected"
+msgstr ""
+
+#: challenge/models.py:144
+msgid "Signed up"
+msgstr ""
+
+#: challenge/models.py:146
+msgid "Withdrawn"
+msgstr ""
+
+#: challenge/models.py:148
+msgid "Waiting for self-reflection"
+msgstr ""
+
+#: challenge/models.py:150
+msgid "Waiting for acknowledgement"
+msgstr ""
+
+#: challenge/models.py:151
+msgid "Acknowledged"
+msgstr ""
+
+#: challenge/models.py:156 challenge/models.py:212
+msgid "Challenge"
 msgstr ""
 
 #: challenge/models.py:161
+msgid "Cancellation text"
+msgstr ""
+
+#: challenge/models.py:164
+msgid "Self-reflection activity text"
+msgstr ""
+
+#: challenge/models.py:167
+msgid "Self-reflection learning text"
+msgstr ""
+
+#: challenge/models.py:170
+msgid "Self-reflection rejection text"
+msgstr ""
+
+#: challenge/models.py:172
+msgid "Acknowledgement text"
+msgstr ""
+
+#: challenge/models.py:180
+msgid "Date created"
+msgstr ""
+
+#: challenge/models.py:182
+msgid "Date accepted"
+msgstr ""
+
+#: challenge/models.py:184
+msgid "Date cancelled"
+msgstr ""
+
+#: challenge/models.py:186
+msgid "Date of self-reflection"
+msgstr ""
+
+#: challenge/models.py:189
+msgid "Date of self-reflection rejection"
+msgstr ""
+
+#: challenge/models.py:191
+msgid "Date acknowledged"
+msgstr ""
+
+#: challenge/models.py:196
+msgid "participation"
+msgstr ""
+
+#: challenge/models.py:197
+msgid "participations"
+msgstr ""
+
+#: challenge/models.py:213
+msgid "Text"
+msgstr ""
+
+#: challenge/models.py:218
 msgid "commment"
 msgstr ""
 
-#: challenge/models.py:162
+#: challenge/models.py:219
 msgid "comments"
 msgstr ""
 
@@ -638,18 +747,18 @@ msgid "Affiliate with organization"
 msgstr ""
 
 #: challenge/templates/challenge_create.html:37
-#: challenge/templates/challenge_edit.html:24
+#: challenge/templates/challenge_edit.html:26
 #: organization/templates/organization_create.html:27
 msgid "Contact person:"
 msgstr ""
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:29
+#: challenge/templates/challenge_edit.html:31
 msgid "Start date"
 msgstr ""
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:29
+#: challenge/templates/challenge_edit.html:31
 msgid "Time"
 msgstr ""
 
@@ -657,94 +766,160 @@ msgstr ""
 msgid "Create this challenge"
 msgstr ""
 
+#: challenge/templates/challenge_deleted_info.html:4
+msgid "Challenge deleted"
+msgstr ""
+
+#: challenge/templates/challenge_deleted_info.html:10
+msgid "The challenge, you are looking for, was deleted for the next reason"
+msgstr ""
+
+#: challenge/templates/challenge_deleted_info.html:12
+msgid "Browse challenges"
+msgstr ""
+
 #: challenge/templates/challenge_detail.html:4
 msgid "Challenge details"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:20
-msgid "Direct link to challenge"
+#: challenge/templates/challenge_detail.html:26
+msgid "Organized by"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:23
+#: challenge/templates/challenge_detail.html:34
+msgid "Participants"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:60
+msgid "No participants yet"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:65
+msgid "Comments"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:93
+msgid "Confirmation required"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:94
+msgid ""
+"You need to write an application to participate in this challenge. The "
+"challenge organizer will use your application text and your history on "
+"Participe to decide whether you are a good fit for this challenge."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:99
 #: challenge/templates/challenge_edit.html:4
 msgid "Edit challenge"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:40
-msgid "Organized by"
+#: challenge/templates/challenge_detail.html:104
+msgid ""
+"You have submitted an application to this challenge. You must now wait for "
+"the organizer to decide whether they want to accept your offer to help."
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:49
-msgid "Confirmation required"
+#: challenge/templates/challenge_detail.html:111
+msgid ""
+"You are signed up for this challenge. The organizer is expecting you to be "
+"there and do your best."
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:55
-#: organization/templates/organization_detail.html:30
-msgid "Contact person"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:69
-msgid "Your application"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:73
-#: challenge/templates/challenge_detail.html:78
+#: challenge/templates/challenge_detail.html:121
 msgid "Withdraw application"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:87
-msgid "Reason for withdrawing"
+#: challenge/templates/challenge_detail.html:126
+msgid "Explain yourself"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:90
+#: challenge/templates/challenge_detail.html:127
+msgid ""
+"Withdrawing from a challenge can be very inconvenient for the organizer. "
+"Please write a note explaining why you can't make it this time."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:136
+msgid ""
+"If you apply to a challenge in the future, the organizer will be able to see "
+"all challenges you withdrew from and the reason you entered. Seeing fewer "
+"withdrawals will make you look more trustworthy."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:140
 msgid "Withdraw"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:98
-msgid "Participe in this Challenge"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:104
-msgid "Share on Facebook"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:106
-msgid "By clicking 'Participate', you agree to participate in this challenge"
-msgstr ""
-
-#: challenge/templates/challenge_detail.html:107
+#: challenge/templates/challenge_detail.html:148
+#: challenge/templates/challenge_detail.html:172
 msgid "Participate"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:115
-msgid "Only registered users can sign-up to Challenge"
+#: challenge/templates/challenge_detail.html:157
+msgid "Privacy warning"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:124
-msgid "Participants"
+#: challenge/templates/challenge_detail.html:159
+msgid ""
+"When you sign up for a challenge, the organizer of the challenge can see "
+"your personal information, including telephone number, email, and birth date."
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:150
-msgid "No participants yet"
+#: challenge/templates/challenge_detail.html:164
+msgid "This is important"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:155
+#: challenge/templates/challenge_detail.html:165
+msgid ""
+"By clicking participate, you agree to take part in this challenge and to do "
+"your best."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:169
+msgid "Share on Facebook"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:181
+msgid "Login required"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:182
+msgid "You must have a user account to participate in this challenge."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:187
+#: organization/templates/organization_detail.html:32
+msgid "Contact person"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:203
+msgid ""
+"Log in to see the telephone number and email address of the contact person."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:215
+msgid ""
+"Log in to see the telephone number and email address of the contact person.."
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:229
+msgid "Link to this page"
+msgstr ""
+
+#: challenge/templates/challenge_detail.html:237
 msgid "People waiting for confirmation"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:170
+#: challenge/templates/challenge_detail.html:252
 msgid "Accept"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:173
+#: challenge/templates/challenge_detail.html:255
 msgid "Reject"
 msgstr ""
 
-#: challenge/templates/challenge_detail.html:184
-msgid "Comments"
-msgstr ""
-
-#: challenge/templates/challenge_edit.html:33
+#: challenge/templates/challenge_edit.html:35
 msgid "Save Changes"
 msgstr ""
 
@@ -1876,11 +2051,11 @@ msgstr ""
 msgid "Full Name"
 msgstr ""
 
-#: organization/models.py:53
+#: organization/models.py:55
 msgid "organization"
 msgstr ""
 
-#: organization/models.py:54
+#: organization/models.py:56
 msgid "organizations"
 msgstr ""
 
@@ -1896,12 +2071,74 @@ msgstr ""
 msgid "Organization details"
 msgstr ""
 
-#: organization/templates/organization_detail.html:46
-msgid "Administrators"
+#: organization/templates/organization_detail.html:49
+msgid "Upcoming challenges"
+msgstr ""
+
+#: organization/templates/organization_detail.html:60
+msgid "No upcoming challenges"
+msgstr ""
+
+#: organization/templates/organization_detail.html:61
+msgid "This organization has no upcoming challenges at the moment"
+msgstr ""
+
+#: organization/templates/organization_detail.html:68
+msgid "Past challenges"
+msgstr ""
+
+#: organization/templates/organization_detail.html:79
+msgid "No past challenges"
+msgstr ""
+
+#: organization/templates/organization_detail.html:80
+msgid "This organization has no past challenges at the moment"
+msgstr ""
+
+#: organization/templates/organization_detail.html:87
+msgid "Staff"
+msgstr ""
+
+#: organization/templates/organization_detail.html:88
+msgid "These users can create challenges in the name of this organization"
+msgstr ""
+
+#: organization/templates/organization_detail.html:104
+msgid "Put iFrame to this Organization on your site"
+msgstr ""
+
+#: organization/templates/organization_detail.html:107
+#: organization/templates/organization_detail.html:111
+msgid "Not supproted"
+msgstr ""
+
+#: organization/templates/organization_iframe.html:13
+msgid "upcoming challenges on Participe"
+msgstr ""
+
+#: organization/templates/organization_iframe.html:24
+msgid "This organization has no open challenges at the moment"
 msgstr ""
 
 #: organization/templates/organization_list.html:4
 msgid "Organizations list"
+msgstr ""
+
+#: organization/templates/organization_list.html:27
+msgid "Current Challenges"
+msgstr ""
+
+#: templates/403.html:4
+msgid "Permission denied"
+msgstr ""
+
+#: templates/403.html:8
+msgid "The force is not with you today."
+msgstr ""
+
+#: templates/403.html:10
+msgid ""
+"You cannot jedi mind trick your way into viewing this page, try again later."
 msgstr ""
 
 #: templates/404.html:4 templates/404.html.py:8
@@ -1934,16 +2171,80 @@ msgid ""
 "mail and should be fixed shortly. Thanks for your patience."
 msgstr ""
 
-#: templates/base.html:37
-msgid ""
-"This is an early test version of Participe. All challenges, users and "
-"organizations are imaginary."
+#: templates/base.html:42
+msgid "My profile"
 msgstr ""
 
-#: templates/base.html:45
+#: templates/base.html:43
+msgid "Log out"
+msgstr ""
+
+#: templates/base.html:46
 msgid "login with facebook"
 msgstr ""
 
-#: templates/base.html:58
+#: templates/base.html:49
+msgid "No account yet?"
+msgstr ""
+
+#: templates/base.html:61
 msgid "change"
+msgstr ""
+
+#: templates/base.html:69
+msgid "Test Version"
+msgstr ""
+
+#: templates/base.html:70
+msgid ""
+"All information on beta.partici.pe is fictional and for testing purposes "
+"only."
+msgstr ""
+
+#: templates/base.html:79
+msgid "For Partners"
+msgstr ""
+
+#: templates/base.html:81
+msgid "For Organizers"
+msgstr ""
+
+#: templates/base.html:82
+msgid "For Sponsors"
+msgstr ""
+
+#: templates/base.html:83
+msgid "For Media"
+msgstr ""
+
+#: templates/base.html:87
+msgid "For Users"
+msgstr ""
+
+#: templates/base.html:89
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:90
+msgid "Terms and Conditions"
+msgstr ""
+
+#: templates/base.html:91
+msgid "Fork us on GitHub"
+msgstr ""
+
+#: templates/base.html:95
+msgid "About Participe"
+msgstr ""
+
+#: templates/base.html:97
+msgid "Team"
+msgstr ""
+
+#: templates/base.html:98
+msgid "Feedback"
+msgstr ""
+
+#: templates/base.html:99
+msgid "Join Us"
 msgstr ""
