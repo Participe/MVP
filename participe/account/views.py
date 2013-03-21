@@ -15,7 +15,7 @@ from django.contrib.auth.tokens import (default_token_generator
 from django.contrib.auth.views import auth_login
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
-from django.db.models import Q
+from django.db.models import Sum, Q
 from django.http import (HttpResponse, HttpResponseBadRequest,
         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -33,6 +33,7 @@ from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
         AvatarCropForm)
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
+from participe.account.models import PRIVACY_MODE
 from participe.core.user_tests import user_profile_completed
 from participe.challenge.models import (Challenge, Participation,
         CHALLENGE_STATUS, PARTICIPATION_STATE)
@@ -259,7 +260,6 @@ def account_list(request):
 def view_profile(request, user_id):
     ctx = {}
     user = request.user
-    user_may_see_account_details = False
 
     account = get_object_or_404(User, pk=user_id)
     ctx.update({"account": account})
@@ -271,23 +271,80 @@ def view_profile(request, user_id):
         profile = None
     ctx.update({"profile": profile})
 
-    participated_challenges = Challenge.objects.filter(pk__in=
-        Participation.objects.filter(
+    challenges_participated = Challenge.objects.filter(
+            pk__in=Participation.objects.filter(
+                    user=account, 
+                    challenge__is_deleted=False, 
+                    status__in=[
+                            PARTICIPATION_STATE.CONFIRMED,
+                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+                            PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
+                    ).values_list("challenge_id", flat=True),
+            )
+    ctx.update({"challenges_participated": challenges_participated})
+
+    challenges_acknowledged = Challenge.objects.filter(
+            pk__in=Participation.objects.filter(
+                    user=account, 
+                    challenge__is_deleted=False, 
+                    status=PARTICIPATION_STATE.ACKNOWLEDGED,
+                    ).values_list("challenge_id", flat=True),
+            )
+    ctx.update({"challenges_acknowledged": challenges_acknowledged})
+
+    participations_cancelled_by_user = Participation.objects.filter(
             user=account, 
             challenge__is_deleted=False, 
-            status=PARTICIPATION_STATE.CONFIRMED
-        ).values_list("challenge_id", flat=True))
-    ctx.update({"participated_challenges": participated_challenges})
+            status=PARTICIPATION_STATE.CANCELLED_BY_USER,
+            )
+    ctx.update({"participations_cancelled_by_user":
+            participations_cancelled_by_user})
 
+    participations_cancelled_by_admin = Participation.objects.filter(
+            user=account, 
+            challenge__is_deleted=False, 
+            status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
+            )
+    ctx.update({"participations_cancelled_by_admin":
+            participations_cancelled_by_admin})
+
+    sum_of_hours_spent = Challenge.objects.filter(
+        pk__in=Participation.objects.filter(
+            user=account, 
+            challenge__is_deleted=False, 
+            status=PARTICIPATION_STATE.ACKNOWLEDGED
+        ).values_list("challenge_id", flat=True)).aggregate(Sum("duration"))
+    ctx.update({"sum_of_hours_spent": sum_of_hours_spent["duration__sum"]})
+    
     affiliated_organizations = Organization.objects.filter(
         affiliated_users=account,
         )
     ctx.update({"affiliated_organizations": affiliated_organizations})
 
+    need_to_know = False
+    if Challenge.objects.filter(contact_person=account, is_deleted=False):
+        need_to_know = True
+
     if user.is_authenticated():
+        chs = Challenge.objects.filter(
+            pk__in=Participation.objects.filter(
+                user=account, 
+                challenge__is_deleted=False, 
+                status__in=[
+                    PARTICIPATION_STATE.CONFIRMED,
+                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
+                ).values_list("challenge_id", flat=True),
+            contact_person=user
+            )
+        if chs:
+            need_to_know = True
+
         admin_challenges = get_admin_challenges(user)
-        desired_challenges = Challenge.objects.filter(pk__in=
-            Participation.objects.filter(
+        desired_challenges = Challenge.objects.filter(
+            pk__in=Participation.objects.filter(
                 user=account, 
                 challenge__is_deleted=False, 
                 status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
@@ -295,7 +352,7 @@ def view_profile(request, user_id):
 
         # Related to viewer Challenges
         related_participated_challenges = [
-                challenge for challenge in participated_challenges
+                challenge for challenge in challenges_participated
                 if challenge in admin_challenges]
         ctx.update({"related_participated_challenges":
                 related_participated_challenges})
@@ -306,25 +363,8 @@ def view_profile(request, user_id):
         ctx.update({"related_desired_challenges":
                 related_desired_challenges})
 
-        # Cancelled Participations
-        user_cancelled_participations = Participation.objects.filter(
-                user=account,
-                status=PARTICIPATION_STATE.CANCELLED_BY_USER
-                )
-        ctx.update({"user_cancelled_participations":
-                user_cancelled_participations})
-
-        admin_cancelled_participations = Participation.objects.filter(
-                user=account,
-                status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN
-                )
-        ctx.update({"admin_cancelled_participations":
-                admin_cancelled_participations})
-        
-        if related_participated_challenges or related_desired_challenges:
-            user_may_see_account_details = True
-
-    ctx.update({"user_may_see_account_details": user_may_see_account_details})
+    ctx.update({"need_to_know": need_to_know})
+    ctx.update({"PRIVACY_MODE": PRIVACY_MODE})
     return render_to_response('account_foreignprofile.html',
             RequestContext(request, ctx))    
 

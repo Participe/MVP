@@ -6,12 +6,18 @@
 
 {% block extra_content %}
     <div class="row">
+    {% if not need_to_know and account.privacy_mode == PRIVACY_MODE.PARANOID %}
+        <div class="span12">
+            <div class="well">
+                <span class="label label-warning">{% trans "The user's information is hidden because they are in paranoid mode" %}.</span>
+            </div>
+        </div>
+    {% else %}
         <div class="span3">
             <div class="well">
                 <img src="{{ profile.avatar|default:'img/default.jpg'|thumbnail_url:'span3_large' }}" alt="">
                 <h2>{{ account.get_full_name }}</h2>
-                {% if user_may_see_account_details %}
-                {# see issue 85 #}
+                {% if need_to_know %}
                     <address>
                         <p>
                             {{ profile.address_1 }}<br>
@@ -27,28 +33,28 @@
                             {{ profile.birth_day }}
                         </p>
                     </address>
+                {% endif %}
 
-                    <b>{% trans "You can see details, because user is" %}</b>
-                    {% if related_participated_challenges %}
+                {% if sum_of_hours_spent %}
+                    <p>{% trans "Hours, spent in challenges" %}: <span class="badge">{{ sum_of_hours_spent }}</span></p>
+                {% endif %}
+                <p>FACEBOOK LINK</p>
+
+                {% if related_participated_challenges %}
                     <p class="note">
-                        <span class="label label-success">{% trans "Signed-up for your challenge" %}:</span><br>
+                        <span class="label label-success">{% trans "User is signed-up for your challenge" %}:</span><br>
                         {% for challenge in related_participated_challenges %}
                             <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
-                    {% endif %}
-                    {% if related_desired_challenges %}
+                {% endif %}
+
+                {% if related_desired_challenges %}
                     <p class="note">
-                        <span class="label label-warning">{% trans "Waitnig for confirmation on your challenge" %}:</span><br>
+                        <span class="label label-warning">{% trans "User is waiting for confirmation on your challenge" %}:</span><br>
                         {% for challenge in related_desired_challenges %}
                             <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
-                    </p>
-                    {% endif %}
-                {% else %}
-                    <p class="note">
-                        <span class="label label-alert">{% trans "Information hidden" %}</span><br>
-                        {% trans "This user does not to share their email address or phone number with the public." %}
                     </p>
                 {% endif %}
             </div>
@@ -56,10 +62,30 @@
 
         <div class="span9">
             <div class="well">
-                {% if participated_challenges %}
+                {% if challenges_participated %}
+                    <h3>{% trans "Participates in challenges" %}</h3>
+                    <ul class="thumbnails">
+                        {% for challenge in challenges_participated %}
+                            <li class="span4">
+                                <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
+                                    <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ challenge.name }}">
+                                    <h4>
+                                        {{ challenge.name }}
+                                    </h4>
+                                    <p>
+                                        <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
+                                        {{ challenge.location }}
+                                    </p>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if challenges_acknowledged %}
                     <h3>{% trans "Participated challenges" %}</h3>
                     <ul class="thumbnails">
-                        {% for challenge in participated_challenges %}
+                        {% for challenge in challenges_acknowledged %}
                             <li class="span4">
                                 <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
                                     <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ challenge.name }}">
@@ -92,11 +118,9 @@
                     </ul>
                 {% endif %}
             </div>
-        </div>
                 
-        {% if user_may_see_account_details %}
-        {% if user_cancelled_participations %}
-        <div class="span9">
+        {% if need_to_know %}
+        {% if participations_cancelled_by_user %}
             <div class="well">
                 <h3>{% trans "Participations, cancelled by user" %}</h3>
                 <table class="table">
@@ -106,7 +130,7 @@
                         <th>Date cancelled</th>
                         <th>Cancellation reason</th>
                     </tr>
-                    {% for participation in user_cancelled_participations %}
+                    {% for participation in participations_cancelled_by_user %}
                     <tr>
                         <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
                         <td>{{ participation.date_created }}</td>
@@ -116,11 +140,9 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
         {% endif %}
 
-        {% if admin_cancelled_participations %}
-        <div class="span9">
+        {% if participations_cancelled_by_admin %}
             <div class="well">
                 <h3>{% trans "Participations, cancelled by challenge admin" %}</h3>
                 <table class="table">
@@ -130,7 +152,7 @@
                         <th>Date cancelled</th>
                         <th>Cancellation reason</th>
                     </tr>
-                    {% for participation in admin_cancelled_participations %}
+                    {% for participation in participations_cancelled_by_admin %}
                     <tr>
                         <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
                         <td>{{ participation.date_created }}</td>
@@ -143,5 +165,6 @@
         </div>
         {% endif %}
         {% endif %}
+    {% endif %}
     </div>
 {% endblock %}
