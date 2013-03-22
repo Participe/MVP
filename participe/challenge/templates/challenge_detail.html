@@ -95,7 +95,7 @@
                     </p>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    {% if is_admin %}
+                    {% if is_admin and challenge.status != CHALLENGE_MODE.COMPLETED %}
                         <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
                     {% elif participation %}
                         <p class="note">

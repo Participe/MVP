@@ -92,6 +92,7 @@ MIDDLEWARE_CLASSES = (
 
     # The HTTP 403 exception
     'participe.core.middleware.Http403Middleware',
+    'participe.core.middleware.Http501Middleware',
 )
 
 ROOT_URLCONF = 'participe.urls'

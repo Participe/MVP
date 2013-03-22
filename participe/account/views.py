@@ -322,26 +322,7 @@ def view_profile(request, user_id):
         )
     ctx.update({"affiliated_organizations": affiliated_organizations})
 
-    need_to_know = False
-    if Challenge.objects.filter(contact_person=account, is_deleted=False):
-        need_to_know = True
-
     if user.is_authenticated():
-        chs = Challenge.objects.filter(
-            pk__in=Participation.objects.filter(
-                user=account, 
-                challenge__is_deleted=False, 
-                status__in=[
-                    PARTICIPATION_STATE.CONFIRMED,
-                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
-                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
-                ).values_list("challenge_id", flat=True),
-            contact_person=user
-            )
-        if chs:
-            need_to_know = True
-
         admin_challenges = get_admin_challenges(user)
         desired_challenges = Challenge.objects.filter(
             pk__in=Participation.objects.filter(
@@ -363,7 +344,6 @@ def view_profile(request, user_id):
         ctx.update({"related_desired_challenges":
                 related_desired_challenges})
 
-    ctx.update({"need_to_know": need_to_know})
     ctx.update({"PRIVACY_MODE": PRIVACY_MODE})
     return render_to_response('account_foreignprofile.html',
             RequestContext(request, ctx))    

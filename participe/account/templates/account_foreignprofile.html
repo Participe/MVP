@@ -3,8 +3,11 @@
 
 {% block title %}{% trans "Profile" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
+{% load accounttags %}
 
 {% block extra_content %}
+    {% need_to_know_tag request account as need_to_know %}
+    
     <div class="row">
     {% if not need_to_know and account.privacy_mode == PRIVACY_MODE.PARANOID %}
         <div class="span12">

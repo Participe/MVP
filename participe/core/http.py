@@ -1,2 +1,5 @@
 class Http403(Exception):   
-    pass 
+    pass
+
+class Http501(Exception):   
+    pass

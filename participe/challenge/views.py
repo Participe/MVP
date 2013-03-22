@@ -16,6 +16,7 @@ from models import (Challenge, Participation, Comment, CHALLENGE_MODE,
         CHALLENGE_STATUS, PARTICIPATION_STATE)
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
+from participe.core.http import Http501
 from participe.core.user_tests import user_profile_completed
 
             
@@ -140,6 +141,10 @@ def challenge_detail(request, challenge_id):
 def challenge_edit(request, challenge_id):
     user = request.user
     challenge = get_object_or_404(Challenge, pk=challenge_id)
+    
+    if challenge.status==CHALLENGE_STATUS.COMPLETED:
+        raise Http501
+
     form = EditChallengeForm(
             user, request.POST or None, request.FILES or None,
             instance=challenge)
