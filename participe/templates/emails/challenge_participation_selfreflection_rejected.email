@@ -1,0 +1,16 @@
+{% load i18n %}
+{% block subject %}{% trans "Information" %}{% endblock %}
+
+{% block html %}
+*******************************************************************************<br/>
+  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}              <br/>
+*******************************************************************************<br/>
+
+{% trans "Dear," %} {{ user.get_full_name }},<br/>
+{% trans "Your self-reflection for" %} "{{ challenge.name }}" {% trans "was rejected for the following reason" %}:<br/>
+{{ participation.selfreflection_rejection_text }}<br/>
+{% trans "Please, revise your selfreflection text on " %} {{ redirect_to }}.
+
+{% trans "Thank you," %}<br/>
+{% trans "Participe Resource Management System" %}<br/>
+{% endblock %}

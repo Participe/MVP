@@ -1,5 +1,6 @@
 {% extends 'challenge_base.html' %}
 {% load i18n %}
+{% load accounttags %}
 
 {% block title %}{% trans "Challenge details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
@@ -34,14 +35,20 @@
                 <h3>{% trans "Participants" %}</h3>
                 <ul class="thumbnails">
                     {% for participation in confirmed %}
+                        {% need_to_know_tag request participation.user as need_to_know %}
+                        {% sum_of_hours_spent_tag participation.user as sum_of_hours_spent %}
+                        {% with participation.user.get_profile as profile %}
                         <li class="span2">
                             {% if is_admin %}
                                 <div class="thumbnail well">
                                     <a href="{% url view_profile participation.user.pk %}">
-                                        {% for profile in participation.user.userprofile_set.all %}
+                                        {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                            <img src="{% thumbnail 'img/default.jpg' 130x130 crop %}" alt="{% trans 'Anonymous User' %}">
+                                            <h4>{% trans "Anonymous User" %}</h4>
+                                        {% else %}
                                             <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
-                                        {% endfor %}
-                                        <h4>{{ participation.user.get_full_name }}</h4>
+                                            <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
+                                        {% endif %}
                                     </a>
                                     <a href="#" onclick="send_remove_form()">
                                         <input type="button" class="btn" participation="{{ participation.pk }}" value="Remove">
@@ -49,13 +56,17 @@
                                 </div>
                             {% else %}
                                 <a class="thumbnail well" href="{% url view_profile participation.user.pk %}">
-                                    {% for profile in participation.user.userprofile_set.all %}
+                                    {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                        <img src="{% thumbnail 'img/default.jpg' 130x130 crop %}" alt="{% trans 'Anonymous User' %}">
+                                        <h4>{% trans "Anonymous User" %}</h4>
+                                    {% else %}
                                         <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
-                                    {% endfor %}
-                                    <h4>{{ participation.user.get_full_name }}</h4>
+                                        <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
+                                    {% endif %}
                                 </a>
                             {% endif %}
                         </li>
+                        {% endwith %}
                     {% empty %}
                         <li>{% trans "No participants yet" %}</li>
                     {% endfor %}
@@ -64,10 +75,16 @@
             <div class="">
                 <h3>{% trans "Comments" %}</h3>
                     {% for comment in comments %}
+                        {% need_to_know_tag request comment.user as need_to_know %}
+                        {% sum_of_hours_spent_tag comment.user as sum_of_hours_spent %}
                             <blockquote class="">
                                 <p>{{ comment.text }}</p>
                                 <small>
-                                    <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a>
+                                    {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                        <a href="{% url view_profile comment.user.pk %}">{% trans "Anonymous User" %}</a>
+                                    {% else %}
+                                        <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a> {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}
+                                    {% endif %}
                                     {{ comment.created_at }}
                                 </small>
                                 {% if user == comment.user or is_admin or user.is_staff %}
@@ -95,8 +112,27 @@
                     </p>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    {% if is_admin and challenge.status != CHALLENGE_MODE.COMPLETED %}
-                        <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
+                    {% if is_admin %}
+                        {% if challenge.is_overdue and challenge.status != CHALLENGE_STATUS.COMPLETED %}
+                            <input id="complete-btn" name="complete-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans 'Challenge complete' %}">
+                            <div id="complete-form">
+                                <p class="note">{% trans "Please, update the challenge description to describe, what really happened at the challenge" %}</p>
+                                <form action="{% url challenge_complete challenge.pk %}" method="post">{% csrf_token %}
+                                    <div class="input"><textarea name="description">{{ challenge.description }}</textarea></div>
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Request self-reflections' %}" />
+                                        <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                    </div>
+                                </form>
+                            </div>
+                            <strong>
+                                <span class="label label-warning">{% trans "Warning!!!" %}</span><br>
+                                {% trans "Remember to reject all participants who did not come to the challenge before you set the challenge to 'Complete'" %}
+                            </strong>
+                        {% endif %}
+                        {% if challenge.status != CHALLENGE_STATUS.COMPLETED %}
+                            <p><a class="btn" href="{{ challenge.get_edit_url }}">{% trans "Edit challenge" %}</a></p>
+                        {% endif %}
                     {% elif participation %}
                         <p class="note">
                             {% if participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION %}
@@ -112,6 +148,15 @@
 
                             {% elif participation.status == PARTICIPATION_STATE.CANCELLED_BY_ADMIN %}
                                 <span class="label label-error">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION %}
+                                <span class="label label-info">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT %}
+                                <span class="label label-info">{{ participation.stat_participation_status_name }}</span>
+
+                            {% elif participation.status == PARTICIPATION_STATE.ACKNOWLEDGED %}
+                                <span class="label label-success">{{ participation.stat_participation_status_name }}</span>
 
                             {% endif %}
                         </p>
@@ -137,15 +182,15 @@
                                     </p>
                                 </small>
                                 <div>
-                                    <input id="withdraw" name="withdraw" type="button" class="btn btn-danger btn-mini" value="{% trans "Withdraw" %}" />
-                                    <input id="cancel-btn" name="cancel-btn" type="button" class="btn btn-mini" value="{% trans "Cancel" %}">
+                                    <input id="withdraw" name="withdraw" type="button" class="btn btn-danger btn-mini" value="{% trans 'Withdraw' %}" />
+                                    <input id="cancel-btn" name="cancel-btn" type="button" class="btn btn-mini" value="{% trans 'Cancel' %}">
                                 </div>
                             </form>
                         {% endif %}
                     {% endif %}
 
                     {% if not is_admin and sform %}
-                        <input id="signup-btn" name="signup-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans "Participate" %}">
+                        <input id="signup-btn" name="signup-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans 'Participate' %}">
                         <div id="signup-form">
                             <form action="." method="post">{% csrf_token %}
                                 {% if challenge.application == CHALLENGE_MODE.CONFIRMATION_REQUIRED %}
@@ -171,6 +216,33 @@
                                 <div class="btn-group">
                                     <input type="submit" class="btn btn-success btn-primary" onclick="share_on_fb();" value="{% trans 'Participate' %}" />
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    {% if not is_admin and rform %}
+                        <input id="selfrefl-btn" name="selfrefl-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans 'Submit self-reflection' %}">
+                        <div id="selfrefl-form">
+                            <form action="." method="post">{% csrf_token %}
+                                <div class="input">{{ rform.selfreflection_activity_text }}</div>
+                                <div class="input">{{ rform.selfreflection_learning_text }}</div>
+                                <div class="btn-group">
+                                    <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Submit' %}" />
+                                    <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    {% if not is_admin and pform %}
+                        <input id="nopart-btn" name="nopart-btn" type="button" class="btn btn-primary btn-large btn-danger" value="{% trans 'I didnot participate after all' %}">
+                        <div id="nopart-form">
+                            <form action="." method="post">{% csrf_token %}
+                                <div class="input">{{ pform.cancellation_text }}</div>
+                                <div class="btn-group">
+                                    <input type="submit" class="btn btn-danger btn-primary" value="{% trans 'Send a reason' %}" />
+                                    <input id="cancel-nopart-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
                                 </div>
                             </form>
                         </div>
@@ -233,17 +305,23 @@
         </div>
     </div>
 
-    {% if waited and is_admin %}
+    {% if waiting_for_confirmation and is_admin %}
         <h3>{% trans "People waiting for confirmation" %}</h3>
         <ul class="thumbnails">
-            {% for participation in waited %}
+            {% for participation in waiting_for_confirmation %}
+                {% need_to_know_tag request participation.user as need_to_know %}
+                {% sum_of_hours_spent_tag participation.user as sum_of_hours_spent %}
+                {% with participation.user.get_profile as profile %}
                 <li class="span3">
                     <div class="thumbnail well">
                         <a href="{% url view_profile participation.user.pk %}">
-                            {% for profile in participation.user.userprofile_set.all %}
-                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 230x150 crop %}" alt="{{ particiation.user.get_full_name }}">
-                            {% endfor %}
-                            <h4>{{ participation.user.get_full_name }}</h4>
+                            {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                <img src="{% thumbnail 'img/default.jpg' 130x130 crop %}" alt="{% trans 'Anonymous User' %}">
+                                <h4>{% trans "Anonymous User" %}</h4>
+                            {% else %}
+                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
+                                <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
+                            {% endif %}
                         </a>
                         <blockquote>
                             {{ participation.application_text }}
@@ -256,13 +334,43 @@
                         </a>
                     </div>
                 </li>
+                {% endwith %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if waiting_for_acknowledgement and is_admin %}
+        <h3>{% trans "People waiting for acknowledgement" %}</h3>
+        <ul class="thumbnails">
+            {% for participation in waiting_for_acknowledgement %}
+                {% need_to_know_tag request participation.user as need_to_know %}
+                {% sum_of_hours_spent_tag participation.user as sum_of_hours_spent %}
+                {% with participation.user.get_profile as profile %}
+                <li class="span3">
+                    <div class="thumbnail well">
+                        <a href="{% url view_profile participation.user.pk %}">
+                            {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                <img src="{% thumbnail 'img/default.jpg' 130x130 crop %}" alt="{% trans 'Anonymous User' %}">
+                                <h4>{% trans "Anonymous User" %}</h4>
+                            {% else %}
+                                <img src="{% thumbnail profile.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ particiation.user.get_full_name }}">
+                                <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
+                            {% endif %}
+                        </a>
+                        <blockquote>{{ participation.selfreflection_activity_text }}</blockquote>
+                        <blockquote>{{ participation.selfreflection_learning_text }}</blockquote>
+                        <a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}"></a>
+                        <a href="#" onclick="send_remove_form()"><input type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}"></a>
+                    </div>
+                </li>
+                {% endwith %}
             {% endfor %}
         </ul>
     {% endif %}
 
     <div id="remove-participation-dialog">
         <form id="remove-participation-form" action="{% url participation_remove challenge.pk %}" method="post">{% csrf_token %}
-            <textarea id="text" name="text" rows="5" cols="20" placeholder="Cancellation/Rejection reason"></textarea>
+            <textarea id="text" name="text" rows="5" cols="20" placeholder="Enter text here"></textarea>
         </form>
     </div>
 
@@ -322,6 +430,45 @@
             $("#cancel-btn").click(function(){
                 $('#signup-form').hide("slow");
                 $("#signup-btn").show("slow");
+                return false;
+            });
+
+            //Self-reflection form
+            $("#selfrefl-form").hide();
+            $("#selfrefl-btn").click(function(){
+                $("#selfrefl-btn").hide();
+                $('#selfrefl-form').show("slow");
+                return false;
+            });
+            $("#cancel-btn").click(function(){
+                $('#selfrefl-form').hide("slow");
+                $("#selfrefl-btn").show("slow");
+                return false;
+            });
+
+            //User didnot participate form
+            $("#nopart-form").hide();
+            $("#nopart-btn").click(function(){
+                $("#nopart-btn").hide();
+                $('#nopart-form').show("slow");
+                return false;
+            });
+            $("#cancel-nopart-btn").click(function(){
+                $('#nopart-form').hide("slow");
+                $("#nopart-btn").show("slow");
+                return false;
+            });
+
+            //Complete challenge form
+            $("#complete-form").hide();
+            $("#complete-btn").click(function(){
+                $("#complete-btn").hide();
+                $('#complete-form').show("slow");
+                return false;
+            });
+            $("#cancel-btn").click(function(){
+                $('#complete-form').hide("slow");
+                $("#complete-btn").show("slow");
                 return false;
             });
 

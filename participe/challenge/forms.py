@@ -281,7 +281,7 @@ class WithdrawSignupForm(forms.ModelForm):
         fields = ["cancellation_text",]
         widgets = {
             "cancellation_text": forms.Textarea(
-                    attrs={"placeholder": _("Reason for withdrawing")}),
+                    attrs={"placeholder": _("Leave a reason")}),
             }
 
     def clean_cancellation_text(self):
@@ -301,6 +301,33 @@ class WithdrawSignupForm(forms.ModelForm):
         instance = super(WithdrawSignupForm, self).save(commit=False)
         instance.status = PARTICIPATION_STATE.CANCELLED_BY_USER
         instance.date_cancelled = datetime.now()
+
+        if commit:
+            instance.save()
+
+class SelfreflectionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SelfreflectionForm, self).__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+            pass
+
+    class Meta:
+        model = Participation
+        fields = [
+                "selfreflection_activity_text",
+                "selfreflection_learning_text",]
+        widgets = {
+            "selfreflection_activity_text": forms.Textarea(
+                    attrs={"placeholder": _("Self-reflection activity")}),
+            "selfreflection_learning_text": forms.Textarea(
+                    attrs={"placeholder": _("Self-reflection learning")}),
+            }
+
+    def save(self, commit=True):
+        instance = super(SelfreflectionForm, self).save(commit=False)
+        instance.status = PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+        instance.date_selfreflection = datetime.now()
 
         if commit:
             instance.save()

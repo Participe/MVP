@@ -308,14 +308,6 @@ def view_profile(request, user_id):
             )
     ctx.update({"participations_cancelled_by_admin":
             participations_cancelled_by_admin})
-
-    sum_of_hours_spent = Challenge.objects.filter(
-        pk__in=Participation.objects.filter(
-            user=account, 
-            challenge__is_deleted=False, 
-            status=PARTICIPATION_STATE.ACKNOWLEDGED
-        ).values_list("challenge_id", flat=True)).aggregate(Sum("duration"))
-    ctx.update({"sum_of_hours_spent": sum_of_hours_spent["duration__sum"]})
     
     affiliated_organizations = Organization.objects.filter(
         affiliated_users=account,

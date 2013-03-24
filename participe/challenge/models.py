@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -119,12 +120,20 @@ class Challenge(models.Model):
     @property
     def get_waiting_count(self):
         return Participation.objects.all().filter(
-                challenge=self, status="0").count()
+                challenge=self,
+                status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION).count()
 
     @property
     def get_confirmed_count(self):
         return Participation.objects.all().filter(
-                challenge=self, status="2").count()
+                challenge=self,
+                status=PARTICIPATION_STATE.CONFIRMED).count()
+
+    @property
+    def is_overdue(self):
+        if self.start_date < date.today():
+            return True
+        return False
 
 PARTICIPATION_STATE = enum(
     WAITING_FOR_CONFIRMATION = "0", 

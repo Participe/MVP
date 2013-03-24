@@ -7,6 +7,7 @@
 
 {% block extra_content %}
     {% need_to_know_tag request account as need_to_know %}
+    {% sum_of_hours_spent_tag account as sum_of_hours_spent %}
     
     <div class="row">
     {% if not need_to_know and account.privacy_mode == PRIVACY_MODE.PARANOID %}
