@@ -192,6 +192,10 @@ def account_login(request):
     form = LoginForm(request.POST or None)
     redirect_to = request.REQUEST.get('next', '')
     
+    if request.method == "GET":
+        if redirect_to and request.user.is_authenticated():
+            return HttpResponseRedirect(redirect_to)
+
     if request.method == 'POST':
         if form.is_valid():
             if not redirect_to:
