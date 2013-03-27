@@ -98,7 +98,13 @@ class Challenge(models.Model):
         return reverse(
                 'participe.challenge.views.challenge_edit',
                 args=[str(self.id)])
-                
+
+    def get_acknowledged_qs(self):
+        """Returns participations with Acknowledged status"""
+        return Participation.objects.filter(
+                challenge=self,
+                status=PARTICIPATION_STATE.ACKNOWLEDGED)
+
     @property
     def stat_application_name(self):
         for code, name in application_choices:

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Sum
 from django.utils.translation import ugettext as _
 
 from django_countries import CountryField
@@ -62,3 +63,12 @@ class Organization(models.Model):
     def get_absolute_url(self):
         return reverse('participe.organization.views.organization_detail',
                 args=[str(self.id)])
+
+    def get_hours_worked(self):
+        from participe.challenge.models import Challenge, CHALLENGE_STATUS
+
+        hours_worked = Challenge.objects.filter(
+                status=CHALLENGE_STATUS.COMPLETED,
+                organization=self,
+                is_deleted=False).aggregate(Sum("duration"))
+        return hours_worked["duration__sum"]

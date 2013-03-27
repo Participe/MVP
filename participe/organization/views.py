@@ -61,11 +61,19 @@ def organization_detail(request, organization_id):
 
 def organization_iframe(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
-    challenges = Challenge.objects.filter(
-            organization=organization, is_deleted=False
+    challenges_upcoming = Challenge.objects.filter(
+            status=CHALLENGE_STATUS.UPCOMING,
+            organization=organization,
+            is_deleted=False
+            ).order_by("created_at")
+    challenges_completed = Challenge.objects.filter(
+            status=CHALLENGE_STATUS.COMPLETED,
+            organization=organization,
+            is_deleted=False
             ).order_by("created_at")
     return render_to_response('organization_iframe.html',
             RequestContext(request, {
                     'organization': organization,
-                    'challenges': challenges,
+                    'challenges_upcoming': challenges_upcoming,
+                    'challenges_completed': challenges_completed,
                     }))
