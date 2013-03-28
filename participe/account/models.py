@@ -58,7 +58,9 @@ class UserProfile(models.Model):
     privacy_mode = models.CharField(
             max_length=2, choices=privacy_choices, default=PRIVACY_MODE.NORMAL,
             verbose_name=_("Privacy mode"))
-    
+
+    fb_profile_link = models.CharField(max_length=100, null=True, blank=True)
+
     confirmation_code = models.CharField(max_length=33, null=True, blank=True)
     
     class Meta:

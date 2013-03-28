@@ -74,6 +74,8 @@ def get_extra_data(backend, details, response, social_user, uid, user, \
                 if name.lower()==country.lower():
                     profile.country = code
 
+        profile.fb_profile_link = fb_profile.get("link", "")
+
         profile.save()
     except Exception, exc:
         # Unexpected error. Just pass by.

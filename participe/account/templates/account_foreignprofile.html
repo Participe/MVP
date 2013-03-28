@@ -32,7 +32,7 @@
                             {{ profile.country.name }}
                         </p>
                         <p>
-                            {{ user.email }}<br>
+                            {{ account.email }}<br>
                             {{ profile.phone_number}}<br>
                             {{ profile.birth_day }}
                         </p>
@@ -42,7 +42,9 @@
                 {% if sum_of_hours_spent %}
                     <p>{% trans "Hours, spent in challenges" %}: <span class="badge">{{ sum_of_hours_spent }}</span></p>
                 {% endif %}
-                <p>FACEBOOK LINK</p>
+                {% if account.social_auth.all and profile.fb_profile_link %}
+                    <div class="input"><a href="#" link="{{ profile.fb_profile_link }}" onclick="open_fb_profile()" class="btn btn-info">FACEBOOK</a></div>
+                {% endif %}
 
                 {% if related_participated_challenges %}
                     <p class="note">
@@ -171,4 +173,15 @@
         {% endif %}
     {% endif %}
     </div>
+
+    <script type="text/javascript">
+        function open_fb_profile(){
+            var event = window.event || evt;
+            event.preventDefault();
+            if (!event.target) event.target = event.srcElement;
+
+            redirect_to = event.target.getAttribute("link");
+            window.open(redirect_to, "_blank").focus();
+        }
+    </script>
 {% endblock %}
