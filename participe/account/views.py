@@ -115,10 +115,11 @@ def signup(request):
 
             # Here and further, if "send_templated_email" will raise exception
             # (in general, if <user.email> not set), user will be redirected
-            # to the "/home/" or other appropriate page. 
+            # to the "/home/" or other appropriate page.
+            DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
             confirmation_link = (
                     "http://%s/account/confirmation/%s/" %
-                    (settings.DOMAIN_NAME, confirmation_code))
+                    (DOMAIN_NAME, confirmation_code))
             try:
                 send_templated_mail(
                         template_name="account_confirmation",
@@ -352,43 +353,50 @@ def view_myprofile(request):
     user_participations = get_user_participations(user).order_by(
             "challenge__start_date")
     user_participations_action_required = user_participations.filter(
-            status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION)
+            status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
+            )
     user_participations_upcoming = user_participations.filter(
-            Q(challenge__status=CHALLENGE_STATUS.UPCOMING) &
-            (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
-                    Q(status=PARTICIPATION_STATE.CONFIRMED)))
+            challenge__status=CHALLENGE_STATUS.UPCOMING,
+            status__in=[
+                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                    PARTICIPATION_STATE.CONFIRMED
+                    ])
     user_participations_completed = user_participations.filter(
-            Q(challenge__status=CHALLENGE_STATUS.UPCOMING) &
-            (Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT) |
-                    Q(status=PARTICIPATION_STATE.ACKNOWLEDGED)))
+            challenge__status=CHALLENGE_STATUS.COMPLETED,
+            status__in=[
+                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+                    PARTICIPATION_STATE.ACKNOWLEDGED
+                    ])
 
     admin_challenges = get_admin_challenges(user).order_by("start_date")
     admin_challenges_action_required = admin_challenges.filter(
-        Q(pk__in=Participation.objects.filter(
-            Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
-            Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT)
-            ).values_list("challenge_id", flat=True)
-        ) | (
-        Q(start_date__lt=datetime.date.today()) & 
-        Q(status=CHALLENGE_STATUS.UPCOMING)
-        )
+            Q(pk__in=Participation.objects.filter(
+                    status__in=[
+                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+                            ]).values_list("challenge_id", flat=True)
+            ) | Q(
+                    start_date__lt=datetime.date.today(),
+                    status=CHALLENGE_STATUS.UPCOMING
+                    )
     )
     admin_challenges_upcoming = admin_challenges.exclude(
-        pk__in=Participation.objects.filter(
-            Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
-            Q(status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT)
-            ).values_list("challenge_id", flat=True)
-        ).filter(
-            status=CHALLENGE_STATUS.UPCOMING,
-            start_date__gte=datetime.date.today()
-            )
+            pk__in=Participation.objects.filter(
+                    status__in=[
+                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+                            ]).values_list("challenge_id", flat=True)
+            ).filter(
+                    status=CHALLENGE_STATUS.UPCOMING,
+                    start_date__gte=datetime.date.today()
+                    )
     admin_challenges_completed = admin_challenges.exclude(
-        pk__in=Participation.objects.filter(
-            status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-            ).values_list("challenge_id", flat=True)
-        ).filter(
-            status=CHALLENGE_STATUS.COMPLETED
-            )
+            pk__in=Participation.objects.filter(
+                    status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+                    ).values_list("challenge_id", flat=True)
+            ).filter(
+                    status=CHALLENGE_STATUS.COMPLETED
+                    )
 
     #TODO Enhance this behaviour
     try:
@@ -490,9 +498,10 @@ def notify_forgotten_password(request):
 
             try:
                 token = token_generator.make_token(user)
+                DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
                 confirmation_link = (
                         "http://%s/accounts/password/renew/%s-%s/" %
-                        (settings.DOMAIN_NAME, int_to_base36(user.id), token))
+                        (DOMAIN_NAME, int_to_base36(user.id), token))
                 send_templated_mail(
                         template_name="account_password_renew",
                         from_email="from@example.com", 
