@@ -327,7 +327,7 @@ def participation_remove(request, challenge_id):
             participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
             template_name = "challenge_participation_selfreflection_rejected"
             redirect_to = (
-                    "<a href='http://{0}/accounts/login?next={1}>{2}</a>"
+                    "<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
                     "".format(
                     request.get_host(),
                     participation.challenge.get_absolute_url(),
