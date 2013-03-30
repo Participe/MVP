@@ -257,13 +257,17 @@ AUTHENTICATION_BACKENDS = (
 #TWITTER_CONSUMER_SECRET      = ''
 FACEBOOK_APP_ID              = '435671289832919'
 FACEBOOK_API_SECRET          = 'f892e1490d357d6ebb8392c7c7b8c54d'
-FACEBOOK_EXTENDED_PERMISSIONS = ['user_about_me', 'user_activities',
-    'user_birthday', 'user_checkins', 'user_education_history', 'user_events', 
-    'user_groups', 'user_hometown', 'user_interests', 'user_likes',
-    'user_location', 'user_notes', 'user_photos', 'user_questions',
-    'user_relationships', 'user_relationship_details', 
-    'user_religion_politics', 'user_status', 'user_subscriptions', 
-    'user_videos', 'user_website', 'user_work_history', 'email',]
+FACEBOOK_EXTENDED_PERMISSIONS = [
+    #'user_about_me', 'user_activities',
+    'user_birthday',
+    #'user_checkins', 'user_education_history', 'user_events', 
+    #'user_groups', 'user_hometown', 'user_interests', 'user_likes',
+    'user_location',
+    #'user_notes', 'user_photos', 'user_questions',
+    #'user_relationships', 'user_relationship_details', 
+    #'user_religion_politics', 'user_status', 'user_subscriptions', 
+    #'user_videos', 'user_website', 'user_work_history',
+    'email',]
 #LINKEDIN_CONSUMER_KEY        = ''
 #LINKEDIN_CONSUMER_SECRET     = ''
 #ORKUT_CONSUMER_KEY           = ''
