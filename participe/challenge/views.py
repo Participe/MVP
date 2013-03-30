@@ -337,10 +337,10 @@ def participation_remove(request, challenge_id):
             participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
             template_name = "challenge_participation_acknowledged"
             redirect_to = (
-                    "<a href='http://{0}/accounts/profile/view/{1}>profile</a>"
+                    "<a href='http://{0}/accounts/profile/view/'>profile</a>"
                     "".format(
-                    request.get_host(),
-                    participation.user.pk))
+                    request.get_host()
+                    ))
             ctx.update({"redirect_to": redirect_to})
 
         if value=="Remove" or value=="Reject":
