@@ -36,7 +36,7 @@ def organization_list(request):
                     'organizations': organizations,
                     }))
 
-def organization_detail(request, organization_id):
+def organization_detail(request, organization_id, slug=None):
     organization = get_object_or_404(Organization, pk=organization_id)
     if organization.is_deleted:
         raise Http404

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Sum
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
 from django_countries import CountryField
@@ -62,7 +63,7 @@ class Organization(models.Model):
 
     def get_absolute_url(self):
         return reverse('participe.organization.views.organization_detail',
-                args=[str(self.id)])
+                args=[str(self.id), slugify(self.name)])
 
     def get_hours_worked(self):
         from participe.challenge.models import Challenge, CHALLENGE_STATUS

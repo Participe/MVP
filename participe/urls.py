@@ -83,6 +83,8 @@ urlpatterns += patterns('participe.organization.views',
             name='organization_create'),
     url(r'^organizations/view/(?P<organization_id>\d+)/$',
             'organization_detail', name='organization_detail'),
+    url(r'^organizations/view/(?P<organization_id>\d+)/(?P<slug>[\w_-]+)/$',
+            'organization_detail', name='organization_detail'),
     url(r'^organizations/iframe/(?P<organization_id>\d+)/$',
             'organization_iframe', name='organization_iframe'),
     )
