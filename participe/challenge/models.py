@@ -68,7 +68,8 @@ class Challenge(models.Model):
     start_time = models.TimeField(verbose_name=_("Start Time"))
 
     organization = models.ForeignKey(
-            Organization, null=True, verbose_name=_("Organization"))
+            Organization, null=True, blank=True,
+            verbose_name=_("Organization"))
 
     application = models.CharField(
             max_length=2, choices=application_choices,
