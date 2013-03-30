@@ -173,17 +173,20 @@ class EditChallengeForm(forms.ModelForm):
 
     class Meta:
         model = Challenge
-        fields = ["avatar", "name", "description", "location",
+        fields = ["avatar", "name", "description", "location", "duration",
             "is_contact_person", "is_alt_person", "alt_person_fullname",
             "alt_person_email", "alt_person_phone", "start_date", "start_time",
             "application", "deleted_reason",
             ]
         widgets = {
-            "location": forms.TextInput(
-                    attrs={"placeholder": _("Location")}),
             "description": forms.Textarea(
                     attrs={"cols": 25, "rows": 5,
                     "placeholder": _("Challenge description")}),
+            "location": forms.TextInput(
+                    attrs={"placeholder": _("Location")}),
+            "duration": widgets.NumberInput(
+                    attrs={'min': '1', 'max': '10', 'step': '1',
+                            "class": "input-mini"}),
             "alt_person_fullname": forms.TextInput(
                     attrs={"placeholder": _("Full name")}),
             #"alt_person_email": forms.TextInput(attrs={"placeholder": _("E-mail")}),
@@ -199,6 +202,12 @@ class EditChallengeForm(forms.ModelForm):
                     attrs={"placeholder": _("Reason for deletion "
                             "(at least 20 symbols)")}),
             }
+
+    def clean_duration(self):
+        if self.cleaned_data["duration"] < 1:
+            raise forms.ValidationError(
+                    _("Value should be greater or equal 1"))
+        return self.cleaned_data["duration"]
 
     def clean_contact(self):
         if self.cleaned_data["contact"] == 'me':

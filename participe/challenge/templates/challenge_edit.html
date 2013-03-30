@@ -21,6 +21,7 @@
                         <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
                         <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
                         <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
+                        <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }}</div> 
                     </div>
                     <div class="span4">
                         <div class="input">{% trans "Contact person:" %}</div>
