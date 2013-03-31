@@ -59,13 +59,21 @@ def organization_detail(request, organization_id, slug=None):
                     'completed_challenges': completed_challenges,
                     }))
 
-def organization_iframe(request, organization_id):
+def organization_iframe_upcoming(request, organization_id):
     organization = get_object_or_404(Organization, pk=organization_id)
     challenges_upcoming = Challenge.objects.filter(
             status=CHALLENGE_STATUS.UPCOMING,
             organization=organization,
             is_deleted=False
             ).order_by("created_at")
+    return render_to_response('organization_iframe.html',
+            RequestContext(request, {
+                    'organization': organization,
+                    'challenges_upcoming': challenges_upcoming,
+                    }))
+
+def organization_iframe_completed(request, organization_id):
+    organization = get_object_or_404(Organization, pk=organization_id)
     challenges_completed = Challenge.objects.filter(
             status=CHALLENGE_STATUS.COMPLETED,
             organization=organization,
@@ -74,6 +82,5 @@ def organization_iframe(request, organization_id):
     return render_to_response('organization_iframe.html',
             RequestContext(request, {
                     'organization': organization,
-                    'challenges_upcoming': challenges_upcoming,
                     'challenges_completed': challenges_completed,
                     }))

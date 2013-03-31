@@ -85,8 +85,13 @@ urlpatterns += patterns('participe.organization.views',
             'organization_detail', name='organization_detail'),
     url(r'^organizations/view/(?P<organization_id>\d+)/(?P<slug>[\w_-]+)/$',
             'organization_detail', name='organization_detail'),
-    url(r'^organizations/iframe/(?P<organization_id>\d+)/$',
-            'organization_iframe', name='organization_iframe'),
+
+    url(r'^organizations/iframe/upcoming/(?P<organization_id>\d+)/$',
+            'organization_iframe_upcoming',
+            name='organization_iframe_upcoming'),
+    url(r'^organizations/iframe/completed/(?P<organization_id>\d+)/$',
+            'organization_iframe_completed',
+            name='organization_iframe_completed'),
     )
 
 # The big, fat disclaimer
