@@ -259,7 +259,7 @@ def challenge_complete(request, challenge_id):
         challenge.save()
 
         redirect_to = (
-                "<a href='http://{0}/accounts/login?next={1}>{2}</a>"
+                "<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
                 "".format(
                 request.get_host(),
                 challenge.get_absolute_url(),
@@ -337,7 +337,8 @@ def participation_remove(request, challenge_id):
             participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
             template_name = "challenge_participation_acknowledged"
             redirect_to = (
-                    "<a href='http://{0}/accounts/profile/view/'>profile</a>"
+                    "<a href='http://{0}/accounts/login?"
+                    "next=/accounts/profile/view/'>profile</a>"
                     "".format(
                     request.get_host()
                     ))
