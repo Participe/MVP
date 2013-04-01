@@ -41,18 +41,17 @@
         </div>
 
         <div class="span9">
+            <div class="well">
             <h3>{% trans "Challenges you are participating in" %}</h3>
             {% for participations, header in user_participations %}
                 {% if participations %}
                 <h4>{{ header }}</h4>
                 <ul class="thumbnails">
-                    {% for participation in participations %}        
+                    {% for participation in participations %}
                         <li class="span3">
                             <a class="thumbnail" href="{{ participation.challenge.get_absolute_url }}">
                                 <img src="{% thumbnail participation.challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ participation.challenge.name }}">
-                                <h4>
-                                    {{ participation.challenge.name }}
-                                </h4>
+                                <h4>{{ participation.challenge.name }}</h4>
                                 <p>
                                     <strong>{{ participation.challenge.start_date|date:"l j. F o" }}</strong><br>
                                     {{ participation.challenge.location }}
@@ -63,6 +62,10 @@
                                     <span class="label label-warning">{% trans "Write self-reflection" %}</span>
                                 {% elif participation.status == PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT %}
                                     <span class="label label-warning">{% trans "Waiting for acknowledgement" %}</span>
+                                {% elif participation.status == PARTICIPATION_STATE.ACKNOWLEDGED %}
+                                    <blockquote>{{ participation.selfreflection_activity_text }}</blockquote>
+                                    <blockquote>{{ participation.selfreflection_learning_text }}</blockquote>
+                                    <blockquote>{{ participation.acknowledgement_text }}</blockquote>
                                 {% endif %}
                             </a>
                         </li>
@@ -70,14 +73,16 @@
                 </ul>
                 {% endif %}
             {% endfor %}
+            </div>
 
             {% if admin_challenges %}
+                <div class="well">
                 <h3>{% trans "Challenges you are responsible for" %}</h3>
                 {% for challenges, header in admin_challenges %}
                     {% if challenges %}
                     <h4>{{ header }}</h4>
                     <ul class="thumbnails">
-                        {% for challenge in challenges %}        
+                        {% for challenge in challenges %}
                             <li class="span3">
                                 <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
                                     <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 340x200 crop %}" alt="{{ challenge.name }}">
@@ -94,7 +99,53 @@
                     </ul>
                     {% endif %}
                 {% endfor %}
+                </div>
             {% endif %}
+
+            {% if participations_cancelled_by_user %}
+            <div class="well">
+                <h3>{% trans "Participations, cancelled by you" %}</h3>
+                <table class="table">
+                    <tr>
+                        <th>Challenge name</th>
+                        <th>Date signed up</th>
+                        <th>Date cancelled</th>
+                        <th>Cancellation reason</th>
+                    </tr>
+                    {% for participation in participations_cancelled_by_user %}
+                    <tr>
+                        <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                        <td>{{ participation.date_created }}</td>
+                        <td>{{ participation.date_cancelled }}</td>
+                        <td>{{ participation.cancellation_text }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+
+            {% if participations_cancelled_by_admin %}
+            <div class="well">
+                <h3>{% trans "Participations, cancelled by challenge admin" %}</h3>
+                <table class="table">
+                    <tr>
+                        <th>Challenge name</th>
+                        <th>Date signed up</th>
+                        <th>Date cancelled</th>
+                        <th>Cancellation reason</th>
+                    </tr>
+                    {% for participation in participations_cancelled_by_admin %}
+                    <tr>
+                        <td><a href="{{ participation.challenge.get_absolute_url }}">{{ participation.challenge.name }}</a></td>
+                        <td>{{ participation.date_created }}</td>
+                        <td>{{ participation.date_cancelled }}</td>
+                        <td>{{ participation.cancellation_text }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

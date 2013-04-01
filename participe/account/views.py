@@ -397,6 +397,18 @@ def view_myprofile(request):
                     status=CHALLENGE_STATUS.COMPLETED
                     )
 
+    participations_cancelled_by_user = Participation.objects.filter(
+            user=user,
+            challenge__is_deleted=False,
+            status=PARTICIPATION_STATE.CANCELLED_BY_USER,
+            )
+
+    participations_cancelled_by_admin = Participation.objects.filter(
+            user=user,
+            challenge__is_deleted=False,
+            status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
+            )
+
     #TODO Enhance this behaviour
     try:
         profile = get_object_or_404(UserProfile, user=user)
@@ -420,7 +432,11 @@ def view_myprofile(request):
                                     _("that have the status 'Upcoming'")),
                             (admin_challenges_completed,
                                     _("that have the status 'Completed'")),],
-                    "PARTICIPATION_STATE": PARTICIPATION_STATE
+                    "PARTICIPATION_STATE": PARTICIPATION_STATE,
+                    "participations_cancelled_by_user":
+                            participations_cancelled_by_user,
+                    "participations_cancelled_by_admin":
+                            participations_cancelled_by_admin
                     }))
 
 @login_required
