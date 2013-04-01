@@ -37,7 +37,7 @@ from participe.account.models import PRIVACY_MODE
 from participe.core.user_tests import user_profile_completed
 from participe.challenge.models import (Challenge, Participation,
         CHALLENGE_STATUS, PARTICIPATION_STATE)
-from participe.organization.models import Organization 
+from participe.organization.models import Organization
 
 try:
     from cStringIO import StringIO
@@ -64,7 +64,7 @@ def _attach_avatar(request, instance):
 
 def _generate_confirmation_code():
     confirmation_code = ''.join(random.choice(
-            string.ascii_uppercase + 
+            string.ascii_uppercase +
             string.digits +
             string.ascii_lowercase
             ) for x in range(33))
@@ -86,9 +86,9 @@ def signup(request):
                     )
             user.set_password(uform.cleaned_data["password"])
             user.save()
-            
+
             confirmation_code = _generate_confirmation_code()
-            
+
             # Create User Profile
             profile = UserProfile.objects.create(
                     user = user,
@@ -123,13 +123,13 @@ def signup(request):
             try:
                 send_templated_mail(
                         template_name="account_confirmation",
-                        from_email="from@example.com", 
-                        recipient_list=[user.email,], 
+                        from_email="from@example.com",
+                        recipient_list=[user.email,],
                         context={
                                 "user": user,
                                 "confirmation_link": confirmation_link,
                                 },)
-                return render_to_response('account_confirmation_email.html', 
+                return render_to_response('account_confirmation_email.html',
                         RequestContext(request, {
                                 "address": user.email,
                                 }))
@@ -144,7 +144,7 @@ def signup(request):
         if access_token:
             fb_profile = urllib.urlopen('https://graph.facebook.com/me?access_token=%s' % access_token)
             fb_profile = json.load(fb_profile)
-                
+
             uform.fields['username'].initial = fb_profile['username']
             uform.fields['first_name'].initial = fb_profile['first_name']
             uform.fields['last_name'].initial = fb_profile['last_name']
@@ -169,9 +169,9 @@ def email_confirmation(request, confirmation_code):
             # Instant log-in after confirmation
 			user.is_active = True
 			user.save()
-			user.backend = "django.contrib.auth.backends.ModelBackend" 
+			user.backend = "django.contrib.auth.backends.ModelBackend"
 			auth_login(request, user)
-			
+
 			info = _("You have successfuly confirmed your e-mail.")
 			return render_to_response('account_information.html',
                     RequestContext(request, {
@@ -182,7 +182,7 @@ def email_confirmation(request, confirmation_code):
             profile.delete()
             user.delete()
             info = _("The link has been expired. Please, sign-up again.")
-            return render_to_response('account_error.html', 
+            return render_to_response('account_error.html',
                     RequestContext(request, {
                             "information": info,
                             }))
@@ -192,7 +192,7 @@ def email_confirmation(request, confirmation_code):
 def account_login(request):
     form = LoginForm(request.POST or None)
     redirect_to = request.REQUEST.get('next', '')
-    
+
     if request.method == "GET":
         if redirect_to and request.user.is_authenticated():
             return HttpResponseRedirect(redirect_to)
@@ -216,7 +216,7 @@ def account_login(request):
                 form.add_non_field_error(
                         _("Sorry, you have entered wrong E-mail or Password"))
 
-    return render_to_response('account_login.html', 
+    return render_to_response('account_login.html',
             RequestContext(request, {
                     'form': form,
                     'next': redirect_to,
@@ -228,7 +228,7 @@ def account_login(request):
 # and FB.login().
 # There's another (but not easiest) way to implement such behaviour:
 # 1. Pass to base template 'access_token' (via 'views' or 'template context');
-# 2. In base template make request to 
+# 2. In base template make request to
 #    'https://www.facebook.com/logout.php?next=http://{%s}&access_token={%s}'
 #    which will logout user from FB and redirect to, e.g.,
 # 3. '/accounts/after_fb_logout/' which will logout user from Participe.
@@ -248,7 +248,7 @@ def account_logout(request, next_page):
         access_token = instance.tokens["access_token"]
         fb_logout = (
                 'https://www.facebook.com/logout.php?'
-                'next=http://%s&access_token=%s' % 
+                'next=http://%s&access_token=%s' %
                 (DOMAIN_NAME, access_token))
         response = logout(request, next_page=fb_logout)
     except:
@@ -268,7 +268,7 @@ def view_profile(request, user_id):
 
     account = get_object_or_404(User, pk=user_id)
     ctx.update({"account": account})
-    
+
     #TODO Enhance this behaviour
     try:
         profile = get_object_or_404(UserProfile, user=account)
@@ -276,44 +276,40 @@ def view_profile(request, user_id):
         profile = None
     ctx.update({"profile": profile})
 
-    challenges_participated = Challenge.objects.filter(
-            pk__in=Participation.objects.filter(
-                    user=account, 
-                    challenge__is_deleted=False, 
-                    status__in=[
-                            PARTICIPATION_STATE.CONFIRMED,
-                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
-                            PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
-                    ).values_list("challenge_id", flat=True),
+    participations_current = Participation.objects.filter(
+            user=account,
+            challenge__is_deleted=False,
+            status__in=[
+                    PARTICIPATION_STATE.CONFIRMED,
+                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
             )
-    ctx.update({"challenges_participated": challenges_participated})
+    ctx.update({"participations_current": participations_current})
 
-    challenges_acknowledged = Challenge.objects.filter(
-            pk__in=Participation.objects.filter(
-                    user=account, 
-                    challenge__is_deleted=False, 
-                    status=PARTICIPATION_STATE.ACKNOWLEDGED,
-                    ).values_list("challenge_id", flat=True),
+    participations_acknowledged = Participation.objects.filter(
+            user=account,
+            challenge__is_deleted=False,
+            status=PARTICIPATION_STATE.ACKNOWLEDGED,
             )
-    ctx.update({"challenges_acknowledged": challenges_acknowledged})
+    ctx.update({"participations_acknowledged": participations_acknowledged})
 
     participations_cancelled_by_user = Participation.objects.filter(
-            user=account, 
-            challenge__is_deleted=False, 
+            user=account,
+            challenge__is_deleted=False,
             status=PARTICIPATION_STATE.CANCELLED_BY_USER,
             )
     ctx.update({"participations_cancelled_by_user":
             participations_cancelled_by_user})
 
     participations_cancelled_by_admin = Participation.objects.filter(
-            user=account, 
-            challenge__is_deleted=False, 
+            user=account,
+            challenge__is_deleted=False,
             status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
             )
     ctx.update({"participations_cancelled_by_admin":
             participations_cancelled_by_admin})
-    
+
     affiliated_organizations = Organization.objects.filter(
         affiliated_users=account,
         )
@@ -323,15 +319,18 @@ def view_profile(request, user_id):
         admin_challenges = get_admin_challenges(user)
         desired_challenges = Challenge.objects.filter(
             pk__in=Participation.objects.filter(
-                user=account, 
-                challenge__is_deleted=False, 
+                user=account,
+                challenge__is_deleted=False,
                 status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
             ).values_list("challenge_id", flat=True))
 
         # Related to viewer Challenges
         related_participated_challenges = [
-                challenge for challenge in challenges_participated
-                if challenge in admin_challenges]
+                participation.challenge for participation in
+                    participations_current.exclude(
+                        status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+                        )
+                if participation.challenge in admin_challenges]
         ctx.update({"related_participated_challenges":
                 related_participated_challenges})
 
@@ -343,7 +342,7 @@ def view_profile(request, user_id):
 
     ctx.update({"PRIVACY_MODE": PRIVACY_MODE})
     return render_to_response('account_foreignprofile.html',
-            RequestContext(request, ctx))    
+            RequestContext(request, ctx))
 
 @login_required
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
@@ -442,9 +441,9 @@ def edit_profile(request):
             #user.email = pform.cleaned_data["email"]
             user.save()
             pform.save()
-            
+
             return HttpResponseRedirect('/accounts/profile/view/')
-    
+
     return render_to_response('account_edit.html',
             RequestContext(request, {
                     "pform": pform,
@@ -480,7 +479,7 @@ def reset_password(request):
             user.save()
 
             info = _("You have successfuly changed your password")
-            return render_to_response('account_information.html', 
+            return render_to_response('account_information.html',
                     RequestContext(request, {
                             "information": info,
                             }))
@@ -504,21 +503,21 @@ def notify_forgotten_password(request):
                         (DOMAIN_NAME, int_to_base36(user.id), token))
                 send_templated_mail(
                         template_name="account_password_renew",
-                        from_email="from@example.com", 
-                        recipient_list=[user.email,], 
+                        from_email="from@example.com",
+                        recipient_list=[user.email,],
                         context={
                                 "user": user,
                                 "confirmation_link": confirmation_link,
                                 },)
                 info = _("Confirmation link to restore password "
                         "were sent to address '%s'" % user.email)
-                return render_to_response('account_information.html', 
+                return render_to_response('account_information.html',
                         RequestContext(request, {
                                 "information": info,
                                 }))
             except:
                 info = _("An error has been acquired.")
-                return render_to_response('account_error.html', 
+                return render_to_response('account_error.html',
                         RequestContext(request, {
                                 "information": info,
                                 }))
@@ -538,12 +537,12 @@ def renew_forgotten_password(request, uidb36=None, token=None):
 
     if user is not None and token_generator.check_token(user, token):
         # Instant log-in after confirmation
-        user.backend = "django.contrib.auth.backends.ModelBackend" 
+        user.backend = "django.contrib.auth.backends.ModelBackend"
         auth_login(request, user)
         return redirect("reset_password")
     else:
         info = _("An error has been acquired.")
-        return render_to_response('account_error.html', 
+        return render_to_response('account_error.html',
                 RequestContext(request, {
                         "information": info,
                         }))
@@ -564,8 +563,8 @@ def change_avatar(request):
         if pform.is_valid():
             _attach_avatar(request, profile)
             return redirect("view_myprofile")
-    
-    return render_to_response('account_change_avatar.html', 
+
+    return render_to_response('account_change_avatar.html',
             RequestContext(request, {
                     "profile": profile,
                     "pform": pform,
@@ -613,7 +612,7 @@ def crop_avatar(request):
                 image = image.convert('RGB')
 
             thumb = StringIO()
-            image.save(thumb, settings.AVATAR_THUMB_FORMAT, 
+            image.save(thumb, settings.AVATAR_THUMB_FORMAT,
                     quality=settings.AVATAR_THUMB_QUALITY)
             thumb_file = ContentFile(thumb.getvalue())
 
@@ -624,7 +623,7 @@ def crop_avatar(request):
 
             return redirect("view_myprofile")
 
-    return render_to_response("account_crop_avatar.html", 
+    return render_to_response("account_crop_avatar.html",
             RequestContext(request, {
                     'AVATAR_CROP_MAX_SIZE': AVATAR_CROP_MAX_SIZE,
                     'dim': result,

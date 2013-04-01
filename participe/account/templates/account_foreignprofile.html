@@ -8,9 +8,9 @@
 {% block extra_content %}
     {% need_to_know_tag request account as need_to_know %}
     {% sum_of_hours_spent_tag account as sum_of_hours_spent %}
-    
+
     <div class="row">
-    {% if not need_to_know and account.privacy_mode == PRIVACY_MODE.PARANOID %}
+    {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
         <div class="span12">
             <div class="well">
                 <span class="label label-warning">{% trans "The user's information is hidden because they are in paranoid mode" %}.</span>
@@ -42,6 +42,7 @@
                 {% if sum_of_hours_spent %}
                     <p>{% trans "Hours, spent in challenges" %}: <span class="badge">{{ sum_of_hours_spent }}</span></p>
                 {% endif %}
+
                 {% if account.social_auth.all and profile.fb_profile_link %}
                     <div class="input"><a href="#" link="{{ profile.fb_profile_link }}" onclick="open_fb_profile()" class="btn btn-info">FACEBOOK</a></div>
                 {% endif %}
@@ -68,19 +69,19 @@
 
         <div class="span9">
             <div class="well">
-                {% if challenges_participated %}
+                {% if participations_current %}
                     <h3>{% trans "Participates in challenges" %}</h3>
                     <ul class="thumbnails">
-                        {% for challenge in challenges_participated %}
+                        {% for participation in participations_current %}
                             <li class="span4">
-                                <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
-                                    <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ challenge.name }}">
+                                <a class="thumbnail" href="{{ participation.challenge.get_absolute_url }}">
+                                    <img src="{{ participation.challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ participation.challenge.name }}">
                                     <h4>
-                                        {{ challenge.name }}
+                                        {{ participation.challenge.name }}
                                     </h4>
                                     <p>
-                                        <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
-                                        {{ challenge.location }}
+                                        <strong>{{ participation.challenge.start_date|date:"l j. F o" }}</strong><br>
+                                        {{ participation.challenge.location }}
                                     </p>
                                 </a>
                             </li>
@@ -88,20 +89,25 @@
                     </ul>
                 {% endif %}
 
-                {% if challenges_acknowledged %}
+                {% if participations_acknowledged %}
                     <h3>{% trans "Participated challenges" %}</h3>
                     <ul class="thumbnails">
-                        {% for challenge in challenges_acknowledged %}
+                        {% for participation in participations_acknowledged %}
                             <li class="span4">
-                                <a class="thumbnail" href="{{ challenge.get_absolute_url }}">
-                                    <img src="{{ challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ challenge.name }}">
+                                <a class="thumbnail" href="{{ participation.challenge.get_absolute_url }}">
+                                    <img src="{{ participation.challenge.avatar|default:'img/default.jpg'|thumbnail_url:'span4_thumb' }}" alt="{{ participation.challenge.name }}">
                                     <h4>
-                                        {{ challenge.name }}
+                                        {{ participation.challenge.name }}
                                     </h4>
                                     <p>
-                                        <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
-                                        {{ challenge.location }}
+                                        <strong>{{ participation.challenge.start_date|date:"l j. F o" }}</strong><br>
+                                        {{ participation.challenge.location }}
                                     </p>
+                                    {% if need_to_know %}
+                                    <blockquote>{{ participation.selfreflection_activity_text }}</blockquote>
+                                    <blockquote>{{ participation.selfreflection_learning_text }}</blockquote>
+                                    <blockquote>{{ participation.acknowledgement_text }}</blockquote>
+                                    {% endif %}
                                 </a>
                             </li>
                         {% endfor %}
@@ -124,7 +130,7 @@
                     </ul>
                 {% endif %}
             </div>
-                
+
         {% if need_to_know %}
         {% if participations_cancelled_by_user %}
             <div class="well">

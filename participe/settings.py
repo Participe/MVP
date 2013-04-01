@@ -8,7 +8,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates/'),
     )
-    
+
 ADMINS = (
     ('OVERRIDE ME IN LOCAL_SETTINGS', 'OVERRIDE ME IN LOCAL_SETTINGS'),
 )
@@ -109,7 +109,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    
+
     'south',
     'social_auth',
     'captcha',
@@ -153,12 +153,12 @@ LOGGING = {
     }
 }
 
-# Put here the proper domain name. For testing needs this value could be 
+# Put here the proper domain name. For testing needs this value could be
 # overriden in local_settings.py (or not)
 DOMAIN_NAME = "beta.partici.pe"
 
 ###############################################################################
-### DJANGO CELERY Y MESSAGE BROKER SECTION                                  ###
+### DJANGO CELERY AND MESSAGE BROKER SECTION                                ###
 ###############################################################################
 import djcelery
 djcelery.setup_loader()
@@ -179,32 +179,32 @@ CELERY_IMPORTS = (
 THUMBNAIL_ALIASES = {
     '': {
             'span2_thumb': {
-                'size': (130, 60), 
+                'size': (130, 60),
                 'crop': "smart",
                 'upscale': True,
             },
             'span4_thumb': {
-                'size': (370, 210), 
+                'size': (370, 210),
                 'crop': "smart",
                 'upscale': True,
             },
             'span3_large': {
-                'size': (220, 220), 
+                'size': (220, 220),
                 'crop': "smart",
                 'upscale': True,
             },
             'span9_wide': {
-                'size': (830, 400), 
+                'size': (830, 400),
                 'crop': "smart",
                 'upscale': True,
             },
             'span6_wide': {
-                'size': (570, 420), 
+                'size': (570, 420),
                 'crop': "smart",
                 'upscale': True,
             },
             'span12_wide': {
-                'size': (1170, 200), 
+                'size': (1170, 200),
                 'crop': "smart",
                 'upscale': True,
             },
@@ -260,12 +260,12 @@ FACEBOOK_API_SECRET          = 'f892e1490d357d6ebb8392c7c7b8c54d'
 FACEBOOK_EXTENDED_PERMISSIONS = [
     #'user_about_me', 'user_activities',
     'user_birthday',
-    #'user_checkins', 'user_education_history', 'user_events', 
+    #'user_checkins', 'user_education_history', 'user_events',
     #'user_groups', 'user_hometown', 'user_interests', 'user_likes',
     'user_location',
     #'user_notes', 'user_photos', 'user_questions',
-    #'user_relationships', 'user_relationship_details', 
-    #'user_religion_politics', 'user_status', 'user_subscriptions', 
+    #'user_relationships', 'user_relationship_details',
+    #'user_religion_politics', 'user_status', 'user_subscriptions',
     #'user_videos', 'user_website', 'user_work_history',
     'email',]
 #LINKEDIN_CONSUMER_KEY        = ''
