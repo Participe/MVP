@@ -9,7 +9,7 @@ from templated_email import send_templated_mail
 from models import Challenge, Participation, PARTICIPATION_STATE
 
 
-@periodic_task(run_every=timedelta(minutes=2))
+@periodic_task(run_every=timedelta(hours=24))
 def remind_accept_reject_application():
     # Select users, who have created Challenge(s)
     users = User.objects.filter(
@@ -22,8 +22,8 @@ def remind_accept_reject_application():
         # Select challenges, created by User
         challenges = Challenge.objects.filter(
                 pk__in=Participation.objects.filter(
-                        user=user, 
-                        challenge__is_deleted=False, 
+                        user=user,
+                        challenge__is_deleted=False,
                         status__in=[
                                 PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
                                 PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
@@ -36,34 +36,34 @@ def remind_accept_reject_application():
                 participations = Participation.objects.filter(
                         user=user,
                         challenge=challenge,
-                        status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION                    
+                        status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
                         )
                 if participations:
                     content += ("<p>There are {0} of people,"
                             " waiting for approval on challenge"
                             " <a href='http://{1}{2}'>{3}</a></p><br/>".format(
-                            participations.count(), settings.DOMAIN_NAME, 
-                            challenge.get_absolute_url(), challenge.name))                
+                            participations.count(), settings.DOMAIN_NAME,
+                            challenge.get_absolute_url(), challenge.name))
 
                 # Looking for people, waiting for acknowledgement
                 participations = Participation.objects.filter(
                         user=user,
                         challenge=challenge,
-                        status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT                    
+                        status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
                         )
                 if participations:
                     content += ("<p>There are {0} of people, waiting for"
                             " acknowledgment of their selfreflection on"
                             " challenge"
                             " <a href='http://{1}{2}'>{3}</a></p><br/>".format(
-                            participations.count(), settings.DOMAIN_NAME, 
+                            participations.count(), settings.DOMAIN_NAME,
                             challenge.get_absolute_url(), challenge.name))
 
                 # Send e-mail
                 send_templated_mail(
                         template_name="remind_accept_reject_application",
-                        from_email="from@example.com", 
-                        recipient_list=[user.email,], 
+                        from_email="from@example.com",
+                        recipient_list=[user.email,],
                         context={
                                 "user": user,
                                 "content": content,
@@ -82,8 +82,8 @@ def remind_challenge_participation():
         if td.days==1:
             send_templated_mail(
                     template_name="remind_challenge_participation",
-                    from_email="from@example.com", 
-                    recipient_list=[user.email,], 
+                    from_email="from@example.com",
+                    recipient_list=[user.email,],
                     context={
                             "user": user,
                             "challenge": challenge,
