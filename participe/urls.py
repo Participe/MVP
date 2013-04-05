@@ -9,16 +9,16 @@ urlpatterns = patterns('',
     # i18n
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^about/', include('django.contrib.flatpages.urls')),
-    
+
     # Home
     url(r'^$', 'django.views.generic.simple.direct_to_template',
             {'template': 'home.html'}, name='home'),
     url(r'^home/$', 'django.views.generic.simple.direct_to_template',
             {'template': 'home.html'}, name='home'),
-    
+
     url(r'', include('social_auth.urls')),
     url(r'^captcha/', include('captcha.urls')),
-    
+
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     )
@@ -60,13 +60,19 @@ urlpatterns += patterns('participe.challenge.views',
     # Challenge
     url(r'^challenges/$', 'challenge_list', name='challenge_list'),
     url(r'^challenges/create/$', 'challenge_create', name='challenge_create'),
+
     url(r'^challenges/view/(?P<challenge_id>\d+)/$', 'challenge_detail',
             name='challenge_detail'),
+    url(r'^challenges/view/(?P<challenge_id>\d+)/(?P<chl_slug>[\w_-]+)/$',
+            'challenge_detail', name='challenge_detail'),
+    url(r'^challenges/view/(?P<challenge_id>\d+)/(?P<org_slug>[\w_-]+)/(?P<chl_slug>[\w_-]+)/$',
+            'challenge_detail', name='challenge_detail'),
+
     url(r'^challenges/complete/(?P<challenge_id>\d+)/$', 'challenge_complete',
             name='challenge_complete'),
     url(r'^challenges/edit/(?P<challenge_id>\d+)/$', 'challenge_edit',
             name='challenge_edit'),
-    url(r'^challenges/participation/accept/(?P<participation_id>\d+)/$', 
+    url(r'^challenges/participation/accept/(?P<participation_id>\d+)/$',
             'participation_accept', name='participation_accept'),
     url(r'^challenges/participation/remove/(?P<challenge_id>\d+)/$',
             'participation_remove', name='participation_remove'),
@@ -81,6 +87,7 @@ urlpatterns += patterns('participe.organization.views',
     url(r'^organizations/$', 'organization_list', name='organization_list'),
     url(r'^organizations/create/$', 'organization_create',
             name='organization_create'),
+
     url(r'^organizations/view/(?P<organization_id>\d+)/$',
             'organization_detail', name='organization_detail'),
     url(r'^organizations/view/(?P<organization_id>\d+)/(?P<slug>[\w_-]+)/$',

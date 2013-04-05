@@ -18,20 +18,20 @@
                     </h1>
                 </p>
                 <p>
-                    {{ challenge.start_date }} 
-                    | {{ challenge.start_time|date:"G:i"|default:"0:00" }} 
+                    {{ challenge.start_date }}
+                    | {{ challenge.start_time|date:"G:i"|default:"0:00" }}
                     | {{ challenge.location }}
                 </p>
                 {% if challenge.organization and not challenge.organization.is_deleted %}
                     <p>
-                        {% trans "Organized by" %} 
+                        {% trans "Organized by" %}
                         <a href="{{ challenge.organization.get_absolute_url }}">{{ challenge.organization.name }}</a>
                     </p>
                 {% endif %}
                 <blockquote>
                     <p>{{ challenge.description }}</p>
                 </blockquote>
-           
+
                 <h3>{% trans "Participants" %}</h3>
                 <ul class="thumbnails">
                     {% for participation in confirmed %}
@@ -105,12 +105,19 @@
         </div>
         <div class="span3">
             <div class="well">
-                {% if challenge.confirmation_required and not participation.status == PARTICIPATION_STATE.CONFIRMED %}
+                {% if challenge.is_overdue %}
+                    <span class="label">{% trans "This challenge is in the past" %}</span><br>
+                {% endif %}
+
+                {% if challenge.confirmation_required and not participation.status == PARTICIPATION_STATE.CONFIRMED and not challenge.is_overdue %}
                     <p class="note">
                         <span class="label">{% trans "Confirmation required" %}</span><br>
-                        {% trans "You need to write an application to participate in this challenge. The challenge organizer will use your application text and your history on Participe to decide whether you are a good fit for this challenge." %}
+                        {% if not is_admin %}
+                            {% trans "You need to write an application to participate in this challenge. The challenge organizer will use your application text and your history on Participe to decide whether you are a good fit for this challenge." %}
+                        {% endif %}
                     </p>
                 {% endif %}
+
                 {% if user.is_authenticated %}
                     {% if is_admin %}
                         {% if challenge.is_overdue and challenge.status != CHALLENGE_STATUS.COMPLETED %}
@@ -228,7 +235,7 @@
                                 <div class="input">{{ rform.selfreflection_activity_text }}</div>
                                 <div class="input">{{ rform.selfreflection_learning_text }}</div>
                                 <div class="btn-group">
-                                    <input type="submit" class="btn btn-success btn-primary" value="{% trans 'Submit' %}" />
+                                    <input id="selfreflect" type="submit" class="btn btn-success btn-primary" value="{% trans 'Submit' %}" />
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
                                 </div>
                             </form>
@@ -377,11 +384,11 @@
     <div id="withdraw-dialog">
         <span>Do you really want to withdraw your application?</span>
     </div>
-    
+
     <div id="delete-comment-dialog">
         <p name="header">Do you really want to delete comment?</p>
     </div>
-    
+
     <script type="text/javascript">
         function share_on_fb(){
             try {
@@ -396,26 +403,26 @@
             } catch(err) {
             }
         }
-        
+
         function send_remove_form(){
             var event = window.event || evt;
             event.preventDefault();
             if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
             value = event.target.getAttribute("value");
-            
+
             $("#remove-participation-dialog").data("participation_id", participation_id);
             $("#remove-participation-dialog").data("value", value);
             $("#remove-participation-dialog").dialog("open");
         }
-        
+
         function delete_comment(){
             var event = window.event || evt;
             event.preventDefault();
             if (!event.target) event.target = event.srcElement;
-            
+
             var redirect_url = $(event.target).attr("url");
-            
+
             $("#delete-comment-dialog").data("redirect_url", redirect_url);
             $("#delete-comment-dialog").dialog("open");
         }
@@ -486,10 +493,10 @@
                         var input2 = $("<input>").attr("type", "hidden").attr("name", "value").val(value);
                         $("#remove-participation-form").append($(input1));
                         $("#remove-participation-form").append($(input2));
-                        $("#remove-participation-form").submit();   
+                        $("#remove-participation-form").submit();
                     },
                     "Close": function(){
-                        $(this).dialog('close');   
+                        $(this).dialog('close');
                     }
                 }
             });
@@ -514,10 +521,10 @@
                 modal: true,
                 buttons: {
                     "Withdraw": function(){
-                        $("#withdraw-form").submit();   
+                        $("#withdraw-form").submit();
                     },
                     "Close": function(){
-                        $(this).dialog('close');   
+                        $(this).dialog('close');
                     }
                 }
             });
@@ -525,7 +532,7 @@
             $('input[id="withdraw"]').click(function(){
                 $("#withdraw-dialog").dialog("open");
             });
-            
+
             //Cancellation text control
             $('#withdraw').attr('disabled','disabled');
             $("#id_cancellation_text").keyup(function() {
@@ -533,6 +540,16 @@
                     $('#withdraw').removeAttr('disabled');
                 } else {
                     $('#withdraw').attr('disabled','disabled');
+                }
+            });
+
+            //Self-reflection text control
+            $('#selfreflect').attr('disabled','disabled');
+            $("#id_selfreflection_activity_text, #id_selfreflection_learning_text").keyup(function() {
+                if ($("#id_selfreflection_activity_text").val().length >= 20 && $("#id_selfreflection_learning_text").val().length >= 20){
+                    $('#selfreflect').removeAttr('disabled');
+                } else {
+                    $('#selfreflect').attr('disabled','disabled');
                 }
             });
 
@@ -558,7 +575,7 @@
                         window.location.href = redirect_url;
                     },
                     "Close": function(){
-                        $(this).dialog('close');   
+                        $(this).dialog('close');
                     }
                 }
             });

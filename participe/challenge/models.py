@@ -2,6 +2,7 @@ from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -11,7 +12,7 @@ from participe.enum import enum
 
 
 CHALLENGE_MODE = enum(
-    FREE_FOR_ALL = "0", 
+    FREE_FOR_ALL = "0",
     CONFIRMATION_REQUIRED = "1",
     )
 
@@ -54,7 +55,7 @@ class Challenge(models.Model):
     contact_person = models.ForeignKey(
             User, related_name="contact_chl_set",
             verbose_name=_("Contact Person"))
-    
+
     is_alt_person = models.BooleanField(default=False)
     alt_person_fullname = models.CharField(
             max_length=80, null=True, blank=True, verbose_name=_("Full name"))
@@ -63,7 +64,7 @@ class Challenge(models.Model):
     alt_person_phone = models.CharField(
             max_length=15, blank=True, default='',
             verbose_name=_("Phone Number"))
-    
+
     start_date = models.DateField(verbose_name=_("Start Date"))
     start_time = models.TimeField(verbose_name=_("Start Time"))
 
@@ -91,10 +92,22 @@ class Challenge(models.Model):
         return unicode(self.name)
 
     def get_absolute_url(self):
-        return reverse(
-                'participe.challenge.views.challenge_detail',
-                args=[str(self.id)])
-                
+        if self.organization:
+            return reverse(
+                    'participe.challenge.views.challenge_detail',
+                    kwargs={
+                            "challenge_id": str(self.id),
+                            "org_slug": slugify(self.organization.name),
+                            "chl_slug": slugify(self.name),
+                            })
+        else:
+            return reverse(
+                    'participe.challenge.views.challenge_detail',
+                    kwargs={
+                            "challenge_id": str(self.id),
+                            "chl_slug": slugify(self.name),
+                            })
+
     def get_edit_url(self):
         return reverse(
                 'participe.challenge.views.challenge_edit',
@@ -143,7 +156,7 @@ class Challenge(models.Model):
         return False
 
 PARTICIPATION_STATE = enum(
-    WAITING_FOR_CONFIRMATION = "0", 
+    WAITING_FOR_CONFIRMATION = "0",
     CONFIRMATION_DENIED = "1",
     CONFIRMED = "2",
     CANCELLED_BY_ADMIN = "3",
@@ -205,14 +218,14 @@ class Participation(models.Model):
             verbose_name=_("Date of self-reflection rejection"))
     date_acknowledged = models.DateField(
             null=True, blank=True, verbose_name=_("Date acknowledged"))
-    
+
     share_on_FB = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _('participation')
         verbose_name_plural = _('participations')
         ordering = ['date_created',]
-        
+
     def __unicode__(self):
         return unicode("%s - %s" % (self.user.username, self.challenge.name))
 
