@@ -236,6 +236,15 @@ class Participation(models.Model):
                 return name
         return ''
 
+    @property
+    def is_selfreflection_rejected(self):
+        if (self.status == PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION and
+                self.selfreflection_rejection_text and
+                (self.selfreflection_learning_text or
+                self.selfreflection_activity_text)):
+            return True
+        return False
+
 class Comment(models.Model):
     user = models.ForeignKey(User, verbose_name=_("User"))
     challenge = models.ForeignKey(Challenge, verbose_name=_("Challenge"))

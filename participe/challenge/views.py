@@ -85,10 +85,11 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
                         instance=participation)
                 ctx.update({"rform": rform})
 
-                pform = WithdrawSignupForm(
-                        request.POST or None, request.FILES or None,
-                        instance=participation)
-                ctx.update({"pform": pform})
+                if not participation.is_selfreflection_rejected:
+                    pform = WithdrawSignupForm(
+                            request.POST or None, request.FILES or None,
+                            instance=participation)
+                    ctx.update({"pform": pform})
         except:
             sform = SignupChallengeForm(
                     request.user, challenge,
@@ -140,7 +141,11 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
     # Extract participations
     confirmed = Participation.objects.all().filter(
             challenge=challenge,
-            status=PARTICIPATION_STATE.CONFIRMED
+            status__in=[
+                    PARTICIPATION_STATE.CONFIRMED,
+                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
+                    PARTICIPATION_STATE.ACKNOWLEDGED,
+                    ]
             )
     ctx.update({"confirmed": confirmed})
 
@@ -149,12 +154,6 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
             status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
             )
     ctx.update({"waiting_for_confirmation": waiting_for_confirmation})
-
-    waiting_for_selfreflection = Participation.objects.all().filter(
-            challenge=challenge,
-            status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
-            )
-    ctx.update({"waiting_for_selfreflection": waiting_for_selfreflection})
 
     waiting_for_acknowledgement = Participation.objects.all().filter(
             challenge=challenge,

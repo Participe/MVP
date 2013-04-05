@@ -39,9 +39,11 @@ def remind_accept_reject_application():
                         status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
                         )
                 if participations:
-                    content += ("<p>There are {0} of people,"
-                            " waiting for approval on challenge"
-                            " <a href='http://{1}{2}'>{3}</a></p><br/>".format(
+                    content += (
+                            u"<p>There are {0} of people,"
+                            u" waiting for approval on challenge"
+                            u" <a href='http://{1}{2}'>{3}</a></p><br/>"
+                            u"".format(
                             participations.count(), settings.DOMAIN_NAME,
                             challenge.get_absolute_url(), challenge.name))
 
@@ -52,10 +54,12 @@ def remind_accept_reject_application():
                         status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
                         )
                 if participations:
-                    content += ("<p>There are {0} of people, waiting for"
-                            " acknowledgment of their selfreflection on"
-                            " challenge"
-                            " <a href='http://{1}{2}'>{3}</a></p><br/>".format(
+                    content += (
+                            u"<p>There are {0} of people, waiting for"
+                            u" acknowledgment of their selfreflection on"
+                            u" challenge"
+                            u" <a href='http://{1}{2}'>{3}</a></p><br/>"
+                            u"".format(
                             participations.count(), settings.DOMAIN_NAME,
                             challenge.get_absolute_url(), challenge.name))
 

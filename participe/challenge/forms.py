@@ -14,7 +14,7 @@ class CreateChallengeForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CreateChallengeForm, self).__init__(*args, **kwargs)
         self.user = user
-        
+
         if self.instance and self.instance.pk:
             pass
 
@@ -34,7 +34,7 @@ class CreateChallengeForm(forms.ModelForm):
             ("he", _("Affiliate different person")),]
         self.fields["contact"].choices = self.contact_choices
         self.fields["contact"].initial = "me"
-         
+
     contact = forms.ChoiceField(
             widget=forms.RadioSelect())
     start_date = forms.DateField(
@@ -66,7 +66,7 @@ class CreateChallengeForm(forms.ModelForm):
             "duration": widgets.NumberInput(
                     attrs={'min': '1', 'max': '10', 'step': '1',
                             "class": "input-mini"}),
-            
+
             "alt_person_fullname": forms.TextInput(
                     attrs={"placeholder": _("Full name")}),
             "alt_person_email": forms.TextInput(
@@ -90,10 +90,10 @@ class CreateChallengeForm(forms.ModelForm):
                 if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
                     raise forms.ValidationError(
                             "%(ext)s is an invalid file extension. "
-                            "Authorized extensions are : %(valid_exts_list)s" % 
+                            "Authorized extensions are : %(valid_exts_list)s" %
                             {'ext': ext,
                             'valid_exts_list':
-                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
+                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)})
             if data.size > settings.AVATAR_MAX_SIZE:
                 raise forms.ValidationError(
                         u"Your file is too big (%(size)s), the maximum "
@@ -101,7 +101,7 @@ class CreateChallengeForm(forms.ModelForm):
                         {'size': filesizeformat(data.size),
                         'max_valid_size':
                             filesizeformat(settings.AVATAR_MAX_SIZE)})
-        return self.cleaned_data['avatar']      
+        return self.cleaned_data['avatar']
 
     def clean_duration(self):
         if self.cleaned_data["duration"] < 1:
@@ -121,7 +121,7 @@ class CreateChallengeForm(forms.ModelForm):
                     [_("This field is required."),])
             del self.cleaned_data["contact"]
         return self.cleaned_data["contact"]
-    
+
     def clean(self):
         if self.cleaned_data["is_alt_person"] == True:
             if not self.cleaned_data["alt_person_fullname"]:
@@ -141,7 +141,7 @@ class CreateChallengeForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(CreateChallengeForm, self).save(commit=False)
         instance.contact_person = self.user
-        
+
         if commit:
             instance.save()
 
@@ -162,7 +162,7 @@ class EditChallengeForm(forms.ModelForm):
             self.fields["contact"].initial = "me"
         else:
             self.fields["contact"].initial = "he"
-         
+
     contact = forms.ChoiceField(
             widget=forms.RadioSelect())
     start_date = forms.DateField(
@@ -221,7 +221,7 @@ class EditChallengeForm(forms.ModelForm):
                     [_("This field is required."),])
             del self.cleaned_data["contact"]
         return self.cleaned_data["contact"]
-    
+
     def clean(self):
         if self.cleaned_data["is_alt_person"] == True:
             if not self.cleaned_data["alt_person_fullname"]:
@@ -271,7 +271,7 @@ class SignupChallengeForm(forms.ModelForm):
             instance.status = PARTICIPATION_STATE.CONFIRMED
         else:
             instance.status = PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
-        
+
         if not self.cleaned_data.get("share_on_FB", ""):
             instance.share_on_FB = False
 
@@ -295,7 +295,7 @@ class WithdrawSignupForm(forms.ModelForm):
 
     def clean_cancellation_text(self):
         # XXX Issue #0081
-        # If user opens Challenge details page, e.g. 4 times, and pushes 
+        # If user opens Challenge details page, e.g. 4 times, and pushes
         # "Participate" at first time, he signs up to challenge.
         # If user pushes "Participate" on 2nd, 3rd and other pages, following
         # prevents unpredictable behaviour.
@@ -304,7 +304,11 @@ class WithdrawSignupForm(forms.ModelForm):
             self._errors["cancellation_text"] = self.error_class(
                     [_("This field is required."),])
             del self.cleaned_data["cancellation_text"]
-        return self.cleaned_data["cancellation_text"]
+
+        try:
+            return self.cleaned_data["cancellation_text"]
+        except:
+            return self.cleaned_data
 
     def save(self, commit=True):
         instance = super(WithdrawSignupForm, self).save(commit=False)

@@ -229,8 +229,9 @@
                     {% endif %}
 
                     {% if not is_admin and rform %}
-                        <input id="selfrefl-btn" name="selfrefl-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans 'Submit self-reflection' %}">
-                        <div id="selfrefl-form">
+                        {% if participation.is_selfreflection_rejected %}
+                            <p><b>Your self-reflection was rejected for the following reason:</b></p>
+                            <blockquote>{{ participation.selfreflection_rejection_text }}</blockquote>
                             <form action="." method="post">{% csrf_token %}
                                 <div class="input">{{ rform.selfreflection_activity_text }}</div>
                                 <div class="input">{{ rform.selfreflection_learning_text }}</div>
@@ -239,7 +240,19 @@
                                     <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
                                 </div>
                             </form>
-                        </div>
+                        {% else %}
+                            <input id="selfrefl-btn" name="selfrefl-btn" type="button" class="btn btn-primary btn-large btn-success" value="{% trans 'Submit self-reflection' %}">
+                            <div id="selfrefl-form">
+                                <form action="." method="post">{% csrf_token %}
+                                    <div class="input">{{ rform.selfreflection_activity_text }}</div>
+                                    <div class="input">{{ rform.selfreflection_learning_text }}</div>
+                                    <div class="btn-group">
+                                        <input id="selfreflect" type="submit" class="btn btn-success btn-primary" value="{% trans 'Submit' %}" />
+                                        <input id="cancel-btn" name="btn cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
                     {% endif %}
 
                     {% if not is_admin and pform %}
