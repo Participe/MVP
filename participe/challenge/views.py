@@ -7,6 +7,7 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
 
 from templated_email import send_templated_mail
 
@@ -384,6 +385,99 @@ def participation_remove(request, challenge_id):
                 context=ctx,)
         return redirect("challenge_detail", participation.challenge.pk)
     return redirect("challenge_list")
+
+@csrf_exempt
+@login_required
+@challenge_admin
+def ajax_participation_accept(request, challenge_id):
+    if request.is_ajax():
+        participation_id = request.POST.get("participation_id", "")
+        try:
+            participation = Participation.objects.get(pk=participation_id)
+        except:
+            return HttpResponse("An error has been encountered")
+
+        participation.status = PARTICIPATION_STATE.CONFIRMED
+        participation.date_accepted = datetime.now()
+        participation.save()
+
+        send_templated_mail(
+                template_name="challenge_participation_accepted",
+                from_email="from@example.com",
+                recipient_list=[participation.user.email,],
+                context={
+                        "user": participation.user,
+                        "challenge": participation.challenge,
+                        },)
+        return HttpResponse()
+    return HttpResponse("An error has been encountered!")
+
+@csrf_exempt
+@login_required
+@challenge_admin
+def ajax_participation_remove(request, challenge_id):
+    if request.is_ajax():
+        ctx = {}
+        participation_id = request.POST.get("participation_id", "")
+        value = request.POST.get("value", "")
+        text = request.POST.get("text", "")
+
+        try:
+            participation = Participation.objects.get(pk=participation_id)
+        except:
+            return HttpResponse("An error has been encountered")
+
+        ctx.update({
+                "user": participation.user,
+                "challenge": participation.challenge,
+                "participation": participation,})
+
+        if value=="Remove":
+            participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
+            template_name = "challenge_participation_removed"
+        elif value=="Reject":
+            participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
+            template_name = "challenge_participation_rejected"
+        elif value=="Reject self-reflection":
+            participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
+            template_name = "challenge_participation_selfreflection_rejected"
+            redirect_to = (
+                    u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
+                    u"".format(
+                    request.get_host(),
+                    participation.challenge.get_absolute_url(),
+                    participation.challenge.name))
+            ctx.update({"redirect_to": redirect_to})
+        elif value=="Acknowledge":
+            participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
+            template_name = "challenge_participation_acknowledged"
+            redirect_to = (
+                    u"<a href='http://{0}/accounts/login?"
+                    u"next=/accounts/profile/view/'>profile</a>"
+                    u"".format(
+                    request.get_host()
+                    ))
+            ctx.update({"redirect_to": redirect_to})
+
+        if value=="Remove" or value=="Reject":
+            participation.cancellation_text = text
+            participation.date_cancelled = datetime.now()
+        elif value=="Reject self-reflection":
+            participation.selfreflection_rejection_text = text
+            participation.date_selfreflection_rejection = datetime.now()
+        elif value=="Acknowledge":
+            participation.acknowledgement_text = text
+            participation.date_acknowledged = datetime.now()
+        participation.save()
+
+        send_templated_mail(
+                template_name=template_name,
+                from_email="from@example.com",
+                recipient_list=[participation.user.email,],
+                context=ctx,)
+
+        return HttpResponse()
+    return HttpResponse("An error has been encountered!")
 
 @login_required
 def comment_add(request):

@@ -80,6 +80,12 @@ urlpatterns += patterns('participe.challenge.views',
             name='comment_add'),
     url(r'^challenges/comment/delete/(?P<comment_id>\d+)/$', 'comment_delete',
             name='comment_delete'),
+
+    # AJAX Part
+    url(r'^ajax/challenges/participation/accept/(?P<challenge_id>\d+)/$',
+            'ajax_participation_accept', name='ajax_participation_accept'),
+    url(r'^ajax/challenges/participation/remove/(?P<challenge_id>\d+)/$',
+            'ajax_participation_remove', name='ajax_participation_remove'),
     )
 
 urlpatterns += patterns('participe.organization.views',

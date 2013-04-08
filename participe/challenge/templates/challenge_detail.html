@@ -346,8 +346,8 @@
                         <blockquote>
                             {{ participation.application_text }}
                         </blockquote>
-                        <a href="{% url participation_accept participation.pk %}">
-                            <input type="button" value="{% trans "Accept" %}">
+                        <a href="#" onclick="send_accept_form()">
+                            <input type="button" participation="{{ participation.pk }}" value="{% trans "Accept" %}">
                         </a>
                         <a href="#" onclick="send_remove_form()">
                             <input type="button" participation="{{ participation.pk }}" value="{% trans "Reject" %}">
@@ -389,7 +389,7 @@
     {% endif %}
 
     <div id="remove-participation-dialog">
-        <form id="remove-participation-form" action="{% url participation_remove challenge.pk %}" method="post">{% csrf_token %}
+        <form id="remove-participation-form" action="{% url ajax_participation_remove challenge.pk %}" method="post">{% csrf_token %}
             <textarea id="text" name="text" rows="5" cols="20" placeholder="Enter text here"></textarea>
         </form>
     </div>
@@ -415,6 +415,27 @@
                 }
             } catch(err) {
             }
+        }
+
+        function send_accept_form(){
+            var event = window.event || evt;
+            event.preventDefault();
+            if (!event.target) event.target = event.srcElement;
+            participation_id = event.target.getAttribute("participation");
+
+            $.post(
+                "{% url ajax_participation_accept challenge.pk %}",
+                {
+                    "participation_id": participation_id
+                },
+                function(data) {
+                    if( data ){
+                        $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                    } else {
+                        $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                    }
+                }
+            );
         }
 
         function send_remove_form(){
@@ -506,7 +527,20 @@
                         var input2 = $("<input>").attr("type", "hidden").attr("name", "value").val(value);
                         $("#remove-participation-form").append($(input1));
                         $("#remove-participation-form").append($(input2));
-                        $("#remove-participation-form").submit();
+
+                        remove_form = $("#remove-participation-form");
+                        $.post(
+                            remove_form.attr('action'),
+                            remove_form.serialize(),
+                            function(data) {
+                                if( data ){
+                                    $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                                } else {
+                                    $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                                }
+                            }
+                        );
+                        $(this).dialog('close');
                     },
                     "Close": function(){
                         $(this).dialog('close');
