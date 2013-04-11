@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load accounttags %}
+
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -39,7 +41,9 @@
                         <div class="btn-toolbar">
                             <div class="btn-group">
                                 {% if user.is_authenticated %}
-                                    <a class="btn" href='/accounts/profile/view/'>{% trans "My profile" %}</a>
+                                    {% as_user_action_required_count request as as_user_count %}
+                                    {% as_admin_action_required_count request as as_admin_count %}
+                                    <a class="btn" href='/accounts/profile/view/'>{% trans "My profile" %} <span class="badge badge-warning" title="{% trans 'Number of challenges, required an action from you, as a participant' %}">{{ as_user_count }}</span> <span class="badge badge-important" title="{% trans 'Number of challenges, required an action from you, as an admin' %}">{{ as_admin_count }}</span></a>
                                     <a class="btn" href='/accounts/logout/'>{% trans "Log out" %}</a>
                                 {% else %}
                                     <a class="btn" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
@@ -76,15 +80,15 @@
             {% block footer %}
                 <div class="row footer">
                     <div class="span4">
-                        <h4>{% trans "For Partners" %}</h4> 
-                        <ul> 
-                            <li><a href="/about/organizers/">{% trans "For Organizers" %}</a></li> 
-                            <li><a href="/about/sponsors/">{% trans "For Sponsors" %}</a></li> 
-                            <li><a href="/about/media/">{% trans "For Media" %}</a></li> 
-                        </ul> 
+                        <h4>{% trans "For Partners" %}</h4>
+                        <ul>
+                            <li><a href="/about/organizers/">{% trans "For Organizers" %}</a></li>
+                            <li><a href="/about/sponsors/">{% trans "For Sponsors" %}</a></li>
+                            <li><a href="/about/media/">{% trans "For Media" %}</a></li>
+                        </ul>
                     </div>
                     <div class="span4">
-                        <h4>{% trans "For Users" %}</h4> 
+                        <h4>{% trans "For Users" %}</h4>
                         <ul>
                             <li><a href="/about/privacy_policy/">{% trans "Privacy Policy" %}</a></li>
                             <li><a href="/about/tnc/">{% trans "Terms and Conditions" %}</a></li>
@@ -92,7 +96,7 @@
                         </ul>
                     </div>
                     <div class="span4">
-                        <h4>{% trans "About Participe" %}</h4> 
+                        <h4>{% trans "About Participe" %}</h4>
                         <ul>
                             <li><a href="/about/team/">{% trans "Team" %}</a></li>
                             <li><a href="/about/feedback/">{% trans "Feedback" %}</a></li>
