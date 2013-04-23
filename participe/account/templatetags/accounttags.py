@@ -14,10 +14,13 @@ register = template.Library()
 def need_to_know_tag(request, account):
     user = request.user
 
-    if Challenge.objects.filter(contact_person=account, is_deleted=False):
-        return True
-
     if user.is_authenticated():
+        if Challenge.objects.filter(
+                status=CHALLENGE_STATUS.UPCOMING,
+                contact_person=account,
+                is_deleted=False):
+            return True
+
         chs = Challenge.objects.filter(
             pk__in=Participation.objects.filter(
                 user=account,

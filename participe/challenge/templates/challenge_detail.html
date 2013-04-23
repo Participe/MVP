@@ -80,7 +80,7 @@
                             <blockquote class="">
                                 <p>{{ comment.text }}</p>
                                 <small>
-                                    {% if not need_to_know and profile.privacy_mode == PRIVACY_MODE.PARANOID %}
+                                    {% if not need_to_know and comment.user.get_profile.privacy_mode == PRIVACY_MODE.PARANOID %}
                                         <a href="{% url view_profile comment.user.pk %}">{% trans "Anonymous User" %}</a>
                                     {% else %}
                                         <a href="{% url view_profile comment.user.pk %}">{{ comment.user.get_full_name }}</a> {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}
