@@ -93,6 +93,18 @@
                                         <strong>{{ challenge.start_date|date:"l j. F o" }}</strong><br>
                                         {{ challenge.location }}
                                     </p>
+
+                                    {% if challenge.has_waiting_for_confirmation %}
+                                        <span class="label label-warning">{% trans "Waiting for confirmation" %}</span>
+                                    {% endif %}
+
+                                    {% if challenge.has_waiting_for_acknowledgement %}
+                                        <span class="label label-warning">{% trans "Waiting for acknowledgement" %}</span>
+                                    {% endif %}
+
+                                    {% if challenge.is_overdue and challenge.status != CHALLENGE_STATUS.COMPLETED %}
+                                        <span class="label label-warning">{% trans "The challenge is overdue" %}</span>
+                                    {% endif %}
                                 </a>
                             </li>
                         {% endfor %}

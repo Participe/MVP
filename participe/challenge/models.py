@@ -150,6 +150,22 @@ class Challenge(models.Model):
                 status=PARTICIPATION_STATE.CONFIRMED).count()
 
     @property
+    def has_waiting_for_confirmation(self):
+        if Participation.objects.filter(
+                status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                challenge=self):
+            return True
+        return False
+
+    @property
+    def has_waiting_for_acknowledgement(self):
+        if Participation.objects.filter(
+                status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+                challenge=self):
+            return True
+        return False
+
+    @property
     def is_overdue(self):
         if self.start_date < date.today():
             return True

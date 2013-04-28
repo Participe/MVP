@@ -432,11 +432,12 @@ def view_myprofile(request):
                                     _("that have the status 'Upcoming'")),
                             (admin_challenges_completed,
                                     _("that have the status 'Completed'")),],
-                    "PARTICIPATION_STATE": PARTICIPATION_STATE,
                     "participations_cancelled_by_user":
                             participations_cancelled_by_user,
                     "participations_cancelled_by_admin":
-                            participations_cancelled_by_admin
+                            participations_cancelled_by_admin,
+                    "PARTICIPATION_STATE": PARTICIPATION_STATE,
+                    "CHALLENGE_STATUS": CHALLENGE_STATUS,
                     }))
 
 @login_required
