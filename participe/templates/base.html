@@ -43,7 +43,14 @@
                                 {% if user.is_authenticated %}
                                     {% as_user_action_required_count request as as_user_count %}
                                     {% as_admin_action_required_count request as as_admin_count %}
-                                    <a class="btn" href='/accounts/profile/view/'>{% trans "My profile" %} <span class="badge badge-warning" title="{% trans 'Number of challenges, required an action from you, as a participant' %}">{{ as_user_count }}</span> <span class="badge badge-important" title="{% trans 'Number of challenges, required an action from you, as an admin' %}">{{ as_admin_count }}</span></a>
+                                    <a class="btn" href='/accounts/profile/view/'>{% trans "My profile" %} 
+                                        {% if as_user_count %}
+                                            <span class="badge badge-warning" title="{% trans 'Number of challenges, required an action from you, as a participant' %}">{{ as_user_count }} {% trans "actions required" %}</span>
+                                        {% endif %}
+                                        {% if as_admin_count %}
+                                             <span class="badge badge-important" title="{% trans 'Number of challenges, required an action from you, as an admin' %}">{{ as_admin_count }} {% trans "admin actions required" %}</span>
+                                        {% endif %}
+                                    </a>
                                     <a class="btn" href='/accounts/logout/'>{% trans "Log out" %}</a>
                                 {% else %}
                                     <a class="btn" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">

@@ -420,18 +420,18 @@ def view_myprofile(request):
                     "profile": profile,
                     "user_participations":
                             [(user_participations_action_required,
-                                    _("where an action is required")),
+                                    _("Action required")),
                             (user_participations_upcoming,
-                                    _("that have the status 'Upcoming'")),
+                                    _("Upcoming")),
                             (user_participations_completed,
-                                    _("that have the status 'Completed'")),],
+                                    _("Completed")),],
                     "admin_challenges":
                             [(admin_challenges_action_required,
-                                    _("where an action is required")),
+                                    _("Action required")),
                             (admin_challenges_upcoming,
-                                    _("that have the status 'Upcoming'")),
+                                    _("upcoming")),
                             (admin_challenges_completed,
-                                    _("that have the status 'Completed'")),],
+                                    _("completed")),],
                     "participations_cancelled_by_user":
                             participations_cancelled_by_user,
                     "participations_cancelled_by_admin":
@@ -464,6 +464,7 @@ def edit_profile(request):
     return render_to_response('account_edit.html',
             RequestContext(request, {
                     "pform": pform,
+                    "profile": profile,
                     }))
 
 @login_required

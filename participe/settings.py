@@ -194,7 +194,7 @@ THUMBNAIL_ALIASES = {
                 'upscale': True,
             },
             'span9_wide': {
-                'size': (830, 400),
+                'size': (830, 220),
                 'crop': "smart",
                 'upscale': True,
             },

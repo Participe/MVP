@@ -43,29 +43,23 @@
                 </div>
             </div>
 
-            <div class="well">
-                <h5>{% trans "Put iFrame to this Organization on your site" %}</h5>
-                <pre class="prettyprint">
-&lt;iframe src="http://{{ request.get_host }}{% url organization_iframe_upcoming organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto"&gt;
-    &lt;p&gt;{% trans "iFrame is not supproted" %}&lt;/p&gt;
-&lt;/iframe&gt;
-                </pre>
-                <iframe src="{% url organization_iframe_upcoming organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto">
-                    <p>{% trans "Not supproted" %}</p>
-                </iframe>
-            </div>
+            {% if request.user in affiliated_users %}
+                <div class="well">
+                    <h5>{% trans "Widget for upcoming challenges" %}</h5>
+                    <p>{% trans "Copy and paste this block of code to your website to show a list of all upcoming challenges of your organization." %} </p>
+                    <pre class="prettyprint">
+&lt;iframe src="http://{{ request.get_host }}{% url organization_iframe_upcoming organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto"&gt;&lt;p&gt;{% trans "Widget not supported in your browser" %}&lt;/p&gt;&lt;iframe&gt;
+                    </pre>
+                </div>
 
-            <div class="well">
-                <h5>{% trans "Put iFrame to this Organization on your site" %}</h5>
-                <pre class="prettyprint">
-&lt;iframe src="http://{{ request.get_host }}{% url organization_iframe_completed organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto"&gt;
-    &lt;p&gt;{% trans "Not supproted" %}&lt;/p&gt;
-&lt;/iframe&gt;
-                </pre>
-                <iframe src="{% url organization_iframe_completed organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto">
-                    <p>{% trans "iFrame is not supproted" %}</p>
-                </iframe>
-            </div>
+                <div class="well">
+                    <h5>{% trans "Widget for past challenges" %}</h5>
+                    <p>{% trans "Copy and paste this block of code to your website to show a list of all past challenges of your organization and their participants." %} </p>
+                    <pre class="prettyprint">
+&lt;iframe src="http://{{ request.get_host }}{% url organization_iframe_completed organization.pk %}" name="iframe" width="400" height="200" align="right" scrolling="auto"&gt;&lt;p&gt;{% trans "Widget not supported in your browser" %}&lt;/p&gt;&lt;/iframe&gt;
+                    </pre>
+                </div>
+            {% endif %}
         </div>
 
         <div class="span6">

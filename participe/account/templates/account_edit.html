@@ -9,35 +9,31 @@
         #ui-datepicker-div {display: none;}
     </style>
 
-    {% if profile.avatar %}
-        <a class="btn" href="{% url change_avatar %}">{% trans "Change profile image" %}</a><br>
-        <a class="btn" href="{% url crop_avatar %}">{% trans "Crop profile image" %}</a><br>
-    {% else %}
-        <a class="btn" href="{% url add_avatar %}">{% trans "Add profile image" %}</a><br>
-    {% endif %}
-    <a class="btn" href="{% url reset_password %}">{% trans "Change password" %}</a><br>
-    <a class="btn" href="{% url delete_profile %}">{% trans "Delete profile" %}</a><br>
 
-    <form id="edit" class="well" action="." method="post">{% csrf_token %}
+    <form id="edit" action="." method="post">{% csrf_token %}
+        <h2>{% trans "Edit profile" %}</h2>
         <div class="row">
-            <div class="span12">
-                <div class="row">
-                    <div class="span6">
-                        <p>{% trans "Edit your profile" %}</p>
-                    </div>
-                    <div class="span6">
-                        <table>
-                            {% for field in pform%}
-                            <tr>
-                                <th>{{ field.label_tag }}</th>
-                                <td><div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        
-                        <div class="input"><input type="submit" form="edit" class="btn-primary" value="{% trans 'Save changes' %}" /></div>
-                    </div>
-                </div>
+            <div class="span5 well">
+                <table>
+                    {% for field in pform%}
+                        <tr>
+                            <th align="right">{{ field.label_tag }}</th>
+                            <td>
+                                <div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="input"><input type="submit" form="edit" class="btn btn-primary" value="{% trans 'Save changes' %}" /></div>
+            </div>
+            <div class="well btn-group span5">
+                {% if profile.avatar %}
+                    <a class="btn" href="{% url change_avatar %}">{% trans "Change profile image" %}</a>
+                {% else %}
+                    <a class="btn" href="{% url add_avatar %}">{% trans "Add profile image" %}</a>
+                {% endif %}
+                <a class="btn" href="{% url reset_password %}">{% trans "Change password" %}</a>
+                <a class="btn" href="{% url delete_profile %}">{% trans "Delete profile" %}</a>
             </div>        
         </div>     
     </form>

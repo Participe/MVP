@@ -170,20 +170,19 @@ class UserEditForm(forms.ModelForm):
         self.fields["country"].required = True
         self.fields["birth_day"].required = True
 
-        #self.fields["username"].label = "username"
-        self.fields["first_name"].label = _("first_name")
-        self.fields["last_name"].label = _("last_name")
-        self.fields["email"].label = _("email")
-        self.fields["address_1"].label = _("address_1")
-        self.fields["address_2"].label = _("address_2")
-        self.fields["postal_code"].label = _("postal_code")
-        self.fields["city"].label = _("city")
-        self.fields["country"].label = _("country")
-        self.fields["birth_day"].label = _("Birth day")
-        self.fields["phone_number"].label = _("phone_number")
-        self.fields["privacy_mode"].label = _("Privacy mode")
+        self.fields["first_name"].label = _("First name")
+        self.fields["last_name"].label = _("Last name")
+        self.fields["email"].label = _("Email")
+        self.fields["address_1"].label = _("Street and house number")
+        self.fields["address_2"].label = _("Additional address info")
+        self.fields["postal_code"].label = _("Postal Code")
+        self.fields["city"].label = _("City")
+        self.fields["country"].label = _("Country")
+        self.fields["birth_day"].label = _("Date of birth")
+        self.fields["phone_number"].label = _("Phone number")
+        self.fields["privacy_mode"].label = _("Privacy")
         self.fields["receive_newsletter"].label =\
-                _("I want to get the Participe newsletter")
+                _("I want to revieve the Participe newsletter")
 
         # Override countries order in choice-list
         self.fields["country"].choices = COUNTRIES
