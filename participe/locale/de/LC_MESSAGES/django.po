@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
+
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-12 19:22+0200\n"
+"POT-Creation-Date: 2013-05-14 19:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -308,9 +308,9 @@ msgid ""
 "Are you sure you want to delete your Participe account? This will delete all "
 "information about your challenges and challenge participatsions and can not "
 "be undone."
-msgstr "
-"Bist du sicher, dass du dein Participe-Konto löschen willst? Dies wird all deine"
-"Daten löschen und kann nicht rückgängig gemacht werden."
+msgstr ""
+"Bist du sicher, dass du dein Participe-Konto löschen willst? Dies wird all "
+"deineDaten löschen und kann nicht rückgängig gemacht werden."
 
 #: account/templates/account_delete.html:15
 msgid "Delete my Participe account"
@@ -323,7 +323,7 @@ msgstr "Benutzerkonto löschen"
 #: challenge/templates/challenge_detail.html:309
 #: challenge/templates/challenge_detail.html:323
 #: challenge/templates/challenge_detail.html:337
-#: challenge/templates/challenge_edit.html:41
+#: challenge/templates/challenge_edit.html:34
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -452,8 +452,8 @@ msgid ""
 "This information can only be seen by organizers of challenges you "
 "participate in."
 msgstr ""
-"Diese Informationen können nur von Organisatoren von Engagements gesehen"
-"werden, zu denen du dich angemeldet hast."
+"Diese Informationen können nur von Organisatoren von Engagements "
+"gesehenwerden, zu denen du dich angemeldet hast."
 
 #: account/templates/account_myprofile.html:46
 msgid "My Challenges"
@@ -577,9 +577,9 @@ msgid ""
 "private by default. To understand who can see what if this information, "
 "please read our Privacy Policy"
 msgstr ""
-"Diese Information kann nur von Menschen gesehen werden, welche sie kennen müssen,"
-"und sind standardmäsig verborgen. Um zu verstehen, wer welche Informationen wann"
-"sehen kann, lies bitte unsere Richtlinien zur Privatsphäre."
+"Diese Information kann nur von Menschen gesehen werden, welche sie kennen "
+"müssen,und sind standardmäsig verborgen. Um zu verstehen, wer welche "
+"Informationen wannsehen kann, lies bitte unsere Richtlinien zur Privatsphäre."
 
 #: account/templates/account_signup.html:53
 msgid "By signing up, you accept the"
@@ -657,7 +657,7 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: challenge/models.py:45 challenge/templates/challenge_create.html:29
-#: challenge/templates/challenge_edit.html:24
+#: challenge/templates/challenge_edit.html:22
 msgid "Duration"
 msgstr "Dauer"
 
@@ -682,7 +682,7 @@ msgid "Organization"
 msgstr "Organisation"
 
 #: challenge/models.py:78 challenge/templates/challenge_create.html:43
-#: challenge/templates/challenge_edit.html:33
+#: challenge/templates/challenge_edit.html:29
 msgid "Application"
 msgstr "Bewerbung"
 
@@ -708,8 +708,7 @@ msgstr "Die Organisatoren haben dich von diesem Engagement abgemeldet"
 
 #: challenge/models.py:191
 msgid "You withdrew your participation to this challenge"
-msgstr ""
-"Du hast deine Bewerbung für dieses Engagement zurückgezogen"
+msgstr "Du hast deine Bewerbung für dieses Engagement zurückgezogen"
 
 #: challenge/models.py:193
 msgid "Please write your experience report"
@@ -792,7 +791,7 @@ msgid "Create challenge"
 msgstr "Engagement erfassen"
 
 #: challenge/templates/challenge_create.html:25
-#: challenge/templates/challenge_edit.html:18
+#: challenge/templates/challenge_edit.html:16
 #: organization/templates/organization_create.html:17
 msgid "Avatar:"
 msgstr "Logo:"
@@ -806,18 +805,18 @@ msgid "Affiliate with organization"
 msgstr "Mit Organisation verknüpfen"
 
 #: challenge/templates/challenge_create.html:37
-#: challenge/templates/challenge_edit.html:27
+#: challenge/templates/challenge_edit.html:23
 #: organization/templates/organization_create.html:27
 msgid "Contact person:"
 msgstr "Kontaktperson:"
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:32
+#: challenge/templates/challenge_edit.html:28
 msgid "Start date"
 msgstr "Datum"
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:32
+#: challenge/templates/challenge_edit.html:28
 msgid "Time"
 msgstr "Uhrzeit"
 
@@ -907,9 +906,9 @@ msgid ""
 "challenge organizer will use your application text and your history on "
 "Participe to decide whether you are a good fit for this challenge."
 msgstr ""
-"Zu diesem Engagement ist eine Bewerbung notwendig. Die Organisatoren"
-"werden aufgrund deines Bewerbungstextes und deinen bisherigen Aktivitäten"
-"entscheiden, ob du gut zu diesem Engagement passt."
+"Zu diesem Engagement ist eine Bewerbung notwendig. Die Organisatorenwerden "
+"aufgrund deines Bewerbungstextes und deinen bisherigen "
+"Aktivitätenentscheiden, ob du gut zu diesem Engagement passt."
 
 #: challenge/templates/challenge_detail.html:192
 msgid "Please mark this challenge as completed"
@@ -921,9 +920,10 @@ msgid ""
 "Remember to reject all participants from the challenge who did not show up "
 "to help, so the challenge will not appear on their profiles."
 msgstr ""
-"Falls dieses Engagement wie geplant stattfefunden hat, markiere es bitte als abgeschlossen"
-"Vergiss nicht, alle angemeldeten Teilnehmer_innen, welche nicht aufgetaucht sind,"
-"davor abzulehnen, damit dieses Engagement nicht auf ihren Profile erscheint."
+"Falls dieses Engagement wie geplant stattfefunden hat, markiere es bitte als "
+"abgeschlossenVergiss nicht, alle angemeldeten Teilnehmer_innen, welche nicht "
+"aufgetaucht sind,davor abzulehnen, damit dieses Engagement nicht auf ihren "
+"Profile erscheint."
 
 #: challenge/templates/challenge_detail.html:196
 msgid "Mark as completed"
@@ -936,7 +936,8 @@ msgid ""
 "happened at the challenge."
 msgstr ""
 "Diese Beschreibung wird in den Dossiers der Teilnehmer_innen erscheinen."
-"Bitte aktualisiere sie falls nötig, damit sie das eigentlich passierte beschreibt."
+"Bitte aktualisiere sie falls nötig, damit sie das eigentlich passierte "
+"beschreibt."
 
 #: challenge/templates/challenge_detail.html:202
 msgid "Request experience reports"
@@ -952,16 +953,16 @@ msgid ""
 "You have submitted an application to this challenge. You must now wait for "
 "the organizer to decide whether they want to accept your offer to help."
 msgstr ""
-"Du hast dich für dieses Engagement beworben. Nun musst du auf die Entscheidung"
-"der Organisatoren warten."
+"Du hast dich für dieses Engagement beworben. Nun musst du auf die "
+"Entscheidungder Organisatoren warten."
 
 #: challenge/templates/challenge_detail.html:222
 msgid ""
 "You are signed up for this challenge. The organizer is expecting you to be "
 "there and do your best."
 msgstr ""
-"Du bist zu diesem Engagement angemeldet. Die Organisatoren erwarten, dass du"
-"erscheints und dein Bestes gibts!"
+"Du bist zu diesem Engagement angemeldet. Die Organisatoren erwarten, dass "
+"duerscheints und dein Bestes gibts!"
 
 #: challenge/templates/challenge_detail.html:241
 msgid "Withdraw application"
@@ -976,9 +977,9 @@ msgid ""
 "Withdrawing from a challenge can be very inconvenient for the organizer. "
 "Please write a note explaining why you can't make it this time."
 msgstr ""
-"Eine Anmeldung zu einem Engagement zurück zu ziehen kann für die Organisatoren"
-"sehr mühsam sein. Bitte schreibe einen kurze Begründung, warum du es trotzdem"
-"nicht schaffst auf zu tauchen."
+"Eine Anmeldung zu einem Engagement zurück zu ziehen kann für die "
+"Organisatorensehr mühsam sein. Bitte schreibe einen kurze Begründung, warum "
+"du es trotzdemnicht schaffst auf zu tauchen."
 
 #: challenge/templates/challenge_detail.html:256
 msgid ""
@@ -986,9 +987,9 @@ msgid ""
 "all challenges you withdrew from and the reason you entered. Seeing fewer "
 "withdrawals will make you look more trustworthy."
 msgstr ""
-"Wenn du dich in Zukunft zu einem Engagement anmeldest, werden die Organisatoren"
-"alle Engagements sehen, von welchen du dich wieder abgemeldet hast. Weniger "
-"Abmeldungen lassen dich vertrauenswürdiger erscheinen."
+"Wenn du dich in Zukunft zu einem Engagement anmeldest, werden die "
+"Organisatorenalle Engagements sehen, von welchen du dich wieder abgemeldet "
+"hast. Weniger Abmeldungen lassen dich vertrauenswürdiger erscheinen."
 
 #: challenge/templates/challenge_detail.html:260
 msgid "Withdraw"
@@ -1050,8 +1051,8 @@ msgid ""
 "Thank you for participating! Please take a minute to write about your "
 "experience."
 msgstr ""
-"Danke fürs mitmachen! Bitte nimm dir eine Minute Zeit und schreibe "
-"einen Erfahrungsbericht."
+"Danke fürs mitmachen! Bitte nimm dir eine Minute Zeit und schreibe einen "
+"Erfahrungsbericht."
 
 #: challenge/templates/challenge_detail.html:317
 msgid "What did you do during this challenge?"
@@ -1090,24 +1091,26 @@ msgstr "Informationen versteckt"
 #: challenge/templates/challenge_detail.html:367
 msgid ""
 "Log in to see the telephone number and email address of the contact person."
-msgstr ""
-"Melde dich an, um die Kontaktinformationen dieser Person zu sehen."
+msgstr "Melde dich an, um die Kontaktinformationen dieser Person zu sehen."
 
 #: challenge/templates/challenge_detail.html:379
 msgid ""
 "Log in to see the telephone number and email address of the contact person.."
-msgstr ""
-"Melde dich an, um die Kontaktinformationen dieser Person zu sehen."
+msgstr "Melde dich an, um die Kontaktinformationen dieser Person zu sehen."
 
 #: challenge/templates/challenge_detail.html:393
 msgid "Link to this page"
 msgstr "Link zu dieser Seite"
 
-#: challenge/templates/challenge_edit.html:36
+#: challenge/templates/challenge_edit.html:30
 msgid "Save Changes"
 msgstr "Änderungen speichern"
 
-#: challenge/templates/challenge_edit.html:41
+#: challenge/templates/challenge_edit.html:31
+msgid "Delete challenge"
+msgstr "Engagement löschen"
+
+#: challenge/templates/challenge_edit.html:34
 msgid "Delete"
 msgstr "Löschen"
 
@@ -2268,8 +2271,8 @@ msgid ""
 "Copy and paste this block of code to your website to show a list of all "
 "upcoming challenges of your organization."
 msgstr ""
-"Kopiere diesen Block Code in deine Webseite, um eine Liste aller "
-"Engagements anzuzeigen, welche deine Organisation veranstaltet"
+"Kopiere diesen Block Code in deine Webseite, um eine Liste aller Engagements "
+"anzuzeigen, welche deine Organisation veranstaltet"
 
 #: organization/templates/organization_detail.html:51
 #: organization/templates/organization_detail.html:59
@@ -2285,9 +2288,8 @@ msgid ""
 "Copy and paste this block of code to your website to show a list of all past "
 "challenges of your organization and their participants."
 msgstr ""
-"Kopiere diesen Block Code in deine Webseite, um eine Liste aller "
-"Engagements anzuzeigen, welche deine Organisation veranstaltet hat"
-
+"Kopiere diesen Block Code in deine Webseite, um eine Liste aller Engagements "
+"anzuzeigen, welche deine Organisation veranstaltet hat"
 
 #: organization/templates/organization_detail.html:67
 msgid "Upcoming challenges"
@@ -2319,8 +2321,9 @@ msgstr "Mitarbeiter_innen"
 
 #: organization/templates/organization_detail.html:106
 msgid "These users can create challenges in the name of this organization"
-msgstr "Diese Menschen können Engagements im Namen der Organisation erstellen"
-"Diese Benutzer_innen können Engagements im Namen dieser Organisation erfassen"
+msgstr ""
+"Diese Menschen können Engagements im Namen der Organisation erstellenDiese "
+"Benutzer_innen können Engagements im Namen dieser Organisation erfassen"
 
 #: organization/templates/organization_iframe.html:16
 msgid "upcoming challenges on Participe"
@@ -2358,8 +2361,7 @@ msgstr "Die Macht ist heute nicht mir dir"
 #: templates/403.html:10
 msgid ""
 "You cannot jedi mind trick your way into viewing this page, try again later."
-msgstr ""
-"Fehler"
+msgstr "Fehler"
 
 #: templates/404.html:4 templates/404.html.py:8
 msgid "Page not found"
