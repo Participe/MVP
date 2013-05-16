@@ -68,7 +68,7 @@
                 <ul class="thumbnails">
                     {% for challenge in upcoming_challenges %}
                         <li class="span2">
-                            <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
+                            <a class="thumbnail well" href="{{ challenge.get_absolute_url }}">
                                 <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
                                 <h4>{{ challenge.name }}</h4>
                             </a>
@@ -87,7 +87,7 @@
                 <ul class="thumbnails">
                     {% for challenge in completed_challenges %}
                         <li class="span2">
-                            <a class="thumbnail well" href="{% url challenge_detail challenge.pk %}">
+                            <a class="thumbnail well" href="{{ challenge.get_absolute_url }}">
                                 <img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 130x130 crop %}" alt="{{ challenge.name }}">
                                 <h4>{{ challenge.name }}</h4>
                             </a>
