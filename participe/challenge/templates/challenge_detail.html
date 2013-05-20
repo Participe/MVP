@@ -50,8 +50,8 @@
                                             <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
                                         {% endif %}
                                     </a>
-                                    <a href="#" onclick="send_remove_form()">
-                                        <input type="button" class="btn" participation="{{ participation.pk }}" value="Remove">
+                                    <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION }} )">
+                                        <input type="button" class="btn" participation="{{ participation.pk }}" value="{% trans 'Remove' %}">
                                     </a>
                                 </div>
                             {% else %}
@@ -97,7 +97,7 @@
                                 <a href="#" onclick="send_accept_form()">
                                     <input type="button" participation="{{ participation.pk }}" value="{% trans "Accept" %}">
                                 </a>
-                                <a href="#" onclick="send_remove_form()">
+                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION }} )">
                                     <input type="button" participation="{{ participation.pk }}" value="{% trans "Reject" %}">
                                 </a>
                             </div>
@@ -129,8 +129,8 @@
                                 <blockquote>{{ participation.selfreflection_activity_text }}</blockquote>
                                 <p>{% trans "What did you learn?" %}</p>
                                 <blockquote>{{ participation.selfreflection_learning_text }}</blockquote>
-                                <a href="#" onclick="send_remove_form()"><input class="btn btn-success" type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}"></a> 
-                                <a href="#" onclick="send_remove_form()"><input class="btn btn-danger" type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}"></a>
+                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE }} )"><input class="btn btn-success" type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}"></a>
+                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION }} )"><input class="btn btn-danger" type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}"></a>
                             </div>
                         </li>
                         {% endwith %}
@@ -448,12 +448,12 @@
             );
         }
 
-        function send_remove_form(){
+        function send_remove_form( remove_id ){
             var event = window.event || evt;
             event.preventDefault();
             if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
-            value = event.target.getAttribute("value");
+            value = remove_id;
 
             $("#remove-participation-dialog").data("participation_id", participation_id);
             $("#remove-participation-dialog").data("value", value);

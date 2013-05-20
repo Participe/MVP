@@ -171,6 +171,13 @@ class Challenge(models.Model):
             return True
         return False
 
+PARTICIPATION_REMOVE_MODE = enum(
+    REMOVE_APPLICATION = "0",
+    REJECT_APPLICATION = "1",
+    REJECT_SELFREFLECTION = "2",
+    ACKNOWLEDGE = "4",
+    )
+
 PARTICIPATION_STATE = enum(
     WAITING_FOR_CONFIRMATION = "0",
     CONFIRMATION_DENIED = "1",
@@ -185,15 +192,20 @@ PARTICIPATION_STATE = enum(
 participation_status_choices = [
     (PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
             _("Waiting for confirmation")),
-    (PARTICIPATION_STATE.CONFIRMATION_DENIED, _("You were not accepted to this challenge")),
-    (PARTICIPATION_STATE.CONFIRMED, _("Signed up")),
-    (PARTICIPATION_STATE.CANCELLED_BY_ADMIN, _("The organizer removed you from this challenge")),
-    (PARTICIPATION_STATE.CANCELLED_BY_USER, _("You withdrew your participation to this challenge")),
+    (PARTICIPATION_STATE.CONFIRMATION_DENIED,
+            _("You were not accepted to this challenge")),
+    (PARTICIPATION_STATE.CONFIRMED,
+            _("Signed up")),
+    (PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
+            _("The organizer removed you from this challenge")),
+    (PARTICIPATION_STATE.CANCELLED_BY_USER,
+            _("You withdrew your participation to this challenge")),
     (PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
             _("Please write your experience report")),
     (PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
             _("Waiting for acknowledgement")),
-    (PARTICIPATION_STATE.ACKNOWLEDGED, _("Report acknowledged")),
+    (PARTICIPATION_STATE.ACKNOWLEDGED,
+            _("Report acknowledged")),
     ]
 
 class Participation(models.Model):

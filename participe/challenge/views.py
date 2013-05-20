@@ -14,12 +14,13 @@ from templated_email import send_templated_mail
 from forms import (CreateChallengeForm, SignupChallengeForm, EditChallengeForm,
         WithdrawSignupForm, SelfreflectionForm)
 from models import (Challenge, Participation, Comment, CHALLENGE_MODE,
-        CHALLENGE_STATUS, PARTICIPATION_STATE)
+        CHALLENGE_STATUS, PARTICIPATION_STATE, PARTICIPATION_REMOVE_MODE)
 from participe.account.models import PRIVACY_MODE
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.http import Http501
 from participe.core.user_tests import user_profile_completed
+from participe.enum import enum
 
 
 @login_required
@@ -172,6 +173,7 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
     ctx.update({"CHALLENGE_STATUS": CHALLENGE_STATUS})
     ctx.update({"CHALLENGE_MODE": CHALLENGE_MODE})
     ctx.update({"PRIVACY_MODE": PRIVACY_MODE})
+    ctx.update({"PARTICIPATION_REMOVE_MODE": PARTICIPATION_REMOVE_MODE})
 
     return render_to_response('challenge_detail.html',
             RequestContext(request, ctx))
@@ -432,13 +434,13 @@ def ajax_participation_remove(request, challenge_id):
                 "challenge": participation.challenge,
                 "participation": participation,})
 
-        if value=="Remove":
+        if value==PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION:
             participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
             template_name = "challenge_participation_removed"
-        elif value=="Reject":
+        elif value==PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION:
             participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
             template_name = "challenge_participation_rejected"
-        elif value=="Reject self-reflection":
+        elif value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
             participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
             template_name = "challenge_participation_selfreflection_rejected"
             redirect_to = (
@@ -448,7 +450,7 @@ def ajax_participation_remove(request, challenge_id):
                     participation.challenge.get_absolute_url(),
                     participation.challenge.name))
             ctx.update({"redirect_to": redirect_to})
-        elif value=="Acknowledge":
+        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
             participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
             template_name = "challenge_participation_acknowledged"
             redirect_to = (
@@ -459,13 +461,14 @@ def ajax_participation_remove(request, challenge_id):
                     ))
             ctx.update({"redirect_to": redirect_to})
 
-        if value=="Remove" or value=="Reject":
+        if (value==PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION or
+                value==PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION):
             participation.cancellation_text = text
             participation.date_cancelled = datetime.now()
-        elif value=="Reject self-reflection":
+        elif value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
             participation.selfreflection_rejection_text = text
             participation.date_selfreflection_rejection = datetime.now()
-        elif value=="Acknowledge":
+        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
             participation.acknowledgement_text = text
             participation.date_acknowledged = datetime.now()
         participation.save()
@@ -475,7 +478,6 @@ def ajax_participation_remove(request, challenge_id):
                 from_email="from@example.com",
                 recipient_list=[participation.user.email,],
                 context=ctx,)
-
         return HttpResponse()
     return HttpResponse("An error has been encountered!")
 
