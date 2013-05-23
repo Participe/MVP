@@ -9,24 +9,24 @@
         ul li {list-style: none;}
         #ui-datepicker-div {display: none;}
     </style>
-    
-    <form id="edit-form" enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
+
+    <form id="edit-form" enctype="multipart/form-data" action="." class="" method="post">{% csrf_token %}
         <div class="row">
-            <div class="span12">
+            <div class="span12 well">
                 <div class="input">{% trans "Avatar:" %}</div>
                 <img src="{{ form.instance.avatar|default:'img/default.jpg'|thumbnail_url:'span9_wide' }}" alt="">
-                <div {% if form.avatar.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.avatar }}{{ form.avatar.errors }}</div>
-                <div {% if form.name.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.name }}{{ form.name.errors }}</div> 
-                <div {% if form.description.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.description }}</div> 
-                <div {% if form.location.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.location }}</div> 
-                <div {% if form.duration.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Duration" %} {{ form.duration }}</div> 
-                <div class="input">{% trans "Contact person:" %}</div>
-                <div {% if form.contact.errors %}class="text-error"{% else %}class="input"{% endif %}>{{ form.contact }}{{ form.contact.errors }}</div> 
-                <div {% if form.alt_person_fullname.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_fullname }}{{ form.alt_person_fullname.errors }}</div> 
-                <div {% if form.alt_person_email.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_email }}{{ form.alt_person_email.errors }}</div> 
-                <div {% if form.alt_person_phone.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ form.alt_person_phone }}{{ form.alt_person_phone.errors }}</div> 
-                <div {% if form.start_date.errors or form.start_time.errors %}class="control-group error"{% else %}class="input"{% endif %}>{% trans "Start date" %} {{ form.start_date }}{{ form.start_date.errors }} {% trans "Time" %} {{ form.start_time }}{{ form.start_time.errors }}</div>
-                <div {% if form.application.errors %}class="text-error"{% else %}class="input"{% endif %}>{% trans "Application" %} {{ form.application }}</div> 
+
+                <table>
+                    {% for field in form %}
+                    <tr>
+                        <th align="right">{{ field.label_tag }}</th>
+                        <td>
+                            <div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
                 <input id="save" name="save" type="submit" class="btn btn-primary" value="{% trans 'Save Changes' %}" />
                 <input id="delete-btn" name="delete-btn" type="button" class="btn btn-danger " value="{% trans 'Delete challenge' %}">
                 <div id="delete-form">
@@ -34,13 +34,13 @@
                     <div><input id="delete" name="delete" type="button" class="btn btn-primary" value="{% trans 'Delete' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
                 </div>
             </div>
-        </div>     
+        </div>
     </form>
 
     <div id="dialog">
         <span>Do you really want to delete this challenge?</span>
     </div>
-    
+
     <script>
         $(function() {
             options = {
@@ -88,10 +88,10 @@
                     "Delete": function(){
                         var input = $("<input>").attr("type", "hidden").attr("name", "delete").val("delete");
                         $("#edit-form").append($(input));
-                        $("#edit-form").submit();   
+                        $("#edit-form").submit();
                     },
                     "Close": function(){
-                        $(this).dialog('close');   
+                        $(this).dialog('close');
                     }
                 }
             });

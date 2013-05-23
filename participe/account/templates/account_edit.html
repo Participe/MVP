@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block title %}{% trans "Edit profile" %} - {{ block.super }}{% endblock %}
-    
+
 {% block extra_content %}
     <style type="text/css">
         ul li {list-style: none;}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="span5 well">
                 <table>
-                    {% for field in pform%}
+                    {% for field in pform %}
                         <tr>
                             <th align="right">{{ field.label_tag }}</th>
                             <td>
@@ -34,8 +34,8 @@
                 {% endif %}
                 <a class="btn" href="{% url reset_password %}">{% trans "Change password" %}</a>
                 <a class="btn" href="{% url delete_profile %}">{% trans "Delete profile" %}</a>
-            </div>        
-        </div>     
+            </div>
+        </div>
     </form>
 
     <script>

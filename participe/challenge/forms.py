@@ -150,7 +150,7 @@ class EditChallengeForm(forms.ModelForm):
         super(EditChallengeForm, self).__init__(*args, **kwargs)
         self.user = user
 
-        self.fields['name'].widget.attrs['class'] = 'disabled'
+        self.fields['name'].widget.attrs['class'] = 'disabled input-xxlarge'
         self.fields['name'].widget.attrs['readonly'] = True
 
         self.contact_choices = [
@@ -162,6 +162,12 @@ class EditChallengeForm(forms.ModelForm):
             self.fields["contact"].initial = "me"
         else:
             self.fields["contact"].initial = "he"
+
+        self.fields.keyOrder = ["avatar", "name", "description", "location",
+            "duration", "contact", "alt_person_fullname",
+            "alt_person_email", "alt_person_phone", "start_date", "start_time",
+            "application", "deleted_reason",
+            ]
 
     contact = forms.ChoiceField(
             widget=forms.RadioSelect())
@@ -180,8 +186,8 @@ class EditChallengeForm(forms.ModelForm):
             ]
         widgets = {
             "description": forms.Textarea(
-                    attrs={"cols": 25, "rows": 5,
-                    "placeholder": _("Challenge description")}),
+                    attrs={"cols": 25, "rows": 5, "class": "field span5",
+                            "placeholder": _("Challenge description")}),
             "location": forms.TextInput(
                     attrs={"placeholder": _("Location")}),
             "duration": widgets.NumberInput(
@@ -199,7 +205,8 @@ class EditChallengeForm(forms.ModelForm):
                     attrs={"class": "input-mini"}),
             "application": forms.RadioSelect(),
             "deleted_reason": forms.Textarea(
-                    attrs={"placeholder": _("Reason for deletion "
+                    attrs={"cols": 25, "rows": 5,
+                            "placeholder": _("Reason for deletion "
                             "(at least 20 symbols)")}),
             }
 
