@@ -246,7 +246,7 @@ def challenge_edit(request, challenge_id):
                                     "user": participation.user,
                                     "challenge": participation.challenge,
                                     },)
-            return redirect("challenge_detail", challenge_id)
+            return redirect(challenge.get_absolute_url())
     return render_to_response('challenge_edit.html',
             RequestContext(request, {'form': form}))
 
