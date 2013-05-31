@@ -55,11 +55,12 @@
                                 {% else %}
                                     <a class="btn" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">
                                         <img src="{{ MEDIA_URL }}img/footer-link-fb.png" alt="{% trans "login with facebook" %}">
-                                        Connect with Facebook
+                                        {% trans "Log in with Facebook" %}
                                     </a>
                                     <a class="btn" href='/accounts/signup/'>{% trans "No account yet?" %}</a>
                                     <a class="btn" href='/accounts/login/'>{% trans "Log in" %}</a>
                                 {% endif %}
+                                <!--
                                 <select name="language" class="input-small" onchange="document.forms['locale'].submit();">
                                     {% for lang in LANGUAGES %}
                                         {% if lang.0 == LANGUAGE_CODE %}
@@ -70,16 +71,12 @@
                                     {% endfor %}
                                 </select>
                                 <input type="submit" class="btn-primary" value="{% trans 'change' %}" style="display:none;" />
+                                -->
                             </div>
                         </div>
                     </form>
                 </div>
             {% endblock %}
-
-                    <p class="note well">
-                        <span class="label">{% trans "Test Version" %}</span><br>
-                        {% trans "All information on beta.partici.pe is fictional and for testing purposes only." %}
-                    </p>
 
             {% block content %}
             {% endblock %}

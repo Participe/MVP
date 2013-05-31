@@ -5,10 +5,9 @@
 #
 msgid ""
 msgstr ""
-
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 19:27+0200\n"
+"POT-Creation-Date: 2013-05-31 09:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +19,7 @@ msgstr ""
 
 #: account/forms.py:20 account/forms.py:22 account/forms.py:66
 #: account/forms.py:201 account/forms.py:258 challenge/forms.py:73
-#: challenge/forms.py:194 challenge/models.py:63 organization/forms.py:66
+#: challenge/forms.py:200 challenge/models.py:63 organization/forms.py:66
 #: organization/models.py:33 organization/models.py:47
 msgid "E-mail"
 msgstr "E-Mail"
@@ -30,7 +29,7 @@ msgstr "E-Mail"
 msgid "Password"
 msgstr "Passwort"
 
-#: account/forms.py:28 account/templates/account_login.html:24
+#: account/forms.py:28
 msgid "Remember me"
 msgstr "Eingeloggt bleiben"
 
@@ -98,7 +97,7 @@ msgid "Date of birth"
 msgstr "Geburtsdatum"
 
 #: account/forms.py:112 account/forms.py:148 account/forms.py:182
-#: account/forms.py:229 challenge/forms.py:75 challenge/forms.py:196
+#: account/forms.py:229 challenge/forms.py:75 challenge/forms.py:202
 #: organization/forms.py:68
 msgid "Phone number"
 msgstr "Telefonnummer"
@@ -170,7 +169,7 @@ msgstr "Sicher"
 msgid "Avatar"
 msgstr "Logo"
 
-#: account/models.py:30 challenge/models.py:200 challenge/models.py:265
+#: account/models.py:30 challenge/models.py:212 challenge/models.py:277
 msgid "User"
 msgstr "Benutzer"
 
@@ -420,7 +419,7 @@ msgstr "Es gibt keine aktiven Benutzerkonten"
 
 #: account/templates/account_login.html:4 templates/base.html:61
 msgid "Log in"
-msgstr "Einloggen"
+msgstr "Anmelden"
 
 #: account/templates/account_login.html:12
 #: account/templates/account_login.html:14
@@ -429,11 +428,23 @@ msgstr "Mit Facebook anmelden"
 
 #: account/templates/account_login.html:18
 msgid "Sign in with email address"
-msgstr "Mit Email-Adresse anmelden"
+msgstr "Mit E-Mail-Adresse anmelden"
+
+#: account/templates/account_login.html:24
+msgid "Keep me logged in"
+msgstr ""
 
 #: account/templates/account_login.html:28
 msgid "Sign in"
 msgstr "Anmelden"
+
+#: account/templates/account_login.html:34
+msgid "Lost your password?"
+msgstr "Passwort vergessen?"
+
+#: account/templates/account_login.html:35 templates/base.html:60
+msgid "No account yet?"
+msgstr "Noch kein Konto?"
 
 #: account/templates/account_myprofile.html:17
 msgid "Hour registered"
@@ -473,7 +484,7 @@ msgstr "Was hast du gelernt?"
 msgid "Comment by the challenge organizer"
 msgstr "Kommentar der Organisatoren"
 
-#: account/templates/account_myprofile.html:79 challenge/models.py:187
+#: account/templates/account_myprofile.html:79 challenge/models.py:194
 msgid "Waiting for confirmation"
 msgstr "Warte auf Bestätigung"
 
@@ -481,7 +492,7 @@ msgstr "Warte auf Bestätigung"
 msgid "Write self-reflection"
 msgstr "Schreibe Erfahrungsbericht"
 
-#: account/templates/account_myprofile.html:83 challenge/models.py:195
+#: account/templates/account_myprofile.html:83 challenge/models.py:206
 msgid "Waiting for acknowledgement"
 msgstr "Warte auf Bestätigung"
 
@@ -520,7 +531,7 @@ msgid "Challenge name"
 msgstr "Name"
 
 #: account/templates/account_myprofile.html:138
-#: account/templates/account_myprofile.html:161 challenge/models.py:189
+#: account/templates/account_myprofile.html:161 challenge/models.py:198
 msgid "Signed up"
 msgstr "Angemeldet"
 
@@ -593,50 +604,50 @@ msgstr "Allgemeinen Schenkbedingungen"
 msgid "Affiliate different person"
 msgstr "Andere Person berechtigen"
 
-#: challenge/forms.py:63 challenge/forms.py:184
+#: challenge/forms.py:63 challenge/forms.py:190
 msgid "Challenge description"
 msgstr "Beschreibung"
 
-#: challenge/forms.py:65 challenge/forms.py:186 challenge/models.py:43
+#: challenge/forms.py:65 challenge/forms.py:192 challenge/models.py:43
 msgid "Location"
 msgstr "Ort"
 
-#: challenge/forms.py:71 challenge/forms.py:191 challenge/models.py:61
+#: challenge/forms.py:71 challenge/forms.py:197 challenge/models.py:61
 #: organization/forms.py:64
 msgid "Full name"
 msgstr "Vollständiger Name"
 
-#: challenge/forms.py:109 challenge/forms.py:209
+#: challenge/forms.py:109 challenge/forms.py:216
 msgid "Value should be greater or equal 1"
 msgstr "Wert sollte mindestens 1 sein"
 
 #: challenge/forms.py:121 challenge/forms.py:129 challenge/forms.py:133
-#: challenge/forms.py:137 challenge/forms.py:221 challenge/forms.py:229
-#: challenge/forms.py:233 challenge/forms.py:237 challenge/forms.py:305
+#: challenge/forms.py:137 challenge/forms.py:228 challenge/forms.py:236
+#: challenge/forms.py:240 challenge/forms.py:244 challenge/forms.py:312
 #: organization/forms.py:102 organization/forms.py:110
 #: organization/forms.py:114 organization/forms.py:118
 msgid "This field is required."
 msgstr "Bitte fülle dieses Feld aus."
 
-#: challenge/forms.py:202
+#: challenge/forms.py:209
 msgid "Reason for deletion (at least 20 symbols)"
 msgstr ""
 "Warum löschst du dein Benutzerkonto? Dein Feedback hilft uns, Participe zu "
 "verbessern."
 
-#: challenge/forms.py:260 challenge/models.py:204
+#: challenge/forms.py:267 challenge/models.py:216
 msgid "Application text"
 msgstr "Dein Bewerbungstext"
 
-#: challenge/forms.py:293
+#: challenge/forms.py:300
 msgid "Leave a reason"
 msgstr "Hinterlasse einen Grund"
 
-#: challenge/forms.py:335
+#: challenge/forms.py:342
 msgid "Self-reflection activity"
 msgstr "Erfahrungsbericht Aktivität"
 
-#: challenge/forms.py:337
+#: challenge/forms.py:344
 msgid "Self-reflection learning"
 msgstr "Erfahrungsbericht Gelerntes"
 
@@ -657,11 +668,10 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: challenge/models.py:45 challenge/templates/challenge_create.html:29
-#: challenge/templates/challenge_edit.html:22
 msgid "Duration"
 msgstr "Dauer"
 
-#: challenge/models.py:50 challenge/models.py:222
+#: challenge/models.py:50 challenge/models.py:234
 msgid "Status"
 msgstr "Status"
 
@@ -682,7 +692,6 @@ msgid "Organization"
 msgstr "Organisation"
 
 #: challenge/models.py:78 challenge/templates/challenge_create.html:43
-#: challenge/templates/challenge_edit.html:29
 msgid "Application"
 msgstr "Bewerbung"
 
@@ -698,91 +707,91 @@ msgstr "Engagement"
 msgid "challenges"
 msgstr "Engagements"
 
-#: challenge/models.py:188
+#: challenge/models.py:196
 msgid "You were not accepted to this challenge"
 msgstr "Du wurdest nicht zu diesem Engagement akzeptiert"
 
-#: challenge/models.py:190
+#: challenge/models.py:200
 msgid "The organizer removed you from this challenge"
 msgstr "Die Organisatoren haben dich von diesem Engagement abgemeldet"
 
-#: challenge/models.py:191
+#: challenge/models.py:202
 msgid "You withdrew your participation to this challenge"
 msgstr "Du hast deine Bewerbung für dieses Engagement zurückgezogen"
 
-#: challenge/models.py:193
+#: challenge/models.py:204
 msgid "Please write your experience report"
 msgstr "Bitte schreibe deinen Erfahrungsbericht"
 
-#: challenge/models.py:196
+#: challenge/models.py:208
 msgid "Report acknowledged"
 msgstr "Bericht bestätigt"
 
-#: challenge/models.py:201 challenge/models.py:266
+#: challenge/models.py:213 challenge/models.py:278
 msgid "Challenge"
 msgstr "Engagement"
 
-#: challenge/models.py:206
+#: challenge/models.py:218
 msgid "Cancellation text"
 msgstr "Grund des Abbruchs"
 
-#: challenge/models.py:209
+#: challenge/models.py:221
 msgid "Self-reflection activity text"
 msgstr "Erfahrungsbericht Aktivität"
 
-#: challenge/models.py:212
+#: challenge/models.py:224
 msgid "Self-reflection learning text"
 msgstr "Erfahrungsbericht Gelerntes"
 
-#: challenge/models.py:215
+#: challenge/models.py:227
 msgid "Self-reflection rejection text"
 msgstr "Erfahrungsbericht Ablehnungstext"
 
-#: challenge/models.py:217
+#: challenge/models.py:229
 msgid "Acknowledgement text"
 msgstr "Erfahrungsbericht Organisatoren-Text"
 
-#: challenge/models.py:225
+#: challenge/models.py:237
 msgid "Date created"
 msgstr "Erstellungsdatum"
 
-#: challenge/models.py:227
+#: challenge/models.py:239
 msgid "Date accepted"
 msgstr "Bestätigungsdatum"
 
-#: challenge/models.py:229
+#: challenge/models.py:241
 msgid "Date cancelled"
 msgstr "Abbruchdatum"
 
-#: challenge/models.py:231
+#: challenge/models.py:243
 msgid "Date of self-reflection"
 msgstr "Datum des Erfahrungsberichtes"
 
-#: challenge/models.py:234
+#: challenge/models.py:246
 msgid "Date of self-reflection rejection"
 msgstr "Datum der Ablehnung"
 
-#: challenge/models.py:236
+#: challenge/models.py:248
 msgid "Date acknowledged"
 msgstr "Bestätigungsdatum"
 
-#: challenge/models.py:241
+#: challenge/models.py:253
 msgid "participation"
 msgstr "Teilnahme"
 
-#: challenge/models.py:242
+#: challenge/models.py:254
 msgid "participations"
 msgstr "Teilnahmen"
 
-#: challenge/models.py:267
+#: challenge/models.py:279
 msgid "Text"
 msgstr "Text"
 
-#: challenge/models.py:272
+#: challenge/models.py:284
 msgid "commment"
 msgstr "Kommentar"
 
-#: challenge/models.py:273
+#: challenge/models.py:285
 msgid "comments"
 msgstr "Kommentare"
 
@@ -805,18 +814,15 @@ msgid "Affiliate with organization"
 msgstr "Mit Organisation verknüpfen"
 
 #: challenge/templates/challenge_create.html:37
-#: challenge/templates/challenge_edit.html:23
 #: organization/templates/organization_create.html:27
 msgid "Contact person:"
 msgstr "Kontaktperson:"
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:28
 msgid "Start date"
 msgstr "Datum"
 
 #: challenge/templates/challenge_create.html:42
-#: challenge/templates/challenge_edit.html:28
 msgid "Time"
 msgstr "Uhrzeit"
 
@@ -859,6 +865,10 @@ msgstr "Teilnehmer_innen"
 #: challenge/templates/challenge_detail.html:150
 msgid "Anonymous User"
 msgstr "Anonymer Benutzer"
+
+#: challenge/templates/challenge_detail.html:54
+msgid "Remove"
+msgstr ""
 
 #: challenge/templates/challenge_detail.html:71
 msgid "No participants yet"
@@ -2183,16 +2193,25 @@ msgid "You don't have permission to perform this action."
 msgstr "Du bist nicht berechtigt, dies zu tun."
 
 #: home/templates/home.html:6
-msgid "Let's change the world. Together."
-msgstr "Ändern wir die Welt. Gemeinsam."
+msgid "Participe is an online platform for volunteering work"
+msgstr "Participe ist eine Plattform für freiwillige Arbeit"
 
-#: home/templates/home.html:11
-msgid "Tag 'video' not supports with your browser."
+#: home/templates/home.html:9
+#, python-format
+msgid ""
+"\n"
+"            On Participe you can find and post opportunities to volunteer "
+"your time for a good cause. Do you want to meet new people, have fun, and "
+"make the world a better place? <a href=\"%(challenge_list)s\">Find your "
+"first challenge on Participe right now!</a>\n"
+"            "
 msgstr ""
-
-#: home/templates/home.html:11
-msgid "Download video"
-msgstr "Video herunterladen"
+"\n"
+"            Auf Participe kannst du freiwillige Engagements finden und erfassen. "
+"Möchtest du neue Leute kennen lernen, Spass haben und dabei die Welt ein kleines "
+"Bisschen besser machen? <a href=\"%(challenge_list)s\">Finde jetzt dein erstes "
+"Engagement auf Participe!</a>\n"
+"            "
 
 #: home/templates/home.html:14
 msgid "Find a Challenge"
@@ -2431,72 +2450,78 @@ msgstr "Ausloggen"
 msgid "login with facebook"
 msgstr "Login mit Facebook"
 
-#: templates/base.html:60
-msgid "No account yet?"
-msgstr "Noch kein Konto?"
+#: templates/base.html:58
+#, fuzzy
+msgid "Log in with Facebook"
+msgstr "Mit Facebook anmelden"
 
 #: templates/base.html:72
 msgid "change"
 msgstr "ändern"
 
-#: templates/base.html:80
-msgid "Test Version"
-msgstr "Test Version"
-
-#: templates/base.html:81
-msgid ""
-"All information on beta.partici.pe is fictional and for testing purposes "
-"only."
-msgstr ""
-"Alle Einträge auf beta.partici.pe sind frei erfunden und nur zu Testzwecken."
-
-#: templates/base.html:90
+#: templates/base.html:85
 msgid "For Partners"
 msgstr "Für Partner_innen"
 
-#: templates/base.html:92
+#: templates/base.html:87
 msgid "For Organizers"
 msgstr "Für Organisatoren"
 
-#: templates/base.html:93
+#: templates/base.html:88
 msgid "For Sponsors"
 msgstr "Für Sponsor_innen"
 
-#: templates/base.html:94
+#: templates/base.html:89
 msgid "For Media"
 msgstr "Für Medien"
 
-#: templates/base.html:98
+#: templates/base.html:93
 msgid "For Users"
 msgstr "Für Benutzer_innen"
 
-#: templates/base.html:100
+#: templates/base.html:95
 msgid "Privacy Policy"
 msgstr "Privatsphäre"
 
-#: templates/base.html:101
+#: templates/base.html:96
 msgid "Terms and Conditions"
-msgstr "Allgemeine Schenkbedingungen"
+msgstr "Allgemeine Geschäftsbedingungen"
 
-#: templates/base.html:102
+#: templates/base.html:97
 msgid "Fork us on GitHub"
 msgstr "Wir sind Open Source"
 
-#: templates/base.html:106
+#: templates/base.html:101
 msgid "About Participe"
 msgstr "Über Participe"
 
-#: templates/base.html:108
+#: templates/base.html:103
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:109
+#: templates/base.html:104
 msgid "Feedback"
 msgstr "Feedback"
 
-#: templates/base.html:110
+#: templates/base.html:105
 msgid "Join Us"
 msgstr "Mach mit"
+
+#~ msgid "Let's change the world. Together."
+#~ msgstr "Ändern wir die Welt. Gemeinsam."
+
+#~ msgid "Download video"
+#~ msgstr "Video herunterladen"
+
+#~ msgid "Test Version"
+#~ msgstr "Test Version"
+
+#~ msgid ""
+#~ "All information on beta.partici.pe is fictional and for testing purposes "
+#~ "only."
+#~ msgstr ""
+#~ "Alle Einträge auf beta.partici.pe sind frei erfunden und nur zu "
+#~ "Testzwecken."
 
 #~ msgid "first_name"
 #~ msgstr "Vorname"
