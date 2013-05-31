@@ -19,10 +19,12 @@
                 <table>
                     {% for field in form %}
                     <tr>
+                        {% ifnotequal field.name "deleted_reason" %}
                         <th align="right">{{ field.label_tag }}</th>
                         <td>
                             <div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div>
                         </td>
+                        {% endifnotequal %}
                     </tr>
                     {% endfor %}
                 </table>
@@ -30,7 +32,12 @@
                 <input id="save" name="save" type="submit" class="btn btn-primary" value="{% trans 'Save Changes' %}" />
                 <input id="delete-btn" name="delete-btn" type="button" class="btn btn-danger " value="{% trans 'Delete challenge' %}">
                 <div id="delete-form">
-                    <div class="input">{{ form.deleted_reason }}</div>
+                    <table>
+                        <tr>
+                            <th>{{ form.deleted_reason.label_tag }}</th>
+                            <td>{{ form.deleted_reason }}</td>
+                        </tr>
+                    </table>
                     <div><input id="delete" name="delete" type="button" class="btn btn-primary" value="{% trans 'Delete' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
                 </div>
             </div>
