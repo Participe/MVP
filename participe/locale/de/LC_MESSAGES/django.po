@@ -590,7 +590,7 @@ msgid ""
 msgstr ""
 "Diese Information kann nur von Menschen gesehen werden, welche sie kennen "
 "müssen,und sind standardmäsig verborgen. Um zu verstehen, wer welche "
-"Informationen wannsehen kann, lies bitte unsere Richtlinien zur Privatsphäre."
+"Informationen wann sehen kann, lies bitte unsere Richtlinien zur Privatsphäre."
 
 #: account/templates/account_signup.html:53
 msgid "By signing up, you accept the"
@@ -598,7 +598,7 @@ msgstr "Indem du dich anmeldest, akzeptierst du die"
 
 #: account/templates/account_signup.html:53
 msgid "terms and conditions"
-msgstr "Allgemeinen Schenkbedingungen"
+msgstr "Allgemeinen Geschäftsbedingungen"
 
 #: challenge/forms.py:34 challenge/forms.py:159 organization/forms.py:26
 msgid "Affiliate different person"
@@ -2223,7 +2223,7 @@ msgstr "Finde eine Organisation"
 
 #: home/templates/terms_and_conditions.html:4
 msgid "Terms and conditions"
-msgstr "Allgemeine Schenkbedingungen"
+msgstr "Allgemeine Geschäftsbedingungen"
 
 #: organization/forms.py:42
 msgid "Organization name"
