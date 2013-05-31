@@ -3,15 +3,12 @@
 
 {% block extra_content %}
     <div class="hero-unit centered-text">
-        <h3>{% trans "Participe ist eine Online-Plattform für freiwillige Arbeit" %}</h3>
-        <!-- <video width="400" height="300" controls="controls" poster="video/duel.jpg">
-            <source src="video/duel.ogv" type='video/ogg; codecs="theora, vorbis"'>
-            <source src="video/duel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-            <source src="video/duel.webm" type='video/webm; codecs="vp8, vorbis"'>
-            {% trans "Tag 'video' not supports with your browser." %} <a href="video/duel.mp4">{% trans "Download video" %}</a>.
-        </video> -->
+        <h3>{% trans "Participe is an online platform for volunteering work" %}</h3>
         <p>
-        Auf Participe findest du Möglichkeiten, dich freiwillig zu engagieren. Nach deinem Einsatz erhältst du eine Arbeitsbestätigung, welche den geleisteten Einsatz würdigt. Willst auch du Spass haben, neue Leute kennen lernen, und dabei die Welt ein kleines bisschen besser machen? Finde gleich jetzt dein erstes Engagement auf Participe!
+            {% url challenge_list as challenge_list %}
+            {% blocktrans %}
+            On Participe you can find and post opportunities to volunteer your time for a good cause. Do you want to meet new people, have fun, and make the world a better place? <a href="{{ challenge_list }}">Find your first challenge on Participe right now!</a>
+            {% endblocktrans %}
         </p>
         <p>
             <a class="btn btn-primary btn-large" href="{% url challenge_list %}">{% trans "Find a Challenge" %}</a>

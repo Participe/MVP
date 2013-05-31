@@ -21,13 +21,10 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/Chicago'
-LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Europe/Zurich'
+LANGUAGE_CODE = 'de'
 LANGUAGES = (
-    ('en', u'English'),
     ('de', u'Deutsch'),
-    ('fr', u'Fran\xe7ais'),
-    ('it', u'Italiano'),
 )
 
 SITE_ID = 1

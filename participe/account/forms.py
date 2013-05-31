@@ -25,7 +25,7 @@ class LoginForm(forms.Form):
             widget=forms.PasswordInput(
                     attrs={"min_length": 6, "max_length": 30,
                             "placeholder": _("Password"), "value": ""}))
-    remember_me = forms.BooleanField(label=_("Remember me"), required=False)
+    remember_me = forms.BooleanField(label=_("Remember me"), required=False, initial=True)
 
     def add_non_field_error(self, message):
         error_list = self.errors.setdefault(NON_FIELD_ERRORS, ErrorList())
