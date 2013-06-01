@@ -1,7 +1,12 @@
 #Django settings for participe project.
 import os
 
-DEBUG = True
+server = request.META.get('wsgi.file_wrapper', None)
+if server is not None and server.__module__ == 'django.core.servers.basehttp':
+    DEBUG = True
+else
+    DEBUG = False
+
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
