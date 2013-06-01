@@ -892,7 +892,7 @@ msgstr "Bitte bestätige diese Erfahrungsberichte"
 
 #: challenge/templates/challenge_detail.html:132
 msgid "Acknowledge"
-msgstr "Bestätigt"
+msgstr "Bestätigen"
 
 #: challenge/templates/challenge_detail.html:133
 msgid "Reject self-reflection"

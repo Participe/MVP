@@ -137,7 +137,7 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
                     pform.save()
             except NameError:
                 pass
-            return redirect("challenge_detail", challenge.pk)
+            return redirect(challenge.get_absolute_url())
         ctx.update({"is_admin": is_challenge_admin(user, challenge)})
 
     # Extract participations
@@ -147,6 +147,7 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
                     PARTICIPATION_STATE.CONFIRMED,
                     PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
                     PARTICIPATION_STATE.ACKNOWLEDGED,
+                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
                     ]
             )
     ctx.update({"confirmed": confirmed})
@@ -306,7 +307,7 @@ def challenge_complete(request, challenge_id):
                             "participation": participation,
                             },)
 
-        return redirect("challenge_detail", challenge.pk)
+        return redirect(challenge.get_absolute_url())
     return redirect("challenge_list")
 
 @login_required
@@ -325,7 +326,7 @@ def participation_accept(request, participation_id):
                     "user": participation.user,
                     "challenge": participation.challenge,
                     },)
-    return redirect("challenge_detail", participation.challenge.pk)
+    return redirect(participation.challenge.get_absolute_url())
 
 @login_required
 @challenge_admin
@@ -385,7 +386,7 @@ def participation_remove(request, challenge_id):
                 from_email="from@example.com",
                 recipient_list=[participation.user.email,],
                 context=ctx,)
-        return redirect("challenge_detail", participation.challenge.pk)
+        return redirect(participation.challenge.get_absolute_url())
     return redirect("challenge_list")
 
 @csrf_exempt
@@ -494,7 +495,7 @@ def comment_add(request):
             text=comment_text,
             )
         comment.save()
-        return redirect("challenge_detail", request.POST["challenge_id"])
+        return redirect(challenge.get_absolute_url())
     return redirect("challenge_list")
 
 @login_required
@@ -503,4 +504,4 @@ def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     comment.is_deleted = True
     comment.save()
-    return redirect("challenge_detail", comment.challenge.pk)
+    return redirect(comment.challenge.get_absolute_url())
