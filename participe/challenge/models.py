@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -18,9 +19,9 @@ CHALLENGE_MODE = enum(
 
 application_choices = [
     (CHALLENGE_MODE.FREE_FOR_ALL,
-            _("Not required: participation by application order")),
+            _(u"Alle können sich anmelden")),
     (CHALLENGE_MODE.CONFIRMATION_REQUIRED,
-            _("Confirmation of participation required")),
+            _(u"Teilnahme erst nach bestätigter Bewerbung")),
     ]
 
 CHALLENGE_STATUS = enum(

@@ -5,11 +5,11 @@
 {% load thumbnail %}
 
 {% block extra_content %}
-    <p>{% trans "Your current avatar: " %}</p>
     <div class="well">
         <div class="row">
             <div class="span12">
-                <div class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 100x100 %}" alt=""></div>
+                <h3>{% trans "Change profile picture" %}</h3>
+                <p class=""><img src="{% thumbnail profile.avatar|default:'img/default.jpg' 200x200 %}" alt=""></p>
                 <form enctype="multipart/form-data" method="POST" action="">{% csrf_token %}
                     {{ pform.as_p }}
                     <input type="submit" value="{% trans "Upload New Image" %}" />

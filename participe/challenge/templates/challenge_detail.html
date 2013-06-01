@@ -169,7 +169,7 @@
                 <form id="add-comment-form" action="{% url comment_add %}" method="post">{% csrf_token %}
                     <textarea id="comment" name="comment" rows="5" cols="80"></textarea>
                         <input type="hidden" name="challenge_id" value="{{ challenge.pk }}" /><br>
-                        <input id="add-comment-btn" class="btn" type="submit" value="Add a comment">
+                        <input id="add-comment-btn" class="btn" type="submit" value="{% trans "Add a comment" %}">
                     </form>
                 {% endif %}
                 </div>

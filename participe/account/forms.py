@@ -278,7 +278,7 @@ class ChangeAvatarForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ChangeAvatarForm, self).__init__(*args, **kwargs)
     
-    avatar = forms.ImageField()
+    avatar = forms.ImageField(label=_("New profile picture"))
     
     def clean_avatar(self):
         data = self.cleaned_data['avatar']
