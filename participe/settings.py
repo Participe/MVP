@@ -2,7 +2,7 @@
 import os
 import sys
 
-RUNNING_DEVSERVER = (len(sys.argv )> 0 and sys.argv[1] == 'runserver')
+RUNNING_DEVSERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
 DEBUG = RUNNING_DEVSERVER
 
 TEMPLATE_DEBUG = DEBUG
