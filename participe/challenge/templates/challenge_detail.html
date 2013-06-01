@@ -5,6 +5,12 @@
 {% block title %}{% trans "Challenge details" %} - {{ block.super }}{% endblock %}
 {% load thumbnail %}
 
+{% block extra_script %}
+<script type="text/javascript">
+    $(window).load(function() {$('.thumbnail').height(Math.max.apply(null, $(".thumbnail").map(function () { return $(this).height();}).get()))});
+</script>
+{% endblock %}
+
 {% block extra_content %}
     <div class="row ">
         <div class="span9">

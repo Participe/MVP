@@ -5,6 +5,12 @@
 {% load thumbnail %}
 {% load accounttags %}
 
+{% block extra_script %}
+<script type="text/javascript">
+    $(window).load(function() {$('.thumbnail').height(Math.max.apply(null, $(".thumbnail").map(function () { return $(this).height();}).get()))});
+</script>
+{% endblock %}
+
 {% block extra_content %}
     {% need_to_know_tag request account as need_to_know %}
     {% sum_of_hours_spent_tag account as sum_of_hours_spent %}

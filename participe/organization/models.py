@@ -73,3 +73,12 @@ class Organization(models.Model):
                 organization=self,
                 is_deleted=False).aggregate(Sum("duration"))
         return hours_worked["duration__sum"]
+
+    def get_upcoming_challenges(self):
+        from participe.challenge.models import Challenge, CHALLENGE_STATUS
+        upcoming_challenges = Challenge.objects.filter(
+                organization=self,
+                status=CHALLENGE_STATUS.UPCOMING,
+                is_deleted=False)
+
+        return upcoming_challenges

@@ -2,6 +2,11 @@
 {% load i18n %}
 
 {% block title %}{% trans "Profile" %} - {{ block.super }}{% endblock %}
+{% block extra_script %}
+<script type="text/javascript">
+    $(window).load(function() {$('.thumbnail').height(Math.max.apply(null, $(".thumbnail").map(function () { return $(this).height();}).get()))});
+</script>
+{% endblock %}
 {% load thumbnail %}
 {% load accounttags %}
 
@@ -45,7 +50,7 @@
                 {% if participations %}
                 <h3>{% trans "My Challenges" %}</h3>
                 <h4>{{ header }}</h4>
-                <ul class="thumbnails">
+                <ul class="thumbnails per3">
                     {% for participation in participations %}
                         {% if participation.status == PARTICIPATION_STATE.ACKNOWLEDGED %}
                         <li class="span9">
@@ -96,7 +101,7 @@
                 {% for challenges, header in admin_challenges %}
                     {% if challenges %}
                     <h4>{{ header }}</h4>
-                    <ul class="thumbnails">
+                    <ul class="thumbnails per3">
                         {% for challenge in challenges %}
                             <li class="span3">
                                 <a class="thumbnail" href="{{ challenge.get_absolute_url }}">

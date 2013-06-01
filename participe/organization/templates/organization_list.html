@@ -20,9 +20,9 @@
                             {{ organization.description }}
                         </blockquote>
                     </p>
-                    {% if organization.challenge_set.all %}
-                        <div class="row">
-                            {% with challenges=organization.challenge_set.all %}
+                    {% with challenges=organization.get_upcoming_challenges %}
+                        {% if organization.get_upcoming_challenges %}
+                            <div class="row">
                                 <div class="span12">
                                     <h4>{% trans "Current Challenges" %}</h4>
                                     <ul class="thumbnails">
@@ -47,9 +47,9 @@
                                         <a href="{{ organization.get_absolute_url }}">... show {{ challenges.count|add:"-6" }} more challenge(s)</a></td>
                                     {% endif %}
                                 </div>
-                            {% endwith %}
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
