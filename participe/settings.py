@@ -1,11 +1,9 @@
 #Django settings for participe project.
 import os
+import sys
 
-server = request.META.get('wsgi.file_wrapper', None)
-if server is not None and server.__module__ == 'django.core.servers.basehttp':
-    DEBUG = True
-else
-    DEBUG = False
+RUNNING_DEVSERVER = (sys.argv[1] == 'runserver')
+DEBUG = RUNNING_DEVSERVER
 
 TEMPLATE_DEBUG = DEBUG
 
