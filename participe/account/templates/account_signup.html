@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block title %}{% trans "Sign up" %} - {{ block.super }}{% endblock %}
-    
+
 {% block extra_script %}
     {% comment %}
     <script type="text/javascript">
@@ -41,18 +41,18 @@
                     </tr>
                     {% endfor %}
 
-                    {% for field in pform%}
+                    {% for field in pform %}
                     <tr>
                         <th align="right">{{ field.label_tag }}</th>
                         <td><div {% if field.errors %}class="control-group error"{% else %}class="input"{% endif %}>{{ field }}{{ field.errors }}</div></td>
                     </tr>
                     {% endfor %}
                 </table>
-                
+
                 <p>{% trans "By signing up, you accept the" %} <a href="/about/tnc/">{% trans "terms and conditions" %}</a>.</p>
                 <div class="input"><input type="submit" form="signup" class="btn btn-primary btn-large" value="{% trans 'Sign up' %}" /></div>
             </div>
-        </div>     
+        </div>
     </form>
 
     <script>

@@ -47,12 +47,13 @@ class UserForm(forms.ModelForm):
         self.fields["email"].label = _("Email")
         self.fields["password"].label = _("Password")
         self.fields["retry"].label = _("Password again")
-        
+
     retry = forms.CharField(
             widget=forms.PasswordInput(
+                    render_value=True,
                     attrs={"min_length": 6, "max_length": 30,
                             "placeholder": _("Retry"), "value": ""}))
-    
+
     class Meta:
         model = User
         fields = [#"username",
@@ -65,13 +66,14 @@ class UserForm(forms.ModelForm):
             "email": widgets.EmailInput(
                     attrs={"placeholder": _("E-mail")}),
             "password": forms.PasswordInput(
+                    render_value=True,
                     attrs={"min_length": 6, "max_length": 30,
                             "placeholder": _("Password")}),
             }
-    
+
     def clean_email(self):
         email = self.cleaned_data["email"]
-        
+
         if not email_re.match(email):
             raise forms.ValidationError(
                     _("Please, enter valid e-mail address."))
@@ -83,13 +85,18 @@ class UserForm(forms.ModelForm):
                     _("Account with such e-mail address already exists."))
         except User.DoesNotExist:
             pass
-            
+
         return self.cleaned_data["email"]
-        
+
     def clean_retry(self):
        if self.cleaned_data["retry"] != self.cleaned_data.get("password", ""):
            raise forms.ValidationError(_("Passwords don't match"))
        return self.cleaned_data["retry"]
+
+    def save(self, commit=True):
+        instance = super(UserForm, self).save(commit=False)
+        if commit:
+            instance.save()
 
 class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -113,7 +120,7 @@ class UserProfileForm(forms.ModelForm):
         self.fields["privacy_mode"].label = _("Privacy mode")
         self.fields["receive_newsletter"].label =\
                 _("I want to get the Participe newsletter")
-                
+
         # Override countries order in choice-list
         self.fields["country"].choices = COUNTRIES
         self.fields["country"].initial = "CH"
@@ -148,12 +155,17 @@ class UserProfileForm(forms.ModelForm):
                     attrs={"placeholder": _("Phone number")}),
             "privacy_mode": forms.RadioSelect(),
             }
-            
+
+    def save(self, commit=True):
+        instance = super(UserProfileForm, self).save(commit=False)
+        if commit:
+            instance.save()
+
 class UserEditForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.user = user
-        
+
         #self.fields['username'].initial = user.username
         #self.fields['username'].widget.attrs['class'] = 'disabled'
         #self.fields['username'].widget.attrs['readonly'] = True
@@ -163,7 +175,7 @@ class UserEditForm(forms.ModelForm):
         self.fields['email'].required = False
         self.fields['email'].widget.attrs['class'] = 'disabled'
         self.fields['email'].widget.attrs['readonly'] = True
-        
+
         self.fields["address_1"].required = True
         self.fields["postal_code"].required = True
         self.fields["city"].required = True
@@ -229,14 +241,14 @@ class UserEditForm(forms.ModelForm):
                     attrs={"placeholder": _("Phone number")}),
             "privacy_mode": forms.RadioSelect(),
             }
-        
+
     def save(self, commit=True):
         instance = super(UserEditForm, self).save(commit=False)
         instance.user = self.user
-        
+
         if commit:
             instance.save()
-            
+
 class ResetPasswordForm(forms.Form):
     password = forms.CharField(
             widget=forms.PasswordInput(
@@ -259,7 +271,7 @@ class RestorePasswordForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        
+
         if not email_re.match(email):
             raise forms.ValidationError(
                     _("Please, enter valid e-mail address."))
@@ -277,9 +289,9 @@ class RestorePasswordForm(forms.Form):
 class ChangeAvatarForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ChangeAvatarForm, self).__init__(*args, **kwargs)
-    
+
     avatar = forms.ImageField(label=_("New profile picture"))
-    
+
     def clean_avatar(self):
         data = self.cleaned_data['avatar']
 
@@ -289,10 +301,10 @@ class ChangeAvatarForm(forms.Form):
                 if ext not in settings.AVATAR_ALLOWED_FILE_EXTS:
                     raise forms.ValidationError(
                             "%(ext)s is an invalid file extension. "
-                            "Authorized extensions are : %(valid_exts_list)s" % 
+                            "Authorized extensions are : %(valid_exts_list)s" %
                             {'ext': ext,
                             'valid_exts_list':
-                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)}) 
+                                ", ".join(settings.AVATAR_ALLOWED_FILE_EXTS)})
             if data.size > settings.AVATAR_MAX_SIZE:
                 raise forms.ValidationError(
                         u"Your file is too big (%(size)s), the maximum "
@@ -300,7 +312,7 @@ class ChangeAvatarForm(forms.Form):
                         {'size': filesizeformat(data.size),
                         'max_valid_size':
                             filesizeformat(settings.AVATAR_MAX_SIZE)})
-        return self.cleaned_data['avatar']      
+        return self.cleaned_data['avatar']
 
 class AvatarCropForm(forms.Form):
     top = forms.IntegerField(widget=forms.HiddenInput, required=False)
@@ -325,7 +337,7 @@ class AvatarCropForm(forms.Form):
             int(self.cleaned_data.get('left')) < settings.AVATAR_CROP_MIN_SIZE:
             raise forms.ValidationError(
                     _("You must select a portion of the image with "
-                    "a minimum of %(size)dx%(size)d pixels.") 
+                    "a minimum of %(size)dx%(size)d pixels.")
                     % {'size': settings.AVATAR_CROP_MIN_SIZE})
 
         return self.cleaned_data

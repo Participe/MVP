@@ -10,15 +10,15 @@
     </head>
     <body>
         <a href="#" onclick="window.top.location.href='http://{{ request.get_host }}'"><img src="{{ 'img/logo_285x93.jpg'|default:'img/default.jpg'|thumbnail_url:'span2_thumb' }}" alt="participe logo"/></a>
-        <a href="#" onclick="window.top.location.href='http://{{ request.get_host }}{% url organization_detail organization.pk %}'"><img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span2_thumb' }}" alt="{{ organization.name}}"/></a>
-        
+        <a href="#" onclick="window.top.location.href='http://{{ request.get_host }}{{ organization.get_absolute_url }}'"><img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span2_thumb' }}" alt="{{ organization.name}}"/></a>
+
         {% if challenges_upcoming %}
         <h5>{{ organization.name }} {% trans "upcoming challenges on Participe" %}:</h5>
             <table class="table condensed-table">
             {% for challenge in challenges_upcoming %}
                 <tr>
-                    <td><a class="" href="#" onclick="window.top.location.href='{% url challenge_detail challenge.pk %}'"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ challenge.name}}" /></a></td>
-                    <td><a class="" href="#" onclick="window.top.location.href='{% url challenge_detail challenge.pk %}'">{{ challenge.name }}</a></td>
+                    <td><a class="" href="#" onclick="window.top.location.href='{{ challenge.get_absolute_url }}'"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ challenge.name}}" /></a></td>
+                    <td><a class="" href="#" onclick="window.top.location.href='{{ challenge.get_absolute_url }}'">{{ challenge.name }}</a></td>
                     <td>{{ challenge.start_date }}</td>
                     <td><span class="label label-info">{{ challenge.duration }}h</span></td>
                     <td><span class="badge badge-success">{{ challenge.get_confirmed_count }}</span></td>
@@ -36,8 +36,8 @@
             <table class="table condensed-table">
             {% for challenge in challenges_completed %}
                 <tr>
-                    <td><a class="" href="#" onclick="window.top.location.href='{% url challenge_detail challenge.pk %}'"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ challenge.name}}" /></a></td>
-                    <td><a class="" href="#" onclick="window.top.location.href='{% url challenge_detail challenge.pk %}'">{{ challenge.name }}</a></td>
+                    <td><a class="" href="#" onclick="window.top.location.href='{{ challenge.get_absolute_url }}'"><img src="{% thumbnail challenge.avatar|default:'img/default.jpg' 50x50 crop %}" alt="{{ challenge.name}}" /></a></td>
+                    <td><a class="" href="#" onclick="window.top.location.href='{{ challenge.get_absolute_url }}'">{{ challenge.name }}</a></td>
                     <td>{{ challenge.start_date }}</td>
                     <td><span class="label label-info">{{ challenge.duration }}h</span></td>
                     <td>
