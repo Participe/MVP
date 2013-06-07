@@ -84,6 +84,9 @@ urlpatterns += patterns('participe.challenge.views',
             'ajax_participation_accept', name='ajax_participation_accept'),
     url(r'^ajax/challenges/participation/remove/(?P<challenge_id>\d+)/$',
             'ajax_participation_remove', name='ajax_participation_remove'),
+    url(r'^ajax/challenges/participation/remove_sr/(?P<challenge_id>\d+)/$',
+            'ajax_accept_reject_selfreflection',
+            name='ajax_accept_reject_selfreflection'),
     )
 
 urlpatterns += patterns('participe.organization.views',

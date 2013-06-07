@@ -25,8 +25,9 @@ DATABASES = {
 }
 
 TIME_ZONE = 'Europe/Zurich'
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = 'en'
 LANGUAGES = (
+    ('en', u'English'),
     ('de', u'Deutsch'),
 )
 

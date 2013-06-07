@@ -56,9 +56,7 @@
                                             <h4>{{ participation.user.get_full_name }} {% if sum_of_hours_spent %}<span class="badge">{{ sum_of_hours_spent }}</span>{% endif %}</h4>
                                         {% endif %}
                                     </a>
-                                    <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION }} )">
-                                        <input type="button" class="btn" participation="{{ participation.pk }}" value="{% trans 'Remove' %}">
-                                    </a>
+                                    <input type="button" class="btn" participation="{{ participation.pk }}" value="{% trans 'Remove' %}" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION }} )">
                                 </div>
                             {% else %}
                                 <a class="thumbnail well" href="{% url view_profile participation.user.pk %}">
@@ -103,9 +101,7 @@
                                 <a href="#" onclick="send_accept_form()">
                                     <input type="button" participation="{{ participation.pk }}" value="{% trans "Accept" %}">
                                 </a>
-                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION }} )">
-                                    <input type="button" participation="{{ participation.pk }}" value="{% trans "Reject" %}">
-                                </a>
+                                <input type="button" participation="{{ participation.pk }}" value="{% trans "Reject" %}" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION }} )">
                             </div>
                         </li>
                         {% endwith %}
@@ -135,8 +131,19 @@
                                 <blockquote>{{ participation.selfreflection_activity_text }}</blockquote>
                                 <p>{% trans "What did you learn?" %}</p>
                                 <blockquote>{{ participation.selfreflection_learning_text }}</blockquote>
-                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE }} )"><input class="btn btn-success" type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}"></a>
-                                <a href="#" onclick="send_remove_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION }} )"><input class="btn btn-danger" type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}"></a>
+
+                                <input class="btn btn-success" type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}" onclick="accept_reject_selfreflection_form( {{ PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE }} )">
+                                <input class="btn btn-danger" type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}" onclick="accept_reject_selfreflection_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION }} )">
+
+                                <div id="accept-reject-selfreflection">
+                                    <form id="accept-reject-selfreflection-form" action="{% url ajax_accept_reject_selfreflection challenge.pk %}" method="post">{% csrf_token %}
+                                        <textarea id="text" name="text" rows="5" cols="20" placeholder="Enter text here"></textarea>
+                                        <div class="btn-group">
+                                            <input class="btn" type="button" value="Send" onclick="send_accept_reject_selfreflection_form()"></input>
+                                            <input id="cancel-btn" name="btn cancel-btn" class="btn" type="button" value="Cancel"></input>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </li>
                         {% endwith %}
@@ -403,7 +410,6 @@
         </div>
     </div>
 
-
     <div id="remove-participation-dialog">
         <form id="remove-participation-form" action="{% url ajax_participation_remove challenge.pk %}" method="post">{% csrf_token %}
             <textarea id="text" name="text" rows="5" cols="20" placeholder="Enter text here"></textarea>
@@ -433,6 +439,9 @@
             }
         }
 
+        /**********************************************************/
+        /*** Accept Application                                 ***/
+        /**********************************************************/
         function send_accept_form(){
             var event = window.event || evt;
             event.preventDefault();
@@ -454,18 +463,97 @@
             );
         }
 
-        function send_remove_form( remove_id ){
+        /**********************************************************/
+        /*** Remove Participation or Reject Application         ***/
+        /**********************************************************/
+        function send_remove_form( action_id ){
             var event = window.event || evt;
             event.preventDefault();
             if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
-            value = remove_id;
 
             $("#remove-participation-dialog").data("participation_id", participation_id);
-            $("#remove-participation-dialog").data("value", value);
+            $("#remove-participation-dialog").data("action_id", action_id);
             $("#remove-participation-dialog").dialog("open");
         }
 
+        $("#remove-participation-dialog").dialog({
+            autoOpen: false,
+            draggable: true,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Proceed": function(){
+                    participation_id = $(this).data('participation_id');
+                    action_id = $(this).data('action_id');
+                    var input1 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
+                    var input2 = $("<input>").attr("type", "hidden").attr("name", "action_id").val(action_id);
+                    $("#remove-participation-form").append($(input1));
+                    $("#remove-participation-form").append($(input2));
+
+                    remove_form = $("#remove-participation-form");
+                    $.post(
+                        remove_form.attr('action'),
+                        remove_form.serialize(),
+                        function(data) {
+                            if( data ){
+                                $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                            } else {
+                                $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                            }
+                        }
+                    );
+                    $(this).dialog('close');
+                },
+                "Close": function(){
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        /**********************************************************/
+        /*** Acknowledge or Reject Participants Self-reflection ***/
+        /**********************************************************/
+        function accept_reject_selfreflection_form( action_id ){
+            var event = window.event || evt;
+            event.preventDefault();
+            if (!event.target) event.target = event.srcElement;
+            participation_id = event.target.getAttribute("participation");
+
+            var input1 = $("<input>").attr("type", "hidden").attr("name", "action_id").val(action_id);
+            $("input[name='action_id']").remove();
+            $("#accept-reject-selfreflection-form").append($(input1));
+
+            var input2 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
+            $("input[name='participation_id']").remove();
+            $("#accept-reject-selfreflection-form").append($(input2));
+
+            $("#accept-reject-selfreflection-form").show("slow");
+
+            return false;
+        }
+
+        function send_accept_reject_selfreflection_form(){
+            var event = window.event || evt;
+            event.preventDefault();
+
+            form = $("#accept-reject-selfreflection-form");
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function(data) {
+                    if( data ){
+                        $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                    } else {
+                        $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                    }
+                }
+            );
+        }
+
+        /**********************************************************/
+        /**********************************************************/
+        /**********************************************************/
         function delete_comment(){
             var event = window.event || evt;
             event.preventDefault();
@@ -487,6 +575,13 @@
             $("#cancel-btn").click(function(){
                 $('#signup-form').hide("slow");
                 $("#signup-btn").show("slow");
+                return false;
+            });
+
+            //Acknowledge or Reject Self-reflection form
+            $("#accept-reject-selfreflection-form").hide();
+            $("#cancel-btn").click(function(){
+                $('#accept-reject-selfreflection-form').hide("slow");
                 return false;
             });
 
@@ -527,41 +622,6 @@
                 $('#complete-form').hide("slow");
                 $("#complete-btn").show("slow");
                 return false;
-            });
-
-            //Remove participation (signed participant) or
-            //Reject application
-            $("#remove-participation-dialog").dialog({
-                autoOpen: false,
-                draggable: true,
-                resizable: false,
-                modal: true,
-                buttons: {
-                    "Proceed": function(){
-                        participation_id = $(this).data('participation_id');
-                        var input1 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
-                        var input2 = $("<input>").attr("type", "hidden").attr("name", "value").val(value);
-                        $("#remove-participation-form").append($(input1));
-                        $("#remove-participation-form").append($(input2));
-
-                        remove_form = $("#remove-participation-form");
-                        $.post(
-                            remove_form.attr('action'),
-                            remove_form.serialize(),
-                            function(data) {
-                                if( data ){
-                                    $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
-                                } else {
-                                    $("input[participation="+participation_id+"]").parent().parent().parent().remove();
-                                }
-                            }
-                        );
-                        $(this).dialog('close');
-                    },
-                    "Close": function(){
-                        $(this).dialog('close');
-                    }
-                }
             });
 
             //User withdraws his application

@@ -422,7 +422,7 @@ def ajax_participation_remove(request, challenge_id):
     if request.is_ajax():
         ctx = {}
         participation_id = request.POST.get("participation_id", "")
-        value = request.POST.get("value", "")
+        value = request.POST.get("action_id", "")
         text = request.POST.get("text", "")
 
         try:
@@ -467,6 +467,63 @@ def ajax_participation_remove(request, challenge_id):
             participation.cancellation_text = text
             participation.date_cancelled = datetime.now()
         elif value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
+            participation.selfreflection_rejection_text = text
+            participation.date_selfreflection_rejection = datetime.now()
+        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
+            participation.acknowledgement_text = text
+            participation.date_acknowledged = datetime.now()
+        participation.save()
+
+        send_templated_mail(
+                template_name=template_name,
+                from_email="from@example.com",
+                recipient_list=[participation.user.email,],
+                context=ctx,)
+        return HttpResponse()
+    return HttpResponse("An error has been encountered!")
+
+@csrf_exempt
+@login_required
+@challenge_admin
+def ajax_accept_reject_selfreflection(request, challenge_id):
+    if request.is_ajax():
+        ctx = {}
+        participation_id = request.POST.get("participation_id", "")
+        value = request.POST.get("action_id", "")
+        text = request.POST.get("text", "")
+
+        try:
+            participation = Participation.objects.get(pk=participation_id)
+        except:
+            return HttpResponse("An error has been encountered")
+
+        ctx.update({
+                "user": participation.user,
+                "challenge": participation.challenge,
+                "participation": participation,})
+
+        if value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
+            participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
+            template_name = "challenge_participation_selfreflection_rejected"
+            redirect_to = (
+                    u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
+                    u"".format(
+                    request.get_host(),
+                    participation.challenge.get_absolute_url(),
+                    participation.challenge.name))
+            ctx.update({"redirect_to": redirect_to})
+        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
+            participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
+            template_name = "challenge_participation_acknowledged"
+            redirect_to = (
+                    u"<a href='http://{0}/accounts/login?"
+                    u"next=/accounts/profile/view/'>profile</a>"
+                    u"".format(
+                    request.get_host()
+                    ))
+            ctx.update({"redirect_to": redirect_to})
+
+        if value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
             participation.selfreflection_rejection_text = text
             participation.date_selfreflection_rejection = datetime.now()
         elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
