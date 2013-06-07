@@ -441,37 +441,9 @@ def ajax_participation_remove(request, challenge_id):
         elif value==PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION:
             participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
             template_name = "challenge_participation_rejected"
-        elif value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
-            participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
-            template_name = "challenge_participation_selfreflection_rejected"
-            redirect_to = (
-                    u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
-                    u"".format(
-                    request.get_host(),
-                    participation.challenge.get_absolute_url(),
-                    participation.challenge.name))
-            ctx.update({"redirect_to": redirect_to})
-        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
-            participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
-            template_name = "challenge_participation_acknowledged"
-            redirect_to = (
-                    u"<a href='http://{0}/accounts/login?"
-                    u"next=/accounts/profile/view/'>profile</a>"
-                    u"".format(
-                    request.get_host()
-                    ))
-            ctx.update({"redirect_to": redirect_to})
 
-        if (value==PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION or
-                value==PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION):
-            participation.cancellation_text = text
-            participation.date_cancelled = datetime.now()
-        elif value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
-            participation.selfreflection_rejection_text = text
-            participation.date_selfreflection_rejection = datetime.now()
-        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
-            participation.acknowledgement_text = text
-            participation.date_acknowledged = datetime.now()
+        participation.cancellation_text = text
+        participation.date_cancelled = datetime.now()
         participation.save()
 
         send_templated_mail(
