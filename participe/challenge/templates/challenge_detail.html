@@ -135,7 +135,7 @@
                                 <input class="btn btn-success" type="button" participation="{{ participation.pk }}" value="{% trans "Acknowledge" %}" onclick="accept_reject_selfreflection_form( {{ PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE }} )">
                                 <input class="btn btn-danger" type="button" participation="{{ participation.pk }}" value="{% trans "Reject self-reflection" %}" onclick="accept_reject_selfreflection_form( {{ PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION }} )">
 
-                                <div id="accept-reject-selfreflection">
+                                <div id="accept-reject-selfreflection-{{ participation.pk }}" class="admin-selfreflection">
                                     <form id="accept-reject-selfreflection-form" action="{% url ajax_accept_reject_selfreflection challenge.pk %}" method="post">{% csrf_token %}
                                         <textarea id="text" name="text" rows="5" cols="20" placeholder="Enter text here"></textarea>
                                         <div class="btn-group">
@@ -484,22 +484,23 @@
             modal: true,
             buttons: {
                 "Proceed": function(){
+                    remove_form = $("#remove-participation-form");
                     participation_id = $(this).data('participation_id');
                     action_id = $(this).data('action_id');
+
                     var input1 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
                     var input2 = $("<input>").attr("type", "hidden").attr("name", "action_id").val(action_id);
-                    $("#remove-participation-form").append($(input1));
-                    $("#remove-participation-form").append($(input2));
+                    remove_form.append($(input1));
+                    remove_form.append($(input2));
 
-                    remove_form = $("#remove-participation-form");
                     $.post(
                         remove_form.attr('action'),
                         remove_form.serialize(),
                         function(data) {
                             if( data ){
-                                $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                                $("input[participation="+participation_id+"]").parent().append("<br><span style='color:red;'>"+data+"</span>");
                             } else {
-                                $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                                $("input[participation="+participation_id+"]").parent().parent().remove();
                             }
                         }
                     );
@@ -519,16 +520,18 @@
             event.preventDefault();
             if (!event.target) event.target = event.srcElement;
             participation_id = event.target.getAttribute("participation");
+            form = $(event.target).parent().find("#accept-reject-selfreflection-form");
 
             var input1 = $("<input>").attr("type", "hidden").attr("name", "action_id").val(action_id);
             $("input[name='action_id']").remove();
-            $("#accept-reject-selfreflection-form").append($(input1));
+            form.append($(input1));
 
             var input2 = $("<input>").attr("type", "hidden").attr("name", "participation_id").val(participation_id);
             $("input[name='participation_id']").remove();
-            $("#accept-reject-selfreflection-form").append($(input2));
+            form.append($(input2));
 
-            $("#accept-reject-selfreflection-form").show("slow");
+            $(".admin-selfreflection").hide("slow");
+            $("#accept-reject-selfreflection-"+participation_id).show("slow");
 
             return false;
         }
@@ -536,16 +539,19 @@
         function send_accept_reject_selfreflection_form(){
             var event = window.event || evt;
             event.preventDefault();
+            if (!event.target) event.target = event.srcElement;
 
-            form = $("#accept-reject-selfreflection-form");
+            form = $(event.target).parent().parent();
+            participation_id = form.find("input[name='participation_id']").val();
+
             $.post(
                 form.attr('action'),
                 form.serialize(),
                 function(data) {
                     if( data ){
-                        $("input[participation="+participation_id+"]").parent().parent().append("<br><span style='color:red;'>"+data+"</span>");
+                        $("#accept-reject-selfreflection-"+participation_id).parent().append("<br><span style='color:red;'>"+data+"</span>");
                     } else {
-                        $("input[participation="+participation_id+"]").parent().parent().parent().remove();
+                        $("#accept-reject-selfreflection-"+participation_id).parent().parent().remove();
                     }
                 }
             );
@@ -579,9 +585,11 @@
             });
 
             //Acknowledge or Reject Self-reflection form
-            $("#accept-reject-selfreflection-form").hide();
-            $("#cancel-btn").click(function(){
-                $('#accept-reject-selfreflection-form').hide("slow");
+            $(".admin-selfreflection").hide();
+            $("input[id='cancel-btn']").click(function(){
+                $(".admin-selfreflection").each( function(index) {
+                    $(this).hide("slow");
+                });
                 return false;
             });
 
