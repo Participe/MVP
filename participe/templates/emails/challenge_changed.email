@@ -1,14 +1,13 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Information" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }},
-{% trans "Start date/time for the challenge " %} "{{ challenge.name }}" {% trans ", has been changed." %}
+{% blocktrans with challenge.name as challenge_name %}
+Start date/time for the challenge <a href='{{ challenge_url }}'>{{ challenge_name }}</a> has been changed.<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

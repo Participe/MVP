@@ -1,15 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Information" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }},
-{% trans "You were removed from" %} "{{ challenge.name }}" {% trans "challenge for the following reason:" %}
-{{ participation.cancellation_text }}
+{% blocktrans with challenge.name as challenge_name and participation.cancellation_text as cancellation_text %}
+You were removed from <a href='{{ challenge_url }}'>{{ challenge_name }}</a> for the following reason:<br/>
+{{ cancellation_text }}<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

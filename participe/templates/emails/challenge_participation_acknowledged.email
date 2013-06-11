@@ -1,17 +1,16 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Information" %}{% endblock %}
 
+{% block content %}
 {% block html %}
-*******************************************************************************<br/>
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}              <br/>
-*******************************************************************************<br/>
 
-{% trans "Dear" %}, {{ user.get_full_name }},<br/>
-{% trans "Your self-reflection for" %} "{{ challenge.name }}" {% trans "was accepted" %}.<br/>
-{% trans "Your participation was acknowledged with the following text" %}:<br/>
-{{ participation.acknowledgement_text }}<br/>
-{% trans "You can see all completed challenges on your" %} {{ redirect_to }}.
+{% blocktrans with challenge.name as challenge_name and participation.acknowledgement_text as acknowledgement_text %}
+Your self-reflection for <a href='{{ challenge_url }}'>{{ challenge_name }}</a> was accepted.<br/>
+Your participation was acknowledged with the following text:<br/>
+{{ acknowledgement_text }}<br/>
+You can see all completed challenges on your {{ redirect_to }}.<br/>
+{% endblocktrans %}
 
-{% trans "Thank you" %},<br/>
-{% trans "Participe Resource Management System" %}<br/>
+{% endblock %}
 {% endblock %}

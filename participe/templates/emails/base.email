@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% block html %}
+
+{% blocktrans with user.get_full_name as user_full_name %}
+Dear, {{ user_full_name }},<br/>
+{% endblocktrans %}
+
+{% block content %}
+{% endblock %}
+
+{% blocktrans %}
+<br/>
+Thank you,<br/>
+Participe Resource Management System<br/>
+{% endblocktrans %}
+
+{% endblock %}

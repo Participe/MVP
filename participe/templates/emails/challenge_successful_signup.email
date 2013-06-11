@@ -1,15 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Congratulations" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }},
-{% trans "You have been signed up for challenge" %} {{ challenge.name }} {% trans "on" %} {{ challenge.start_date }}.
-{% trans "Please don’t forget to show up!" %}
+{% blocktrans with challenge.name as challenge_name and challenge.start_date as start_date %}
+You have been signed up for challenge {{ challenge_name }} on {{ start_date }}.<br/>
+Please don’t forget to show up!<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

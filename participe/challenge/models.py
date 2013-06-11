@@ -109,6 +109,12 @@ class Challenge(models.Model):
                             "chl_slug": slugify(self.name),
                             })
 
+    def get_full_url(self, request):
+        url = u"http://{0}{1}".format(
+            request.get_host(),
+            self.get_absolute_url())
+        return url
+
     def get_edit_url(self):
         return reverse(
                 'participe.challenge.views.challenge_edit',

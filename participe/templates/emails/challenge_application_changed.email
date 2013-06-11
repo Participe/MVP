@@ -1,15 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Congratulatios" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }},
-{% trans "The status of the challenge" %} "{{ challenge.name }}" {% trans "has been changed from 'Confirmation required' to 'Free for all'." %}
-{% trans "This means you've been accepted to this challenge automatically. Be sure to show up and give your best!" %}
+{% blocktrans with challenge.name as challenge_name %}
+The status of the challenge <a href='{{ challenge_url }}'>{{ challenge_name }}</a> has been changed from "Confirmation required" to "Free for all".<br/>
+This means you've been accepted to this challenge automatically. Be sure to show up and give your best!<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

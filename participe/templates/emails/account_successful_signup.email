@@ -1,13 +1,13 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Congratulations" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }}, {% trans "You have successfully signed up to Participe." %}
+{% blocktrans %}
+You have successfully signed up to Participe.<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

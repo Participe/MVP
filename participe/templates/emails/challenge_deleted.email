@@ -1,15 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Information" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }},
-{% trans "The challenge you signed up for, " %} "{{ challenge.name }}" {% trans ", was deleted for the following reason:" %}
-"{{ challenge.deleted_reason }}"
+{% blocktrans with challenge.name as challenge_name and challenge.deleted_reason as deleted_reason %}
+The challenge you signed up for, <a href='{{ challenge_url }}'>{{ challenge_name }}</a>, was deleted for the following reason:<br/>
+{{ deleted_reason }}<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}

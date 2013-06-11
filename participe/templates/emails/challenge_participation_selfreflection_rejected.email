@@ -1,16 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Information" %}{% endblock %}
 
+{% block content %}
 {% block html %}
-*******************************************************************************<br/>
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}              <br/>
-*******************************************************************************<br/>
 
-{% trans "Dear," %} {{ user.get_full_name }},<br/>
-{% trans "Your self-reflection for" %} "{{ challenge.name }}" {% trans "was rejected for the following reason" %}:<br/>
-{{ participation.selfreflection_rejection_text }}<br/>
-{% trans "Please, revise your selfreflection text on " %} {{ redirect_to }}.
+{% blocktrans with challenge.name as challenge_name and participation.selfreflection_rejection_text as selfreflection_rejection_text %}
+Your self-reflection for <a href='{{ challenge_url }}'>{{ challenge_name }}</a> was rejected for the following reason:<br/>
+{{ selfreflection_rejection_text }}<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}<br/>
-{% trans "Participe Resource Management System" %}<br/>
+{% endblock %}
 {% endblock %}

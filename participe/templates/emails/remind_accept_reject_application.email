@@ -1,15 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Congratulations" %}{% endblock %}
 
+{% block content %}
 {% block html %}
-*******************************************************************************<br/>
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY" %}.              <br/>
-*******************************************************************************<br/>
 
-{% trans "Dear" %}, {{ user.get_full_name }},<br/>
+{% blocktrans %}
 {{ content }}
-{% trans "Please confirm or reject these people as soon as possible" %}.<br/>
+Please confirm or reject these people as soon as possible.<br/>
+{% endblocktrans %}
 
-{% trans "Thank you" %},<br/>
-{% trans "Participe Resource Management System" %}<br/>
+{% endblock %}
 {% endblock %}

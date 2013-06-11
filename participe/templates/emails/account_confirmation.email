@@ -1,14 +1,14 @@
+{% extends 'emails/base.email' %}
 {% load i18n %}
 {% block subject %}{% trans "Congratulations" %}{% endblock %}
 
-{% block plain %}
-*******************************************************************************
-  {% trans "THIS IS AN AUTOMATED EMAIL - PLEASE DO NOT REPLY." %}
-*******************************************************************************
+{% block content %}
+{% block html %}
 
-{% trans "Dear," %} {{ user.get_full_name }}, {% trans "You are about to sign-up to Participe." %}
-{% trans "Please, follow this link" %} {{ confirmation_link }}
+{% blocktrans %}
+You are about to sign-up to Participe.<br/>
+Please, follow this link {{ confirmation_link }}<br/>
+{% endblocktrans %}
 
-{% trans "Thank you," %}
-{% trans "Participe Resource Management System" %}
+{% endblock %}
 {% endblock %}
