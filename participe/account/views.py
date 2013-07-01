@@ -11,13 +11,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import (default_token_generator
-        as token_generator)
+                                        as token_generator)
 from django.contrib.auth.views import auth_login
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
 from django.db.models import Sum, Q
 from django.http import (HttpResponse, HttpResponseBadRequest,
-        HttpResponseForbidden, HttpResponseRedirect, Http404)
+                         HttpResponseForbidden, HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext, Context, loader
 from django.utils import timezone
@@ -29,14 +29,14 @@ from social_auth.utils import setting
 from templated_email import send_templated_mail
 
 from forms import (LoginForm, UserForm, UserProfileForm, UserEditForm,
-        ResetPasswordForm, RestorePasswordForm, ChangeAvatarForm,
-        AvatarCropForm)
+                   ResetPasswordForm, RestorePasswordForm, ChangeAvatarForm,
+                   AvatarCropForm)
 from models import UserProfile
 from utils import get_user_participations, get_admin_challenges
 from participe.account.models import PRIVACY_MODE
 from participe.core.user_tests import user_profile_completed
 from participe.challenge.models import (Challenge, Participation,
-        CHALLENGE_STATUS, PARTICIPATION_STATE)
+                                        CHALLENGE_STATUS, PARTICIPATION_STATE)
 from participe.organization.models import Organization
 
 try:
@@ -62,13 +62,15 @@ def _attach_avatar(request, instance):
     except:
         return
 
+
 def _generate_confirmation_code():
     confirmation_code = ''.join(random.choice(
-            string.ascii_uppercase +
-            string.digits +
-            string.ascii_lowercase
-            ) for x in range(33))
+        string.ascii_uppercase +
+        string.digits +
+        string.ascii_lowercase
+    ) for x in range(33))
     return confirmation_code
+
 
 def signup(request):
     uform = UserForm(request.POST or None, request.FILES or None)
@@ -78,12 +80,13 @@ def signup(request):
         if uform.is_valid() and pform.is_valid():
             # Create User
             user = User.objects.create(
-                    username = uform.cleaned_data["email"],
-                    first_name = uform.cleaned_data["first_name"],
-                    last_name = uform.cleaned_data["last_name"],
-                    email = uform.cleaned_data["email"],
-                    is_active=False,
-                    )
+                username=uform.cleaned_data["email"],
+                first_name=uform.cleaned_data["first_name"],
+                last_name=uform.cleaned_data["last_name"],
+                email=uform.cleaned_data["email"],
+                is_active=False,
+            )
+
             user.set_password(uform.cleaned_data["password"])
             user.save()
 
@@ -91,19 +94,17 @@ def signup(request):
 
             # Create User Profile
             profile = UserProfile.objects.create(
-                    user = user,
-                    address_1 = pform.cleaned_data["address_1"],
-                    address_2 = pform.cleaned_data["address_2"],
-                    postal_code = pform.cleaned_data["postal_code"],
-                    city = pform.cleaned_data["city"],
-                    country = pform.cleaned_data["country"],
-                    #gender = pform.cleaned_data["gender"],
-                    birth_day = pform.cleaned_data["birth_day"],
-                    phone_number = pform.cleaned_data["phone_number"],
-                    receive_newsletter = pform.cleaned_data[
-                            "receive_newsletter"],
-                    confirmation_code=confirmation_code,
-                    )
+                user=user,
+                address_1=pform.cleaned_data["address_1"],
+                address_2=pform.cleaned_data["address_2"],
+                postal_code=pform.cleaned_data["postal_code"],
+                city=pform.cleaned_data["city"],
+                country=pform.cleaned_data["country"],
+                birth_day=pform.cleaned_data["birth_day"],
+                phone_number=pform.cleaned_data["phone_number"],
+                receive_newsletter=pform.cleaned_data["receive_newsletter"],
+                confirmation_code=confirmation_code,
+            )
             _attach_avatar(request, profile)
 
             """
@@ -113,28 +114,25 @@ def signup(request):
             login(request, user)
             """
 
-            # Here and further, if "send_templated_email" will raise exception
-            # (in general, if <user.email> not set), user will be redirected
-            # to the "/home/" or other appropriate page.
-            DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
+            DOMAIN_NAME = request.get_host()
             confirmation_link = (
-                    "http://%s/account/confirmation/%s/" %
-                    (DOMAIN_NAME, confirmation_code))
-            try:
-                send_templated_mail(
-                        template_name="account_confirmation",
-                        from_email="from@example.com",
-                        recipient_list=[user.email,],
-                        context={
-                                "user": user,
-                                "confirmation_link": confirmation_link,
-                                },)
-                return render_to_response('account_confirmation_email.html',
-                        RequestContext(request, {
-                                "address": user.email,
-                                }))
-            except:
-                return HttpResponseRedirect('/')
+                "http://%s/account/confirmation/%s/" %
+                (DOMAIN_NAME, confirmation_code))
+
+            send_templated_mail(
+                template_name="account_confirmation",
+                from_email="from@example.com",
+                recipient_list=[user.email, ],
+                context={
+                    "user": user,
+                    "confirmation_link": confirmation_link,
+                    "subject": _("Welcome to Participe"),
+                }, )
+
+            return render_to_response('account_confirmation_email.html',
+                                      RequestContext(request, {
+                                          "address": user.email,
+                                      }))
 
     #XXX Point-blank auth. Uncomment for testing
     """
@@ -151,14 +149,15 @@ def signup(request):
             uform.fields['email'].initial = fb_profile['email']
     """
     return render_to_response('account_signup.html',
-            RequestContext(request, {
-                    'uform': uform,
-                    'pform': pform,
-                    #XXX Point-blank auth. Uncomment for testing
-                    #'fb_app_id': setting('FACEBOOK_APP_ID'),
-                    #'app_scope': ",".join(setting('FACEBOOK_EXTENDED_PERMISSIONS')),
-                    #'fb_profile': fb_profile,
-                    }))
+                              RequestContext(request, {
+                                  'uform': uform,
+                                  'pform': pform,
+                                  #XXX Point-blank auth. Uncomment for testing
+                                  #'fb_app_id': setting('FACEBOOK_APP_ID'),
+                                  #'app_scope': ",".join(setting('FACEBOOK_EXTENDED_PERMISSIONS')),
+                                  #'fb_profile': fb_profile,
+                              }))
+
 
 def email_confirmation(request, confirmation_code):
     try:
@@ -166,28 +165,29 @@ def email_confirmation(request, confirmation_code):
         user = User.objects.get(pk=profile.user.pk)
 
         if user.date_joined > (timezone.now() - datetime.timedelta(days=7)):
-            # Instant log-in after confirmation
-			user.is_active = True
-			user.save()
-			user.backend = "django.contrib.auth.backends.ModelBackend"
-			auth_login(request, user)
+        # Instant log-in after confirmation
+            user.is_active = True
+            user.save()
+            user.backend = "django.contrib.auth.backends.ModelBackend"
+            auth_login(request, user)
 
-			info = _("You have successfuly confirmed your e-mail.")
-			return render_to_response('account_information.html',
-                    RequestContext(request, {
-                            "information": info,
-                            }))
+            info = _("You have successfuly confirmed your e-mail.")
+            return render_to_response('account_information.html',
+                                      RequestContext(request, {
+                                          "information": info,
+                                      }))
         else:
             # Delete expired user profile and account
             profile.delete()
             user.delete()
             info = _("The link has been expired. Please, sign-up again.")
             return render_to_response('account_error.html',
-                    RequestContext(request, {
-                            "information": info,
-                            }))
+                                      RequestContext(request, {
+                                          "information": info,
+                                      }))
     except:
         raise Http404
+
 
 def account_login(request):
     form = LoginForm(request.POST or None)
@@ -204,8 +204,8 @@ def account_login(request):
 
             data = form.cleaned_data
             user = authenticate(
-                    username=data['username'],
-                    password=data['password'])
+                username=data['username'],
+                password=data['password'])
 
             if user:
                 login(request, user)
@@ -214,13 +214,13 @@ def account_login(request):
                 return HttpResponseRedirect(redirect_to)
             else:
                 form.add_non_field_error(
-                        _("Sorry, you have entered wrong E-mail or Password"))
+                    _("Sorry, you have entered wrong E-mail or Password"))
 
     return render_to_response('account_login.html',
-            RequestContext(request, {
-                    'form': form,
-                    'next': redirect_to,
-                    }))
+                              RequestContext(request, {
+                                  'form': form,
+                                  'next': redirect_to,
+                              }))
 
 # Simple wrapper for django logout. Allows to logout Facebook together with
 # Participe logout.
@@ -244,23 +244,17 @@ def account_logout(request, next_page):
     DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
     try:
         instance = UserSocialAuth.objects.filter(
-                provider='facebook').get(user=user)
+            provider='facebook').get(user=user)
         access_token = instance.tokens["access_token"]
         fb_logout = (
-                'https://www.facebook.com/logout.php?'
-                'next=http://%s&access_token=%s' %
-                (DOMAIN_NAME, access_token))
+            'https://www.facebook.com/logout.php?'
+            'next=http://%s&access_token=%s' %
+            (DOMAIN_NAME, access_token))
         response = logout(request, next_page=fb_logout)
     except:
         response = logout(request, next_page=next_page)
     return response
 
-def account_list(request):
-    accounts = User.objects.all().filter(is_active=True)
-    return render_to_response('account_list.html',
-            RequestContext(request, {
-                    'accounts': accounts
-                    }))
 
 def view_profile(request, user_id):
     ctx = {}
@@ -277,42 +271,42 @@ def view_profile(request, user_id):
     ctx.update({"profile": profile})
 
     participations_current = Participation.objects.filter(
-            user=account,
-            challenge__is_deleted=False,
-            status__in=[
-                    PARTICIPATION_STATE.CONFIRMED,
-                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
-                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,]
-            )
+        user=account,
+        challenge__is_deleted=False,
+        status__in=[
+            PARTICIPATION_STATE.CONFIRMED,
+            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+            PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION, ]
+    )
     ctx.update({"participations_current": participations_current})
 
     participations_acknowledged = Participation.objects.filter(
-            user=account,
-            challenge__is_deleted=False,
-            status=PARTICIPATION_STATE.ACKNOWLEDGED,
-            )
+        user=account,
+        challenge__is_deleted=False,
+        status=PARTICIPATION_STATE.ACKNOWLEDGED,
+    )
     ctx.update({"participations_acknowledged": participations_acknowledged})
 
     participations_cancelled_by_user = Participation.objects.filter(
-            user=account,
-            challenge__is_deleted=False,
-            status=PARTICIPATION_STATE.CANCELLED_BY_USER,
-            )
+        user=account,
+        challenge__is_deleted=False,
+        status=PARTICIPATION_STATE.CANCELLED_BY_USER,
+    )
     ctx.update({"participations_cancelled_by_user":
-            participations_cancelled_by_user})
+                    participations_cancelled_by_user})
 
     participations_cancelled_by_admin = Participation.objects.filter(
-            user=account,
-            challenge__is_deleted=False,
-            status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
-            )
+        user=account,
+        challenge__is_deleted=False,
+        status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
+    )
     ctx.update({"participations_cancelled_by_admin":
-            participations_cancelled_by_admin})
+                    participations_cancelled_by_admin})
 
     affiliated_organizations = Organization.objects.filter(
         affiliated_users=account,
-        )
+    )
     ctx.update({"affiliated_organizations": affiliated_organizations})
 
     if user.is_authenticated():
@@ -326,23 +320,24 @@ def view_profile(request, user_id):
 
         # Related to viewer Challenges
         related_participated_challenges = [
-                participation.challenge for participation in
-                    participations_current.exclude(
-                        status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
-                        )
-                if participation.challenge in admin_challenges]
+            participation.challenge for participation in
+            participations_current.exclude(
+                status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+            )
+            if participation.challenge in admin_challenges]
         ctx.update({"related_participated_challenges":
-                related_participated_challenges})
+                        related_participated_challenges})
 
         related_desired_challenges = [
-                challenge for challenge in desired_challenges
-                if challenge in admin_challenges]
+            challenge for challenge in desired_challenges
+            if challenge in admin_challenges]
         ctx.update({"related_desired_challenges":
-                related_desired_challenges})
+                        related_desired_challenges})
 
     ctx.update({"PRIVACY_MODE": PRIVACY_MODE})
     return render_to_response('account_foreignprofile.html',
-            RequestContext(request, ctx))
+                              RequestContext(request, ctx))
+
 
 @login_required
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
@@ -350,64 +345,64 @@ def view_myprofile(request):
     user = request.user
 
     user_participations = get_user_participations(user).order_by(
-            "challenge__start_date")
+        "challenge__start_date")
     user_participations_action_required = user_participations.filter(
-            status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
-            )
+        status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
+    )
     user_participations_upcoming = user_participations.filter(
-            challenge__status=CHALLENGE_STATUS.UPCOMING,
-            status__in=[
-                    PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                    PARTICIPATION_STATE.CONFIRMED
-                    ])
+        challenge__status=CHALLENGE_STATUS.UPCOMING,
+        status__in=[
+            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+            PARTICIPATION_STATE.CONFIRMED
+        ])
     user_participations_completed = user_participations.filter(
-            challenge__status=CHALLENGE_STATUS.COMPLETED,
-            status__in=[
-                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
-                    PARTICIPATION_STATE.ACKNOWLEDGED
-                    ])
+        challenge__status=CHALLENGE_STATUS.COMPLETED,
+        status__in=[
+            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT,
+            PARTICIPATION_STATE.ACKNOWLEDGED
+        ])
 
     admin_challenges = get_admin_challenges(user).order_by("start_date")
     admin_challenges_action_required = admin_challenges.filter(
-            Q(pk__in=Participation.objects.filter(
-                    status__in=[
-                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-                            ]).values_list("challenge_id", flat=True)
-            ) | Q(
-                    start_date__lt=datetime.date.today(),
-                    status=CHALLENGE_STATUS.UPCOMING
-                    )
+        Q(pk__in=Participation.objects.filter(
+            status__in=[
+                PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+            ]).values_list("challenge_id", flat=True)
+        ) | Q(
+            start_date__lt=datetime.date.today(),
+            status=CHALLENGE_STATUS.UPCOMING
+        )
     )
     admin_challenges_upcoming = admin_challenges.exclude(
-            pk__in=Participation.objects.filter(
-                    status__in=[
-                            PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
-                            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-                            ]).values_list("challenge_id", flat=True)
-            ).filter(
-                    status=CHALLENGE_STATUS.UPCOMING,
-                    start_date__gte=datetime.date.today()
-                    )
+        pk__in=Participation.objects.filter(
+            status__in=[
+                PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
+                PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+            ]).values_list("challenge_id", flat=True)
+    ).filter(
+        status=CHALLENGE_STATUS.UPCOMING,
+        start_date__gte=datetime.date.today()
+    )
     admin_challenges_completed = admin_challenges.exclude(
-            pk__in=Participation.objects.filter(
-                    status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-                    ).values_list("challenge_id", flat=True)
-            ).filter(
-                    status=CHALLENGE_STATUS.COMPLETED
-                    )
+        pk__in=Participation.objects.filter(
+            status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+        ).values_list("challenge_id", flat=True)
+    ).filter(
+        status=CHALLENGE_STATUS.COMPLETED
+    )
 
     participations_cancelled_by_user = Participation.objects.filter(
-            user=user,
-            challenge__is_deleted=False,
-            status=PARTICIPATION_STATE.CANCELLED_BY_USER,
-            )
+        user=user,
+        challenge__is_deleted=False,
+        status=PARTICIPATION_STATE.CANCELLED_BY_USER,
+    )
 
     participations_cancelled_by_admin = Participation.objects.filter(
-            user=user,
-            challenge__is_deleted=False,
-            status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
-            )
+        user=user,
+        challenge__is_deleted=False,
+        status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
+    )
 
     #TODO Enhance this behaviour
     try:
@@ -415,30 +410,31 @@ def view_myprofile(request):
     except:
         profile = None
     return render_to_response('account_myprofile.html',
-            RequestContext(request, {
-                    "user": user,
-                    "profile": profile,
-                    "user_participations":
-                            [(user_participations_action_required,
-                                    _("Action required")),
-                            (user_participations_upcoming,
-                                    _("Upcoming")),
-                            (user_participations_completed,
-                                    _("Completed")),],
-                    "admin_challenges":
-                            [(admin_challenges_action_required,
-                                    _("Action required")),
-                            (admin_challenges_upcoming,
-                                    _("upcoming")),
-                            (admin_challenges_completed,
-                                    _("completed")),],
-                    "participations_cancelled_by_user":
-                            participations_cancelled_by_user,
-                    "participations_cancelled_by_admin":
-                            participations_cancelled_by_admin,
-                    "PARTICIPATION_STATE": PARTICIPATION_STATE,
-                    "CHALLENGE_STATUS": CHALLENGE_STATUS,
-                    }))
+                              RequestContext(request, {
+                                  "user": user,
+                                  "profile": profile,
+                                  "user_participations":
+                                      [(user_participations_action_required,
+                                        _("Action required")),
+                                       (user_participations_upcoming,
+                                        _("Upcoming")),
+                                       (user_participations_completed,
+                                        _("Completed")), ],
+                                  "admin_challenges":
+                                      [(admin_challenges_action_required,
+                                        _("Action required")),
+                                       (admin_challenges_upcoming,
+                                        _("upcoming")),
+                                       (admin_challenges_completed,
+                                        _("completed")), ],
+                                  "participations_cancelled_by_user":
+                                      participations_cancelled_by_user,
+                                  "participations_cancelled_by_admin":
+                                      participations_cancelled_by_admin,
+                                  "PARTICIPATION_STATE": PARTICIPATION_STATE,
+                                  "CHALLENGE_STATUS": CHALLENGE_STATUS,
+                              }))
+
 
 @login_required
 def edit_profile(request):
@@ -462,10 +458,11 @@ def edit_profile(request):
             return HttpResponseRedirect('/accounts/profile/view/')
 
     return render_to_response('account_edit.html',
-            RequestContext(request, {
-                    "pform": pform,
-                    "profile": profile,
-                    }))
+                              RequestContext(request, {
+                                  "pform": pform,
+                                  "profile": profile,
+                              }))
+
 
 @login_required
 def delete_profile(request):
@@ -484,7 +481,8 @@ def delete_profile(request):
         return HttpResponseRedirect('/')
 
     return render_to_response('account_delete.html',
-            RequestContext(request, {}))
+                              RequestContext(request, {}))
+
 
 @login_required
 def reset_password(request):
@@ -498,13 +496,14 @@ def reset_password(request):
 
             info = _("You have successfuly changed your password")
             return render_to_response('account_information.html',
-                    RequestContext(request, {
-                            "information": info,
-                            }))
+                                      RequestContext(request, {
+                                          "information": info,
+                                      }))
     return render_to_response('account_reset_password.html',
-            RequestContext(request, {
-                    'form': form,
-                    }))
+                              RequestContext(request, {
+                                  'form': form,
+                              }))
+
 
 def notify_forgotten_password(request):
     form = RestorePasswordForm(request.POST or None)
@@ -517,32 +516,33 @@ def notify_forgotten_password(request):
                 token = token_generator.make_token(user)
                 DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
                 confirmation_link = (
-                        "http://%s/accounts/password/renew/%s-%s/" %
-                        (DOMAIN_NAME, int_to_base36(user.id), token))
+                    "http://%s/accounts/password/renew/%s-%s/" %
+                    (DOMAIN_NAME, int_to_base36(user.id), token))
                 send_templated_mail(
-                        template_name="account_password_renew",
-                        from_email="from@example.com",
-                        recipient_list=[user.email,],
-                        context={
-                                "user": user,
-                                "confirmation_link": confirmation_link,
-                                },)
+                    template_name="account_password_renew",
+                    from_email="from@example.com",
+                    recipient_list=[user.email, ],
+                    context={
+                        "user": user,
+                        "confirmation_link": confirmation_link,
+                    }, )
                 info = _("Confirmation link to restore password "
-                        "were sent to address '%s'" % user.email)
+                         "were sent to address '%s'" % user.email)
                 return render_to_response('account_information.html',
-                        RequestContext(request, {
-                                "information": info,
-                                }))
+                                          RequestContext(request, {
+                                              "information": info,
+                                          }))
             except:
                 info = _("An error has been acquired.")
                 return render_to_response('account_error.html',
-                        RequestContext(request, {
-                                "information": info,
-                                }))
+                                          RequestContext(request, {
+                                              "information": info,
+                                          }))
     return render_to_response('account_restore_password.html',
-            RequestContext(request, {
-                    'form': form,
-                    }))
+                              RequestContext(request, {
+                                  'form': form,
+                              }))
+
 
 def renew_forgotten_password(request, uidb36=None, token=None):
     assert uidb36 is not None and token is not None
@@ -561,9 +561,9 @@ def renew_forgotten_password(request, uidb36=None, token=None):
     else:
         info = _("An error has been acquired.")
         return render_to_response('account_error.html',
-                RequestContext(request, {
-                        "information": info,
-                        }))
+                                  RequestContext(request, {
+                                      "information": info,
+                                  }))
 
 # TODO On general success move this to separate application
 @login_required
@@ -583,10 +583,11 @@ def change_avatar(request):
             return redirect("view_myprofile")
 
     return render_to_response('account_change_avatar.html',
-            RequestContext(request, {
-                    "profile": profile,
-                    "pform": pform,
-                    }))
+                              RequestContext(request, {
+                                  "profile": profile,
+                                  "pform": pform,
+                              }))
+
 
 @login_required
 def crop_avatar(request):
@@ -620,10 +621,10 @@ def crop_avatar(request):
 
             box = [left, top, right, bottom]
             (w, h) = image.size
-            if result=="width":
-                box = map(lambda x: x*h/AVATAR_CROP_MAX_SIZE, box)
+            if result == "width":
+                box = map(lambda x: x * h / AVATAR_CROP_MAX_SIZE, box)
             else:
-                box = map(lambda x: x*w/AVATAR_CROP_MAX_SIZE, box)
+                box = map(lambda x: x * w / AVATAR_CROP_MAX_SIZE, box)
 
             image = image.crop(box)
             if image.mode != 'RGB':
@@ -631,20 +632,20 @@ def crop_avatar(request):
 
             thumb = StringIO()
             image.save(thumb, settings.AVATAR_THUMB_FORMAT,
-                    quality=settings.AVATAR_THUMB_QUALITY)
+                       quality=settings.AVATAR_THUMB_QUALITY)
             thumb_file = ContentFile(thumb.getvalue())
 
             base_name, ext = os.path.splitext(avatar.name)
             profile.avatar = avatar.storage.save(
-                    "%s_cropped%s" % (base_name, ext), thumb_file)
+                "%s_cropped%s" % (base_name, ext), thumb_file)
             profile.save()
 
             return redirect("view_myprofile")
 
     return render_to_response("account_crop_avatar.html",
-            RequestContext(request, {
-                    'AVATAR_CROP_MAX_SIZE': AVATAR_CROP_MAX_SIZE,
-                    'dim': result,
-                    'avatar': avatar,
-                    'form': form
-                    }))
+                              RequestContext(request, {
+                                  'AVATAR_CROP_MAX_SIZE': AVATAR_CROP_MAX_SIZE,
+                                  'dim': result,
+                                  'avatar': avatar,
+                                  'form': form
+                              }))

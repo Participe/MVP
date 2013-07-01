@@ -8,15 +8,46 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Organization.is_deleted'
-        db.add_column('organization_organization', 'is_deleted',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        # Adding model 'Organization'
+        db.create_table('organization_organization', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('address_1', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
+            ('address_2', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
+            ('postal_code', self.gf('django.db.models.fields.PositiveIntegerField')(null=True, blank=True)),
+            ('city', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
+            ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
+            ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('video', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
+            ('is_contact_person', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('contact_person', self.gf('django.db.models.fields.related.ForeignKey')(related_name='contact_org_set', to=orm['auth.User'])),
+            ('is_alt_person', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('alt_person_fullname', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
+            ('alt_person_email', self.gf('django.db.models.fields.EmailField')(max_length=80, null=True, blank=True)),
+            ('alt_person_phone', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
+            ('is_deleted', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal('organization', ['Organization'])
+
+        # Adding M2M table for field affiliated_users on 'Organization'
+        db.create_table('organization_organization_affiliated_users', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('organization', models.ForeignKey(orm['organization.organization'], null=False)),
+            ('user', models.ForeignKey(orm['auth.user'], null=False))
+        ))
+        db.create_unique('organization_organization_affiliated_users', ['organization_id', 'user_id'])
 
 
     def backwards(self, orm):
-        # Deleting field 'Organization.is_deleted'
-        db.delete_column('organization_organization', 'is_deleted')
+        # Deleting model 'Organization'
+        db.delete_table('organization_organization')
+
+        # Removing M2M table for field affiliated_users on 'Organization'
+        db.delete_table('organization_organization_affiliated_users')
 
 
     models = {

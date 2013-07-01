@@ -1,14 +1,22 @@
 {% extends 'emails/base.email' %}
 {% load i18n %}
-{% block subject %}{% trans "Congratulations" %}{% endblock %}
 
 {% block content %}
-{% block html %}
-
-{% blocktrans %}
-You are about to sign-up to Participe.<br/>
-Please, follow this link {{ confirmation_link }}<br/>
-{% endblocktrans %}
-
-{% endblock %}
+    {% block html %}
+        <p>
+            {% blocktrans %}Thank you for joining Participe! We are glad you want to help us make the world a better place.{% endblocktrans %}
+        </p>
+        <p>
+            {%  blocktrans %}To help make sure that you are a real person and not a computer program, we need you to navigate your web-browser to the following link:{% endblocktrans %}
+        </p>
+        <p>
+            <a href="{{ confirmation_link }}">{{ confirmation_link }}</a>
+        </p>
+        <p>
+        {% blocktrans %}If the link above appears as a clickable link, go ahead and click it. If not, you will have to mark the link, copy it, and paste it to the address bar of your web browser.{% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}We hope you enjoy your experience with Participe. If you have any questions, comments, or suggestions please let us know! You can contact the lead developer, <a href='mailto:markus.roth@partici.pe'>Markus Roth</a>.{% endblocktrans %}
+        </p>
+    {% endblock %}
 {% endblock %}

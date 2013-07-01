@@ -1,18 +1,15 @@
 {% load i18n %}
-
+{% block subject %}{{ subject }}{% endblock %}
 {% block html %}
+    <p>
+        {% blocktrans with user.first_name as user_first_name %}Dear {{ user_first_name }}{% endblocktrans %}
+    </p>
 
-{% blocktrans with user.get_full_name as user_full_name %}
-Dear, {{ user_full_name }},<br/>
-{% endblocktrans %}
+    {% block content %}
+    {% endblock %}
 
-{% block content %}
-{% endblock %}
-
-{% blocktrans %}
-<br/>
-Thank you,<br/>
-Participe Resource Management System<br/>
-{% endblocktrans %}
-
+    <p>
+        {% trans "All the best," %}<br/>
+        {% trans "The Participe team" %}
+    </p>
 {% endblock %}

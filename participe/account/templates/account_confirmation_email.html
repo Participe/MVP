@@ -7,7 +7,7 @@
     <div class="well">
         <div class="row">
             <div class="span12">
-                <p>{% trans "Confirmation e-mail was sent to the address" %} {{ address }}</p>
+                <p>{% blocktrans with address as address %}To verify that you are a real person, we sent you an email to {{ address }}. Please check your mail, and click on the link provided in the one we sent you.{% endblocktrans %}</p>
             </div>
         </div>
     </div>

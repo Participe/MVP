@@ -186,68 +186,78 @@ def challenge_edit(request, challenge_id):
     user = request.user
     challenge = get_object_or_404(Challenge, pk=challenge_id)
 
-    if challenge.status==CHALLENGE_STATUS.COMPLETED:
+    if challenge.status == CHALLENGE_STATUS.COMPLETED:
         raise Http501
 
     form = EditChallengeForm(
-            user, request.POST or None, request.FILES or None,
-            instance=challenge)
+        user,
+        request.POST or None,
+        request.FILES or None,
+        instance=challenge)
 
+    #save button clicked
     if request.method == "POST":
         if form.is_valid():
             form.save()
 
             ctx = {}
             ctx.update({
-                "user": participation.user,
-                "challenge": participation.challenge,
+                "user": user,
+                "challenge": challenge,
                 "challenge_url": challenge.get_full_url(request),
-                })
+            })
 
             participations = Participation.objects.all().filter(
-                    Q(challenge=challenge) &
-                    (Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
-                            Q(status=PARTICIPATION_STATE.CONFIRMED))
-                    )
+                Q(challenge=challenge) &
+                (
+                    Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION) |
+                    Q(status=PARTICIPATION_STATE.CONFIRMED)
+                )
+            )
+
             waited = Participation.objects.all().filter(
-                    Q(challenge=challenge) &
-                    Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
-                    )
+                Q(challenge=challenge) &
+                Q(status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION)
+            )
+
             if "delete" in request.POST:
                 challenge.is_deleted = True
                 challenge.save()
 
                 for participation in participations:
                     send_templated_mail(
-                            template_name="challenge_deleted",
-                            from_email="from@example.com",
-                            recipient_list=[participation.user.email,],
-                            context=ctx,)
+                        template_name="challenge_deleted",
+                        from_email="from@example.com",
+                        recipient_list=[participation.user.email, ],
+                        context=ctx)
+
             #is_date_time_changed:
             elif ("start_date" in form.changed_data or
                     "start_time" in form.changed_data):
                 for participation in participations:
                     send_templated_mail(
-                            template_name="challenge_changed",
-                            from_email="from@example.com",
-                            recipient_list=[participation.user.email,],
-                            context=ctx,)
+                        template_name="challenge_changed",
+                        from_email="from@example.com",
+                        recipient_list=[participation.user.email,],
+                        context=ctx, )
+
             #is_application_changed:
             if ("application" in form.changed_data and
-                    challenge.application==CHALLENGE_MODE.FREE_FOR_ALL):
+                    challenge.application == CHALLENGE_MODE.FREE_FOR_ALL):
                 for participation in waited:
                     participation.status = PARTICIPATION_STATE.CONFIRMED
                     participation.date_accepted = datetime.now()
                     participation.save()
 
                     send_templated_mail(
-                            template_name="challenge_application_changed",
-                            from_email="from@example.com",
-                            recipient_list=[participation.user.email,],
-                            context=ctx,)
+                        template_name="challenge_application_changed",
+                        from_email="from@example.com",
+                        recipient_list=[participation.user.email, ],
+                        context=ctx, )
+
             return redirect(challenge.get_absolute_url())
-    return render_to_response('challenge_edit.html',
-            RequestContext(request, {'form': form}))
+
+    return render_to_response('challenge_edit.html', RequestContext(request, {'form': form}))
 
 @login_required
 @challenge_admin

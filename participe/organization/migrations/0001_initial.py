@@ -11,6 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Organization'
         db.create_table('organization_organization', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
             ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('address_1', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
@@ -22,19 +23,31 @@ class Migration(SchemaMigration):
             ('video', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
             ('is_contact_person', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('contact_person', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('contact_person', self.gf('django.db.models.fields.related.ForeignKey')(related_name='contact_org_set', to=orm['auth.User'])),
             ('is_alt_person', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('alt_person_fullname', self.gf('django.db.models.fields.CharField')(max_length=80, null=True, blank=True)),
             ('alt_person_email', self.gf('django.db.models.fields.EmailField')(max_length=80, null=True, blank=True)),
             ('alt_person_phone', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
+            ('is_deleted', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('organization', ['Organization'])
+
+        # Adding M2M table for field affiliated_users on 'Organization'
+        db.create_table('organization_organization_affiliated_users', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('organization', models.ForeignKey(orm['organization.organization'], null=False)),
+            ('user', models.ForeignKey(orm['auth.user'], null=False))
+        ))
+        db.create_unique('organization_organization_affiliated_users', ['organization_id', 'user_id'])
 
 
     def backwards(self, orm):
         # Deleting model 'Organization'
         db.delete_table('organization_organization')
+
+        # Removing M2M table for field affiliated_users on 'Organization'
+        db.delete_table('organization_organization_affiliated_users')
 
 
     models = {
@@ -78,11 +91,13 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['name']", 'object_name': 'Organization'},
             'address_1': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'address_2': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
+            'affiliated_users': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             'alt_person_email': ('django.db.models.fields.EmailField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'alt_person_fullname': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
             'alt_person_phone': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
+            'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '80', 'null': 'True', 'blank': 'True'}),
-            'contact_person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
+            'contact_person': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'contact_org_set'", 'to': "orm['auth.User']"}),
             'country': ('django_countries.fields.CountryField', [], {'max_length': '2'}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -90,6 +105,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_alt_person': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_contact_person': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
             'postal_code': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'video': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),

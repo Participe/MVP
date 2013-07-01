@@ -125,7 +125,7 @@ class UserProfileForm(forms.ModelForm):
         self.fields["country"].choices = COUNTRIES
         self.fields["country"].initial = "CH"
 
-    captcha = CaptchaField()
+    #captcha = CaptchaField()
     birth_day = forms.DateField(
             input_formats=("%d.%m.%Y",),
             widget=forms.DateInput(

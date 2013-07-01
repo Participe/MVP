@@ -2,7 +2,7 @@
 import os
 import sys
 
-RUNNING_DEVSERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
+RUNNING_DEVSERVER = True
 DEBUG = RUNNING_DEVSERVER
 
 TEMPLATE_DEBUG = DEBUG
@@ -10,25 +10,20 @@ TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates/'),
-    )
+    os.path.join(PROJECT_PATH, 'templates/emails/'),
+)
 
 ADMINS = (
     ('OVERRIDE ME IN LOCAL_SETTINGS', 'OVERRIDE ME IN LOCAL_SETTINGS'),
 )
+
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'sqlite.db',
-    }
-}
-
 TIME_ZONE = 'Europe/Zurich'
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de'
 LANGUAGES = (
-    ('en', u'English'),
     ('de', u'Deutsch'),
+    #('en', u'English'),
 )
 
 SITE_ID = 1
