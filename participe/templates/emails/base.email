@@ -9,7 +9,9 @@
     {% endblock %}
 
     <p>
-        {% trans "All the best," %}<br/>
+        {% trans "All the best," %}
+    </p>
+    <p>
         {% trans "The Participe team" %}
     </p>
 {% endblock %}

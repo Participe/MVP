@@ -14,7 +14,7 @@ gender_choices = [
     ]
 
 PRIVACY_MODE = enum(
-    PARANOID = "0", 
+    PARANOID = "0",
     NORMAL = "1",
     )
 

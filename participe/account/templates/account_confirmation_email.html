@@ -4,9 +4,9 @@
 {% block title %}{% trans "Confirmation" %} - {{ block.super }}{% endblock %}
 
 {% block extra_content %}
-    <div class="well">
-        <div class="row">
-            <div class="span12">
+    <div class="row">
+        <div class="span12">
+            <div class="well">
                 <p>{% blocktrans with address as address %}To verify that you are a real person, we sent you an email to {{ address }}. Please check your mail, and click on the link provided in the one we sent you.{% endblocktrans %}</p>
             </div>
         </div>

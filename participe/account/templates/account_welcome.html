@@ -1,0 +1,17 @@
+{% extends 'account_base.html' %}
+{% load i18n %}
+
+{% block extra_content %}
+    <div class="row">
+        <div class="span12">
+            <div class="well">
+                <h3>{% trans "Welcome to Participe!" %}</h3>
+                {% url challenge.views.challenge_list as challenge_list %}
+                <p>
+                    {% blocktrans %}Thank you for confirming your email address. You are now signed up and logged in to Participe and can start using it. Why don't you see if you can find a challenge that interests you in the <a hrer="{{ challenge_list }}">list of challenges</a>?{% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

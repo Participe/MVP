@@ -347,6 +347,8 @@ EMAIL_HOST = 'OVERRIDE ME IN LOCAL_SETTINGS'
 #EMAIL_PORT = 587
 #EMAIL_USE_TLS = True
 
+EMAIL_SENDER = "info@partici.pe"
+
 TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 TEMPLATED_EMAIL_TEMPLATE_DIR = 'emails/'
 TEMPLATED_EMAIL_FILE_EXTENSION = 'email'

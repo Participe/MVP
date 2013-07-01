@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-01 20:25+0200\n"
+"POT-Creation-Date: 2013-07-01 22:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr "Telefonnummer"
 
 #: account/forms.py:120 account/models.py:60
 msgid "Privacy mode"
-msgstr "Privatshphäre-Modus"
+msgstr "Bestimme den Schutz deiner Privatsphäre"
 
 #: account/forms.py:122
 msgid "I want to get the Participe newsletter"
@@ -163,11 +163,18 @@ msgstr "Weiblich"
 
 #: account/models.py:22
 msgid "Paranoid"
-msgstr "Sehr sicher: Nur Organisator_innen von Anlessen, zu denen du dich anmeldest, sehen je deine persönlichen Daten. Auch dein Name wir nur für diese Personen sichtbar sein."
+msgstr ""
+"Sehr sicher: Nur Organisator_innen von Engagements zu denen du dich "
+"anmeldest sehen je deine persönlichen Daten. Auch dein Name und dein Foto "
+"werden nur für diese Personen sichtbar sein."
 
 #: account/models.py:23
 msgid "Normal"
-msgstr "Sicher: Dein Namen, dein Foto, und die Engagements and denen mit mitmachst und mitgemacht hast sind für alle Mitglieder von Participe sichtbar. Alle anderen Angaben sind lediglich für Organisator_innen von Engagements sichtbar, zu denen du dich angemeldet hast."
+msgstr ""
+"Sicher: Dein Name, dein Foto, und die Engagements and denen mit mitmachst "
+"und mitgemacht hast sind für alle Mitglieder von Participe sichtbar. Alle "
+"anderen Angaben sind lediglich für Organisator_innen von Engagements "
+"sichtbar, zu denen du dich angemeldet hast."
 
 #: account/models.py:28 challenge/models.py:39 organization/models.py:15
 msgid "Avatar"
@@ -201,50 +208,47 @@ msgstr "Benutzerprofil"
 msgid "user profiles"
 msgstr "Benutzerprofile"
 
-#: account/views.py:173
-msgid "You have successfuly confirmed your e-mail."
-msgstr "Deine E-Mail Adresse wurde bestätigt."
+#: account/views.py:129
+msgid "Welcome to Participe"
+msgstr "Willkommen bei Participe"
 
-#: account/views.py:182
+#: account/views.py:181
 msgid "The link has been expired. Please, sign-up again."
 msgstr "Der Link ist nicht mehr gültig. Bitte melde dich erneut an."
 
-#: account/views.py:216 account/templates/account_login.html:19
+#: account/views.py:215 account/templates/account_login.html:19
 msgid "Sorry, you have entered wrong E-mail or Password"
 msgstr "Falsche E-Mail Adresse oder falsches Passwort eingetragen."
 
-#: account/views.py:417 account/views.py:424
+#: account/views.py:416 account/views.py:423
 msgid "Action required"
 msgstr "Aktion erforderlich"
 
-#: account/views.py:419 challenge/models.py:33
+#: account/views.py:418 challenge/models.py:33
 msgid "Upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:421 challenge/models.py:34
+#: account/views.py:420 challenge/models.py:34
 msgid "Completed"
 msgstr "Vergangen"
 
-#: account/views.py:426
+#: account/views.py:425
 msgid "upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:428
+#: account/views.py:427
 msgid "completed"
 msgstr "Erledigt"
 
-#: account/views.py:496
+#: account/views.py:495
 msgid "You have successfuly changed your password"
 msgstr "Dein Passwort wurde geändert."
 
-#: account/views.py:528
-#, python-format
-msgid "Confirmation link to restore password were sent to address '%s'"
-msgstr ""
-"Ein E-Mail mit einem Link, um das Passwort zurück zu setzen, wurde an die "
-"Adresse '%s' geschickt."
+#: account/views.py:526
+msgid "New password for Participe"
+msgstr "Neues Passwort bei Participe"
 
-#: account/views.py:535 account/views.py:561
+#: account/views.py:534 account/views.py:560
 msgid "An error has been acquired."
 msgstr "Es ist ein Fehler aufgetreten."
 
@@ -301,9 +305,9 @@ msgid ""
 "Please check your mail, and click on the link provided in the one we sent "
 "you."
 msgstr ""
-"Um sicherzustellen, dass du ein Mensch (und kein Computerprogramm) bist, haben wir dir eine Email "
-"an die Adresse %(address)s gesendet. Bitte öffne das Email, das wir dir geschickt "
-"haben und klicke auf den Link im Mail."
+"Um sicherzustellen, dass du ein Mensch (und kein Computerprogramm) bist, "
+"haben wir dir eine Email an die Adresse %(address)s gesendet. Bitte klicke "
+"den Link darin, um dein Konto bei Participe zu aktivieren."
 
 #: account/templates/account_crop_avatar.html:74
 msgid "Crop."
@@ -462,7 +466,7 @@ msgstr "Geleistete Stunden"
 
 #: account/templates/account_myprofile.html:24
 msgid "Contact"
-msgstr "Kontaktperson"
+msgstr "Kontaktdaten"
 
 #: account/templates/account_myprofile.html:26
 msgid "Privacy information"
@@ -561,7 +565,7 @@ msgstr "Engagements, von denen du abgemeldet wurdest"
 
 #: account/templates/account_reset_password.html:4
 msgid "Reset password"
-msgstr "Passwort zurücksetzen"
+msgstr "Neues Passwort anfordern"
 
 #: account/templates/account_reset_password.html:12
 msgid "Please, enter new password"
@@ -579,9 +583,35 @@ msgstr "Passwort zurücksetzen"
 msgid "Forgotten password"
 msgstr "Passwort zurücksetzen"
 
-#: account/templates/account_restore_password.html:15
+#: account/templates/account_restore_password.html:11
+msgid ""
+"If you lost or forgot your password, you can reset it. Enter your email "
+"address below, and we will send you an email with a link. After clicking on "
+"it, you will be able to set a new password and log in with that from now on."
+msgstr ""
+"Falls du dein Passwort verloren oder vergessen hast, kannst du hier ein "
+"neues setzen. Gib unten deine E-Mail-Adresse ein, und wir schicken dir ein E-"
+"Mail mit einem Link darin. Nachdem du auf den Link geklickt hast, kannst du "
+"ein neues Passwort wählen, mit dem du dich in Zukunft einloggen kannst."
+
+#: account/templates/account_restore_password.html:16
 msgid "Send me an e-mail"
 msgstr "Schick mir ein Email"
+
+#: account/templates/account_restore_password_email_sent.html:8
+msgid "Passwort Reset Email Sent"
+msgstr "Schau in deine E-Mails"
+
+#: account/templates/account_restore_password_email_sent.html:10
+#, python-format
+msgid ""
+"We sent you a password reset email to the email address %(email)s. Please "
+"click on the link in the email we sent you to set a new password, so you can "
+"log in to Participe again."
+msgstr ""
+"Wir haben dir ein E-Mail an die Adresse %(email)s geschickt. Bitte klicke "
+"auf den Link im Email, damit du ein neues Passwort setzen und dich dann "
+"wieder bei Participe anmelden kannst."
 
 #: account/templates/account_signup.html:4
 #: account/templates/account_signup.html:54
@@ -610,6 +640,24 @@ msgstr "Indem du dich anmeldest, akzeptierst du die"
 #: account/templates/account_signup.html:53
 msgid "terms and conditions"
 msgstr "Allgemeinen Geschäftsbedingungen"
+
+#: account/templates/account_welcome.html:8
+msgid "Welcome to Participe!"
+msgstr "Willkommen bei Participe!"
+
+#: account/templates/account_welcome.html:11
+#, python-format
+msgid ""
+"Thank you for confirming your email address. You are now signed up and "
+"logged in to Participe and can start using it. Why don't you see if you can "
+"find a challenge that interests you in the <a hrer=\"%(challenge_list)s"
+"\">list of challenges</a>?"
+msgstr ""
+"Danke, dass du deine E-Mail-Adresse bestätigt hast. Du bist nun bei "
+"Participe angemeldet und eingeloggt. Jetzt kanns losgehen! Sieh doch gleich "
+"nach, ob du ein Engagement findest, das dir zusagt. <a href="
+"\"%(challenge_list)s\">Hier findest du die Liste der aktuellen Engagements</"
+"a>."
 
 #: challenge/forms.py:34 challenge/forms.py:159 organization/forms.py:26
 msgid "Affiliate different person"
@@ -2513,17 +2561,7 @@ msgstr "Feedback"
 msgid "Join Us"
 msgstr "Mach mit"
 
-#: templates/emails/account_confirmation.email:5
-msgid "Welcome to Participe"
-msgstr "Willkommen bei Participe"
-
-#: templates/emails/account_confirmation.email:10
-#: templates/emails/base.email:4
-#, python-format
-msgid "Dear %(user_first_name)s"
-msgstr "Hallo %(user_first_name)s"
-
-#: templates/emails/account_confirmation.email:12
+#: templates/emails/account_confirmation.email:7
 msgid ""
 "Thank you for joining Participe! We are glad you want to help us make the "
 "world a better place."
@@ -2531,15 +2569,15 @@ msgstr ""
 "Danke, dass du bei Participe mitmachst! Wir sind froh, dass auch du die Welt "
 "ein kleines Bisschen besser machen willst."
 
-#: templates/emails/account_confirmation.email:15
+#: templates/emails/account_confirmation.email:10
 msgid ""
 "To help make sure that you are a real person and not a computer program, we "
 "need you to navigate your web-browser to the following link:"
 msgstr ""
-"Um sicherzustellen, dass du ein Mensch (und kein Computerprogramm) bist, müssen wir dich bitten "
-"auf die Seite von folgendem Link zu gehen:"
+"Um sicherzustellen, dass du ein Mensch (und kein Computerprogramm) bist, "
+"müssen wir dich bitten auf die Seite von folgendem Link zu gehen:"
 
-#: templates/emails/account_confirmation.email:21
+#: templates/emails/account_confirmation.email:16
 msgid ""
 "If the link above appears as a clickable link, go ahead and click it. If "
 "not, you will have to mark the link, copy it, and paste it to the address "
@@ -2548,7 +2586,7 @@ msgstr ""
 "Wenn der Link oben klickbar erscheint, klick ihn an! Falls nicht, wirst du "
 "ihn kopieren und in der Adressleiste deines Browsers einfügen müssen."
 
-#: templates/emails/account_confirmation.email:24
+#: templates/emails/account_confirmation.email:19
 msgid ""
 "We hope you enjoy your experience with Participe. If you have any questions, "
 "comments, or suggestions please let us know! You can contact the lead "
@@ -2559,24 +2597,30 @@ msgstr ""
 "wissen! Du kannst den Software-Entwickler <a href='mailto:markus."
 "roth@partici.pe'>Markus Roth</a> kontaktieren."
 
-#: templates/emails/account_password_renew.email.html:3
+#: templates/emails/account_password_renew.email:7
+msgid ""
+"You, or someone pretending to be you, requested a password reset on "
+"Participe."
+msgstr ""
+"Du, oder jemand der sich als dich ausgibt, hat auf Participe um ein neues "
+"Passwort gebeten."
+
+#: templates/emails/account_password_renew.email:10
+msgid "If you need a new password, please click on the following link:"
+msgstr "Falls du ein neues Passwort brauchst, klick bitte auf den folgenden Link:"
+
+#: templates/emails/account_password_renew.email:16
+msgid "If you did not request a new password, you can ignore this email."
+msgstr "Falls du kein neues Passwort brauchst, kannst du dieses E-Mail ignorieren."
+
 #: templates/emails/account_successful_reset_password.email.html:3
 #: templates/emails/account_successful_signup.email.html:3
 #: templates/emails/challenge_participation_accepted.email.html:3
 #: templates/emails/challenge_successful_signup.email.html:3
 #: templates/emails/remind_accept_reject_application.email.html:3
 #: templates/emails/remind_challenge_participation.email.html:3
-#, fuzzy
 msgid "Congratulations"
-msgstr "Bestätigung"
-
-#: templates/emails/account_password_renew.email.html:8
-#, python-format
-msgid ""
-"\n"
-"You are about to restore your password to Participe.<br/>\n"
-"Please, follow this link %(confirmation_link)s<br/>\n"
-msgstr ""
+msgstr "Glückwunsch"
 
 #: templates/emails/account_successful_reset_password.email.html:8
 #, fuzzy
@@ -2592,11 +2636,16 @@ msgid ""
 "You have successfully signed up to Participe.<br/>\n"
 msgstr "Deine E-Mail Adresse wurde bestätigt."
 
-#: templates/emails/base.email:11
+#: templates/emails/base.email:5
+#, python-format
+msgid "Dear %(user_first_name)s"
+msgstr "Hallo %(user_first_name)s"
+
+#: templates/emails/base.email:12
 msgid "All the best,"
 msgstr "Alles Gute,"
 
-#: templates/emails/base.email:12
+#: templates/emails/base.email:13
 msgid "The Participe team"
 msgstr "Das Participe Team"
 
@@ -2714,6 +2763,14 @@ msgid ""
 "Don't forget that you are signed up for %(challenge_name)s tomorrow at "
 "%(start_time)s.\n"
 msgstr ""
+
+#~ msgid "Confirmation link to restore password were sent to address '%s'"
+#~ msgstr ""
+#~ "Ein E-Mail mit einem Link, um das Passwort zurück zu setzen, wurde an die "
+#~ "Adresse '%s' geschickt."
+
+#~ msgid "You have successfuly confirmed your e-mail."
+#~ msgstr "Deine E-Mail Adresse wurde bestätigt."
 
 #~ msgid "Confirmation e-mail was sent to the address"
 #~ msgstr ""

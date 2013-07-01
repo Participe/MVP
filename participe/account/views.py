@@ -121,7 +121,7 @@ def signup(request):
 
             send_templated_mail(
                 template_name="account_confirmation",
-                from_email="from@example.com",
+                from_email=settings.EMAIL_SENDER,
                 recipient_list=[user.email, ],
                 context={
                     "user": user,
@@ -171,10 +171,8 @@ def email_confirmation(request, confirmation_code):
             user.backend = "django.contrib.auth.backends.ModelBackend"
             auth_login(request, user)
 
-            info = _("You have successfuly confirmed your e-mail.")
-            return render_to_response('account_information.html',
+            return render_to_response('account_welcome.html',
                                       RequestContext(request, {
-                                          "information": info,
                                       }))
         else:
             # Delete expired user profile and account
@@ -514,23 +512,23 @@ def notify_forgotten_password(request):
 
             try:
                 token = token_generator.make_token(user)
-                DOMAIN_NAME = request.get_host() #settings.DOMAIN_NAME
+                DOMAIN_NAME = request.get_host()
                 confirmation_link = (
                     "http://%s/accounts/password/renew/%s-%s/" %
                     (DOMAIN_NAME, int_to_base36(user.id), token))
                 send_templated_mail(
                     template_name="account_password_renew",
-                    from_email="from@example.com",
+                    from_email=settings.EMAIL_SENDER,
                     recipient_list=[user.email, ],
                     context={
                         "user": user,
                         "confirmation_link": confirmation_link,
+                        "subject": _("New password for Participe")
                     }, )
-                info = _("Confirmation link to restore password "
-                         "were sent to address '%s'" % user.email)
-                return render_to_response('account_information.html',
+
+                return render_to_response('account_restore_password_email_sent.html',
                                           RequestContext(request, {
-                                              "information": info,
+                                              "email": user.email,
                                           }))
             except:
                 info = _("An error has been acquired.")
