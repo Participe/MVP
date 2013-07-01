@@ -1,25 +1,20 @@
 import os
 import datetime
-import itertools
-import json
 import random
 import string
-import urllib
 
 from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.contrib.auth.tokens import (default_token_generator
-                                        as token_generator)
+from django.contrib.auth.tokens import (default_token_generator as token_generator)
 from django.contrib.auth.views import auth_login
 from django.contrib.sessions.models import Session
 from django.core.files.base import ContentFile
-from django.db.models import Sum, Q
-from django.http import (HttpResponse, HttpResponseBadRequest,
-                         HttpResponseForbidden, HttpResponseRedirect, Http404)
+from django.db.models import Q
+from django.http import (HttpResponseRedirect, Http404)
 from django.shortcuts import get_object_or_404, redirect, render_to_response
-from django.template import RequestContext, Context, loader
+from django.template import RequestContext
 from django.utils import timezone
 from django.utils.http import int_to_base36, base36_to_int
 from django.utils.translation import ugettext as _

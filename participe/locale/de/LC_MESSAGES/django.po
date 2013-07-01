@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-01 22:22+0200\n"
+"POT-Creation-Date: 2013-07-01 23:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,47 +208,47 @@ msgstr "Benutzerprofil"
 msgid "user profiles"
 msgstr "Benutzerprofile"
 
-#: account/views.py:129
+#: account/views.py:124
 msgid "Welcome to Participe"
 msgstr "Willkommen bei Participe"
 
-#: account/views.py:181
+#: account/views.py:176
 msgid "The link has been expired. Please, sign-up again."
 msgstr "Der Link ist nicht mehr gültig. Bitte melde dich erneut an."
 
-#: account/views.py:215 account/templates/account_login.html:19
+#: account/views.py:210 account/templates/account_login.html:19
 msgid "Sorry, you have entered wrong E-mail or Password"
 msgstr "Falsche E-Mail Adresse oder falsches Passwort eingetragen."
 
-#: account/views.py:416 account/views.py:423
+#: account/views.py:411 account/views.py:418
 msgid "Action required"
 msgstr "Aktion erforderlich"
 
-#: account/views.py:418 challenge/models.py:33
+#: account/views.py:413 challenge/models.py:33
 msgid "Upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:420 challenge/models.py:34
+#: account/views.py:415 challenge/models.py:34
 msgid "Completed"
 msgstr "Vergangen"
 
-#: account/views.py:425
+#: account/views.py:420
 msgid "upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:427
+#: account/views.py:422
 msgid "completed"
 msgstr "Erledigt"
 
-#: account/views.py:495
+#: account/views.py:490
 msgid "You have successfuly changed your password"
 msgstr "Dein Passwort wurde geändert."
 
-#: account/views.py:526
+#: account/views.py:521
 msgid "New password for Participe"
 msgstr "Neues Passwort bei Participe"
 
-#: account/views.py:534 account/views.py:560
+#: account/views.py:529 account/views.py:555
 msgid "An error has been acquired."
 msgstr "Es ist ein Fehler aufgetreten."
 
@@ -417,7 +417,7 @@ msgid "Participations, cancelled by challenge admin"
 msgstr "Engagements, welche durch den Organisator abgebrochen wurden"
 
 #: account/templates/account_information.html:4
-#: templates/emails/challenge_changed.email.html:3
+#: templates/emails/challenge_changed.email:3
 #: templates/emails/challenge_deleted.email.html:3
 #: templates/emails/challenge_participation_acknowledged.email.html:3
 #: templates/emails/challenge_participation_rejected.email.html:3
@@ -853,6 +853,11 @@ msgstr "Kommentar"
 #: challenge/models.py:292
 msgid "comments"
 msgstr "Kommentare"
+
+#: challenge/views.py:261
+#, python-format
+msgid "You were accepted to '%(challenge)s on Participe!"
+msgstr "Deine Bewerbung für '%(challenge)s' auf Participe war erfolgreich!"
 
 #: challenge/templates/challenge_create.html:4
 msgid "Create challenge"
@@ -2607,34 +2612,13 @@ msgstr ""
 
 #: templates/emails/account_password_renew.email:10
 msgid "If you need a new password, please click on the following link:"
-msgstr "Falls du ein neues Passwort brauchst, klick bitte auf den folgenden Link:"
+msgstr ""
+"Falls du ein neues Passwort brauchst, klick bitte auf den folgenden Link:"
 
 #: templates/emails/account_password_renew.email:16
 msgid "If you did not request a new password, you can ignore this email."
-msgstr "Falls du kein neues Passwort brauchst, kannst du dieses E-Mail ignorieren."
-
-#: templates/emails/account_successful_reset_password.email.html:3
-#: templates/emails/account_successful_signup.email.html:3
-#: templates/emails/challenge_participation_accepted.email.html:3
-#: templates/emails/challenge_successful_signup.email.html:3
-#: templates/emails/remind_accept_reject_application.email.html:3
-#: templates/emails/remind_challenge_participation.email.html:3
-msgid "Congratulations"
-msgstr "Glückwunsch"
-
-#: templates/emails/account_successful_reset_password.email.html:8
-#, fuzzy
-msgid ""
-"\n"
-"You have successfully reset your password.<br/>\n"
-msgstr "Dein Passwort wurde geändert."
-
-#: templates/emails/account_successful_signup.email.html:8
-#, fuzzy
-msgid ""
-"\n"
-"You have successfully signed up to Participe.<br/>\n"
-msgstr "Deine E-Mail Adresse wurde bestätigt."
+msgstr ""
+"Falls du kein neues Passwort brauchst, kannst du dieses E-Mail ignorieren."
 
 #: templates/emails/base.email:5
 #, python-format
@@ -2645,27 +2629,32 @@ msgstr "Hallo %(user_first_name)s"
 msgid "All the best,"
 msgstr "Alles Gute,"
 
-#: templates/emails/base.email:13
+#: templates/emails/base.email:15
 msgid "The Participe team"
 msgstr "Das Participe Team"
 
-#: templates/emails/challenge_application_changed.email.html:3
-#, fuzzy
-msgid "Congratulatios"
-msgstr "Bestätigung"
-
-#: templates/emails/challenge_application_changed.email.html:8
+#: templates/emails/challenge_application_changed.email:7
 #, python-format
 msgid ""
 "\n"
-"The status of the challenge <a href='%(challenge_url)s'>%(challenge_name)s</"
-"a> has been changed from \"Confirmation required\" to \"Free for all\".<br/"
-">\n"
-"This means you've been accepted to this challenge automatically. Be sure to "
-"show up and give your best!<br/>\n"
+"    The status of the challenge <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a> has been changed from \"Confirmation required\" to "
+"\"Free for all\".<br/>\n"
+"    This means you've been accepted to this challenge automatically. Be sure "
+"to show up and give your best!<br/>\n"
+"    "
 msgstr ""
+"Du hast dich auf Participe um die Teilnahme beim Engagement <a "
+"href='%(challenge_url)s'>%(challenge_name)s</a> beworben. <br>Die "
+"Organisator_innen des Engagements haben nun beschlossen, dass keine "
+"Bewerbung mehr für dieses Engagement nötig ist. Alle Bewerber_innen, welche "
+"noch keine Antwort auf ihre Bewerbung bekommen haben, wurden somit "
+"automatisch aufgenommen.<br>Du bist somit verbindlich für das Engagement "
+"angemeldet. Falls du aus einem Grund nicht teilnehmen kannst, melde dich "
+"bitte so bald als möglich vom Engagement ab. Die Organisator_innen werden es "
+"dir danken."
 
-#: templates/emails/challenge_changed.email.html:8
+#: templates/emails/challenge_changed.email:8
 #, python-format
 msgid ""
 "\n"
@@ -2681,6 +2670,13 @@ msgid ""
 "%(challenge_name)s</a>, was deleted for the following reason:<br/>\n"
 "%(deleted_reason)s<br/>\n"
 msgstr ""
+
+#: templates/emails/challenge_participation_accepted.email.html:3
+#: templates/emails/challenge_successful_signup.email.html:3
+#: templates/emails/remind_accept_reject_application.email.html:3
+#: templates/emails/remind_challenge_participation.email.html:3
+msgid "Congratulations"
+msgstr "Glückwunsch"
 
 #: templates/emails/challenge_participation_accepted.email.html:8
 #, python-format
@@ -2763,6 +2759,22 @@ msgid ""
 "Don't forget that you are signed up for %(challenge_name)s tomorrow at "
 "%(start_time)s.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "You have successfully reset your password.<br/>\n"
+#~ msgstr "Dein Passwort wurde geändert."
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "You have successfully signed up to Participe.<br/>\n"
+#~ msgstr "Deine E-Mail Adresse wurde bestätigt."
+
+#, fuzzy
+#~ msgid "Congratulatios"
+#~ msgstr "Bestätigung"
 
 #~ msgid "Confirmation link to restore password were sent to address '%s'"
 #~ msgstr ""

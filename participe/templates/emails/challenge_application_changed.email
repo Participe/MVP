@@ -1,0 +1,11 @@
+{% extends 'emails/base.email' %}
+{% load i18n %}
+
+{% block content %}
+    {% block html %}
+        {% blocktrans with challenge.name as challenge_name %}
+        The status of the challenge <a href='{{ challenge_url }}'>{{ challenge_name }}</a> has been changed from "Confirmation required" to "Free for all".<br/>
+        This means you've been accepted to this challenge automatically. Be sure to show up and give your best!<br/>
+        {% endblocktrans %}
+    {% endblock %}
+{% endblock %}

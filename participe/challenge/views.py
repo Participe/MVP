@@ -1,51 +1,53 @@
-from datetime import date, datetime
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
-from django.http import (HttpResponse, HttpResponseBadRequest,
-        HttpResponseForbidden, HttpResponseRedirect, Http404)
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render_to_response
-from django.template import RequestContext, Context, loader
-from django.utils.translation import ugettext as _
+from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import ugettext as _
 
 from templated_email import send_templated_mail
+from datetime import date, datetime
 
 from forms import (CreateChallengeForm, SignupChallengeForm, EditChallengeForm,
-        WithdrawSignupForm, SelfreflectionForm)
+                   WithdrawSignupForm, SelfreflectionForm)
 from models import (Challenge, Participation, Comment, CHALLENGE_MODE,
-        CHALLENGE_STATUS, PARTICIPATION_STATE, PARTICIPATION_REMOVE_MODE)
+                    CHALLENGE_STATUS, PARTICIPATION_STATE, PARTICIPATION_REMOVE_MODE)
+
 from participe.account.models import PRIVACY_MODE
 from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.http import Http501
 from participe.core.user_tests import user_profile_completed
-from participe.enum import enum
+
 
 
 @login_required
 @user_passes_test(user_profile_completed, login_url="/accounts/profile/edit/")
 def challenge_create(request):
     form = CreateChallengeForm(
-            request.user, request.POST or None, request.FILES or None)
+        request.user, request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             form.save()
             return redirect("challenge_list")
 
     return render_to_response('challenge_create.html',
-            RequestContext(request, {'form': form}))
+                              RequestContext(request, {'form': form}))
+
 
 def challenge_list(request):
     challenges = Challenge.objects.all().filter(
-            status=CHALLENGE_STATUS.UPCOMING,
-            start_date__gte=date.today(),
-            is_deleted=False)
+        status=CHALLENGE_STATUS.UPCOMING,
+        start_date__gte=date.today(),
+        is_deleted=False)
     return render_to_response('challenge_list.html',
-            RequestContext(request, {
-                'challenges': challenges,
-                'CHALLENGE_MODE': CHALLENGE_MODE,
-                }))
+                              RequestContext(request, {
+                                  'challenges': challenges,
+                                  'CHALLENGE_MODE': CHALLENGE_MODE,
+                              }))
+
 
 def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
     ctx = {}
@@ -56,46 +58,46 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
 
     if challenge.is_deleted:
         return render_to_response('challenge_deleted_info.html',
-                RequestContext(request, {
-                        "challenge": challenge,
-                        }))
+                                  RequestContext(request, {
+                                      "challenge": challenge,
+                                  }))
 
     # Only authenticated users may signup to challenge
     if request.user.is_authenticated():
         try:
             participation = Participation.objects.all().get(
-                    Q(user=request.user) & Q(challenge=challenge))
+                Q(user=request.user) & Q(challenge=challenge))
             ctx.update({"participation": participation})
 
-            if (participation.status==PARTICIPATION_STATE.CONFIRMED or
-                    participation.status==PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION):
+            if (participation.status == PARTICIPATION_STATE.CONFIRMED or
+                        participation.status == PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION):
                 wform = WithdrawSignupForm(
-                        request.POST or None, request.FILES or None,
-                        instance=participation)
+                    request.POST or None, request.FILES or None,
+                    instance=participation)
                 ctx.update({"wform": wform})
 
-            if participation.status==PARTICIPATION_STATE.CANCELLED_BY_USER:
+            if participation.status == PARTICIPATION_STATE.CANCELLED_BY_USER:
                 sform = SignupChallengeForm(
-                        request.user, challenge,
-                        request.POST or None, request.FILES or None,
-                        instance=participation)
+                    request.user, challenge,
+                    request.POST or None, request.FILES or None,
+                    instance=participation)
                 ctx.update({"sform": sform})
 
-            if participation.status==PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION:
+            if participation.status == PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION:
                 rform = SelfreflectionForm(
-                        request.POST or None, request.FILES or None,
-                        instance=participation)
+                    request.POST or None, request.FILES or None,
+                    instance=participation)
                 ctx.update({"rform": rform})
 
                 if not participation.is_selfreflection_rejected:
                     pform = WithdrawSignupForm(
-                            request.POST or None, request.FILES or None,
-                            instance=participation)
+                        request.POST or None, request.FILES or None,
+                        instance=participation)
                     ctx.update({"pform": pform})
         except:
             sform = SignupChallengeForm(
-                    request.user, challenge,
-                    request.POST or None, request.FILES or None)
+                request.user, challenge,
+                request.POST or None, request.FILES or None)
             ctx.update({"sform": sform})
 
         # Weird block, but it's the only way to describe the logic with
@@ -105,15 +107,15 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
             try:
                 if sform.is_valid():
                     sform.save()
-                    if challenge.application==CHALLENGE_MODE.FREE_FOR_ALL:
+                    if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
                             from_email="from@example.com",
-                            recipient_list=[user.email,],
+                            recipient_list=[user.email, ],
                             context={
-                                    "user": user,
-                                    "challenge": challenge,
-                                    },)
+                                "user": user,
+                                "challenge": challenge,
+                            }, )
             except NameError:
                 pass
 
@@ -142,32 +144,32 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
 
     # Extract participations
     confirmed = Participation.objects.all().filter(
-            challenge=challenge,
-            status__in=[
-                    PARTICIPATION_STATE.CONFIRMED,
-                    PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
-                    PARTICIPATION_STATE.ACKNOWLEDGED,
-                    PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-                    ]
-            )
+        challenge=challenge,
+        status__in=[
+            PARTICIPATION_STATE.CONFIRMED,
+            PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION,
+            PARTICIPATION_STATE.ACKNOWLEDGED,
+            PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+        ]
+    )
     ctx.update({"confirmed": confirmed})
 
     waiting_for_confirmation = Participation.objects.all().filter(
-            challenge=challenge,
-            status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
-            )
+        challenge=challenge,
+        status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+    )
     ctx.update({"waiting_for_confirmation": waiting_for_confirmation})
 
     waiting_for_acknowledgement = Participation.objects.all().filter(
-            challenge=challenge,
-            status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
-            )
+        challenge=challenge,
+        status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
+    )
     ctx.update({"waiting_for_acknowledgement": waiting_for_acknowledgement})
 
     # Extract comments
     comments = Comment.objects.all().filter(
-            Q(challenge=challenge) & Q(is_deleted=False)
-            ).order_by("created_at")
+        Q(challenge=challenge) & Q(is_deleted=False)
+    ).order_by("created_at")
     ctx.update({"comments": comments})
 
     ctx.update({"PARTICIPATION_STATE": PARTICIPATION_STATE})
@@ -177,7 +179,8 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
     ctx.update({"PARTICIPATION_REMOVE_MODE": PARTICIPATION_REMOVE_MODE})
 
     return render_to_response('challenge_detail.html',
-            RequestContext(request, ctx))
+                              RequestContext(request, ctx))
+
 
 @login_required
 @challenge_admin
@@ -233,31 +236,35 @@ def challenge_edit(request, challenge_id):
 
             #is_date_time_changed:
             elif ("start_date" in form.changed_data or
-                    "start_time" in form.changed_data):
+                          "start_time" in form.changed_data):
                 for participation in participations:
                     send_templated_mail(
                         template_name="challenge_changed",
                         from_email="from@example.com",
-                        recipient_list=[participation.user.email,],
+                        recipient_list=[participation.user.email, ],
                         context=ctx, )
 
-            #is_application_changed:
             if ("application" in form.changed_data and
                     challenge.application == CHALLENGE_MODE.FREE_FOR_ALL):
                 for participation in waited:
+                    #if we change a challenge state from confirmation required to free-for-all,
+                    #we automatically accept all people who are currently waiting for their
+                    #applications to be accepted. We also inform them by email about this.
                     participation.status = PARTICIPATION_STATE.CONFIRMED
                     participation.date_accepted = datetime.now()
                     participation.save()
 
                     send_templated_mail(
                         template_name="challenge_application_changed",
-                        from_email="from@example.com",
+                        from_email=settings.EMAIL_SENDER,
                         recipient_list=[participation.user.email, ],
+                        subject=_("You were accepted to '%(challenge)s on Participe!") % {"challenge": challenge.name},
                         context=ctx, )
 
             return redirect(challenge.get_absolute_url())
 
     return render_to_response('challenge_edit.html', RequestContext(request, {'form': form}))
+
 
 @login_required
 @challenge_admin
@@ -270,17 +277,17 @@ def challenge_complete(request, challenge_id):
         challenge.save()
 
         redirect_to = (
-                u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
-                u"".format(
+            u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
+            u"".format(
                 request.get_host(),
                 challenge.get_absolute_url(),
                 challenge.name))
 
         # CONFIRMED -->> WAITING FOR SELFREFLECTION
         participations = Participation.objects.filter(
-                challenge=challenge,
-                status=PARTICIPATION_STATE.CONFIRMED
-                )
+            challenge=challenge,
+            status=PARTICIPATION_STATE.CONFIRMED
+        )
         for participation in participations:
             participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
             participation.save()
@@ -288,20 +295,20 @@ def challenge_complete(request, challenge_id):
             send_templated_mail(
                 template_name="challenge_participation_request_selfreflection",
                 from_email="from@example.com",
-                recipient_list=[participation.user.email,],
+                recipient_list=[participation.user.email, ],
                 context={
                     "user": participation.user,
                     "challenge": challenge,
                     "challenge_url":
                         participation.challenge.get_full_url(request),
                     "redirect_to": redirect_to,
-                    },)
+                }, )
 
         # WAITING FOR CONFIRMATION -->> CANCELLED BY ADMIN
         participations = Participation.objects.filter(
-                challenge=challenge,
-                status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
-                )
+            challenge=challenge,
+            status=PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION
+        )
         for participation in participations:
             participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
             participation.cancellation_text = "Challenge completed"
@@ -310,17 +317,18 @@ def challenge_complete(request, challenge_id):
             send_templated_mail(
                 template_name="challenge_participation_rejected",
                 from_email="from@example.com",
-                recipient_list=[participation.user.email,],
+                recipient_list=[participation.user.email, ],
                 context={
                     "user": participation.user,
                     "challenge": challenge,
                     "challenge_url":
                         participation.challenge.get_full_url(request),
                     "participation": participation,
-                    },)
+                }, )
 
         return redirect(challenge.get_absolute_url())
     return redirect("challenge_list")
+
 
 @login_required
 @challenge_admin
@@ -331,16 +339,17 @@ def participation_accept(request, participation_id):
     participation.save()
 
     send_templated_mail(
-            template_name="challenge_participation_accepted",
-            from_email="from@example.com",
-            recipient_list=[participation.user.email,],
-            context={
-                    "user": participation.user,
-                    "challenge": participation.challenge,
-                    "challenge_url":
-                            participation.challenge.get_full_url(request),
-                    },)
+        template_name="challenge_participation_accepted",
+        from_email="from@example.com",
+        recipient_list=[participation.user.email, ],
+        context={
+            "user": participation.user,
+            "challenge": participation.challenge,
+            "challenge_url":
+                participation.challenge.get_full_url(request),
+        }, )
     return redirect(participation.challenge.get_absolute_url())
+
 
 @login_required
 @challenge_admin
@@ -353,56 +362,57 @@ def participation_remove(request, challenge_id):
 
         participation = get_object_or_404(Participation, pk=participation_id)
         ctx.update({
-                "user": participation.user,
-                "challenge": participation.challenge,
-                "challenge_url": participation.challenge.get_full_url(request),
-                "participation": participation,})
+            "user": participation.user,
+            "challenge": participation.challenge,
+            "challenge_url": participation.challenge.get_full_url(request),
+            "participation": participation, })
 
-        if value=="Remove":
+        if value == "Remove":
             participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
             template_name = "challenge_participation_removed"
-        elif value=="Reject":
+        elif value == "Reject":
             participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
             template_name = "challenge_participation_rejected"
-        elif value=="Reject self-reflection":
+        elif value == "Reject self-reflection":
             participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
             template_name = "challenge_participation_selfreflection_rejected"
             redirect_to = (
-                    u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
-                    u"".format(
+                u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
+                u"".format(
                     request.get_host(),
                     participation.challenge.get_absolute_url(),
                     participation.challenge.name))
             ctx.update({"redirect_to": redirect_to})
-        elif value=="Acknowledge":
+        elif value == "Acknowledge":
             participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
             template_name = "challenge_participation_acknowledged"
             redirect_to = (
-                    u"<a href='http://{0}/accounts/login?"
-                    u"next=/accounts/profile/view/'>profile</a>"
-                    u"".format(
+                u"<a href='http://{0}/accounts/login?"
+                u"next=/accounts/profile/view/'>profile</a>"
+                u"".format(
                     request.get_host()
-                    ))
+                ))
             ctx.update({"redirect_to": redirect_to})
 
-        if value=="Remove" or value=="Reject":
+        if value == "Remove" or value == "Reject":
             participation.cancellation_text = text
             participation.date_cancelled = datetime.now()
-        elif value=="Reject self-reflection":
+        elif value == "Reject self-reflection":
             participation.selfreflection_rejection_text = text
             participation.date_selfreflection_rejection = datetime.now()
-        elif value=="Acknowledge":
+        elif value == "Acknowledge":
             participation.acknowledgement_text = text
             participation.date_acknowledged = datetime.now()
         participation.save()
 
         send_templated_mail(
-                template_name=template_name,
-                from_email="from@example.com",
-                recipient_list=[participation.user.email,],
-                context=ctx,)
+            template_name=template_name,
+            from_email="from@example.com",
+            recipient_list=[participation.user.email, ],
+            context=ctx, )
         return redirect(participation.challenge.get_absolute_url())
     return redirect("challenge_list")
+
 
 @csrf_exempt
 @login_required
@@ -420,15 +430,16 @@ def ajax_participation_accept(request, challenge_id):
         participation.save()
 
         send_templated_mail(
-                template_name="challenge_participation_accepted",
-                from_email="from@example.com",
-                recipient_list=[participation.user.email,],
-                context={
-                        "user": participation.user,
-                        "challenge": participation.challenge,
-                        },)
+            template_name="challenge_participation_accepted",
+            from_email="from@example.com",
+            recipient_list=[participation.user.email, ],
+            context={
+                "user": participation.user,
+                "challenge": participation.challenge,
+            }, )
         return HttpResponse()
     return HttpResponse("An error has been encountered!")
+
 
 @csrf_exempt
 @login_required
@@ -446,14 +457,14 @@ def ajax_participation_remove(request, challenge_id):
             return HttpResponse("An error has been encountered")
 
         ctx.update({
-                "user": participation.user,
-                "challenge": participation.challenge,
-                "participation": participation,})
+            "user": participation.user,
+            "challenge": participation.challenge,
+            "participation": participation, })
 
-        if value==PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION:
+        if value == PARTICIPATION_REMOVE_MODE.REMOVE_APPLICATION:
             participation.status = PARTICIPATION_STATE.CANCELLED_BY_ADMIN
             template_name = "challenge_participation_removed"
-        elif value==PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION:
+        elif value == PARTICIPATION_REMOVE_MODE.REJECT_APPLICATION:
             participation.status = PARTICIPATION_STATE.CONFIRMATION_DENIED
             template_name = "challenge_participation_rejected"
 
@@ -462,12 +473,13 @@ def ajax_participation_remove(request, challenge_id):
         participation.save()
 
         send_templated_mail(
-                template_name=template_name,
-                from_email="from@example.com",
-                recipient_list=[participation.user.email,],
-                context=ctx,)
+            template_name=template_name,
+            from_email="from@example.com",
+            recipient_list=[participation.user.email, ],
+            context=ctx, )
         return HttpResponse()
     return HttpResponse("An error has been encountered!")
+
 
 @csrf_exempt
 @login_required
@@ -488,47 +500,48 @@ def ajax_accept_reject_selfreflection(request, challenge_id):
             "user": participation.user,
             "challenge": participation.challenge,
             "challenge_url": participation.challenge.get_full_url(request),
-            "participation": participation,})
+            "participation": participation, })
 
-        if value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
+        if value == PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
             participation.status = PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
             template_name = "challenge_participation_selfreflection_rejected"
             redirect_to = (
-                    u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
-                    u"".format(
+                u"<a href='http://{0}/accounts/login?next={1}'>{2}</a>"
+                u"".format(
                     request.get_host(),
                     participation.challenge.get_absolute_url(),
                     participation.challenge.name))
             ctx.update({"redirect_to": redirect_to})
-        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
+        elif value == PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
             participation.status = PARTICIPATION_STATE.ACKNOWLEDGED
             template_name = "challenge_participation_acknowledged"
             redirect_to = (
-                    u"<a href='http://{0}/accounts/login?"
-                    u"next=/accounts/profile/view/'>profile</a>"
-                    u"".format(
+                u"<a href='http://{0}/accounts/login?"
+                u"next=/accounts/profile/view/'>profile</a>"
+                u"".format(
                     request.get_host()
-                    ))
+                ))
             ctx.update({"redirect_to": redirect_to})
 
-        if value==PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
+        if value == PARTICIPATION_REMOVE_MODE.REJECT_SELFREFLECTION:
             participation.selfreflection_rejection_text = text
             participation.date_selfreflection_rejection = datetime.now()
-        elif value==PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
+        elif value == PARTICIPATION_REMOVE_MODE.ACKNOWLEDGE:
             participation.acknowledgement_text = text
             participation.date_acknowledged = datetime.now()
         participation.save()
 
         try:
             send_templated_mail(
-                    template_name=template_name,
-                    from_email="from@example.com",
-                    recipient_list=[participation.user.email,],
-                    context=ctx,)
+                template_name=template_name,
+                from_email="from@example.com",
+                recipient_list=[participation.user.email, ],
+                context=ctx, )
         except Exception, e:
             print ">>> %s - %s - %s" % (e, e.message, e.__class__)
         return HttpResponse()
     return HttpResponse("An error has been encountered!")
+
 
 @login_required
 def comment_add(request):
@@ -541,10 +554,11 @@ def comment_add(request):
             user=request.user,
             challenge=challenge,
             text=comment_text,
-            )
+        )
         comment.save()
         return redirect(challenge.get_absolute_url())
     return redirect("challenge_list")
+
 
 @login_required
 @challenge_admin
