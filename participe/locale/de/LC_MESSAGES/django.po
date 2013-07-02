@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE TITLE.settings.EMAIL_SENDER
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 02:16+0200\n"
+"POT-Creation-Date: 2013-07-02 16:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,9 +164,9 @@ msgstr "Weiblich"
 #: account/models.py:22
 msgid "Paranoid"
 msgstr ""
-"Sehr sicher: Nur Organisator_innen von Engagements zu denen du dich "
-"anmeldest sehen je deine persönlichen Daten. Auch dein Name und dein Foto "
-"werden nur für diese Personen sichtbar sein."
+"Anonym: Nur Organisator_innen von Engagements zu denen du dich anmeldest "
+"sehen je deine persönlichen Daten. Auch dein Name und dein Foto werden nur "
+"für diese Personen sichtbar sein."
 
 #: account/models.py:23
 msgid "Normal"
@@ -178,7 +178,7 @@ msgstr ""
 
 #: account/models.py:28 challenge/models.py:39 organization/models.py:15
 msgid "Avatar"
-msgstr "Logo"
+msgstr "Bild"
 
 #: account/models.py:30 challenge/models.py:219 challenge/models.py:284
 msgid "User"
@@ -392,31 +392,31 @@ msgstr "Auf Engagements gebuchte Stunden"
 msgid "has signed up to"
 msgstr " macht mit bei"
 
-#: account/templates/account_foreignprofile.html:60
+#: account/templates/account_foreignprofile.html:59
 msgid "and"
 msgstr "und"
 
-#: account/templates/account_foreignprofile.html:67
+#: account/templates/account_foreignprofile.html:65
 msgid "User is waiting for confirmation on your challenge"
 msgstr "Wartet auf Bestätigung seines Erfahrungsberichts"
 
-#: account/templates/account_foreignprofile.html:79
+#: account/templates/account_foreignprofile.html:77
 msgid "Participates in challenges"
 msgstr "Geleistete Einsätze"
 
-#: account/templates/account_foreignprofile.html:99
+#: account/templates/account_foreignprofile.html:97
 msgid "Participated challenges"
 msgstr "Geleistete Einsätze"
 
-#: account/templates/account_foreignprofile.html:124
+#: account/templates/account_foreignprofile.html:122
 msgid "Affiliated with"
 msgstr "Verknüpft mit"
 
-#: account/templates/account_foreignprofile.html:143
+#: account/templates/account_foreignprofile.html:141
 msgid "Participations, cancelled by user"
 msgstr "Durch Benutzer abgebrochene Engagements"
 
-#: account/templates/account_foreignprofile.html:165
+#: account/templates/account_foreignprofile.html:163
 msgid "Participations, cancelled by challenge admin"
 msgstr "Engagements, welche durch den Organisator abgebrochen wurden"
 
@@ -541,7 +541,7 @@ msgid ""
 "sign up to their challenges."
 msgstr ""
 "Diese information kann nur von Organisator_innen von Engagements gesehen "
-"werden,zu denen du dich angemeldet hast."
+"werden, zu denen du dich angemeldet hast."
 
 #: account/templates/account_myprofile.html:142
 #: account/templates/account_myprofile.html:165 challenge/forms.py:60
@@ -730,7 +730,7 @@ msgstr "Name"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: challenge/models.py:46 challenge/templates/challenge_create.html:38
+#: challenge/models.py:46 challenge/templates/challenge_create.html:33
 msgid "Duration"
 msgstr "Dauer"
 
@@ -754,7 +754,7 @@ msgstr "Uhrzeit"
 msgid "Organization"
 msgstr "Organisation"
 
-#: challenge/models.py:79 challenge/templates/challenge_create.html:52
+#: challenge/models.py:79 challenge/templates/challenge_create.html:47
 msgid "Application"
 msgstr "Bewerbung"
 
@@ -858,7 +858,16 @@ msgstr "Kommentar"
 msgid "comments"
 msgstr "Kommentare"
 
-#: challenge/views.py:261
+#: challenge/views.py:118
+msgid "Participation Confirmation for %(challenge_name)"
+msgstr "Anmeldebestätigung für %(challenge_name)s auf Participe"
+
+#: challenge/views.py:241
+#, python-format
+msgid "%(challenge)s now starts at %(start_date)s at %(start_time)s"
+msgstr "%(challenge)s beginnt neu am %(start_date)s um %(start_time)s"
+
+#: challenge/views.py:254
 #, python-format
 msgid "You were accepted to '%(challenge)s on Participe!"
 msgstr "Deine Bewerbung für '%(challenge)s' auf Participe war erfolgreich!"
@@ -868,52 +877,47 @@ msgid "Create challenge"
 msgstr "Engagement erfassen"
 
 #: challenge/templates/challenge_create.html:23
-#, fuzzy
 msgid "Create a challenge"
 msgstr "Engagement erfassen"
 
 #: challenge/templates/challenge_create.html:25
 msgid ""
-"\n"
-"                            If you are the organizer of any kind of "
-"gathering that makes the world better in any\n"
-"                            way, you are very welcome to post it on "
-"Participe. This may lead to people learning about\n"
-"                            this opportunity to help out that might be "
-"willing to come by and lend a hand. Please\n"
-"                            be aware that posting a challenge requires you "
-"to\n"
-"                        "
+"You can enter your Challenge here. If you have any questions, don't hesitate "
+"to <a href=\"mailto:markus.roth@partici.pe\">contact Markus</a>."
 msgstr ""
+"Du kannst dein Engagement hier eintragen, damit es auf Participe erscheint "
+"und sich Gleichgesinnte eintragen können. Falls du Schwierigkeiten, Fragen, "
+"oder Anmerkungen hast, zögere nicht <a href=\"mailto:markus.roth@partici.pe"
+"\">Markus Roth</a> zu kontaktieren."
 
-#: challenge/templates/challenge_create.html:34
+#: challenge/templates/challenge_create.html:29
 #: challenge/templates/challenge_edit.html:16
 #: organization/templates/organization_create.html:17
 msgid "Avatar:"
 msgstr "Bild"
 
-#: challenge/templates/challenge_create.html:38
+#: challenge/templates/challenge_create.html:33
 msgid "hours"
 msgstr "Stunden"
 
-#: challenge/templates/challenge_create.html:41
+#: challenge/templates/challenge_create.html:36
 msgid "Affiliate with organization"
 msgstr "Mit Organisation verknüpfen"
 
-#: challenge/templates/challenge_create.html:46
+#: challenge/templates/challenge_create.html:41
 #: organization/templates/organization_create.html:27
 msgid "Contact person:"
 msgstr "Kontaktperson:"
 
-#: challenge/templates/challenge_create.html:51
+#: challenge/templates/challenge_create.html:46
 msgid "Start date"
 msgstr "Datum"
 
-#: challenge/templates/challenge_create.html:51
+#: challenge/templates/challenge_create.html:46
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: challenge/templates/challenge_create.html:55
+#: challenge/templates/challenge_create.html:50
 msgid "Create this challenge"
 msgstr "Engagement erfassen"
 
@@ -1066,20 +1070,24 @@ msgstr ""
 
 #: challenge/templates/challenge_detail.html:251
 msgid "Withdraw application"
-msgstr "Bewerbung zurückziehen"
+msgstr "Abmelden"
 
 #: challenge/templates/challenge_detail.html:256
 msgid "Explain yourself"
-msgstr "Erkläre dich"
+msgstr "Entschuldige dich"
 
 #: challenge/templates/challenge_detail.html:257
 msgid ""
 "Withdrawing from a challenge can be very inconvenient for the organizer. "
 "Please write a note explaining why you can't make it this time."
 msgstr ""
-"Eine Anmeldung zu einem Engagement zurück zu ziehen kann für die "
+"Eine Anmeldung zu einem Engagement zurückzuziehen kann für die "
 "Organisator_innen sehr mühsam sein. Bitte schreibe einen kurze Begründung, "
-"warum du es trotzdemnicht schaffst auf zu tauchen."
+"warum es doch nicht geht."
+
+#: challenge/templates/challenge_detail.html:265
+msgid "Warning"
+msgstr "Hinweis"
 
 #: challenge/templates/challenge_detail.html:266
 msgid ""
@@ -1112,11 +1120,11 @@ msgid ""
 msgstr ""
 "Wenn du dich zu einem Egagement anmeldest, können die Organisator_innen "
 "deine persönlichen Daten, inklusive deiner Telefonnummer, deinem "
-"Geburtsdatum und deiner Email einsehen."
+"Geburtsdatum und deiner E-Mail-Adresse einsehen."
 
 #: challenge/templates/challenge_detail.html:294
 msgid "This is important"
-msgstr "Wichtig"
+msgstr "Verbindliche Anmeldung"
 
 #: challenge/templates/challenge_detail.html:295
 msgid ""
@@ -1180,7 +1188,7 @@ msgid "You must have a user account to participate in this challenge."
 msgstr "Du musst ein Participe Konto haben, um hier mit zu machen."
 
 #: challenge/templates/challenge_detail.html:361
-#: organization/templates/organization_detail.html:32
+#: organization/templates/organization_detail.html:30
 msgid "Contact person"
 msgstr "Kontaktperson"
 
@@ -2364,11 +2372,11 @@ msgstr "Organisation erfassen"
 msgid "Organization details"
 msgstr "Detils der Organisation"
 
-#: organization/templates/organization_detail.html:48
+#: organization/templates/organization_detail.html:46
 msgid "Widget for upcoming challenges"
 msgstr "Widget für zukünftige Engagements"
 
-#: organization/templates/organization_detail.html:49
+#: organization/templates/organization_detail.html:47
 msgid ""
 "Copy and paste this block of code to your website to show a list of all "
 "upcoming challenges of your organization."
@@ -2376,16 +2384,16 @@ msgstr ""
 "Kopiere diesen Block Code in deine Webseite, um eine Liste aller Engagements "
 "anzuzeigen, welche deine Organisation veranstaltet"
 
-#: organization/templates/organization_detail.html:51
-#: organization/templates/organization_detail.html:59
+#: organization/templates/organization_detail.html:49
+#: organization/templates/organization_detail.html:57
 msgid "Widget not supported in your browser"
 msgstr "Dein Browser unterstützt dieses Widget nicht"
 
-#: organization/templates/organization_detail.html:56
+#: organization/templates/organization_detail.html:54
 msgid "Widget for past challenges"
 msgstr "Widget für vergangene Engagements"
 
-#: organization/templates/organization_detail.html:57
+#: organization/templates/organization_detail.html:55
 msgid ""
 "Copy and paste this block of code to your website to show a list of all past "
 "challenges of your organization and their participants."
@@ -2393,35 +2401,35 @@ msgstr ""
 "Kopiere diesen Block Code in deine Webseite, um eine Liste aller Engagements "
 "anzuzeigen, welche deine Organisation veranstaltet hat"
 
-#: organization/templates/organization_detail.html:67
+#: organization/templates/organization_detail.html:65
 msgid "Upcoming challenges"
 msgstr "Zukünftige Engagements"
 
-#: organization/templates/organization_detail.html:78
+#: organization/templates/organization_detail.html:76
 msgid "No upcoming challenges"
 msgstr "Keine zukünftigen Engagements"
 
-#: organization/templates/organization_detail.html:79
+#: organization/templates/organization_detail.html:77
 msgid "This organization has no upcoming challenges at the moment"
 msgstr "Diese Organisation hat derzeit keine Engagements"
 
-#: organization/templates/organization_detail.html:86
+#: organization/templates/organization_detail.html:84
 msgid "Past challenges"
 msgstr "Vergangene Engagements"
 
-#: organization/templates/organization_detail.html:97
+#: organization/templates/organization_detail.html:95
 msgid "No past challenges"
 msgstr "Keine vergangenen Engagements"
 
-#: organization/templates/organization_detail.html:98
+#: organization/templates/organization_detail.html:96
 msgid "This organization has no past challenges at the moment"
 msgstr "Diese Organisation hat keine vergangenen Engagements"
 
-#: organization/templates/organization_detail.html:105
+#: organization/templates/organization_detail.html:103
 msgid "Staff"
 msgstr "Berechtigte"
 
-#: organization/templates/organization_detail.html:106
+#: organization/templates/organization_detail.html:104
 msgid "These users can create challenges in the name of this organization"
 msgstr ""
 "Diese Menschen können Engagements im Namen dieser Organisation erfassen"
@@ -2551,7 +2559,7 @@ msgstr "Für Organisator_innen"
 
 #: templates/base.html:90
 msgid "For Sponsors"
-msgstr "Für Sponsor_innen"
+msgstr "Für Partner_innen"
 
 #: templates/base.html:91
 msgid "For Media"
@@ -2657,7 +2665,7 @@ msgid "The Participe team"
 msgstr "Das Participe Team"
 
 #: templates/emails/challenge_application_changed.email:6
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "        The status of the challenge <a href='%(challenge_url)s'>"
@@ -2667,12 +2675,13 @@ msgid ""
 "sure to show up and give your best!<br/>\n"
 "        "
 msgstr ""
+"\n"
 "Du hast dich auf Participe um die Teilnahme beim Engagement <a "
 "href='%(challenge_url)s'>%(challenge_name)s</a> beworben. <br>Die "
 "Organisator_innen des Engagements haben nun beschlossen, dass keine "
 "Bewerbung mehr für dieses Engagement nötig ist. Alle Bewerber_innen, welche "
 "noch keine Antwort auf ihre Bewerbung bekommen haben, wurden somit "
-"automatisch aufgenommen.<br>Du bist somit verbindlich für das Engagement "
+"automatisch aufgenommen.<br>Du bist also verbindlich für das Engagement "
 "angemeldet. Falls du aus einem Grund nicht teilnehmen kannst, melde dich "
 "bitte so bald als möglich vom Engagement ab. Die Organisator_innen werden es "
 "dir danken."
@@ -2684,6 +2693,12 @@ msgid ""
 "Start date/time for the challenge <a href='%(challenge_url)s'>"
 "%(challenge_name)s</a> has been changed.<br/>\n"
 msgstr ""
+"\n"
+"Du bist auf Participe bei <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a> angemeldet. <br> Die Organisator_innen des "
+"Engagements haben das Datum oder die Uhrzeit des Engagements verändert. "
+"Falls du beim neuen Zeitpunkt nicht mitmachen kannst, melde dich bitte so bald als "
+"möglich vom Engagement ab. \n"
 
 #: templates/emails/challenge_deleted.email.html:8
 #, python-format
@@ -2695,7 +2710,6 @@ msgid ""
 msgstr ""
 
 #: templates/emails/challenge_participation_accepted.email.html:3
-#: templates/emails/challenge_successful_signup.email.html:3
 #: templates/emails/remind_accept_reject_application.email.html:3
 #: templates/emails/remind_challenge_participation.email.html:3
 msgid "Congratulations"
@@ -2758,14 +2772,20 @@ msgid ""
 "%(selfreflection_rejection_text)s<br/>\n"
 msgstr ""
 
-#: templates/emails/challenge_successful_signup.email.html:8
+#: templates/emails/challenge_successful_signup.email:7
 #, python-format
 msgid ""
 "\n"
-"You have been signed up for challenge %(challenge_name)s on %(start_date)s."
+"    You have been signed up for challenge %(challenge_name)s on "
+"%(start_date)s %(start_time)s.<br/>\n"
+"    Please don’t forget to show up! Visit the challenge at %(challenge_url)s."
 "<br/>\n"
-"Please don’t forget to show up!<br/>\n"
+"    "
 msgstr ""
+"\n"
+"<p>Gerne bestätigen wir dir, dass du dich bei <a href=\"%(challenge_url)s\">"
+"%(challenge_name)s</a> verbindlich angemeldet hast. Zur Erinnerung: Das "
+"Engagement beginnt am %(start_date)s um %(start_time)s. </p> "
 
 #: templates/emails/remind_accept_reject_application.email.html:8
 #, python-format
@@ -2895,9 +2915,6 @@ msgstr ""
 
 #~ msgid "You can see details, because user is"
 #~ msgstr "Du kannst diese Details sehen, weil der Benutyer"
-
-#~ msgid "Challenges you are participating in"
-#~ msgstr "Engagements in denen du mit machst"
 
 #~ msgid "Reason for withdrawing"
 #~ msgstr "Grund des Rückzugs"

@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 
 from templated_email import send_templated_mail
 from datetime import date, datetime
+import locale
 
 from forms import (CreateChallengeForm, SignupChallengeForm, EditChallengeForm,
                    WithdrawSignupForm, SelfreflectionForm)
@@ -20,7 +21,6 @@ from participe.account.utils import is_challenge_admin
 from participe.core.decorators import challenge_admin
 from participe.core.http import Http501
 from participe.core.user_tests import user_profile_completed
-
 
 
 @login_required
@@ -110,11 +110,14 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
                     if challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
                         send_templated_mail(
                             template_name="challenge_successful_signup",
-                            from_email="from@example.com",
+                            from_email=settings.EMAIL_SENDER,
                             recipient_list=[user.email, ],
                             context={
                                 "user": user,
                                 "challenge": challenge,
+                                "challenge_url": challenge.get_full_url(request),
+                                "subject": _("Participation Confirmation for %(challenge_name)")
+                                        % {"challenge_name": challenge.name},
                             }, )
             except NameError:
                 pass
@@ -209,6 +212,7 @@ def challenge_edit(request, challenge_id):
                 "challenge": challenge,
                 "challenge_url": challenge.get_full_url(request),
             })
+            locale.setlocale(locale.LC_TIME, "de_CH")
 
             participations = Participation.objects.all().filter(
                 Q(challenge=challenge) &
@@ -230,22 +234,26 @@ def challenge_edit(request, challenge_id):
                 for participation in participations:
                     send_templated_mail(
                         template_name="challenge_deleted",
-                        from_email="from@example.com",
+                        from_email=settings.EMAIL_SENDER,
                         recipient_list=[participation.user.email, ],
                         context=ctx)
 
             #is_date_time_changed:
-            elif ("start_date" in form.changed_data or
-                          "start_time" in form.changed_data):
+            elif "start_date" in form.changed_data or "start_time" in form.changed_data:
+                ctx.update({"subject": _("%(challenge)s now starts at %(start_date)s at %(start_time)s") % {
+                    "challenge": challenge.name,
+                    "start_date": challenge.start_date.strftime("%A, %d. %B"),
+                    "start_time": challenge.start_time.strftime("%H:%M"),
+                }})
                 for participation in participations:
                     send_templated_mail(
                         template_name="challenge_changed",
-                        from_email="from@example.com",
+                        from_email=settings.EMAIL_SENDER,
                         recipient_list=[participation.user.email, ],
                         context=ctx, )
 
-            if ("application" in form.changed_data and
-                    challenge.application == CHALLENGE_MODE.FREE_FOR_ALL):
+            if "application" in form.changed_data and challenge.application == CHALLENGE_MODE.FREE_FOR_ALL:
+                ctx.update({"subject": _("You were accepted to '%(challenge)s on Participe!") % {"challenge": challenge.name}})
                 for participation in waited:
                     #if we change a challenge state from confirmation required to free-for-all,
                     #we automatically accept all people who are currently waiting for their
@@ -258,7 +266,6 @@ def challenge_edit(request, challenge_id):
                         template_name="challenge_application_changed",
                         from_email=settings.EMAIL_SENDER,
                         recipient_list=[participation.user.email, ],
-                        subject=_("You were accepted to '%(challenge)s on Participe!") % {"challenge": challenge.name},
                         context=ctx, )
 
             return redirect(challenge.get_absolute_url())

@@ -13,9 +13,7 @@
                 </h1>
                 <img src="{{ organization.avatar|default:'img/default.jpg'|thumbnail_url:'span6_wide' }}" alt="{{ organization.name}} logo image">
                 <p>
-                    <blockquote>
-                        {{ organization.description }}
-                    </blockquote>
+                    <blockquote>{{ organization.description }}</blockquote>
                 </p>
                 <address>
                     <strong>{{ organization.address_1 }}</strong><br>

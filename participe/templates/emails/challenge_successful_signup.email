@@ -1,0 +1,13 @@
+{% extends 'emails/base.email' %}
+{% load i18n %}
+
+{% block content %}
+    {% block html %}
+
+    {% blocktrans with challenge.name as challenge_name and challenge.start_date as start_date and challenge.start_time as start_time %}
+    You have been signed up for challenge {{ challenge_name }} on {{ start_date }} {{ start_time }}.<br/>
+    Please don’t forget to show up! Visit the challenge at {{ challenge_url }}.<br/>
+    {% endblocktrans %}
+
+    {% endblock %}
+{% endblock %}
