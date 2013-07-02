@@ -55,10 +55,8 @@
 
                 {% if related_participated_challenges %}
                     <p class="note">
-                        <span class="label label-success">{% trans "User is signed-up for your challenge" %}:</span><br>
-                        {% for challenge in related_participated_challenges %}
-                            <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
+                        {{  user.first_name }} {% trans "has signed up to" %}
+                        {% for challenge in related_participated_challenges %} <a href="{{ challenge.get_absolute_url }}">{{ challenge.name }}</a>{% if not forloop.last %} {% trans "and" %} {% endif %}{% endfor %}.
                     </p>
                 {% endif %}
 

@@ -20,6 +20,15 @@
         <form enctype="multipart/form-data" action="." class="well" method="post">{% csrf_token %}
             <div class="row">
                 <div class="span12">
+                    <h3>{% trans "Create a challenge" %}</h3>
+                    <p>
+                        {% blocktrans %}
+                            If you are the organizer of any kind of gathering that makes the world better in any
+                            way, you are very welcome to post it on Participe. This may lead to people learning about
+                            this opportunity to help out that might be willing to come by and lend a hand. Please
+                            be aware that posting a challenge requires you to
+                        {% endblocktrans %}
+                    </p>
                     <div class="row">
                         <div class="span4">
                             <div class="input">{% trans "Avatar:" %} {{ form.avatar }}{{ form.avatar.errors }}</div>
