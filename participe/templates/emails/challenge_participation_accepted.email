@@ -1,0 +1,14 @@
+{% extends 'emails/base.email' %}
+{% load i18n %}
+
+{% block content %}
+    {% block html %}
+
+    {% blocktrans with challenge.name as challenge_name and challenge.start_date as start_date %}
+    Your application to <a href='{{ challenge_url }}'>{{ challenge_name }}</a> has been accepted!<br/>
+    You are now signed up for the challenge on {{ start_date }}.<br/>
+    Please don’t forget to show up!<br/>
+    {% endblocktrans %}
+
+    {% endblock %}
+{% endblock %}

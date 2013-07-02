@@ -414,11 +414,11 @@
     </div>
 
     <div id="withdraw-dialog">
-        <span>Do you really want to withdraw your application?</span>
+        <span>{% trans "Do you really want to withdraw your application?" %}</span>
     </div>
 
     <div id="delete-comment-dialog">
-        <p name="header">Do you really want to delete comment?</p>
+        <p name="header">{%  trans "Are you sure you want to delete this comment?" %}</p>
     </div>
 
     <script type="text/javascript">
@@ -698,11 +698,11 @@
                 resizable: false,
                 modal: true,
                 buttons: {
-                    "Delete": function(){
+                    {% trans "Delete" %}: function(){
                         redirect_url = $(this).data("redirect_url");
                         window.location.href = redirect_url;
                     },
-                    "Close": function(){
+                    {% trans "Close" %}: function(){
                         $(this).dialog('close');
                     }
                 }

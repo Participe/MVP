@@ -38,14 +38,17 @@
                             <td>{{ form.deleted_reason }}</td>
                         </tr>
                     </table>
-                    <div><input id="delete" name="delete" type="button" class="btn btn-primary" value="{% trans 'Delete' %}" /><input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}"></div>
+                    <div>
+                        <input id="delete" name="delete" type="button" class="btn btn-danger" value="{% trans 'Delete' %}" />
+                        <input id="cancel-btn" name="cancel-btn" type="button" class="btn" value="{% trans 'Cancel' %}">
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 
     <div id="dialog">
-        <span>Do you really want to delete this challenge?</span>
+        <span>{% trans "Do you really want to delete this challenge?" %}</span>
     </div>
 
     <script>

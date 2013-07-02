@@ -60,6 +60,8 @@ def challenge_detail(request, challenge_id, org_slug=None, chl_slug=None):
         return render_to_response('challenge_deleted_info.html',
                                   RequestContext(request, {
                                       "challenge": challenge,
+                                      "subject": _("%(challenge_name)s was cancelled")
+                                                 % {"challenge_name": challenge.name},
                                   }))
 
     # Only authenticated users may signup to challenge
@@ -231,6 +233,8 @@ def challenge_edit(request, challenge_id):
                 challenge.is_deleted = True
                 challenge.save()
 
+                ctx.update({"subject": _("%(challenge_name)s was cancelled")
+                                       % {"challenge_name": challenge.name}})
                 for participation in participations:
                     send_templated_mail(
                         template_name="challenge_deleted",
@@ -399,7 +403,7 @@ def participation_remove(request, challenge_id):
                 u"".format(
                     request.get_host()
                 ))
-            ctx.update({"redirect_to": redirect_to})
+            ctx.update({"redirect_to": redirect_to, })
 
         if value == "Remove" or value == "Reject":
             participation.cancellation_text = text
@@ -443,6 +447,10 @@ def ajax_participation_accept(request, challenge_id):
             context={
                 "user": participation.user,
                 "challenge": participation.challenge,
+                "subject": _("You were accepted for %(challenge_name)s")
+                           % {"challenge_name": participation.challenge.name},
+                "challenge_url": participation.challenge.get_full_url(request),
+
             }, )
         return HttpResponse()
     return HttpResponse("An error has been encountered!")
