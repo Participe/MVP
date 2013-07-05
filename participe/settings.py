@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'participe.challenge',
     'participe.organization',
     'participe.account',
+    'participe.backup',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -347,14 +348,11 @@ EMAIL_HOST = 'OVERRIDE ME IN LOCAL_SETTINGS'
 #EMAIL_PORT = 587
 #EMAIL_USE_TLS = True
 
-EMAIL_SENDER = "info@partici.pe"
+EMAIL_SENDER = 'info@participe.ch'
 
 TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 TEMPLATED_EMAIL_TEMPLATE_DIR = 'emails/'
 TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
 
 # Override some settings
-try:
-    from local_settings import *
-except:
-    pass
+from local_settings import *
