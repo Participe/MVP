@@ -9,7 +9,7 @@ This Django project is licensed under the [Affero General Public License](http:/
 
 Contributions
 -------------
-If you want to help our cause, we would be very glad to consider your pull requests. If you are interested in joining the team, please contact me at markus.roth@partici.pe
+If you want to help our cause, we would be very glad to consider your pull requests. If you are interested in joining the team, please contact me at markus.roth@participe.ch
 
 
 

@@ -26,9 +26,9 @@
         #ui-datepicker-div {display: none;}
     </style>
 
-    <form id="signup" class="well" enctype="multipart/form-data" action="." method="post">{% csrf_token %}
+    <form id="signup" enctype="multipart/form-data" action="." method="post">{% csrf_token %}
         <div class="row">
-            <div class="span12">
+            <div class="span6 offset3 well">
                 <h3>{% trans "Create a new account" %}</h3>
                 <p>{% trans "This information is only visible to people who need to see it, and is private by default. To understand who can see what if this information, please read our Privacy Policy" %}</p>
                 <table cellpadding="5">

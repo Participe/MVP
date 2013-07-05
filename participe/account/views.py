@@ -337,17 +337,19 @@ def view_profile(request, user_id):
 def view_myprofile(request):
     user = request.user
 
-    user_participations = get_user_participations(user).order_by(
-        "challenge__start_date")
+    user_participations = get_user_participations(user).order_by("challenge__start_date")
+
     user_participations_action_required = user_participations.filter(
         status=PARTICIPATION_STATE.WAITING_FOR_SELFREFLECTION
     )
+
     user_participations_upcoming = user_participations.filter(
         challenge__status=CHALLENGE_STATUS.UPCOMING,
         status__in=[
             PARTICIPATION_STATE.WAITING_FOR_CONFIRMATION,
             PARTICIPATION_STATE.CONFIRMED
         ])
+
     user_participations_completed = user_participations.filter(
         challenge__status=CHALLENGE_STATUS.COMPLETED,
         status__in=[
@@ -356,6 +358,7 @@ def view_myprofile(request):
         ])
 
     admin_challenges = get_admin_challenges(user).order_by("start_date")
+
     admin_challenges_action_required = admin_challenges.filter(
         Q(pk__in=Participation.objects.filter(
             status__in=[
@@ -367,6 +370,7 @@ def view_myprofile(request):
             status=CHALLENGE_STATUS.UPCOMING
         )
     )
+
     admin_challenges_upcoming = admin_challenges.exclude(
         pk__in=Participation.objects.filter(
             status__in=[
@@ -377,6 +381,7 @@ def view_myprofile(request):
         status=CHALLENGE_STATUS.UPCOMING,
         start_date__gte=datetime.date.today()
     )
+
     admin_challenges_completed = admin_challenges.exclude(
         pk__in=Participation.objects.filter(
             status=PARTICIPATION_STATE.WAITING_FOR_ACKNOWLEDGEMENT
@@ -397,7 +402,6 @@ def view_myprofile(request):
         status=PARTICIPATION_STATE.CANCELLED_BY_ADMIN,
     )
 
-    #TODO Enhance this behaviour
     try:
         profile = get_object_or_404(UserProfile, user=user)
     except:

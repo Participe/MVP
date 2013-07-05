@@ -386,7 +386,7 @@ msgstr "Daten aufgrund von Privatsphäre-Einstellungen verborgen"
 
 #: account/templates/account_foreignprofile.html:49
 msgid "Hours, spent in challenges"
-msgstr "Auf Engagements gebuchte Stunden"
+msgstr "Geleistete Stunden"
 
 #: account/templates/account_foreignprofile.html:58
 msgid "has signed up to"
@@ -402,11 +402,11 @@ msgstr "Wartet auf Bestätigung seines Erfahrungsberichts"
 
 #: account/templates/account_foreignprofile.html:77
 msgid "Participates in challenges"
-msgstr "Geleistete Einsätze"
+msgstr "Ist angemeldet bei"
 
 #: account/templates/account_foreignprofile.html:97
 msgid "Participated challenges"
-msgstr "Geleistete Einsätze"
+msgstr "Hat mitgemacht bei"
 
 #: account/templates/account_foreignprofile.html:122
 msgid "Affiliated with"
@@ -631,10 +631,15 @@ msgid ""
 "private by default. To understand who can see what if this information, "
 "please read our Privacy Policy"
 msgstr ""
-"Diese Information kann nur von Menschen gesehen werden, welche sie kennen "
-"müssen,und sind standardmäsig verborgen. Um zu verstehen, wer welche "
+"<p>Um dich bei Participe zu Engagements anzumelden, oder gar selbst welche zu "
+"erfassen, brauchst du ein Konto bei Participe. </p>"
+"<p>Auf dieser Seite kannst du eins erfassen. Dazu musst einige persönliche Daten "
+"über dich angeben, damit die Organisator_innen von Engagements dich erkennen und "
+"kontaktieren können.</p>"
+"<p>Diese Information kann nur von Menschen gesehen werden, welche sie kennen "
+"müssen, und sind standardmäsig verborgen. Um zu verstehen, wer welche "
 "Informationen wann sehen kann, lies bitte unsere Richtlinien zur "
-"Privatsphäre."
+"Privatsphäre.</p>"
 
 #: account/templates/account_signup.html:53
 msgid "By signing up, you accept the"
@@ -892,11 +897,11 @@ msgstr "Engagement erfassen"
 #: challenge/templates/challenge_create.html:25
 msgid ""
 "You can enter your Challenge here. If you have any questions, don't hesitate "
-"to <a href=\"mailto:markus.roth@partici.pe\">contact Markus</a>."
+"to <a href=\"mailto:markus.roth@participe.ch\">contact Markus</a>."
 msgstr ""
 "Du kannst dein Engagement hier eintragen, damit es auf Participe erscheint "
 "und sich Gleichgesinnte eintragen können. Falls du Schwierigkeiten, Fragen, "
-"oder Anmerkungen hast, zögere nicht <a href=\"mailto:markus.roth@partici.pe"
+"oder Anmerkungen hast, zögere nicht <a href=\"mailto:markus.roth@participe.ch"
 "\">Markus Roth</a> zu kontaktieren."
 
 #: challenge/templates/challenge_create.html:29
@@ -1074,8 +1079,7 @@ msgid ""
 "You are signed up for this challenge. The organizer is expecting you to be "
 "there and do your best."
 msgstr ""
-"Du bist zu diesem Engagement angemeldet. Die Organisator_innen erwarten, "
-"dass duerscheints und dein Bestes gibts!"
+"Du bist zu diesem Engagement verbindlich angemeldet."
 
 #: challenge/templates/challenge_detail.html:251
 msgid "Withdraw application"
@@ -2399,7 +2403,7 @@ msgstr "Organisation erfassen"
 
 #: organization/templates/organization_detail.html:4
 msgid "Organization details"
-msgstr "Detils der Organisation"
+msgstr "Details der Organisation"
 
 #: organization/templates/organization_detail.html:46
 msgid "Widget for upcoming challenges"
@@ -2587,7 +2591,7 @@ msgstr "Für Organisator_innen"
 
 #: templates/base.html:90
 msgid "For Sponsors"
-msgstr "Für Partner_innen"
+msgstr "Partner_innen"
 
 #: templates/base.html:91
 msgid "For Media"
@@ -2654,12 +2658,12 @@ msgstr ""
 msgid ""
 "We hope you enjoy your experience with Participe. If you have any questions, "
 "comments, or suggestions please let us know! You can contact the lead "
-"developer, <a href='mailto:markus.roth@partici.pe'>Markus Roth</a>."
+"developer, <a href='mailto:markus.roth@participe.ch'>Markus Roth</a>."
 msgstr ""
 "Wir hoffen, dass du eine gute Erfahrung mit Participe machst. Falls du eine "
 "Frage, einen Kommentar oder einen Verbesserungsvorschlag hast, lass es uns "
 "wissen! Du kannst den Software-Entwickler <a href='mailto:markus."
-"roth@partici.pe'>Markus Roth</a> kontaktieren."
+"roth@participe.ch'>Markus Roth</a> kontaktieren."
 
 #: templates/emails/account_password_renew.email:7
 msgid ""
