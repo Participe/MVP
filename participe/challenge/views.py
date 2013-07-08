@@ -313,6 +313,8 @@ def challenge_complete(request, challenge_id):
                     "challenge_url":
                         participation.challenge.get_full_url(request),
                     "redirect_to": redirect_to,
+                    "subject": _("Self-reflection requested for %(challenge_name)s")
+                               % {"challenge_name": participation.challenge.name},
                 }, )
 
         # WAITING FOR CONFIRMATION -->> CANCELLED BY ADMIN
@@ -327,11 +329,13 @@ def challenge_complete(request, challenge_id):
 
             send_templated_mail(
                 template_name="challenge_participation_rejected",
-                from_email="from@example.com",
+                from_email=settings.EMAIL_SENDER,
                 recipient_list=[participation.user.email, ],
                 context={
                     "user": participation.user,
                     "challenge": challenge,
+                    "subject": _("You were not accepted for %(challenge_name)s")
+                               % {"challenge_name": participation.challenge.name},
                     "challenge_url":
                         participation.challenge.get_full_url(request),
                     "participation": participation,
@@ -403,7 +407,11 @@ def participation_remove(request, challenge_id):
                 u"".format(
                     request.get_host()
                 ))
-            ctx.update({"redirect_to": redirect_to, })
+            ctx.update({
+                "redirect_to": redirect_to,
+                "subject": _("You were accepted for %(challenge_name)s")
+                           % {"challenge_name": participation.challenge.name},
+                })
 
         if value == "Remove" or value == "Reject":
             participation.cancellation_text = text

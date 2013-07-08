@@ -1,0 +1,11 @@
+{% extends 'emails/base.email' %}
+{% load i18n %}
+
+{% block content %}
+    {% block html %}
+        {% blocktrans with challenge.name as challenge_name %}
+        Thanks for participating in <a href='{{ challenge_url }}'>{{ challenge_name }}</a>.<br/>
+        Please write your self-reflection on {{ redirect_to }}.<br/>
+        {% endblocktrans %}
+    {% endblock %}
+{% endblock %}

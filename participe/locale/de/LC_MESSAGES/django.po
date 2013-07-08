@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 17:51+0200\n"
+"POT-Creation-Date: 2013-07-08 14:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,7 +208,7 @@ msgstr "Benutzerprofil"
 msgid "user profiles"
 msgstr "Benutzerprofile"
 
-#: account/views.py:124
+#: account/views.py:124 account/templates/account_edit.html:20
 msgid "Welcome to Participe"
 msgstr "Willkommen bei Participe"
 
@@ -220,35 +220,35 @@ msgstr "Der Link ist nicht mehr gültig. Bitte melde dich erneut an."
 msgid "Sorry, you have entered wrong E-mail or Password"
 msgstr "Falsche E-Mail Adresse oder falsches Passwort eingetragen."
 
-#: account/views.py:411 account/views.py:418
+#: account/views.py:415 account/views.py:422
 msgid "Action required"
 msgstr "Aktion erforderlich"
 
-#: account/views.py:413 challenge/models.py:33
+#: account/views.py:417 challenge/models.py:33
 msgid "Upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:415 challenge/models.py:34
+#: account/views.py:419 challenge/models.py:34
 msgid "Completed"
 msgstr "Vergangen"
 
-#: account/views.py:420
+#: account/views.py:424
 msgid "upcoming"
 msgstr "Demnächst"
 
-#: account/views.py:422
+#: account/views.py:426
 msgid "completed"
 msgstr "Erledigt"
 
-#: account/views.py:490
+#: account/views.py:494
 msgid "You have successfuly changed your password"
 msgstr "Dein Passwort wurde geändert."
 
-#: account/views.py:521
+#: account/views.py:525
 msgid "New password for Participe"
 msgstr "Neues Passwort bei Participe"
 
-#: account/views.py:529 account/views.py:555
+#: account/views.py:533 account/views.py:559
 msgid "An error has been acquired."
 msgstr "Es ist ein Fehler aufgetreten."
 
@@ -347,23 +347,36 @@ msgstr "Abbrechen"
 msgid "Edit profile"
 msgstr "Benutzerprofil bearbeiten"
 
-#: account/templates/account_edit.html:27
+#: account/templates/account_edit.html:22
+msgid ""
+"Thank you for signing up to Participe. Before you can sign up to or create "
+"challenges, we will need some more information about you. Please complete "
+"your personal information in the form below."
+msgstr ""
+"Auf Participe finden wir es wichtig, dass Organisator_innen und "
+"Teilnehmer_innen miteinander kommunizieren können. Wir brauchen daher von "
+"dir noch einige Angaben, bevor deine Anmeldung abgeschlossen ist. Diese "
+"Daten sind nur für Menschen sichtbar, welche einen guten Grund dazu haben. "
+"Bitte lies für weitere Angaben zu Schutz deiner Privatsphäre unsere <a "
+"href='http://participe.ch/about/privacy_policy/'>Datenschutzbestimmungen</a>."
+
+#: account/templates/account_edit.html:39
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
-#: account/templates/account_edit.html:31
+#: account/templates/account_edit.html:43
 msgid "Change profile image"
 msgstr "Profilfoto ändern"
 
-#: account/templates/account_edit.html:33
+#: account/templates/account_edit.html:45
 msgid "Add profile image"
 msgstr "Profilfoto hinzufügen"
 
-#: account/templates/account_edit.html:35
+#: account/templates/account_edit.html:47
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: account/templates/account_edit.html:36
+#: account/templates/account_edit.html:48
 msgid "Delete profile"
 msgstr "Benutzerkonto löschen"
 
@@ -422,11 +435,9 @@ msgstr "Engagements, welche durch den Organisator abgebrochen wurden"
 
 #: account/templates/account_information.html:4
 #: templates/emails/challenge_changed.email:3
-#: templates/emails/challenge_participation_acknowledged.email.html:3
-#: templates/emails/challenge_participation_rejected.email.html:3
-#: templates/emails/challenge_participation_removed.email.html:3
-#: templates/emails/challenge_participation_request_selfreflection.email.html:3
-#: templates/emails/challenge_participation_selfreflection_rejected.email.html:3
+#: templates/emails/challenge_participation_rejected.email:3
+#: templates/emails/challenge_participation_removed.email:3
+#: templates/emails/challenge_participation_selfreflection_rejected.email:3
 msgid "Information"
 msgstr "Informationen"
 
@@ -434,7 +445,7 @@ msgstr "Informationen"
 msgid "Go back to your profile"
 msgstr "Zurück zum Benutzerprofil"
 
-#: account/templates/account_login.html:4 templates/base.html:61
+#: account/templates/account_login.html:4 templates/base.html:69
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -449,7 +460,7 @@ msgstr "Mit E-Mail-Adresse anmelden"
 
 #: account/templates/account_login.html:24
 msgid "Keep me logged in"
-msgstr ""
+msgstr "Angemeldet bleiben"
 
 #: account/templates/account_login.html:28
 msgid "Sign in"
@@ -459,7 +470,7 @@ msgstr "Anmelden"
 msgid "Lost your password?"
 msgstr "Passwort vergessen?"
 
-#: account/templates/account_login.html:35 templates/base.html:60
+#: account/templates/account_login.html:35 templates/base.html:68
 msgid "No account yet?"
 msgstr "Noch kein Konto?"
 
@@ -631,15 +642,14 @@ msgid ""
 "private by default. To understand who can see what if this information, "
 "please read our Privacy Policy"
 msgstr ""
-"<p>Um dich bei Participe zu Engagements anzumelden, oder gar selbst welche zu "
-"erfassen, brauchst du ein Konto bei Participe. </p>"
-"<p>Auf dieser Seite kannst du eins erfassen. Dazu musst einige persönliche Daten "
-"über dich angeben, damit die Organisator_innen von Engagements dich erkennen und "
-"kontaktieren können.</p>"
-"<p>Diese Information kann nur von Menschen gesehen werden, welche sie kennen "
-"müssen, und sind standardmäsig verborgen. Um zu verstehen, wer welche "
-"Informationen wann sehen kann, lies bitte unsere Richtlinien zur "
-"Privatsphäre.</p>"
+"<p>Um dich bei Participe zu Engagements anzumelden, oder gar selbst welche "
+"zu erfassen, brauchst du ein Konto bei Participe. </p><p>Auf dieser Seite "
+"kannst du eins erfassen. Dazu musst einige persönliche Daten über dich "
+"angeben, damit die Organisator_innen von Engagements dich erkennen und "
+"kontaktieren können.</p><p>Diese Information kann nur von Menschen gesehen "
+"werden, welche sie kennen müssen, und sind standardmäsig verborgen. Um zu "
+"verstehen, wer welche Informationen wann sehen kann, lies bitte unsere "
+"Richtlinien zur Privatsphäre.</p>"
 
 #: account/templates/account_signup.html:53
 msgid "By signing up, you accept the"
@@ -780,7 +790,7 @@ msgstr "Du wurdest nicht zu diesem Engagement akzeptiert"
 
 #: challenge/models.py:207
 msgid "The organizer removed you from this challenge"
-msgstr "Die Organisator_innen haben dich von diesem Engagement abgemeldet"
+msgstr "Du wurdest von diesem Engagement abgemeldet"
 
 #: challenge/models.py:209
 msgid "You withdrew your participation to this challenge"
@@ -881,10 +891,22 @@ msgstr "%(challenge)s beginnt neu am %(start_date)s um %(start_time)s"
 msgid "You were accepted to '%(challenge)s on Participe!"
 msgstr "Deine Bewerbung bei '%(challenge)s' war erfolgreich!"
 
-#: challenge/views.py:450
+#: challenge/views.py:316
+#, python-format
+msgid "Self-reflection requested for %(challenge_name)s"
+msgstr "Danke für deinen Einsatz bei %(challenge_name)s!"
+
+#: challenge/views.py:337
+#, python-format
+msgid "You were not accepted for %(challenge_name)s"
+msgstr ""
+"Deine Bewerbung für '%(challenge_name)s' auf Participe war erfolgreich!"
+
+#: challenge/views.py:412 challenge/views.py:458
 #, python-format
 msgid "You were accepted for %(challenge_name)s"
-msgstr "Deine Bewerbung für '%(challenge_name)s' auf Participe war erfolgreich!"
+msgstr ""
+"Deine Bewerbung für '%(challenge_name)s' auf Participe war erfolgreich!"
 
 #: challenge/templates/challenge_create.html:4
 msgid "Create challenge"
@@ -973,7 +995,7 @@ msgstr "Anonymer Benutzer"
 
 #: challenge/templates/challenge_detail.html:56
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: challenge/templates/challenge_detail.html:72
 msgid "No participants yet"
@@ -1078,8 +1100,7 @@ msgstr ""
 msgid ""
 "You are signed up for this challenge. The organizer is expecting you to be "
 "there and do your best."
-msgstr ""
-"Du bist zu diesem Engagement verbindlich angemeldet."
+msgstr "Du bist zu diesem Engagement verbindlich angemeldet."
 
 #: challenge/templates/challenge_detail.html:251
 msgid "Withdraw application"
@@ -2345,6 +2366,10 @@ msgstr ""
 "\">Finde jetzt dein erstes Engagement auf Participe!</a>\n"
 "            "
 
+#: home/templates/home.html:16 home/templates/home.html.py:19
+msgid "Participe für Freiwillige"
+msgstr ""
+
 #: home/templates/terms_and_conditions.html:4
 msgid "Terms and conditions"
 msgstr "Allgemeine Geschäftsbedingungen"
@@ -2545,87 +2570,87 @@ msgid ""
 "ability to fulfill the request"
 msgstr ""
 
-#: templates/base.html:46
+#: templates/base.html:54
 msgid "My profile"
 msgstr "Mein Profil"
 
-#: templates/base.html:48
+#: templates/base.html:56
 msgid "Number of challenges, required an action from you, as a participant"
 msgstr "Benötigte Aktionen"
 
-#: templates/base.html:48
+#: templates/base.html:56
 msgid "actions required"
 msgstr "Aktionen erforderlich"
 
-#: templates/base.html:51
+#: templates/base.html:59
 msgid "Number of challenges, required an action from you, as an admin"
 msgstr "Benötigte Aktionen als Organisator"
 
-#: templates/base.html:51
+#: templates/base.html:59
 msgid "admin actions required"
 msgstr "Aktionen als Organisator erforderlich"
 
-#: templates/base.html:54
+#: templates/base.html:62
 msgid "Log out"
 msgstr "Ausloggen"
 
-#: templates/base.html:57
+#: templates/base.html:65
 msgid "login with facebook"
 msgstr "Login mit Facebook"
 
-#: templates/base.html:58
+#: templates/base.html:66
 msgid "Log in with Facebook"
 msgstr "Mit Facebook anmelden"
 
-#: templates/base.html:73
+#: templates/base.html:81
 msgid "change"
 msgstr "ändern"
 
-#: templates/base.html:87
+#: templates/base.html:95
 msgid "For Partners"
 msgstr "Für Partner_innen"
 
-#: templates/base.html:89
+#: templates/base.html:97
 msgid "For Organizers"
 msgstr "Für Organisator_innen"
 
-#: templates/base.html:90
+#: templates/base.html:98
 msgid "For Sponsors"
 msgstr "Partner_innen"
 
-#: templates/base.html:91
+#: templates/base.html:99
 msgid "For Media"
 msgstr "Für Medienschaffende"
 
-#: templates/base.html:95
+#: templates/base.html:103
 msgid "For Users"
 msgstr "Für Benutzer_innen"
 
-#: templates/base.html:97
+#: templates/base.html:105
 msgid "Privacy Policy"
 msgstr "Schutz der Privatsphäre"
 
-#: templates/base.html:98
+#: templates/base.html:106
 msgid "Terms and Conditions"
 msgstr "Allgemeine Geschäftsbedingungen"
 
-#: templates/base.html:99
+#: templates/base.html:107
 msgid "Fork us on GitHub"
 msgstr "Participe ist freie Software"
 
-#: templates/base.html:103
+#: templates/base.html:111
 msgid "About Participe"
 msgstr "Über Participe"
 
-#: templates/base.html:105
+#: templates/base.html:113
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:106
+#: templates/base.html:114
 msgid "Feedback"
 msgstr "Feedback"
 
-#: templates/base.html:107
+#: templates/base.html:115
 msgid "Join Us"
 msgstr "Mach mit"
 
@@ -2758,12 +2783,12 @@ msgid ""
 msgstr ""
 "\n"
 "<p>Herzliche Gratulation! Deine Bewerbung um die Teilnahme bei <a "
-"href='%(challenge_url)s'>%(challenge_name)s</a> wurde angenommen.</p> "
-"<p>Du bist nun verbindlich zum Engagement "
-"angemeldet, welches am %(start_date)s stattfindet.</p>\n"
+"href='%(challenge_url)s'>%(challenge_name)s</a> wurde angenommen.</p> <p>Du "
+"bist nun verbindlich zum Engagement angemeldet, welches am %(start_date)s "
+"stattfindet.</p>\n"
 "    "
 
-#: templates/emails/challenge_participation_acknowledged.email.html:8
+#: templates/emails/challenge_participation_acknowledged.email:7
 #, python-format
 msgid ""
 "\n"
@@ -2773,8 +2798,15 @@ msgid ""
 "%(acknowledgement_text)s<br/>\n"
 "You can see all completed challenges on your %(redirect_to)s.<br/>\n"
 msgstr ""
+"\n"
+"<p> Gratuliere! Dein Erfahrungsbericht für <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a> wurde von den Organisator_innen akzeptiert.</p><p>Sie "
+"haben deine Antworten mit folgendem Text ergänzt:<br/>\n"
+"%(acknowledgement_text)s<br/>\n"
+"Du kannst nun das Engagement mit diesen Texten auf deinem Profil anschauen: "
+"%(redirect_to)s.<br/>\n"
 
-#: templates/emails/challenge_participation_rejected.email.html:8
+#: templates/emails/challenge_participation_rejected.email:8
 #, python-format
 msgid ""
 "\n"
@@ -2782,8 +2814,12 @@ msgid ""
 "%(challenge_name)s</a> was rejected for the following reason:<br/>\n"
 "%(cancellation_text)s<br/>\n"
 msgstr ""
+"\n"
+"Deine Bewerbung auf <a href='%(challenge_url)s'>%(challenge_name)s</a> wurde "
+"leider mit folgender Begründung abgelehnt :<br/>\n"
+"%(cancellation_text)s<br/>\n"
 
-#: templates/emails/challenge_participation_removed.email.html:8
+#: templates/emails/challenge_participation_removed.email:8
 #, python-format
 msgid ""
 "\n"
@@ -2791,17 +2827,35 @@ msgid ""
 "the following reason:<br/>\n"
 "%(cancellation_text)s<br/>\n"
 msgstr ""
+"\n"
+"Du wurdest von den Organisator_innen von <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a>  von der Teilnahme mit folgendem Grund abgemeldet:<br/"
+">\n"
+"%(cancellation_text)s<br/>\n"
 
-#: templates/emails/challenge_participation_request_selfreflection.email.html:8
+#: templates/emails/challenge_participation_request_selfreflection.email:6
 #, python-format
 msgid ""
 "\n"
-"Thanks for participating in <a href='%(challenge_url)s'>%(challenge_name)s</"
-"a>.<br/>\n"
-"Please write your self-reflection on %(redirect_to)s.<br/>\n"
+"        Thanks for participating in <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a>.<br/>\n"
+"        Please write your self-reflection on %(redirect_to)s.<br/>\n"
+"        "
 msgstr ""
+"\n"
+"<p>Vielen Dank für deine Teilnahme an <a href='%(challenge_url)s'>"
+"%(challenge_name)s</a>! Die Organisator_innen haben das Engagement auf "
+"Participe als beendet markiert.</p><p>Du bist nun eingeladen, zwei Kurze "
+"Texte zu schreiben, in welchen du sagst was du während dem Engagement "
+"gemacht und was du gelernt hast. Nachdem die Organisator_innen diese "
+"Antworten bestätigt haben, erscheinen sie zusammen mit Details des "
+"Engagements in deinem persönlichen Profil auf Participe. Die Text durch "
+"Organisator_innen von Engagements zu denen du dich anmeldest sichtbar und "
+"können dir bei Bewerbungen auf Anspruchsvollere Engagements helfen.</p><p>Um "
+"diesen letzten Teil des Engagements abzuschliessen, gehe bitte hierhin:<br>  "
+"%(redirect_to)s'.</p>        "
 
-#: templates/emails/challenge_participation_selfreflection_rejected.email.html:8
+#: templates/emails/challenge_participation_selfreflection_rejected.email:8
 #, python-format
 msgid ""
 "\n"
@@ -2809,6 +2863,11 @@ msgid ""
 "was rejected for the following reason:<br/>\n"
 "%(selfreflection_rejection_text)s<br/>\n"
 msgstr ""
+"\n"
+"Dein Erfahrungsbericht für <a href='%(challenge_url)s'>%(challenge_name)s</"
+"a> wurde aus folgendem Grund von den Organisator_innen des Engagements nicht "
+"angenommen:<br/>\n"
+"%(selfreflection_rejection_text)s<br/>\n"
 
 #: templates/emails/challenge_successful_signup.email:7
 #, python-format
@@ -2825,12 +2884,12 @@ msgstr ""
 "%(challenge_name)s</a> verbindlich angemeldet hast. Zur Erinnerung: Das "
 "Engagement beginnt am %(start_date)s um %(start_time)s. </p> "
 
-#: templates/emails/remind_accept_reject_application.email.html:3
+#: templates/emails/remind_accept_reject_application.email:3
 #: templates/emails/remind_challenge_participation.email.html:3
 msgid "Congratulations"
 msgstr "Glückwunsch"
 
-#: templates/emails/remind_accept_reject_application.email.html:8
+#: templates/emails/remind_accept_reject_application.email:8
 #, python-format
 msgid ""
 "\n"

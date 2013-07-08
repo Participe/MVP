@@ -1,6 +1,5 @@
 {% extends 'emails/base.email' %}
 {% load i18n %}
-{% block subject %}{% trans "Information" %}{% endblock %}
 
 {% block content %}
 {% block html %}
