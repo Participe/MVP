@@ -152,7 +152,7 @@ LOGGING = {
 
 # Put here the proper domain name. For testing needs this value could be
 # overriden in local_settings.py (or not)
-DOMAIN_NAME = "beta.partici.pe"
+DOMAIN_NAME = "participe.ch"
 
 ###############################################################################
 ### DJANGO CELERY AND MESSAGE BROKER SECTION                                ###
@@ -226,63 +226,11 @@ AVATAR_CROP_MIN_SIZE = 15
 ### DJANGO SOCIAL AUTH SECTION                                              ###
 ###############################################################################
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuthBackend',
-    #'social_auth.backends.google.GoogleOAuth2Backend',
-    #'social_auth.backends.google.GoogleBackend',
-    #'social_auth.backends.yahoo.YahooBackend',
-    #'social_auth.backends.browserid.BrowserIDBackend',
-    #'social_auth.backends.contrib.linkedin.LinkedinBackend',
-    #'social_auth.backends.contrib.disqus.DisqusBackend',
-    #'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-    #'social_auth.backends.contrib.orkut.OrkutBackend',
-    #'social_auth.backends.contrib.foursquare.FoursquareBackend',
-    #'social_auth.backends.contrib.github.GithubBackend',
-    #'social_auth.backends.contrib.vkontakte.VKontakteBackend',
-    #'social_auth.backends.contrib.live.LiveBackend',
-    #'social_auth.backends.contrib.skyrock.SkyrockBackend',
-    #'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-    #'social_auth.backends.OpenIDBackend',
     'participe.core.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
     'auth_remember.backend.AuthRememberBackend',
 )
-
-#TODO Override this in local_settings.py
-#TWITTER_CONSUMER_KEY         = ''
-#TWITTER_CONSUMER_SECRET      = ''
-FACEBOOK_APP_ID              = '435671289832919'
-FACEBOOK_API_SECRET          = 'f892e1490d357d6ebb8392c7c7b8c54d'
-FACEBOOK_EXTENDED_PERMISSIONS = [
-    #'user_about_me', 'user_activities',
-    'user_birthday',
-    #'user_checkins', 'user_education_history', 'user_events',
-    #'user_groups', 'user_hometown', 'user_interests', 'user_likes',
-    'user_location',
-    #'user_notes', 'user_photos', 'user_questions',
-    #'user_relationships', 'user_relationship_details',
-    #'user_religion_politics', 'user_status', 'user_subscriptions',
-    #'user_videos', 'user_website', 'user_work_history',
-    'email',]
-#LINKEDIN_CONSUMER_KEY        = ''
-#LINKEDIN_CONSUMER_SECRET     = ''
-#ORKUT_CONSUMER_KEY           = ''
-#ORKUT_CONSUMER_SECRET        = ''
-#GOOGLE_CONSUMER_KEY          = ''
-#GOOGLE_CONSUMER_SECRET       = ''
-#GOOGLE_OAUTH2_CLIENT_ID      = ''
-#GOOGLE_OAUTH2_CLIENT_SECRET  = ''
-#FOURSQUARE_CONSUMER_KEY      = ''
-#FOURSQUARE_CONSUMER_SECRET   = ''
-#VK_APP_ID                    = ''
-#VK_API_SECRET                = ''
-#LIVE_CLIENT_ID               = ''
-#LIVE_CLIENT_SECRET           = ''
-#SKYROCK_CONSUMER_KEY         = ''
-#SKYROCK_CONSUMER_SECRET      = ''
-#YAHOO_CONSUMER_KEY           = ''
-#YAHOO_CONSUMER_SECRET        = ''
 
 LOGIN_URL          = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/profile/view/'
@@ -290,9 +238,6 @@ LOGIN_ERROR_URL    = '/login-error/'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/view/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/edit/'
-#SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = ''
-#SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = ''
-#SOCIAL_AUTH_BACKEND_ERROR_URL = ''
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
@@ -308,13 +253,6 @@ import random
 SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(
     ['Darth Vader', 'Obi-Wan Kenobi', 'R2-D2', 'C-3PO', 'Yoda',
     'Luke Skywalker',])
-
-#SOCIAL_AUTH_UUID_LENGTH = 16
-#SOCIAL_AUTH_EXTRA_DATA = False
-
-#SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
-#SOCIAL_AUTH_EXPIRATION = 'expires'
-#SOCIAL_AUTH_SESSION_EXPIRATION = False
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',

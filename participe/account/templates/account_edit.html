@@ -12,6 +12,18 @@
 
     <form id="edit" action="." method="post">{% csrf_token %}
         <h2>{% trans "Edit profile" %}</h2>
+	    {% if not user.profile.is_complete %}
+                 <div class="row">
+                 <div class="span11 offset2">
+		 <div class="alert">
+			<h4>
+			      {% trans "Welcome to Participe" %}
+			</h4>
+			{% trans "Thank you for signing up to Participe. Before you can sign up to or create challenges, we will need some more information about you. Please complete your personal information in the form below." %}
+		 </div>
+		 </div>
+		 </div>
+	    {% endif %}
         <div class="row">
             <div class="span5 well">
                 <table>
