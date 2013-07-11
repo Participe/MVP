@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-08 14:18+0200\n"
+"POT-Creation-Date: 2013-07-11 11:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -664,17 +664,17 @@ msgid "Welcome to Participe!"
 msgstr "Willkommen bei Participe!"
 
 #: account/templates/account_welcome.html:11
-#, python-format
+#, fuzzy
 msgid ""
 "Thank you for confirming your email address. You are now signed up and "
 "logged in to Participe and can start using it. Why don't you see if you can "
-"find a challenge that interests you in the <a hrer=\"%(challenge_list)s"
-"\">list of challenges</a>?"
+"find a challenge that interests you in the <a hrer=\"http://participe.ch/"
+"challenges/\">list of challenges</a>?"
 msgstr ""
 "Danke, dass du deine E-Mail-Adresse bestätigt hast. Du bist nun bei "
 "Participe angemeldet und eingeloggt. Jetzt kanns losgehen! Sieh doch gleich "
 "nach, ob du ein Engagement findest, das dir zusagt. <a href="
-"\"%(challenge_list)s\">Hier findest du die Liste der aktuellen Engagements</"
+"\"http://participe.ch/challenges/\">Hier findest du die Liste der aktuellen Engagements</"
 "a>."
 
 #: challenge/forms.py:34 challenge/forms.py:159 organization/forms.py:26
@@ -2365,10 +2365,6 @@ msgstr ""
 "Welt ein kleines Bisschen besser machen? <a href=\"%(challenge_list)s"
 "\">Finde jetzt dein erstes Engagement auf Participe!</a>\n"
 "            "
-
-#: home/templates/home.html:16 home/templates/home.html.py:19
-msgid "Participe für Freiwillige"
-msgstr ""
 
 #: home/templates/terms_and_conditions.html:4
 msgid "Terms and conditions"
