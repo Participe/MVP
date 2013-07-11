@@ -664,7 +664,6 @@ msgid "Welcome to Participe!"
 msgstr "Willkommen bei Participe!"
 
 #: account/templates/account_welcome.html:11
-#, fuzzy
 msgid ""
 "Thank you for confirming your email address. You are now signed up and "
 "logged in to Participe and can start using it. Why don't you see if you can "
