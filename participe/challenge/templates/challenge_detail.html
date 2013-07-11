@@ -32,7 +32,7 @@
                     </p>
                 {% endif %}
                 <blockquote>
-                    <p>{{ challenge.description }}</p>
+                    <p>{{ challenge.description|escape|linebreaks }}</p>
                 </blockquote>
 
                 <h3>{% trans "Participants" %}</h3>
