@@ -64,7 +64,7 @@ class CreateChallengeForm(forms.ModelForm):
             "location": forms.TextInput(
                     attrs={"placeholder": _("Location")}),
             "duration": widgets.NumberInput(
-                    attrs={'min': '1', 'max': '10', 'step': '1',
+                    attrs={'min': '1', 'max': '999999', 'step': '1',
                             "class": "input-mini"}),
 
             "alt_person_fullname": forms.TextInput(
