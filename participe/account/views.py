@@ -2,6 +2,7 @@ import os
 import datetime
 import random
 import string
+import hashlib
 
 from django.conf import settings
 from django.contrib.auth import authenticate, login
@@ -75,7 +76,7 @@ def signup(request):
         if uform.is_valid() and pform.is_valid():
             # Create User
             user = User.objects.create(
-                username=uform.cleaned_data["email"],
+                username=uform.cleaned_data["email"][:30],
                 first_name=uform.cleaned_data["first_name"],
                 last_name=uform.cleaned_data["last_name"],
                 email=uform.cleaned_data["email"],
